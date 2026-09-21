@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Add Funds — Wavynum</title>
+
+  <link rel="stylesheet" href="style.css?v=3">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+</head>
+
+<body class="dashboard-page">
+
+  <header class="dashboard-header">
+
+    <a href="dashboard.html" class="dashboard-logo">
+      Wavynum
+    </a>
+
+    <a href="dashboard.html" class="back-button" aria-label="Back">
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+  </header>
+
+
+  <main class="funds-main">
+
+    <section class="funds-header">
+
+      <p class="dashboard-eyebrow">WALLET</p>
+
+      <h1>Add funds</h1>
+
+      <p>
+        Add money to your Wavynum wallet.
+      </p>
+
+    </section>
+
+
+    <section class="funds-card">
+
+      <div class="funds-card-title">
+        <div class="funds-icon">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+
+        <div>
+          <h2>Deposit funds</h2>
+          <p>Choose your currency and enter an amount.</p>
+        </div>
+      </div>
+
+
+      <form id="fundsForm">
+
+        <div class="form-group">
+
+          <label for="currency">
+            Currency
+          </label>
+
+          <select id="currency" required>
+
+            <option value="USD">
+              USD — US Dollar
+            </option>
+
+            <option value="NGN">
+              NGN — Nigerian Naira
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="amount">
+            Amount
+          </label>
+
+          <input
+            type="number"
+            id="amount"
+            placeholder="0.00"
+            min="1"
+            step="0.01"
+            required
+          >
+
+        </div>
+
+
+        <div class="deposit-preview">
+
+          <span>Amount to add</span>
+
+          <strong id="amountPreview">
+            $0.00
+          </strong>
+
+        </div>
+
+
+        <button type="submit" class="funds-button">
+
+          <i class="fa-solid fa-plus"></i>
+
+          Add funds
+
+        </button>
+
+
+        <p id="fundsMessage" class="funds-message"></p>
+
+      </form>
+
+    </section>
+
+
+    <section class="demo-notice">
+
+      <i class="fa-solid fa-circle-info"></i>
+
+      <div>
+
+        <strong>Development mode</strong>
+
+        <p>
+          This deposit is simulated for testing.
+          Real payment processing will be connected later.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script type="module" src="add-funds.js?v=1"></script>
+
+</body>
+</html>

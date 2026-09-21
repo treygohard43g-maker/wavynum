@@ -1932,3 +1932,477 @@ body.menu-open {
   }
 
 }
+/* =========================================================
+   WAVYNUM — SERVICE NUMBER MARKETPLACE
+   ========================================================= */
+
+.numbers-main {
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 38px 0 60px;
+}
+
+.numbers-header {
+  margin-bottom: 34px;
+}
+
+.numbers-header h1 {
+  margin: 6px 0 8px;
+  color: #ecfdf3;
+  font-size: clamp(28px, 5vw, 38px);
+  line-height: 1.15;
+}
+
+.numbers-header > p:last-child {
+  max-width: 620px;
+  margin: 0;
+  color: #7e8a82;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+/* Marketplace */
+
+.service-marketplace {
+  margin-top: 10px;
+}
+
+.marketplace-heading {
+  margin-bottom: 18px;
+}
+
+.marketplace-heading h2 {
+  margin: 5px 0 0;
+  color: #ecfdf3;
+  font-size: 22px;
+}
+
+
+/* Service grid */
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+
+/* Service card */
+
+.service-number-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+  gap: 15px;
+
+  padding: 17px;
+
+  background: #0c140f;
+
+  border: 1px solid rgba(34, 197, 94, 0.12);
+  border-radius: 20px;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.service-number-card:hover {
+  transform: translateY(-3px);
+
+  background: #0e1711;
+
+  border-color: rgba(34, 197, 94, 0.32);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.service-number-card:active {
+  transform: translateY(-1px);
+}
+
+
+/* Brand logo box */
+
+.service-brand-icon {
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 16px;
+
+  font-size: 24px;
+
+  transition: transform 0.2s ease;
+}
+
+.service-number-card:hover .service-brand-icon {
+  transform: scale(1.05);
+}
+
+
+/* Facebook */
+
+.facebook-brand {
+  background: #1877f2;
+  color: #ffffff;
+}
+
+
+/* WhatsApp */
+
+.whatsapp-brand {
+  background: #25d366;
+  color: #ffffff;
+}
+
+
+/* Snapchat */
+
+.snapchat-brand {
+  background: #fffc00;
+  color: #111111;
+}
+
+
+/* Instagram */
+
+.instagram-brand {
+  background:
+    linear-gradient(
+      135deg,
+      #833ab4,
+      #fd1d1d,
+      #fcb045
+    );
+
+  color: #ffffff;
+}
+
+
+/* Telegram */
+
+.telegram-brand {
+  background: #229ed9;
+  color: #ffffff;
+}
+
+
+/* Zoosk */
+
+.zoosk-brand {
+  background: #151b17;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  color: #39e86f;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+
+/* MeetMe */
+
+.meetme-brand {
+  background: #151b17;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: #39e86f;
+  font-size: 21px;
+}
+
+
+/* Match */
+
+.match-brand {
+  background: #151b17;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: #39e86f;
+  font-size: 21px;
+}
+
+
+/* X */
+
+.x-brand {
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  color: #ffffff;
+}
+
+
+/* Other */
+
+.other-brand {
+  background: rgba(34, 197, 94, 0.09);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  color: #39e86f;
+}
+
+
+/* Service information */
+
+.service-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.service-card-info h3 {
+  margin: 0 0 5px;
+
+  color: #ecfdf3;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+.service-card-info p {
+  margin: 0;
+
+  color: #78857d;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* Choose number action */
+
+.service-card-action {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  flex-shrink: 0;
+
+  color: #657169;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  transition: color 0.2s ease;
+}
+
+.service-card-action i {
+  font-size: 11px;
+}
+
+.service-number-card:hover .service-card-action {
+  color: #39e86f;
+}
+
+
+/* Compatibility notice */
+
+.number-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  margin-top: 28px;
+  padding: 18px;
+
+  background: #0a110d;
+
+  border: 1px solid rgba(34, 197, 94, 0.11);
+  border-radius: 18px;
+}
+
+.number-notice-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: rgba(34, 197, 94, 0.09);
+  color: #39e86f;
+
+  font-size: 17px;
+}
+
+.number-notice strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #dff9e8;
+
+  font-size: 13px;
+}
+
+.number-notice p {
+  margin: 0;
+
+  color: #748078;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* Development notice */
+
+.numbers-main .demo-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  margin-top: 14px;
+  padding: 18px;
+
+  background: #0a110d;
+
+  border: 1px solid rgba(34, 197, 94, 0.08);
+  border-radius: 18px;
+}
+
+.numbers-main .demo-notice > i {
+  margin-top: 2px;
+
+  color: #39e86f;
+
+  font-size: 16px;
+}
+
+.numbers-main .demo-notice strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #dff9e8;
+
+  font-size: 13px;
+}
+
+.numbers-main .demo-notice p {
+  margin: 0;
+
+  color: #748078;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+
+/* Back button */
+
+.back-button {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  color: #aab6ae;
+  background: #0c140f;
+
+  border: 1px solid rgba(34, 197, 94, 0.12);
+
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+.back-button:hover {
+  color: #39e86f;
+  border-color: rgba(34, 197, 94, 0.3);
+  background: #101a13;
+}
+
+
+/* Mobile */
+
+@media (max-width: 760px) {
+
+  .numbers-main {
+    width: min(100% - 24px, 620px);
+    padding: 28px 0 45px;
+  }
+
+  .numbers-header {
+    margin-bottom: 28px;
+  }
+
+  .service-grid {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+
+  .service-number-card {
+    padding: 15px;
+    border-radius: 17px;
+  }
+
+  .service-brand-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+  }
+
+  .service-card-action span {
+    display: none;
+  }
+
+  .service-card-action i {
+    font-size: 12px;
+  }
+
+  .number-notice,
+  .numbers-main .demo-notice {
+    padding: 15px;
+  }
+}
+
+
+/* Small phones */
+
+@media (max-width: 390px) {
+
+  .numbers-main {
+    width: calc(100% - 20px);
+  }
+
+  .service-number-card {
+    gap: 12px;
+  }
+
+  .service-brand-icon {
+    width: 47px;
+    height: 47px;
+
+    font-size: 20px;
+  }
+
+  .service-card-info h3 {
+    font-size: 14px;
+  }
+
+  .service-card-info p {
+    font-size: 11px;
+  }
+}

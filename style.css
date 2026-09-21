@@ -1840,3 +1840,95 @@ body.menu-open {
   }
 
 }
+
+/* SERVICE MARKETPLACE */
+
+.service-marketplace {
+  margin-top: 10px;
+}
+
+.marketplace-heading {
+  margin-bottom: 18px;
+}
+
+.marketplace-heading h2 {
+  margin: 4px 0 0;
+  color: #ecfdf3;
+  font-size: 22px;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.service-number-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+  padding: 18px;
+  background: #0c140f;
+  border: 1px solid rgba(34, 197, 94, 0.12);
+  border-radius: 18px;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.service-number-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(34, 197, 94, 0.3);
+  background: #0e1711;
+}
+
+.service-brand-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: rgba(34, 197, 94, 0.09);
+  color: #39e86f;
+  font-size: 21px;
+}
+
+.service-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.service-card-info h3 {
+  margin: 0 0 4px;
+  color: #ecfdf3;
+  font-size: 15px;
+}
+
+.service-card-info p {
+  margin: 0;
+  color: #78857d;
+  font-size: 12px;
+}
+
+.service-arrow {
+  color: #657169;
+  font-size: 13px;
+}
+
+.service-number-card:hover .service-arrow {
+  color: #39e86f;
+}
+
+@media (max-width: 650px) {
+
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-number-card {
+    padding: 16px;
+  }
+
+}

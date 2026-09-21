@@ -1,10 +1,19 @@
-import { auth } from "./firebase.js";
+import { auth, db } from "./firebase.js";
+
 import {
   createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
+import {
+  doc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
 const signupForm = document.getElementById("signupForm");
 const message = document.getElementById("signupMessage");
+
 
 signupForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -13,36 +22,47 @@ signupForm.addEventListener("submit", async (event) => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
-  if (!name || !email || !password) {
-    message.textContent = "Please fill in all fields.";
-    return;
-  }
-
-  if (password.length < 6) {
-    message.textContent = "Password must be at least 6 characters.";
-    return;
-  }
+  message.textContent = "Creating your account...";
 
   try {
-    message.textContent = "Creating your account...";
 
-    await createUserWithEmailAndPassword(auth, email, password);
+    // Create Firebase account
+    const userCredential =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    message.textContent = "Account created successfully!";
+    const user = userCredential.user;
+
+    // Create the user's Wavynum account document
+    await setDoc(doc(db, "users", user.uid), {
+
+      name: name,
+
+      email: user.email,
+
+      usdBalance: 0,
+
+      ngnBalance: 0,
+
+      createdAt: serverTimestamp()
+
+    });
+
+    message.textContent =
+      "Account created successfully!";
 
     setTimeout(() => {
       window.location.href = "login.html";
     }, 1000);
 
   } catch (error) {
-    console.error(error);
 
-    if (error.code === "auth/email-already-in-use") {
-      message.textContent = "An account with this email already exists.";
-    } else if (error.code === "auth/invalid-email") {
-      message.textContent = "Please enter a valid email address.";
-    } else {
-      message.textContent = "Unable to create account. Please try again.";
-    }
+    console.error("Signup error:", error);
+
+    message.textContent =
+      "Signup error: " + error.code;
   }
 });

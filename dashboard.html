@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard — Wavynum</title>
+
+  <link rel="stylesheet" href="style.css?v=2">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+</head>
+
+<body class="dashboard-page">
+
+  <!-- Top Navigation -->
+  <header class="dashboard-header">
+
+    <button class="menu-button" id="menuButton" aria-label="Open menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <a href="dashboard.html" class="dashboard-logo">
+      Wavynum
+    </a>
+
+    <button class="notification-button" aria-label="Notifications">
+      <i class="fa-regular fa-bell"></i>
+      <span class="notification-dot"></span>
+    </button>
+
+  </header>
+
+
+  <!-- Side Menu -->
+  <aside class="side-menu" id="sideMenu">
+
+    <div class="side-menu-header">
+
+      <div>
+        <span class="menu-label">WAVYNUM</span>
+        <strong>Account Menu</strong>
+      </div>
+
+      <button class="close-menu" id="closeMenu" aria-label="Close menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+
+    <nav class="side-navigation">
+
+      <a href="dashboard.html" class="side-link active">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="#" class="side-link">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+        <span>My Numbers</span>
+      </a>
+
+      <a href="#" class="side-link">
+        <i class="fa-regular fa-message"></i>
+        <span>SMS Inbox</span>
+      </a>
+
+      <a href="#" class="side-link">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Buy Number</span>
+      </a>
+
+      <a href="#" class="side-link">
+        <i class="fa-solid fa-wallet"></i>
+        <span>Wallet</span>
+      </a>
+
+      <a href="#" class="side-link">
+        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        <span>Transactions</span>
+      </a>
+
+      <a href="#" class="side-link">
+        <i class="fa-solid fa-circle-plus"></i>
+        <span>Add Funds</span>
+      </a>
+
+      <div class="menu-divider"></div>
+
+      <a href="#" class="side-link">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+      </a>
+
+      <a href="#" class="side-link">
+        <i class="fa-solid fa-headset"></i>
+        <span>Support</span>
+      </a>
+
+    </nav>
+
+
+    <div class="side-menu-bottom">
+
+      <button class="logout-button" id="logoutButton">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Log out</span>
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- Menu Overlay -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+
+  <!-- Main Dashboard -->
+  <main class="dashboard-main">
+
+    <section class="dashboard-welcome">
+
+      <div>
+        <p class="dashboard-eyebrow">ACCOUNT OVERVIEW</p>
+
+        <h1>
+          Welcome back
+        </h1>
+
+        <p class="dashboard-subtitle">
+          Manage your numbers, wallet and messages.
+        </p>
+      </div>
+
+      <a href="#" class="dashboard-add-button">
+        <i class="fa-solid fa-plus"></i>
+        Add Funds
+      </a>
+
+    </section>
+
+
+    <!-- Wallet Cards -->
+    <section class="wallet-grid">
+
+      <div class="wallet-card primary-wallet">
+
+        <div class="wallet-card-top">
+          <span>USD Balance</span>
+
+          <div class="wallet-icon">
+            <i class="fa-solid fa-dollar-sign"></i>
+          </div>
+        </div>
+
+        <div class="wallet-balance">
+          $0.00
+        </div>
+
+        <p class="wallet-description">
+          Available for purchases
+        </p>
+
+      </div>
+
+
+      <div class="wallet-card">
+
+        <div class="wallet-card-top">
+          <span>NGN Balance</span>
+
+          <div class="wallet-icon">
+            <i class="fa-solid fa-naira-sign"></i>
+          </div>
+        </div>
+
+        <div class="wallet-balance">
+          ₦0.00
+        </div>
+
+        <p class="wallet-description">
+          Available for purchases
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- Quick Actions -->
+    <section class="dashboard-section">
+
+      <div class="section-title-row">
+        <div>
+          <p class="dashboard-eyebrow">QUICK ACCESS</p>
+          <h2>What do you want to do?</h2>
+        </div>
+      </div>
+
+
+      <div class="quick-actions">
+
+        <a href="#" class="quick-action-card">
+
+          <div class="quick-action-icon">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </div>
+
+          <div>
+            <h3>Buy a number</h3>
+            <p>Choose a virtual number for your service.</p>
+          </div>
+
+          <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
+
+        </a>
+
+
+        <a href="#" class="quick-action-card">
+
+          <div class="quick-action-icon">
+            <i class="fa-solid fa-circle-plus"></i>
+          </div>
+
+          <div>
+            <h3>Add funds</h3>
+            <p>Fund your Wavynum wallet securely.</p>
+          </div>
+
+          <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
+
+        </a>
+
+
+        <a href="#" class="quick-action-card">
+
+          <div class="quick-action-icon">
+            <i class="fa-regular fa-message"></i>
+          </div>
+
+          <div>
+            <h3>Open SMS inbox</h3>
+            <p>View messages received by your numbers.</p>
+          </div>
+
+          <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- Active Number -->
+    <section class="dashboard-section">
+
+      <div class="section-title-row">
+
+        <div>
+          <p class="dashboard-eyebrow">ACTIVE NUMBER</p>
+          <h2>My current number</h2>
+        </div>
+
+        <a href="#" class="section-link">
+          View all
+        </a>
+
+      </div>
+
+
+      <div class="active-number-card">
+
+        <div class="number-status">
+          <span class="status-indicator"></span>
+          Active
+        </div>
+
+        <div class="number-content">
+
+          <div class="number-icon">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+          </div>
+
+          <div>
+            <span class="number-country">United States</span>
+            <h3>+1 (000) 000-0000</h3>
+          </div>
+
+        </div>
+
+        <div class="number-actions">
+
+          <button type="button" class="number-action">
+            <i class="fa-regular fa-copy"></i>
+            Copy
+          </button>
+
+          <button type="button" class="number-action">
+            <i class="fa-regular fa-message"></i>
+            SMS
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Recent Transactions -->
+    <section class="dashboard-section">
+
+      <div class="section-title-row">
+
+        <div>
+          <p class="dashboard-eyebrow">ACTIVITY</p>
+          <h2>Recent transactions</h2>
+        </div>
+
+        <a href="#" class="section-link">
+          View all
+        </a>
+
+      </div>
+
+
+      <div class="transactions-card">
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            <i class="fa-solid fa-receipt"></i>
+          </div>
+
+          <h3>No transactions yet</h3>
+
+          <p>
+            Your wallet activity will appear here.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SMS Preview -->
+    <section class="dashboard-section">
+
+      <div class="section-title-row">
+
+        <div>
+          <p class="dashboard-eyebrow">MESSAGES</p>
+          <h2>SMS inbox</h2>
+        </div>
+
+        <a href="#" class="section-link">
+          Open inbox
+        </a>
+
+      </div>
+
+
+      <div class="transactions-card">
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            <i class="fa-regular fa-message"></i>
+          </div>
+
+          <h3>No messages</h3>
+
+          <p>
+            Messages received by your numbers will appear here.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    const menuButton = document.getElementById("menuButton");
+    const closeMenu = document.getElementById("closeMenu");
+    const sideMenu = document.getElementById("sideMenu");
+    const menuOverlay = document.getElementById("menuOverlay");
+
+    function openMenu() {
+      sideMenu.classList.add("open");
+      menuOverlay.classList.add("active");
+      document.body.classList.add("menu-open");
+    }
+
+    function closeSideMenu() {
+      sideMenu.classList.remove("open");
+      menuOverlay.classList.remove("active");
+      document.body.classList.remove("menu-open");
+    }
+
+    menuButton.addEventListener("click", openMenu);
+    closeMenu.addEventListener("click", closeSideMenu);
+    menuOverlay.addEventListener("click", closeSideMenu);
+
+  </script>
+
+</body>
+</html>

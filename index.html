@@ -3,21 +3,303 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>Wavynum — Virtual Numbers</title>
 
-    <title>Wavynum</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>Wavynum</h1>
+    <!-- Navigation -->
+    <header class="navbar">
 
-    <p>Virtual numbers made simple.</p>
+        <a href="#" class="logo">
+            Wavynum
+        </a>
 
-    <button>Get Started</button>
+        <nav class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#support">Support</a>
+            <a href="login.html" class="login-link">Log in</a>
+            <a href="signup.html" class="nav-button">Get Started</a>
+        </nav>
+
+        <button class="mobile-menu" onclick="toggleMenu()">
+            ☰
+        </button>
+
+    </header>
+
+
+    <!-- Mobile navigation -->
+    <div class="mobile-nav" id="mobileNav">
+
+        <a href="#services">Services</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#support">Support</a>
+        <a href="login.html">Log in</a>
+        <a href="signup.html" class="mobile-start">Get Started</a>
+
+    </div>
+
+
+    <!-- Hero -->
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                <span></span>
+                Secure virtual numbers
+            </div>
+
+            <h1>
+                Virtual numbers
+                <br>
+                <span>made simple.</span>
+            </h1>
+
+            <p class="hero-text">
+                Get access to virtual phone numbers for SMS verification,
+                online services and more — all from one simple platform.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="signup.html" class="primary-button">
+                    Get started
+                    <span>→</span>
+                </a>
+
+                <a href="#how-it-works" class="secondary-button">
+                    Learn how it works
+                </a>
+
+            </div>
+
+            <div class="trusted-text">
+                Simple • Fast • Private
+            </div>
+
+        </section>
+
+
+        <!-- Services -->
+        <section class="services-section" id="services">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    SERVICES
+                </span>
+
+                <h2>
+                    One platform for your
+                    <span>verification needs.</span>
+                </h2>
+
+                <p>
+                    Choose a service, select an available number,
+                    and manage your messages from your dashboard.
+                </p>
+
+            </div>
+
+
+            <div class="service-grid">
+
+                <div class="service-card">
+
+                    <div class="service-icon instagram">
+                        ◎
+                    </div>
+
+                    <div>
+                        <h3>Social platforms</h3>
+                        <p>
+                            Numbers for supported social platforms
+                            and online services.
+                        </p>
+                    </div>
+
+                    <span class="arrow">→</span>
+
+                </div>
+
+
+                <div class="service-card">
+
+                    <div class="service-icon messaging">
+                        ✉
+                    </div>
+
+                    <div>
+                        <h3>SMS verification</h3>
+                        <p>
+                            Receive supported verification messages
+                            directly in your private inbox.
+                        </p>
+                    </div>
+
+                    <span class="arrow">→</span>
+
+                </div>
+
+
+                <div class="service-card">
+
+                    <div class="service-icon business">
+                        ◈
+                    </div>
+
+                    <div>
+                        <h3>Online services</h3>
+                        <p>
+                            Access numbers for supported websites
+                            and applications.
+                        </p>
+                    </div>
+
+                    <span class="arrow">→</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- How it works -->
+        <section class="how-section" id="how-it-works">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    HOW IT WORKS
+                </span>
+
+                <h2>
+                    Three simple steps.
+                </h2>
+
+            </div>
+
+
+            <div class="steps">
+
+                <div class="step">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <h3>Choose a service</h3>
+
+                    <p>
+                        Select the service you need a number for.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <h3>Get a number</h3>
+
+                    <p>
+                        Select an available number and reserve it
+                        to your account.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <h3>Receive messages</h3>
+
+                    <p>
+                        Supported incoming SMS messages appear
+                        in your private inbox.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CTA -->
+        <section class="cta-section">
+
+            <div>
+
+                <span class="section-label">
+                    READY?
+                </span>
+
+                <h2>
+                    Start using Wavynum.
+                </h2>
+
+                <p>
+                    Create your account and explore available services.
+                </p>
+
+            </div>
+
+            <a href="signup.html" class="cta-button">
+                Create account →
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer id="support">
+
+        <div class="footer-logo">
+            Wavynum
+        </div>
+
+        <p>
+            © 2026 Wavynum. All rights reserved.
+        </p>
+
+        <div class="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Support</a>
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        function toggleMenu() {
+
+            const menu = document.getElementById("mobileNav");
+
+            menu.classList.toggle("active");
+
+        }
+
+    </script>
 
 </body>
 

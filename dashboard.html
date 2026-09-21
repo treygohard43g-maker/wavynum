@@ -6,7 +6,7 @@
 
   <title>Dashboard — Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 
   <link
     rel="stylesheet"
@@ -69,7 +69,8 @@
         <span>SMS Inbox</span>
       </a>
 
-      <a href="#" class="side-link">
+      <!-- BUY NUMBER -->
+      <a href="buy-number.html" class="side-link">
         <i class="fa-solid fa-cart-shopping"></i>
         <span>Buy Number</span>
       </a>
@@ -84,7 +85,7 @@
         <span>Transactions</span>
       </a>
 
-      <a href="#" class="side-link">
+      <a href="add-funds.html" class="side-link">
         <i class="fa-solid fa-circle-plus"></i>
         <span>Add Funds</span>
       </a>
@@ -123,6 +124,7 @@
   <!-- Main Dashboard -->
   <main class="dashboard-main">
 
+    <!-- Welcome -->
     <section class="dashboard-welcome">
 
       <div>
@@ -196,16 +198,19 @@
     <section class="dashboard-section">
 
       <div class="section-title-row">
+
         <div>
           <p class="dashboard-eyebrow">QUICK ACCESS</p>
           <h2>What do you want to do?</h2>
         </div>
+
       </div>
 
 
       <div class="quick-actions">
 
-        <a href="#" class="quick-action-card">
+        <!-- BUY NUMBER -->
+        <a href="buy-number.html" class="quick-action-card">
 
           <div class="quick-action-icon">
             <i class="fa-solid fa-cart-shopping"></i>
@@ -221,6 +226,7 @@
         </a>
 
 
+        <!-- ADD FUNDS -->
         <a href="add-funds.html" class="quick-action-card">
 
           <div class="quick-action-icon">
@@ -237,6 +243,7 @@
         </a>
 
 
+        <!-- SMS INBOX -->
         <a href="#" class="quick-action-card">
 
           <div class="quick-action-icon">
@@ -391,6 +398,7 @@
   </main>
 
 
+  <!-- Menu Script -->
   <script>
 
     const menuButton = document.getElementById("menuButton");
@@ -415,6 +423,10 @@
     menuOverlay.addEventListener("click", closeSideMenu);
 
   </script>
-<script type="module" src="dashboard.js?v=2"></script>
+
+
+  <!-- Firebase Dashboard Logic -->
+  <script type="module" src="dashboard.js?v=2"></script>
+
 </body>
 </html>

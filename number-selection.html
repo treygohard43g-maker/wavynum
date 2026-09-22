@@ -6,7 +6,7 @@
 
   <title>Select Number — Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 
   <link
     rel="stylesheet"
@@ -247,7 +247,24 @@
 
 
     /* =========================================
-       SERVICE TITLE
+       NORMALIZE SERVICE NAME
+    ========================================= */
+
+    function normalizeService(value) {
+
+      return String(value || "")
+        .trim()
+        .toLowerCase();
+
+    }
+
+
+    const selectedService =
+      normalizeService(service);
+
+
+    /* =========================================
+       PAGE TITLE
     ========================================= */
 
     serviceTitle.textContent =
@@ -290,14 +307,14 @@
           IMPORTANT:
 
           Your Firestore collection
-          is called "number"
+          is "numbers" — PLURAL.
         */
 
         const snapshot =
           await getDocs(
             collection(
               db,
-              "number"
+              "numbers"
             )
           );
 
@@ -312,46 +329,92 @@
               docSnapshot.data();
 
 
-            /*
-              Only display numbers
-              whose status is available.
-            */
+            /* ---------------------------------
+               ONLY AVAILABLE NUMBERS
+            --------------------------------- */
 
             if (
-              data.status &&
+              !data.status ||
               String(
                 data.status
-              ).toLowerCase() ===
+              ).trim().toLowerCase() !==
               "available"
             ) {
 
-              numbers.push({
-
-                id:
-                  docSnapshot.id,
-
-                number:
-                  data.number || "",
-
-                country:
-                  data.country || "",
-
-                countryName:
-                  data.countryName ||
-                  "Unknown",
-
-                price:
-                  Number(
-                    data.price
-                  ) || 0,
-
-                provider:
-                  data.provider ||
-                  "Provider"
-
-              });
+              return;
 
             }
+
+
+            /* ---------------------------------
+               SERVICES ARRAY
+            --------------------------------- */
+
+            const services =
+              Array.isArray(
+                data.services
+              )
+                ? data.services
+                : [];
+
+
+            /*
+              Check whether this number
+              supports the selected service.
+            */
+
+            const supportsService =
+              services.some(
+                item =>
+                  normalizeService(item) ===
+                  selectedService
+              );
+
+
+            /*
+              If the number is not assigned
+              to this service, don't display it.
+            */
+
+            if (!supportsService) {
+
+              return;
+
+            }
+
+
+            /* ---------------------------------
+               SAVE NUMBER
+            --------------------------------- */
+
+            numbers.push({
+
+              id:
+                docSnapshot.id,
+
+              number:
+                data.number || "",
+
+              country:
+                data.country || "",
+
+              countryName:
+                data.countryName ||
+                "Unknown",
+
+              price:
+                Number(
+                  data.price
+                ) || 0,
+
+              provider:
+                data.provider ||
+                "Provider",
+
+              services:
+                services
+
+            });
 
           }
         );
@@ -411,8 +474,12 @@
           ? numbers
           : numbers.filter(
               item =>
-                item.country ===
-                country
+                String(
+                  item.country
+                ).trim().toUpperCase() ===
+                String(
+                  country
+                ).trim().toUpperCase()
             );
 
 
@@ -437,7 +504,7 @@
             <p>
               There are currently no
               available numbers for
-              this country.
+              ${escapeHtml(service)}.
             </p>
 
           </div>
@@ -600,11 +667,6 @@
       };
 
 
-      /*
-        Save selected number
-        for the confirmation page.
-      */
-
       localStorage.setItem(
         "wavynumSelectedNumber",
         JSON.stringify(
@@ -612,10 +674,6 @@
         )
       );
 
-
-      /*
-        Continue to confirmation.
-      */
 
       window.location.href =
         "number-confirmation.html";

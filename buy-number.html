@@ -4,77 +4,339 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Buy a Number — Wavynum</title>
+  <title>Buy a Number - Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=9">
 
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   >
+
+  <style>
+    /* =========================================
+       WAVYNUM BUY NUMBER
+       ========================================= */
+
+    .numbers-main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 25px 24px 70px;
+    }
+
+    .numbers-header {
+      margin-bottom: 28px;
+    }
+
+    .numbers-header h1 {
+      margin: 0 0 8px;
+      color: #f0fff7;
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    .numbers-header p {
+      margin: 0;
+      color: #899890;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .marketplace-heading {
+      margin: 0 0 18px;
+      color: #dff9eb;
+      font-size: 19px;
+      font-weight: 750;
+    }
+
+    .service-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* =========================================
+       SERVICE CARD
+       ========================================= */
+
+    .service-number-card {
+      width: 100%;
+      min-height: 142px;
+      box-sizing: border-box;
+
+      display: flex;
+      align-items: center;
+
+      padding: 20px 24px;
+
+      background: #08130e;
+      border: 1px solid rgba(24, 215, 101, 0.22);
+      border-radius: 28px;
+
+      text-decoration: none;
+
+      transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+    }
+
+    .service-number-card:hover {
+      transform: translateY(-3px);
+      background: #0a1811;
+      border-color: rgba(24, 215, 101, .55);
+      box-shadow: 0 12px 30px rgba(0,0,0,.22);
+    }
+
+    /* =========================================
+       REAL BRAND / APP ICON
+       ========================================= */
+
+    .service-brand-icon {
+      width: 100px;
+      height: 100px;
+      min-width: 100px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 24px;
+
+      background: #101a15;
+      border: 1px solid rgba(24, 215, 101, .30);
+
+      overflow: hidden;
+    }
+
+    .service-brand-icon img {
+      width: 72px;
+      height: 72px;
+
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Services whose official icon looks better larger */
+    .service-brand-icon.large-logo img {
+      width: 78px;
+      height: 78px;
+    }
+
+    .service-card-info {
+      flex: 1;
+      min-width: 0;
+      margin-left: 30px;
+    }
+
+    .service-card-info h3 {
+      margin: 0 0 7px;
+
+      color: #ecfff5;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .service-card-info p {
+      margin: 0;
+
+      color: #83938b;
+      font-size: 17px;
+      line-height: 1.4;
+    }
+
+    .service-card-action {
+      margin-left: 18px;
+      flex-shrink: 0;
+
+      color: #74837c;
+      font-size: 26px;
+    }
+
+    /* =========================================
+       NOTICE
+       ========================================= */
+
+    .number-notice {
+      margin-top: 32px;
+      padding: 24px;
+
+      background: #08130e;
+      border: 1px solid rgba(24, 215, 101, .18);
+      border-radius: 25px;
+    }
+
+    .number-notice h3 {
+      margin: 0 0 10px;
+      color: #dff9eb;
+      font-size: 20px;
+    }
+
+    .number-notice p {
+      margin: 0;
+      color: #7e8e86;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .demo-notice {
+      margin-top: 18px;
+      padding: 18px 20px;
+
+      border-radius: 20px;
+      background: rgba(24, 215, 101, .06);
+      border: 1px solid rgba(24, 215, 101, .12);
+
+      color: #789087;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* =========================================
+       MOBILE
+       ========================================= */
+
+    @media (max-width: 600px) {
+
+      .numbers-main {
+        padding: 18px 24px 60px;
+      }
+
+      .numbers-header h1 {
+        font-size: 29px;
+      }
+
+      .numbers-header p {
+        font-size: 15px;
+      }
+
+      .service-number-card {
+        min-height: 126px;
+        padding: 18px;
+        border-radius: 25px;
+      }
+
+      .service-brand-icon {
+        width: 100px;
+        height: 100px;
+        min-width: 100px;
+        border-radius: 23px;
+      }
+
+      .service-brand-icon img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .service-card-info {
+        margin-left: 28px;
+      }
+
+      .service-card-info h3 {
+        font-size: 23px;
+      }
+
+      .service-card-info p {
+        font-size: 16px;
+      }
+
+      .service-card-action {
+        font-size: 23px;
+      }
+    }
+
+    @media (max-width: 420px) {
+
+      .service-number-card {
+        padding: 16px;
+      }
+
+      .service-brand-icon {
+        width: 88px;
+        height: 88px;
+        min-width: 88px;
+      }
+
+      .service-brand-icon img {
+        width: 62px;
+        height: 62px;
+      }
+
+      .service-card-info {
+        margin-left: 20px;
+      }
+
+      .service-card-info h3 {
+        font-size: 20px;
+      }
+
+      .service-card-info p {
+        font-size: 14px;
+      }
+
+      .service-card-action {
+        font-size: 20px;
+      }
+    }
+  </style>
 </head>
 
-<body class="dashboard-page">
+<body>
 
+  <!-- HEADER -->
   <header class="dashboard-header">
 
     <a href="dashboard.html" class="dashboard-logo">
       Wavynum
     </a>
 
-    <a href="dashboard.html" class="back-button" aria-label="Back to dashboard">
+    <a
+      href="dashboard.html"
+      class="back-button"
+      aria-label="Back to dashboard"
+    >
       <i class="fa-solid fa-arrow-left"></i>
     </a>
 
   </header>
 
+
+  <!-- MAIN -->
   <main class="numbers-main">
 
-    <section class="numbers-header">
+    <div class="numbers-header">
 
-      <p class="dashboard-eyebrow">
-        VIRTUAL NUMBERS
-      </p>
-
-      <h1>
-        Buy a number
-      </h1>
+      <h1>Buy a number</h1>
 
       <p>
-        Choose a service to view available virtual numbers and prices.
+        Choose the service you need a virtual number for.
       </p>
 
-    </section>
+    </div>
+
+
+    <h2 class="marketplace-heading">
+      Available services
+    </h2>
 
 
     <section class="service-marketplace">
 
-      <div class="marketplace-heading">
-
-        <div>
-          <p class="dashboard-eyebrow">
-            SERVICES
-          </p>
-
-          <h2>
-            Choose a service
-          </h2>
-        </div>
-
-      </div>
-
-
       <div class="service-grid">
 
 
-        <!-- Facebook -->
+        <!-- FACEBOOK -->
         <a
           href="number-selection.html?service=Facebook"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon facebook-brand">
-            <i class="fa-brands fa-facebook-f"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/facebook.com/w/256/h/256"
+              alt="Facebook"
+            >
           </div>
 
           <div class="service-card-info">
@@ -83,21 +345,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- WhatsApp -->
+        <!-- WHATSAPP -->
         <a
           href="number-selection.html?service=WhatsApp"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon whatsapp-brand">
-            <i class="fa-brands fa-whatsapp"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/whatsapp.com/w/256/h/256"
+              alt="WhatsApp"
+            >
           </div>
 
           <div class="service-card-info">
@@ -106,21 +370,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- Snapchat -->
+        <!-- SNAPCHAT -->
         <a
           href="number-selection.html?service=Snapchat"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon snapchat-brand">
-            <i class="fa-brands fa-snapchat"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/snapchat.com/w/256/h/256"
+              alt="Snapchat"
+            >
           </div>
 
           <div class="service-card-info">
@@ -129,21 +395,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- Instagram -->
+        <!-- INSTAGRAM -->
         <a
           href="number-selection.html?service=Instagram"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon instagram-brand">
-            <i class="fa-brands fa-instagram"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/instagram.com/w/256/h/256"
+              alt="Instagram"
+            >
           </div>
 
           <div class="service-card-info">
@@ -152,21 +420,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- Telegram -->
+        <!-- TELEGRAM -->
         <a
           href="number-selection.html?service=Telegram"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon telegram-brand">
-            <i class="fa-brands fa-telegram"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/telegram.org/w/256/h/256"
+              alt="Telegram"
+            >
           </div>
 
           <div class="service-card-info">
@@ -175,21 +445,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- Google Voice -->
+        <!-- GOOGLE VOICE -->
         <a
           href="number-selection.html?service=Google%20Voice"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon googlevoice-brand">
-            <i class="fa-solid fa-phone"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/voice.google.com/w/256/h/256"
+              alt="Google Voice"
+            >
           </div>
 
           <div class="service-card-info">
@@ -198,21 +470,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- TextPlus -->
+        <!-- TEXTPLUS -->
         <a
           href="number-selection.html?service=TextPlus"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon textplus-brand">
-            <span>+</span>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/textplus.com/w/256/h/256"
+              alt="TextPlus"
+            >
           </div>
 
           <div class="service-card-info">
@@ -221,21 +495,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- TextNow -->
+        <!-- TEXTNOW -->
         <a
           href="number-selection.html?service=TextNow"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon textnow-brand">
-            <span>TN</span>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/textnow.com/w/256/h/256"
+              alt="TextNow"
+            >
           </div>
 
           <div class="service-card-info">
@@ -244,21 +520,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- TextFree -->
+        <!-- TEXTFREE -->
         <a
           href="number-selection.html?service=TextFree"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon textfree-brand">
-            <i class="fa-solid fa-comment-sms"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/textfree.us/w/256/h/256"
+              alt="TextFree"
+            >
           </div>
 
           <div class="service-card-info">
@@ -267,21 +545,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- Hushed -->
+        <!-- HUSHED -->
         <a
           href="number-selection.html?service=Hushed"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon hushed-brand">
-            <i class="fa-solid fa-volume-xmark"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/hushed.com/w/256/h/256"
+              alt="Hushed"
+            >
           </div>
 
           <div class="service-card-info">
@@ -290,21 +570,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- Burner -->
+        <!-- BURNER -->
         <a
           href="number-selection.html?service=Burner"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon burner-brand">
-            <i class="fa-solid fa-fire-flame-simple"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/burnerapp.com/w/256/h/256"
+              alt="Burner"
+            >
           </div>
 
           <div class="service-card-info">
@@ -313,21 +595,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- 2ndLine -->
+        <!-- 2NDLINE -->
         <a
           href="number-selection.html?service=2ndLine"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon secondline-brand">
-            <i class="fa-solid fa-phone-volume"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/2ndline.co/w/256/h/256"
+              alt="2ndLine"
+            >
           </div>
 
           <div class="service-card-info">
@@ -336,21 +620,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- FreeTone -->
+        <!-- FREETONE -->
         <a
           href="number-selection.html?service=FreeTone"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon freetone-brand">
-            <i class="fa-solid fa-phone"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/freetoneapp.com/w/256/h/256"
+              alt="FreeTone"
+            >
           </div>
 
           <div class="service-card-info">
@@ -359,21 +645,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- CoverMe -->
+        <!-- COVERME -->
         <a
           href="number-selection.html?service=CoverMe"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon coverme-brand">
-            <i class="fa-solid fa-shield-halved"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/coverme.ws/w/256/h/256"
+              alt="CoverMe"
+            >
           </div>
 
           <div class="service-card-info">
@@ -382,21 +670,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- Numero -->
+        <!-- NUMERO -->
         <a
           href="number-selection.html?service=Numero"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon numero-brand">
-            <i class="fa-solid fa-sim-card"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/numeroesim.com/w/256/h/256"
+              alt="Numero"
+            >
           </div>
 
           <div class="service-card-info">
@@ -405,21 +695,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- MySudo -->
+        <!-- MYSUDO -->
         <a
           href="number-selection.html?service=MySudo"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon mysudo-brand">
-            <i class="fa-solid fa-user-shield"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/mysudo.com/w/256/h/256"
+              alt="MySudo"
+            >
           </div>
 
           <div class="service-card-info">
@@ -428,21 +720,23 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- X / Twitter -->
+        <!-- TWITTER / X -->
         <a
           href="number-selection.html?service=Twitter"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon x-brand">
-            <i class="fa-brands fa-x-twitter"></i>
+          <div class="service-brand-icon large-logo">
+            <img
+              src="https://cdn.brandfetch.io/x.com/w/256/h/256"
+              alt="X"
+            >
           </div>
 
           <div class="service-card-info">
@@ -451,21 +745,25 @@
           </div>
 
           <div class="service-card-action">
-            <span>Choose number</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
         </a>
 
 
-        <!-- Other number services -->
+        <!-- OTHER -->
         <a
           href="number-selection.html?service=Other"
           class="service-number-card"
         >
 
-          <div class="service-brand-icon other-brand">
-            <i class="fa-solid fa-layer-group"></i>
+          <div class="service-brand-icon">
+
+            <i
+              class="fa-solid fa-layer-group"
+              style="font-size:48px;color:#18d765;"
+            ></i>
+
           </div>
 
           <div class="service-card-info">
@@ -474,7 +772,6 @@
           </div>
 
           <div class="service-card-action">
-            <span>Browse</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
 
@@ -486,47 +783,28 @@
     </section>
 
 
-    <section class="number-notice">
+    <!-- SERVICE COMPATIBILITY -->
+    <div class="number-notice">
 
-      <div class="number-notice-icon">
-        <i class="fa-solid fa-shield-halved"></i>
-      </div>
+      <h3>Service compatibility</h3>
 
-      <div>
+      <p>
+        Number availability and acceptance can vary by service.
+        Wavynum will show available inventory for the service
+        you select.
+      </p>
 
-        <strong>
-          Service compatibility
-        </strong>
-
-        <p>
-          Number availability and acceptance can vary by service.
-          Wavynum will show available inventory before purchase.
-        </p>
-
-      </div>
-
-    </section>
+    </div>
 
 
-    <section class="demo-notice">
+    <!-- DEMO NOTICE -->
+    <div class="demo-notice">
 
-      <i class="fa-solid fa-circle-info"></i>
+      Number availability shown on this page is currently
+      simulated. Real number inventory can be connected later
+      through an authorized number provider.
 
-      <div>
-
-        <strong>
-          Development mode
-        </strong>
-
-        <p>
-          Number inventory is currently simulated. Authorized
-          number providers will be connected later.
-        </p>
-
-      </div>
-
-    </section>
-
+    </div>
 
   </main>
 

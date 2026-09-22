@@ -14,190 +14,338 @@
   >
 
   <style>
-    /* ================================
-       WAVYNUM CONFIRMATION PAGE
-       ================================ */
+    /* =========================
+       WAVYNUM CONFIRMATION
+    ========================= */
+
+    .confirmation-page {
+      min-height: 100vh;
+      background: #050806;
+      color: #f0fdf4;
+    }
 
     .confirmation-main {
-      width: min(100%, 720px);
+      width: 100%;
+      max-width: 760px;
       margin: 0 auto;
-      padding: 28px 18px 60px;
+      padding: 55px 20px 80px;
     }
 
     .confirmation-header {
-      margin-bottom: 22px;
+      margin-bottom: 30px;
+    }
+
+    .confirmation-header .dashboard-eyebrow {
+      color: #39e86f;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.7px;
     }
 
     .confirmation-header h1 {
-      margin: 4px 0 8px;
+      margin-top: 10px;
+      color: #ecfdf3;
+      font-size: clamp(32px, 6vw, 46px);
+      line-height: 1.08;
+      letter-spacing: -2px;
     }
 
-    .confirmation-header .dashboard-subtitle {
-      margin: 0;
+    .confirmation-header p:last-child {
+      margin-top: 13px;
+      color: #78857d;
+      font-size: 15px;
     }
 
-    .purchase-card {
-      background: rgba(255,255,255,0.055);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 24px;
-      padding: 18px;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.18);
-      backdrop-filter: blur(12px);
+    /* MAIN CARD */
+
+    .confirmation-card {
+      background:
+        linear-gradient(
+          145deg,
+          #0c140f,
+          #080d0a
+        );
+
+      border: 1px solid rgba(34, 197, 94, 0.14);
+
+      border-radius: 22px;
+
+      padding: 25px;
+
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.30);
     }
+
+    /* SERVICE */
 
     .service-row {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      gap: 15px;
+
+      padding-bottom: 22px;
+
+      border-bottom:
+        1px solid rgba(34, 197, 94, 0.10);
     }
 
     .service-icon {
-      width: 52px;
-      height: 52px;
-      min-width: 52px;
-      border-radius: 16px;
+      width: 54px;
+      height: 54px;
+
+      flex-shrink: 0;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      font-size: 20px;
+
+      border-radius: 14px;
+
+      background:
+        rgba(34, 197, 94, 0.09);
+
+      border:
+        1px solid rgba(34, 197, 94, 0.16);
+
+      color: #39e86f;
+
+      font-size: 21px;
     }
 
     .service-info h2 {
-      margin: 0 0 4px;
-      font-size: 18px;
+      color: #ecfdf3;
+      font-size: 19px;
+      margin-bottom: 3px;
     }
 
     .service-info p {
-      margin: 0;
-      opacity: .65;
+      color: #78857d;
       font-size: 13px;
     }
 
+    /* NUMBER */
+
     .selected-number {
       text-align: center;
-      padding: 28px 10px;
+
+      padding: 34px 10px;
     }
 
     .selected-number-label {
       display: block;
-      font-size: 12px;
-      opacity: .55;
+
       margin-bottom: 9px;
+
+      color: #58645b;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      letter-spacing: 1.5px;
+
       text-transform: uppercase;
-      letter-spacing: .08em;
     }
 
     .selected-number strong {
-      font-size: clamp(23px, 7vw, 31px);
-      letter-spacing: .3px;
+      display: block;
+
+      color: #39e86f;
+
+      font-size: clamp(25px, 7vw, 34px);
+
+      font-weight: 800;
+
+      letter-spacing: -0.5px;
     }
 
+    /* DETAILS */
+
     .details-box {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 8px;
+      padding-top: 5px;
+
+      border-top:
+        1px solid rgba(34, 197, 94, 0.10);
     }
 
     .detail-row {
       display: flex;
-      justify-content: space-between;
+
       align-items: center;
+      justify-content: space-between;
+
       gap: 20px;
-      padding: 12px 2px;
-      font-size: 14px;
+
+      padding: 14px 2px;
+
+      border-bottom:
+        1px solid rgba(34, 197, 94, 0.06);
     }
 
     .detail-row span {
-      opacity: .58;
+      color: #78857d;
+      font-size: 14px;
     }
 
     .detail-row strong {
+      color: #ecfdf3;
+      font-size: 14px;
       text-align: right;
     }
 
+    .detail-row:last-child strong {
+      color: #39e86f;
+      font-size: 17px;
+    }
+
+    /* WALLET */
+
     .wallet-card {
-      margin-top: 14px;
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.065);
-      border: 1px solid rgba(255,255,255,0.08);
+      margin-top: 20px;
+
+      padding: 18px;
+
+      background:
+        rgba(34, 197, 94, 0.055);
+
+      border:
+        1px solid rgba(34, 197, 94, 0.14);
+
+      border-radius: 16px;
     }
 
     .wallet-card-top {
       display: flex;
-      justify-content: space-between;
+
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
+
+      gap: 15px;
     }
 
     .wallet-label {
-      font-size: 12px;
-      opacity: .58;
+      color: #78857d;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      letter-spacing: 1.2px;
+
       text-transform: uppercase;
-      letter-spacing: .06em;
     }
 
     .wallet-amount {
-      font-size: 22px;
-      font-weight: 800;
       margin-top: 5px;
+
+      color: #39e86f;
+
+      font-size: 24px;
+
+      font-weight: 800;
     }
 
     .wallet-icon-small {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
+      width: 42px;
+      height: 42px;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.08);
+
+      border-radius: 12px;
+
+      background:
+        rgba(34, 197, 94, 0.10);
+
+      border:
+        1px solid rgba(34, 197, 94, 0.14);
+
+      color: #39e86f;
     }
+
+    /* BUY BUTTON */
 
     .buy-button {
       width: 100%;
-      margin-top: 16px;
-      border: 0;
-      border-radius: 16px;
-      padding: 16px;
-      background: #fff;
-      color: #111;
+
+      margin-top: 20px;
+
+      padding: 15px;
+
+      border: none;
+
+      border-radius: 11px;
+
+      background: #22c55e;
+
+      color: #031108;
+
       font-size: 15px;
+
       font-weight: 800;
+
       cursor: pointer;
-      transition: transform .18s ease, opacity .18s ease;
+
+      box-shadow:
+        0 8px 25px rgba(34, 197, 94, 0.14);
+
+      transition: .2s ease;
     }
 
-    .buy-button:active {
-      transform: scale(.98);
+    .buy-button:hover {
+      background: #39e86f;
+
+      transform: translateY(-2px);
     }
 
     .buy-button:disabled {
       opacity: .55;
+
       cursor: not-allowed;
+
+      transform: none;
     }
+
+    /* BACK */
 
     .back-link {
       display: flex;
+
       justify-content: center;
       align-items: center;
+
       gap: 7px;
-      margin-top: 17px;
-      color: inherit;
-      opacity: .62;
+
+      margin-top: 20px;
+
+      color: #68756c;
+
       text-decoration: none;
+
       font-size: 13px;
+
+      transition: .2s ease;
     }
+
+    .back-link:hover {
+      color: #39e86f;
+    }
+
+    /* MESSAGE */
 
     .message {
       display: none;
-      margin-top: 14px;
+
+      margin-top: 15px;
+
       padding: 13px 14px;
-      border-radius: 14px;
+
+      border-radius: 11px;
+
       font-size: 13px;
-      line-height: 1.4;
+
+      line-height: 1.5;
     }
 
     .message.show {
@@ -205,41 +353,94 @@
     }
 
     .message.error {
-      background: rgba(220,38,38,.13);
-      border: 1px solid rgba(220,38,38,.2);
+      background: rgba(220, 38, 38, .10);
+
+      border:
+        1px solid rgba(220, 38, 38, .20);
+
       color: #ff9b9b;
     }
 
     .message.success {
-      background: rgba(34,197,94,.12);
-      border: 1px solid rgba(34,197,94,.2);
-      color: #8ff0ad;
+      background:
+        rgba(34, 197, 94, .09);
+
+      border:
+        1px solid rgba(34, 197, 94, .20);
+
+      color: #86efac;
     }
 
+    /* LOADING */
+
     .loading {
+      padding: 60px 20px;
+
       text-align: center;
-      padding: 45px 15px;
-      opacity: .6;
+
+      color: #78857d;
     }
 
     .loading i {
-      font-size: 24px;
-      margin-bottom: 10px;
+      display: block;
+
+      margin-bottom: 12px;
+
+      color: #39e86f;
+
+      font-size: 23px;
     }
 
-    @media (max-width: 430px) {
+    /* MOBILE */
+
+    @media (max-width: 750px) {
 
       .confirmation-main {
-        padding: 22px 14px 45px;
+        padding:
+          35px
+          16px
+          60px;
       }
 
-      .purchase-card {
-        padding: 15px;
-        border-radius: 21px;
+      .confirmation-header {
+        margin-bottom: 23px;
+      }
+
+      .confirmation-header h1 {
+        font-size: 34px;
+        letter-spacing: -1.5px;
+      }
+
+      .confirmation-card {
+        padding: 18px;
+
+        border-radius: 18px;
       }
 
       .selected-number {
-        padding: 24px 6px;
+        padding: 28px 5px;
+      }
+
+      .selected-number strong {
+        font-size: 25px;
+      }
+
+    }
+
+    @media (max-width: 380px) {
+
+      .confirmation-main {
+        padding-left: 13px;
+        padding-right: 13px;
+      }
+
+      .confirmation-card {
+        padding: 15px;
+      }
+
+      .service-icon {
+        width: 48px;
+        height: 48px;
       }
 
       .detail-row {
@@ -247,19 +448,25 @@
       }
 
       .wallet-amount {
-        font-size: 20px;
+        font-size: 21px;
       }
 
     }
   </style>
 </head>
 
-<body class="dashboard-page">
+
+<body class="confirmation-page dashboard-page">
+
 
   <!-- HEADER -->
+
   <header class="dashboard-header">
 
-    <a href="buy-number.html" class="dashboard-logo">
+    <a
+      href="buy-number.html"
+      class="dashboard-logo"
+    >
       Wavynum
     </a>
 
@@ -275,7 +482,11 @@
 
 
   <!-- MAIN -->
+
   <main class="confirmation-main">
+
+
+    <!-- TITLE -->
 
     <section class="confirmation-header">
 
@@ -287,7 +498,7 @@
         Confirm your number
       </h1>
 
-      <p class="dashboard-subtitle">
+      <p>
         Review the details before completing your purchase.
       </p>
 
@@ -295,29 +506,36 @@
 
 
     <!-- LOADING -->
-    <div id="loadingState" class="loading">
+
+    <div
+      id="loadingState"
+      class="loading"
+    >
 
       <i class="fa-solid fa-spinner fa-spin"></i>
 
-      <div>
-        Loading purchase details...
-      </div>
+      Loading purchase details...
 
     </div>
 
 
-    <!-- PURCHASE CONTENT -->
+    <!-- CARD -->
+
     <section
       id="confirmationContent"
-      class="purchase-card"
+      class="confirmation-card"
       style="display:none;"
     >
 
+
       <!-- SERVICE -->
+
       <div class="service-row">
 
         <div class="service-icon">
+
           <i class="fa-solid fa-mobile-screen-button"></i>
+
         </div>
 
         <div class="service-info">
@@ -336,10 +554,11 @@
 
 
       <!-- NUMBER -->
+
       <div class="selected-number">
 
         <span class="selected-number-label">
-          Selected number
+          Selected Number
         </span>
 
         <strong id="phoneNumber">
@@ -350,6 +569,7 @@
 
 
       <!-- DETAILS -->
+
       <div class="details-box">
 
         <div class="detail-row">
@@ -394,6 +614,7 @@
 
 
       <!-- WALLET -->
+
       <div class="wallet-card">
 
         <div class="wallet-card-top">
@@ -405,8 +626,8 @@
             </div>
 
             <div
-              class="wallet-amount"
               id="walletBalance"
+              class="wallet-amount"
             >
               $0.00
             </div>
@@ -424,7 +645,8 @@
       </div>
 
 
-      <!-- BUY -->
+      <!-- PURCHASE -->
+
       <button
         type="button"
         id="buyButton"
@@ -435,6 +657,7 @@
 
 
       <!-- MESSAGE -->
+
       <div
         id="message"
         class="message"
@@ -442,20 +665,26 @@
 
 
       <!-- BACK -->
+
       <a
         href="number-selection.html"
         class="back-link"
       >
+
         <i class="fa-solid fa-arrow-left"></i>
+
         Choose another number
+
       </a>
+
 
     </section>
 
   </main>
 
 
-  <!-- FIREBASE / PURCHASE LOGIC -->
+  <!-- FIREBASE -->
+
   <script type="module">
 
     import { auth, db } from "./firebase.js";
@@ -474,51 +703,83 @@
 
 
     const selectedRaw =
-      localStorage.getItem("wavynumSelectedNumber");
+      localStorage.getItem(
+        "wavynumSelectedNumber"
+      );
 
 
     const loadingState =
-      document.getElementById("loadingState");
+      document.getElementById(
+        "loadingState"
+      );
 
     const confirmationContent =
-      document.getElementById("confirmationContent");
+      document.getElementById(
+        "confirmationContent"
+      );
 
     const serviceName =
-      document.getElementById("serviceName");
+      document.getElementById(
+        "serviceName"
+      );
 
     const countryName =
-      document.getElementById("countryName");
+      document.getElementById(
+        "countryName"
+      );
 
     const phoneNumber =
-      document.getElementById("phoneNumber");
+      document.getElementById(
+        "phoneNumber"
+      );
 
     const serviceDetail =
-      document.getElementById("serviceDetail");
+      document.getElementById(
+        "serviceDetail"
+      );
 
     const countryDetail =
-      document.getElementById("countryDetail");
+      document.getElementById(
+        "countryDetail"
+      );
 
     const priceDetail =
-      document.getElementById("priceDetail");
+      document.getElementById(
+        "priceDetail"
+      );
 
     const walletBalance =
-      document.getElementById("walletBalance");
+      document.getElementById(
+        "walletBalance"
+      );
 
     const buyButton =
-      document.getElementById("buyButton");
+      document.getElementById(
+        "buyButton"
+      );
 
     const message =
-      document.getElementById("message");
+      document.getElementById(
+        "message"
+      );
 
+
+    /* =========================
+       SELECTED NUMBER
+    ========================= */
 
     if (!selectedRaw) {
 
       loadingState.innerHTML = `
         <p>No number has been selected.</p>
-        <a href="buy-number.html">Return to Buy Number</a>
+        <a href="buy-number.html">
+          Return to Buy Number
+        </a>
       `;
 
-      throw new Error("No selected number");
+      throw new Error(
+        "No selected number"
+      );
 
     }
 
@@ -528,35 +789,53 @@
 
 
     const price =
-      Number(selectedNumber.price || 0);
+      Number(
+        selectedNumber.price || 0
+      );
 
 
     serviceName.textContent =
-      selectedNumber.service || "Service";
+      selectedNumber.service ||
+      "Service";
+
 
     countryName.textContent =
       selectedNumber.countryName ||
       selectedNumber.country ||
       "Country";
 
+
     phoneNumber.textContent =
-      selectedNumber.number || "—";
+      selectedNumber.number ||
+      "—";
+
 
     serviceDetail.textContent =
-      selectedNumber.service || "—";
+      selectedNumber.service ||
+      "—";
+
 
     countryDetail.textContent =
       selectedNumber.countryName ||
       selectedNumber.country ||
       "—";
 
+
     priceDetail.textContent =
       "$" + price.toFixed(2);
 
 
-    function showMessage(text, type) {
+    /* =========================
+       MESSAGES
+    ========================= */
 
-      message.textContent = text;
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent =
+        text;
 
       message.className =
         "message show " + type;
@@ -566,105 +845,130 @@
 
     function hideMessage() {
 
+      message.textContent =
+        "";
+
       message.className =
         "message";
 
-      message.textContent = "";
-
     }
 
 
-    function showWalletBalance(balance) {
+    function showWalletBalance(
+      balance
+    ) {
 
       walletBalance.textContent =
-        "$" + Number(balance).toFixed(2);
+        "$" +
+        Number(balance).toFixed(2);
 
     }
 
 
-    onAuthStateChanged(auth, async (user) => {
+    /* =========================
+       AUTH + WALLET
+    ========================= */
 
-      if (!user) {
+    onAuthStateChanged(
+      auth,
+      async (user) => {
 
-        window.location.href =
-          "login.html";
+        if (!user) {
 
-        return;
-
-      }
-
-
-      try {
-
-        const userRef =
-          doc(db, "users", user.uid);
-
-
-        const userSnapshot =
-          await getDoc(userRef);
-
-
-        if (!userSnapshot.exists()) {
-
-          loadingState.textContent =
-            "Your wallet account could not be found.";
+          window.location.href =
+            "login.html";
 
           return;
 
         }
 
 
-        const userData =
-          userSnapshot.data();
+        try {
+
+          const userRef =
+            doc(
+              db,
+              "users",
+              user.uid
+            );
 
 
-        /*
-          IMPORTANT:
-          Wavynum uses usdBalance.
-        */
+          const userSnapshot =
+            await getDoc(
+              userRef
+            );
 
-        const usd =
-          Number(
-            userData.usdBalance || 0
+
+          if (!userSnapshot.exists()) {
+
+            loadingState.textContent =
+              "Your wallet account could not be found.";
+
+            return;
+
+          }
+
+
+          const userData =
+            userSnapshot.data();
+
+
+          /* Wavynum USD field */
+
+          const usd =
+            Number(
+              userData.usdBalance || 0
+            );
+
+
+          showWalletBalance(
+            usd
           );
 
 
-        showWalletBalance(usd);
+          loadingState.style.display =
+            "none";
 
 
-        loadingState.style.display =
-          "none";
-
-        confirmationContent.style.display =
-          "block";
+          confirmationContent.style.display =
+            "block";
 
 
-        buyButton.addEventListener(
-          "click",
-          () => purchaseNumber(user)
-        );
+          buyButton.addEventListener(
+            "click",
+            () => purchaseNumber(user)
+          );
 
 
-      } catch (error) {
+        } catch (error) {
 
-        console.error(
-          "Wallet loading error:",
-          error
-        );
+          console.error(
+            "Wallet loading error:",
+            error
+          );
 
-        loadingState.textContent =
-          "Unable to load your wallet balance.";
+
+          loadingState.textContent =
+            "Unable to load your wallet balance.";
+
+        }
 
       }
+    );
 
-    });
 
+    /* =========================
+       PURCHASE
+    ========================= */
 
-    async function purchaseNumber(user) {
+    async function purchaseNumber(
+      user
+    ) {
 
       hideMessage();
 
-      buyButton.disabled = true;
+      buyButton.disabled =
+        true;
 
       buyButton.textContent =
         "Processing...";
@@ -682,7 +986,10 @@
 
         const numberId =
           selectedNumber.number
-            .replace(/\D/g, "");
+            .replace(
+              /\D/g,
+              ""
+            );
 
 
         const numberRef =
@@ -724,7 +1031,8 @@
         const otp =
           Math.floor(
             100000 +
-            Math.random() * 900000
+            Math.random() *
+            900000
           ).toString();
 
 
@@ -757,7 +1065,10 @@
               );
 
 
-            if (currentBalance < price) {
+            if (
+              currentBalance <
+              price
+            ) {
 
               throw new Error(
                 "Your USD wallet balance is too low for this purchase."
@@ -772,7 +1083,9 @@
               );
 
 
-            if (numberSnapshot.exists()) {
+            if (
+              numberSnapshot.exists()
+            ) {
 
               throw new Error(
                 "This number has already been purchased."
@@ -782,8 +1095,11 @@
 
 
             const newBalance =
-              currentBalance - price;
+              currentBalance -
+              price;
 
+
+            /* UPDATE USD */
 
             transaction.update(
               userRef,
@@ -794,9 +1110,12 @@
             );
 
 
+            /* INVENTORY */
+
             transaction.set(
               numberRef,
               {
+
                 number:
                   selectedNumber.number,
 
@@ -820,13 +1139,17 @@
 
                 soldAt:
                   serverTimestamp()
+
               }
             );
 
 
+            /* USER NUMBER */
+
             transaction.set(
               ownedNumberRef,
               {
+
                 number:
                   selectedNumber.number,
 
@@ -850,13 +1173,17 @@
 
                 purchasedAt:
                   serverTimestamp()
+
               }
             );
 
 
+            /* PURCHASE */
+
             transaction.set(
               purchaseRef,
               {
+
                 userId:
                   user.uid,
 
@@ -880,13 +1207,17 @@
 
                 purchasedAt:
                   serverTimestamp()
+
               }
             );
 
 
+            /* TRANSACTION */
+
             transaction.set(
               transactionRef,
               {
+
                 userId:
                   user.uid,
 
@@ -912,6 +1243,7 @@
 
                 createdAt:
                   serverTimestamp()
+
               }
             );
 
@@ -934,12 +1266,15 @@
           "Purchase Complete";
 
 
-        setTimeout(() => {
+        setTimeout(
+          () => {
 
-          window.location.href =
-            "my-numbers.html";
+            window.location.href =
+              "my-numbers.html";
 
-        }, 900);
+          },
+          900
+        );
 
 
       } catch (error) {

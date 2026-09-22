@@ -21,411 +21,300 @@
   >
 
   <style>
-
-    * {
-      box-sizing: border-box;
-    }
+    /*
+      Wavynum confirmation page
+      Green + black design
+    */
 
     body {
-      margin: 0;
-      background: #f5f7fb;
-      color: #111827;
-      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(
+          circle at top,
+          rgba(0, 255, 140, 0.08),
+          transparent 35%
+        ),
+        #020604;
+      color: #ffffff;
     }
 
-    .confirmation-page {
-      min-height: 100vh;
-      padding: 16px 12px 30px;
-    }
-
-    .confirmation-container {
+    .confirmation-main {
       width: 100%;
-      max-width: 650px;
+      max-width: 900px;
       margin: 0 auto;
+      padding: 22px 16px 40px;
     }
 
-    /* HEADER */
-
-    .top-bar {
+    .confirmation-header {
       display: flex;
       align-items: center;
-      gap: 11px;
-      margin-bottom: 15px;
+      gap: 14px;
+      margin-bottom: 22px;
     }
 
-    .back-btn {
-      width: 40px;
-      height: 40px;
-      border: 0;
-      border-radius: 12px;
-      background: #fff;
-      color: #111827;
-      box-shadow: 0 3px 12px rgba(0,0,0,.07);
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .title-area {
-      min-width: 0;
-    }
-
-    .page-title {
-      font-size: 20px;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-
-    .page-subtitle {
-      color: #6b7280;
-      font-size: 12px;
-      margin-top: 3px;
-    }
-
-    /* SERVICE */
-
-    .service-card {
-      background: #fff;
-      border-radius: 17px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      box-shadow: 0 5px 18px rgba(0,0,0,.06);
-      margin-bottom: 12px;
-    }
-
-    .service-logo {
+    .confirmation-back {
       width: 42px;
       height: 42px;
-      border-radius: 12px;
-      background: #f3f4f6;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 13px;
+      color: #ffffff;
+      text-decoration: none;
+      background: #08130e;
+      border: 1px solid rgba(0, 255, 140, 0.22);
+    }
+
+    .confirmation-header h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .confirmation-header p {
+      margin: 4px 0 0;
+      color: rgba(255,255,255,0.58);
+      font-size: 13px;
+    }
+
+    .confirmation-card {
+      width: 100%;
+      background: #08130e;
+      border: 1px solid rgba(0, 255, 140, 0.20);
+      border-radius: 18px;
       overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.28);
+    }
+
+    .confirmation-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 20px;
+      border-bottom: 1px solid rgba(0,255,140,0.10);
+    }
+
+    .number-label {
+      color: rgba(255,255,255,0.55);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      margin-bottom: 7px;
+    }
+
+    .actual-phone-number {
+      color: #ffffff;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      word-break: break-word;
+    }
+
+    .number-price {
+      text-align: right;
       flex-shrink: 0;
     }
 
-    .service-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      padding: 5px;
-    }
-
-    .service-logo i {
-      font-size: 20px;
-      color: #6b7280;
-    }
-
-    .service-name {
-      font-size: 16px;
+    .number-price-value {
+      color: #35e58a;
+      font-size: 21px;
       font-weight: 800;
     }
 
-    .service-description {
+    .number-price-label {
+      color: rgba(255,255,255,0.50);
       font-size: 11px;
-      color: #6b7280;
       margin-top: 2px;
     }
 
-    /* CONFIRMATION CARD */
-
-    .confirmation-card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 16px;
-      box-shadow: 0 5px 18px rgba(0,0,0,.06);
-      border: 1px solid #edf0f4;
-    }
-
-    .section-label {
-      color: #6b7280;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      font-weight: 800;
-      margin-bottom: 5px;
-    }
-
-    .actual-number {
-      font-size: 24px;
-      font-weight: 900;
-      color: #111827;
-      letter-spacing: .2px;
-      word-break: break-word;
-      line-height: 1.2;
-    }
-
-    /* DETAILS */
-
-    .details {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      margin-top: 17px;
+    .number-details {
+      padding: 5px 20px;
     }
 
     .detail-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 11px 12px;
-      background: #f8f9fb;
-      border-radius: 11px;
+      gap: 15px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .detail-left {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      min-width: 0;
-    }
-
-    .detail-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 9px;
-      background: #eef1f4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #374151;
-      flex-shrink: 0;
-    }
-
-    .detail-icon i {
-      font-size: 13px;
+    .detail-row:last-child {
+      border-bottom: none;
     }
 
     .detail-label {
-      color: #6b7280;
-      font-size: 10px;
+      color: rgba(255,255,255,0.58);
+      font-size: 13px;
+    }
+
+    .detail-label i {
+      width: 20px;
+      color: #35e58a;
+      margin-right: 4px;
     }
 
     .detail-value {
-      color: #111827;
-      font-size: 12px;
-      font-weight: 800;
-      text-align: right;
-      word-break: break-word;
-    }
-
-    /* PRICE */
-
-    .price-section {
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: 1px solid #edf0f4;
-    }
-
-    .price-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .total-label {
+      color: #ffffff;
       font-size: 13px;
-      color: #6b7280;
-      font-weight: 700;
-    }
-
-    .total-price {
-      font-size: 22px;
-      font-weight: 900;
-      color: #111827;
-    }
-
-    .usd-label {
-      font-size: 9px;
-      color: #9ca3af;
+      font-weight: 600;
       text-align: right;
-      margin-top: 1px;
     }
 
-    /* SECURITY */
-
-    .secure-box {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin-top: 13px;
-      padding: 10px 11px;
-      background: #f0fdf4;
-      border: 1px solid #dcfce7;
-      border-radius: 11px;
-      color: #15803d;
-      font-size: 11px;
-      line-height: 1.4;
+    .available {
+      color: #35e58a;
     }
 
-    .secure-box i {
-      font-size: 15px;
-      flex-shrink: 0;
+    .confirmation-action {
+      padding: 15px 20px 20px;
     }
 
-    /* BUTTON */
-
-    .confirm-btn {
+    .buy-button {
       width: 100%;
-      border: 0;
-      border-radius: 12px;
-      background: #111827;
-      color: #fff;
-      padding: 13px 14px;
-      margin-top: 14px;
+      border: none;
+      border-radius: 13px;
+      padding: 14px 16px;
+      background: #19b968;
+      color: #ffffff;
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 700;
       cursor: pointer;
+      transition: .2s ease;
     }
 
-    .confirm-btn:hover {
-      opacity: .94;
+    .buy-button:hover {
+      background: #21d477;
+      transform: translateY(-1px);
     }
 
-    .confirm-btn:active {
-      transform: scale(.99);
-    }
-
-    .confirm-btn:disabled {
+    .buy-button:disabled {
       opacity: .55;
       cursor: not-allowed;
+      transform: none;
     }
 
-    /* LOADING */
-
-    .loading {
-      background: #fff;
-      border-radius: 18px;
-      padding: 45px 20px;
-      text-align: center;
-      color: #6b7280;
-      box-shadow: 0 4px 16px rgba(0,0,0,.05);
-    }
-
-    .loading i {
-      font-size: 25px;
-      margin-bottom: 10px;
-    }
-
-    /* ERROR */
-
-    .error-box {
-      background: #fff1f2;
-      color: #be123c;
-      border: 1px solid #fecdd3;
-      border-radius: 14px;
-      padding: 14px;
+    .notice {
+      background: #08130e;
+      border: 1px solid rgba(0,255,140,0.18);
+      border-radius: 15px;
+      padding: 16px;
+      color: rgba(255,255,255,0.72);
       font-size: 13px;
-      line-height: 1.5;
+      margin-bottom: 15px;
     }
 
-    .error-box strong {
-      display: block;
-      margin-bottom: 5px;
+    .notice i {
+      color: #35e58a;
+      margin-right: 7px;
     }
 
-    /* SUCCESS */
+    .error-notice {
+      display: none;
+      border-color: rgba(255,80,80,0.25);
+    }
 
-    .success-box {
-      background: #fff;
-      border-radius: 18px;
-      padding: 30px 20px;
+    .error-notice i {
+      color: #ff6666;
+    }
+
+    .success-card {
+      display: none;
       text-align: center;
-      box-shadow: 0 5px 18px rgba(0,0,0,.06);
+      padding: 30px 20px;
     }
 
     .success-icon {
-      width: 58px;
-      height: 58px;
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 15px;
       border-radius: 50%;
-      background: #dcfce7;
-      color: #16a34a;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 13px;
+      background: rgba(25,185,104,0.12);
+      border: 1px solid rgba(25,185,104,0.30);
+      color: #35e58a;
       font-size: 25px;
     }
 
-    .success-title {
-      font-size: 19px;
-      font-weight: 900;
-      margin-bottom: 6px;
+    .success-card h2 {
+      margin: 0 0 7px;
+      font-size: 21px;
     }
 
-    .success-text {
-      color: #6b7280;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .view-number-btn {
-      width: 100%;
-      border: 0;
-      border-radius: 12px;
-      background: #111827;
-      color: #fff;
-      padding: 12px;
-      margin-top: 16px;
+    .success-card p {
+      margin: 0 0 18px;
+      color: rgba(255,255,255,0.58);
       font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
     }
 
-    @media (max-width: 380px) {
+    .success-number {
+      color: #35e58a;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
 
-      .confirmation-page {
-        padding: 13px 10px 25px;
+    .numbers-link {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      border-radius: 13px;
+      background: #19b968;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 600px) {
+
+      .confirmation-main {
+        padding: 18px 13px 30px;
       }
 
-      .confirmation-card {
-        padding: 14px;
+      .confirmation-top {
+        padding: 17px;
       }
 
-      .actual-number {
-        font-size: 21px;
+      .number-details {
+        padding: 5px 17px;
       }
 
-      .total-price {
-        font-size: 20px;
+      .confirmation-action {
+        padding: 14px 17px 17px;
+      }
+
+      .actual-phone-number {
+        font-size: 18px;
+      }
+
+      .number-price-value {
+        font-size: 18px;
       }
 
     }
-
   </style>
 </head>
 
 <body>
 
-<div class="confirmation-page">
+  <main class="confirmation-main">
 
-  <div class="confirmation-container">
+    <div class="confirmation-header">
 
-    <!-- HEADER -->
-
-    <div class="top-bar">
-
-      <button
-        class="back-btn"
-        id="backBtn"
-        aria-label="Go back"
+      <a
+        href="number-selection.html"
+        class="confirmation-back"
       >
         <i class="fa-solid fa-arrow-left"></i>
-      </button>
+      </a>
 
-      <div class="title-area">
-
-        <div class="page-title">
-          Confirm Number
-        </div>
-
-        <div class="page-subtitle">
-          Review your number before purchase
-        </div>
-
+      <div>
+        <h1>Confirm Number</h1>
+        <p>Review your selected number</p>
       </div>
 
     </div>
@@ -434,223 +323,11 @@
     <!-- LOADING -->
 
     <div
-      id="loading"
-      class="loading"
+      id="loadingBox"
+      class="notice"
     >
-
       <i class="fa-solid fa-spinner fa-spin"></i>
-
-      <div>
-        Loading number details...
-      </div>
-
-    </div>
-
-
-    <!-- CONTENT -->
-
-    <div
-      id="content"
-      style="display:none;"
-    >
-
-      <!-- SERVICE -->
-
-      <div class="service-card">
-
-        <div
-          class="service-logo"
-          id="serviceLogo"
-        >
-          <i class="fa-solid fa-phone"></i>
-        </div>
-
-        <div>
-
-          <div
-            class="service-name"
-            id="serviceName"
-          >
-            Service
-          </div>
-
-          <div class="service-description">
-            Number selected for purchase
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- CONFIRMATION -->
-
-      <div class="confirmation-card">
-
-        <div class="section-label">
-          Phone Number
-        </div>
-
-        <div
-          class="actual-number"
-          id="actualNumber"
-        >
-          —
-        </div>
-
-
-        <div class="details">
-
-          <!-- COUNTRY -->
-
-          <div class="detail-row">
-
-            <div class="detail-left">
-
-              <div class="detail-icon">
-                <i class="fa-solid fa-globe"></i>
-              </div>
-
-              <div>
-
-                <div class="detail-label">
-                  Country
-                </div>
-
-                <div
-                  class="detail-value"
-                  id="countryValue"
-                >
-                  —
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- PROVIDER -->
-
-          <div class="detail-row">
-
-            <div class="detail-left">
-
-              <div class="detail-icon">
-                <i class="fa-solid fa-server"></i>
-              </div>
-
-              <div>
-
-                <div class="detail-label">
-                  Provider
-                </div>
-
-                <div
-                  class="detail-value"
-                  id="providerValue"
-                >
-                  —
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- STATUS -->
-
-          <div class="detail-row">
-
-            <div class="detail-left">
-
-              <div class="detail-icon">
-                <i class="fa-solid fa-circle-check"></i>
-              </div>
-
-              <div>
-
-                <div class="detail-label">
-                  Inventory Status
-                </div>
-
-                <div
-                  class="detail-value"
-                  id="statusValue"
-                >
-                  Available
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- PRICE -->
-
-        <div class="price-section">
-
-          <div class="price-row">
-
-            <div class="total-label">
-              Total
-            </div>
-
-            <div>
-
-              <div
-                class="total-price"
-                id="priceValue"
-              >
-                $0.00
-              </div>
-
-              <div class="usd-label">
-                USD
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- SECURITY -->
-
-        <div class="secure-box">
-
-          <i class="fa-solid fa-shield-halved"></i>
-
-          <div>
-            Your selected number is checked against
-            Wavynum's live inventory before purchase.
-          </div>
-
-        </div>
-
-
-        <!-- CONFIRM BUTTON -->
-
-        <button
-          class="confirm-btn"
-          id="confirmBtn"
-        >
-
-          <i class="fa-solid fa-check"></i>
-          Confirm & Buy
-
-        </button>
-
-      </div>
-
+      Loading number...
     </div>
 
 
@@ -658,930 +335,893 @@
 
     <div
       id="errorBox"
-      class="error-box"
+      class="notice error-notice"
+    >
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <span id="errorText">
+        Unable to load this number.
+      </span>
+    </div>
+
+
+    <!-- CONFIRMATION -->
+
+    <section
+      id="confirmationCard"
+      class="confirmation-card"
       style="display:none;"
     >
 
-      <strong>
-        Unable to load this number
-      </strong>
+      <div class="confirmation-top">
 
-      <span id="errorMessage"></span>
+        <div>
 
-    </div>
+          <div class="number-label">
+            Actual phone number
+          </div>
+
+          <div
+            id="actualNumber"
+            class="actual-phone-number"
+          >
+            Loading...
+          </div>
+
+        </div>
+
+
+        <div class="number-price">
+
+          <div
+            id="numberPrice"
+            class="number-price-value"
+          >
+            $0.00
+          </div>
+
+          <div class="number-price-label">
+            USD
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="number-details">
+
+        <div class="detail-row">
+
+          <div class="detail-label">
+            <i class="fa-solid fa-globe"></i>
+            Country
+          </div>
+
+          <div
+            id="countryName"
+            class="detail-value"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <div class="detail-label">
+            <i class="fa-solid fa-server"></i>
+            Provider
+          </div>
+
+          <div
+            id="provider"
+            class="detail-value"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <div class="detail-label">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+            Service
+          </div>
+
+          <div
+            id="serviceName"
+            class="detail-value"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <div class="detail-label">
+            <i class="fa-solid fa-circle-check"></i>
+            Status
+          </div>
+
+          <div class="detail-value available">
+            Available
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="confirmation-action">
+
+        <button
+          id="purchaseButton"
+          class="buy-button"
+        >
+          <i class="fa-solid fa-cart-shopping"></i>
+          Buy Number
+        </button>
+
+      </div>
+
+    </section>
 
 
     <!-- SUCCESS -->
 
-    <div
-      id="successBox"
-      class="success-box"
-      style="display:none;"
+    <section
+      id="successCard"
+      class="confirmation-card success-card"
     >
 
       <div class="success-icon">
-
         <i class="fa-solid fa-check"></i>
-
       </div>
 
-      <div class="success-title">
-        Number Purchased
-      </div>
+      <h2>Number Purchased</h2>
 
-      <div class="success-text">
-        Your number has been added to your
-        Wavynum account.
-      </div>
+      <p>
+        Your number has been added to your Wavynum account.
+      </p>
 
-      <button
-        class="view-number-btn"
-        id="viewNumberBtn"
+      <div
+        id="purchasedNumber"
+        class="success-number"
       >
+      </div>
 
+      <a
+        href="my-numbers.html"
+        class="numbers-link"
+      >
+        <i class="fa-solid fa-phone"></i>
         View My Numbers
+      </a>
 
-        <i class="fa-solid fa-arrow-right"></i>
+    </section>
 
-      </button>
+  </main>
 
-    </div>
 
-  </div>
+  <script type="module">
 
-</div>
+    import {
+      auth,
+      db
+    } from "./firebase.js";
 
 
-<script type="module">
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-  import {
-    auth,
-    db
-  } from "./firebase.js";
 
+    import {
+      doc,
+      getDoc,
+      setDoc,
+      addDoc,
+      collection,
+      runTransaction,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-  import {
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
+    const loadingBox =
+      document.getElementById("loadingBox");
 
-  import {
-    doc,
-    getDoc,
-    runTransaction,
-    collection,
-    addDoc,
-    serverTimestamp,
-    setDoc
-  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+    const errorBox =
+      document.getElementById("errorBox");
 
+    const errorText =
+      document.getElementById("errorText");
 
-  /* --------------------------------
-     ELEMENTS
-  -------------------------------- */
+    const confirmationCard =
+      document.getElementById("confirmationCard");
 
-  const loading =
-    document.getElementById("loading");
+    const successCard =
+      document.getElementById("successCard");
 
-  const content =
-    document.getElementById("content");
+    const actualNumber =
+      document.getElementById("actualNumber");
 
-  const errorBox =
-    document.getElementById("errorBox");
+    const numberPrice =
+      document.getElementById("numberPrice");
 
-  const errorMessage =
-    document.getElementById("errorMessage");
+    const countryName =
+      document.getElementById("countryName");
 
-  const successBox =
-    document.getElementById("successBox");
+    const provider =
+      document.getElementById("provider");
 
-  const serviceName =
-    document.getElementById("serviceName");
+    const serviceName =
+      document.getElementById("serviceName");
 
-  const serviceLogo =
-    document.getElementById("serviceLogo");
+    const purchaseButton =
+      document.getElementById("purchaseButton");
 
-  const actualNumber =
-    document.getElementById("actualNumber");
+    const purchasedNumber =
+      document.getElementById("purchasedNumber");
 
-  const countryValue =
-    document.getElementById("countryValue");
 
-  const providerValue =
-    document.getElementById("providerValue");
+    let selectedNumber = null;
+    let firestoreNumber = null;
 
-  const statusValue =
-    document.getElementById("statusValue");
 
-  const priceValue =
-    document.getElementById("priceValue");
+    function formatPrice(value) {
 
-  const confirmBtn =
-    document.getElementById("confirmBtn");
+      const price =
+        Number(value) || 0;
 
-  const backBtn =
-    document.getElementById("backBtn");
-
-  const viewNumberBtn =
-    document.getElementById("viewNumberBtn");
-
-
-  /* --------------------------------
-     SERVICE LOGOS
-  -------------------------------- */
-
-  const serviceLogos = {
-
-    facebook:
-      "https://cdn.simpleicons.org/facebook/1877F2",
-
-    whatsapp:
-      "https://cdn.simpleicons.org/whatsapp/25D366",
-
-    instagram:
-      "https://cdn.simpleicons.org/instagram/E4405F",
-
-    telegram:
-      "https://cdn.simpleicons.org/telegram/26A5E4",
-
-    snapchat:
-      "https://cdn.simpleicons.org/snapchat/FFFC00",
-
-    "google voice":
-      "https://cdn.simpleicons.org/googlevoice/4285F4",
-
-    textplus:
-      "https://cdn.simpleicons.org/textplus/4CAF50",
-
-    textnow:
-      "https://cdn.simpleicons.org/textnow/00A8FF",
-
-    textfree:
-      "https://cdn.simpleicons.org/textfree/1DA1F2",
-
-    hushed:
-      "https://cdn.simpleicons.org/hushed/111111",
-
-    burner:
-      "https://cdn.simpleicons.org/burner/111111",
-
-    "2ndline":
-      "https://cdn.simpleicons.org/2ndline/111111",
-
-    freetone:
-      "https://cdn.simpleicons.org/freetone/111111",
-
-    coverme:
-      "https://cdn.simpleicons.org/coverme/111111",
-
-    numero:
-      "https://cdn.simpleicons.org/numero/111111",
-
-    mysudo:
-      "https://cdn.simpleicons.org/mysudo/111111",
-
-    "twitter / x":
-      "https://cdn.simpleicons.org/x/000000"
-
-  };
-
-
-  /* --------------------------------
-     HELPERS
-  -------------------------------- */
-
-  function normalizeService(value) {
-
-    return String(value || "")
-      .trim()
-      .toLowerCase();
-
-  }
-
-
-  function formatPrice(value) {
-
-    const amount =
-      Number(value) || 0;
-
-    return "$" + amount.toFixed(2);
-
-  }
-
-
-  function getCountryFlag(country) {
-
-    const code =
-      String(country || "")
-        .trim()
-        .toUpperCase();
-
-    if (code === "US") {
-      return "🇺🇸";
-    }
-
-    if (code === "UK" || code === "GB") {
-      return "🇬🇧";
-    }
-
-    if (code === "CA") {
-      return "🇨🇦";
-    }
-
-    return "🌍";
-
-  }
-
-
-  function escapeHtml(value) {
-
-    return String(value || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-
-  }
-
-
-  /* --------------------------------
-     GET SELECTED NUMBER
-  -------------------------------- */
-
-  let selectedNumber = null;
-
-
-  try {
-
-    const saved =
-      localStorage.getItem(
-        "wavynumSelectedNumber"
-      );
-
-
-    if (!saved) {
-
-      throw new Error(
-        "No number has been selected."
-      );
+      return "$" + price.toFixed(2);
 
     }
 
 
-    selectedNumber =
-      JSON.parse(saved);
+    function showError(message) {
 
+      loadingBox.style.display =
+        "none";
 
-    if (
-      !selectedNumber ||
-      !selectedNumber.id
-    ) {
+      confirmationCard.style.display =
+        "none";
 
-      throw new Error(
-        "The selected number is missing its Firestore ID."
-      );
+      errorBox.style.display =
+        "block";
 
-    }
-
-
-  } catch (error) {
-
-    loading.style.display = "none";
-
-    errorBox.style.display = "block";
-
-    errorMessage.textContent =
-      error.message;
-
-  }
-
-
-  /* --------------------------------
-     DISPLAY SELECTED NUMBER
-  -------------------------------- */
-
-  function displaySelectedNumber() {
-
-    if (!selectedNumber) {
-      return;
-    }
-
-
-    const service =
-      selectedNumber.service || "Service";
-
-
-    serviceName.textContent =
-      service;
-
-
-    actualNumber.textContent =
-      selectedNumber.number ||
-      "Number unavailable";
-
-
-    countryValue.textContent =
-      `${getCountryFlag(
-        selectedNumber.country
-      )} ${
-        selectedNumber.countryName ||
-        "Unknown"
-      }`;
-
-
-    providerValue.textContent =
-      selectedNumber.provider ||
-      "Provider";
-
-
-    priceValue.textContent =
-      formatPrice(
-        selectedNumber.price
-      );
-
-
-    const logo =
-      serviceLogos[
-        normalizeService(service)
-      ];
-
-
-    if (!logo) {
-
-      serviceLogo.innerHTML =
-        '<i class="fa-solid fa-phone"></i>';
-
-      return;
+      errorText.textContent =
+        message;
 
     }
 
 
-    serviceLogo.innerHTML = `
-
-      <img
-        src="${escapeHtml(logo)}"
-        alt="${escapeHtml(service)}"
-      >
-
-    `;
-
-  }
-
-
-  /* --------------------------------
-     LOAD INVENTORY DOCUMENT
-  -------------------------------- */
-
-  async function verifyNumber() {
-
-    if (!selectedNumber) {
-      return;
-    }
-
+    /*
+      READ SELECTED NUMBER
+    */
 
     try {
 
-      /*
-       * IMPORTANT:
-       *
-       * Use the REAL Firestore document ID.
-       *
-       * DO NOT use the phone number as the ID.
-       */
-
-      const numberRef =
-        doc(
-          db,
-          "numbers",
-          selectedNumber.id
+      const saved =
+        localStorage.getItem(
+          "wavynumSelectedNumber"
         );
 
 
-      const numberSnapshot =
-        await getDoc(numberRef);
-
-
-      if (!numberSnapshot.exists()) {
+      if (!saved) {
 
         throw new Error(
-          "This number no longer exists in Wavynum inventory."
+          "No number has been selected."
         );
 
       }
 
 
-      const data =
-        numberSnapshot.data();
+      selectedNumber =
+        JSON.parse(saved);
 
 
-      const status =
-        String(
-          data.status || ""
-        )
-        .trim()
-        .toLowerCase();
-
-
-      if (status !== "available") {
+      if (
+        !selectedNumber ||
+        !selectedNumber.id
+      ) {
 
         throw new Error(
-          "This number is no longer available."
+          "The selected number is missing its Firestore ID."
         );
 
       }
-
-
-      /*
-       * Refresh the number details
-       * from Firestore.
-       */
-
-      selectedNumber.number =
-        data.number ||
-        selectedNumber.number;
-
-      selectedNumber.country =
-        data.country ||
-        selectedNumber.country;
-
-      selectedNumber.countryName =
-        data.countryName ||
-        selectedNumber.countryName;
-
-      selectedNumber.price =
-        Number(data.price) ||
-        selectedNumber.price;
-
-      selectedNumber.provider =
-        data.provider ||
-        selectedNumber.provider;
-
-
-      displaySelectedNumber();
-
-
-      loading.style.display = "none";
-
-      content.style.display = "block";
-
 
     } catch (error) {
 
-      console.error(
-        "Number verification error:",
-        error
+      showError(
+        error.message ||
+        "Unable to read the selected number."
       );
 
-
-      loading.style.display = "none";
-
-      content.style.display = "none";
-
-      errorBox.style.display = "block";
-
-      errorMessage.textContent =
-        error.message;
-
-    }
-
-  }
-
-
-  /* --------------------------------
-     PURCHASE
-  -------------------------------- */
-
-  async function purchaseNumber() {
-
-    if (!selectedNumber) {
-      return;
     }
 
 
-    const user =
-      auth.currentUser;
+    /*
+      LOAD NUMBER DIRECTLY FROM FIRESTORE
+    */
+
+    async function loadNumber() {
+
+      if (
+        !selectedNumber ||
+        !selectedNumber.id
+      ) {
+        return;
+      }
 
 
-    if (!user) {
+      try {
 
-      alert(
-        "Please sign in before purchasing a number."
-      );
-
-      window.location.href =
-        "signin.html";
-
-      return;
-
-    }
+        const numberRef =
+          doc(
+            db,
+            "numbers",
+            selectedNumber.id
+          );
 
 
-    confirmBtn.disabled = true;
-
-    confirmBtn.innerHTML = `
-
-      <i class="fa-solid fa-spinner fa-spin"></i>
-      Processing...
-
-    `;
+        const snapshot =
+          await getDoc(
+            numberRef
+          );
 
 
-    try {
+        if (!snapshot.exists()) {
 
-      const numberId =
-        selectedNumber.id;
+          throw new Error(
+            "This number no longer exists."
+          );
+
+        }
 
 
-      /*
-       * REAL INVENTORY DOCUMENT
-       */
+        const data =
+          snapshot.data();
 
-      const numberRef =
-        doc(
-          db,
-          "numbers",
-          numberId
+
+        const status =
+          String(
+            data.status || ""
+          )
+          .trim()
+          .toLowerCase();
+
+
+        if (
+          status !== "available"
+        ) {
+
+          throw new Error(
+            "Sorry, this number is no longer available."
+          );
+
+        }
+
+
+        /*
+          THIS IS THE FIX.
+
+          Get the real phone number
+          directly from Firestore.
+        */
+
+        const realNumber =
+          String(
+            data.number ?? ""
+          ).trim();
+
+
+        if (!realNumber) {
+
+          throw new Error(
+            "The phone number field is empty in this inventory record."
+          );
+
+        }
+
+
+        firestoreNumber = {
+
+          id:
+            snapshot.id,
+
+          number:
+            realNumber,
+
+          country:
+            String(
+              data.country ?? ""
+            ).trim(),
+
+          countryName:
+            String(
+              data.countryName ??
+              "Unknown"
+            ).trim(),
+
+          price:
+            Number(
+              data.price
+            ) || 0,
+
+          provider:
+            String(
+              data.provider ??
+              "Provider"
+            ).trim(),
+
+          service:
+            String(
+              selectedNumber.service ??
+              ""
+            ).trim()
+
+        };
+
+
+        /*
+          DISPLAY ACTUAL NUMBER
+        */
+
+        actualNumber.textContent =
+          firestoreNumber.number;
+
+
+        numberPrice.textContent =
+          formatPrice(
+            firestoreNumber.price
+          );
+
+
+        countryName.textContent =
+          firestoreNumber.countryName ||
+          "Unknown";
+
+
+        provider.textContent =
+          firestoreNumber.provider ||
+          "Provider";
+
+
+        serviceName.textContent =
+          firestoreNumber.service ||
+          "Service";
+
+
+        loadingBox.style.display =
+          "none";
+
+        confirmationCard.style.display =
+          "block";
+
+      } catch (error) {
+
+        console.error(
+          "Number loading error:",
+          error
         );
 
+        showError(
+          error.message ||
+          "Unable to load this number."
+        );
 
-      let purchasedNumber = null;
+      }
+
+    }
 
 
-      /*
-       * ATOMIC INVENTORY CHECK
-       */
+    /*
+      CHECK LOGIN
+    */
 
-      await runTransaction(
-        db,
-        async (transaction) => {
+    onAuthStateChanged(
+      auth,
+      async (user) => {
 
-          const numberSnapshot =
-            await transaction.get(
-              numberRef
+        if (!user) {
+
+          showError(
+            "Please sign in before purchasing a number."
+          );
+
+          return;
+
+        }
+
+
+        await loadNumber();
+
+      }
+    );
+
+
+    /*
+      BUY NUMBER
+    */
+
+    purchaseButton.addEventListener(
+      "click",
+      async () => {
+
+        const user =
+          auth.currentUser;
+
+
+        if (!user) {
+
+          showError(
+            "Please sign in before purchasing a number."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          !firestoreNumber ||
+          !firestoreNumber.id
+        ) {
+
+          showError(
+            "The selected number could not be loaded."
+          );
+
+          return;
+
+        }
+
+
+        purchaseButton.disabled =
+          true;
+
+
+        purchaseButton.innerHTML =
+          `
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Processing...
+          `;
+
+
+        try {
+
+          const numberId =
+            firestoreNumber.id;
+
+
+          const numberRef =
+            doc(
+              db,
+              "numbers",
+              numberId
             );
 
 
-          if (!numberSnapshot.exists()) {
-
-            throw new Error(
-              "This number no longer exists."
-            );
-
-          }
-
-
-          const numberData =
-            numberSnapshot.data();
-
-
-          const status =
-            String(
-              numberData.status || ""
-            )
-            .trim()
-            .toLowerCase();
-
-
-          if (status !== "available") {
-
-            throw new Error(
-              "Sorry, this number has already been purchased."
-            );
-
-          }
-
-
-          purchasedNumber = {
-
-            id: numberId,
-
-            number:
-              numberData.number ||
-              selectedNumber.number,
-
-            country:
-              numberData.country ||
-              selectedNumber.country,
-
-            countryName:
-              numberData.countryName ||
-              selectedNumber.countryName,
-
-            price:
-              Number(numberData.price) ||
-              Number(selectedNumber.price) ||
-              0,
-
-            provider:
-              numberData.provider ||
-              selectedNumber.provider,
-
-            service:
-              selectedNumber.service
-
-          };
+          let purchasedNumberData =
+            null;
 
 
           /*
-           * Mark inventory as sold.
-           */
+            ATOMIC INVENTORY CHECK
+          */
 
-          transaction.update(
-            numberRef,
-            {
+          await runTransaction(
+            db,
+            async (transaction) => {
 
-              status: "sold",
+              const numberSnapshot =
+                await transaction.get(
+                  numberRef
+                );
 
-              ownerId:
-                user.uid,
 
-              soldService:
-                selectedNumber.service,
+              if (
+                !numberSnapshot.exists()
+              ) {
 
-              soldAt:
-                serverTimestamp()
+                throw new Error(
+                  "This number no longer exists."
+                );
+
+              }
+
+
+              const numberData =
+                numberSnapshot.data();
+
+
+              const status =
+                String(
+                  numberData.status || ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+              if (
+                status !== "available"
+              ) {
+
+                throw new Error(
+                  "Sorry, this number has already been purchased."
+                );
+
+              }
+
+
+              const realNumber =
+                String(
+                  numberData.number ?? ""
+                ).trim();
+
+
+              if (!realNumber) {
+
+                throw new Error(
+                  "The phone number is missing from the inventory record."
+                );
+
+              }
+
+
+              purchasedNumberData = {
+
+                id:
+                  numberId,
+
+                number:
+                  realNumber,
+
+                country:
+                  numberData.country ||
+                  "",
+
+                countryName:
+                  numberData.countryName ||
+                  "Unknown",
+
+                price:
+                  Number(
+                    numberData.price
+                  ) || 0,
+
+                provider:
+                  numberData.provider ||
+                  "Provider",
+
+                service:
+                  selectedNumber.service ||
+                  ""
+
+              };
+
+
+              transaction.update(
+                numberRef,
+                {
+
+                  status:
+                    "sold",
+
+                  ownerId:
+                    user.uid,
+
+                  soldService:
+                    selectedNumber.service ||
+                    "",
+
+                  soldAt:
+                    serverTimestamp()
+
+                }
+              );
 
             }
           );
 
+
+          /*
+            USER NUMBER
+          */
+
+          await setDoc(
+
+            doc(
+              db,
+              "users",
+              user.uid,
+              "numbers",
+              numberId
+            ),
+
+            {
+
+              numberId:
+                numberId,
+
+              number:
+                purchasedNumberData.number,
+
+              country:
+                purchasedNumberData.country,
+
+              countryName:
+                purchasedNumberData.countryName,
+
+              price:
+                purchasedNumberData.price,
+
+              provider:
+                purchasedNumberData.provider,
+
+              service:
+                purchasedNumberData.service,
+
+              status:
+                "active",
+
+              purchasedAt:
+                serverTimestamp()
+
+            }
+
+          );
+
+
+          /*
+            PURCHASE RECORD
+          */
+
+          await addDoc(
+
+            collection(
+              db,
+              "purchases"
+            ),
+
+            {
+
+              userId:
+                user.uid,
+
+              numberId:
+                numberId,
+
+              number:
+                purchasedNumberData.number,
+
+              country:
+                purchasedNumberData.country,
+
+              countryName:
+                purchasedNumberData.countryName,
+
+              price:
+                purchasedNumberData.price,
+
+              provider:
+                purchasedNumberData.provider,
+
+              service:
+                purchasedNumberData.service,
+
+              status:
+                "completed",
+
+              createdAt:
+                serverTimestamp()
+
+            }
+
+          );
+
+
+          /*
+            TRANSACTION RECORD
+          */
+
+          await addDoc(
+
+            collection(
+              db,
+              "transactions"
+            ),
+
+            {
+
+              userId:
+                user.uid,
+
+              type:
+                "number_purchase",
+
+              numberId:
+                numberId,
+
+              number:
+                purchasedNumberData.number,
+
+              amount:
+                purchasedNumberData.price,
+
+              currency:
+                "USD",
+
+              status:
+                "completed",
+
+              createdAt:
+                serverTimestamp()
+
+            }
+
+          );
+
+
+          /*
+            SUCCESS
+          */
+
+          localStorage.removeItem(
+            "wavynumSelectedNumber"
+          );
+
+
+          purchasedNumber.textContent =
+            purchasedNumberData.number;
+
+
+          confirmationCard.style.display =
+            "none";
+
+
+          successCard.style.display =
+            "block";
+
+
+        } catch (error) {
+
+          console.error(
+            "Purchase error:",
+            error
+          );
+
+
+          purchaseButton.disabled =
+            false;
+
+
+          purchaseButton.innerHTML =
+            `
+              <i class="fa-solid fa-cart-shopping"></i>
+              Buy Number
+            `;
+
+
+          errorBox.style.display =
+            "block";
+
+          errorText.textContent =
+            error.message ||
+            "Purchase failed. Please try again.";
+
         }
-      );
-
-
-      if (!purchasedNumber) {
-
-        throw new Error(
-          "Purchase could not be completed."
-        );
 
       }
+    );
 
-
-      /*
-       * SAVE NUMBER UNDER USER ACCOUNT
-       */
-
-      const userNumberRef =
-        doc(
-          db,
-          "users",
-          user.uid,
-          "numbers",
-          numberId
-        );
-
-
-      await setDoc(
-        userNumberRef,
-        {
-
-          numberId:
-            numberId,
-
-          number:
-            purchasedNumber.number,
-
-          country:
-            purchasedNumber.country,
-
-          countryName:
-            purchasedNumber.countryName,
-
-          price:
-            purchasedNumber.price,
-
-          provider:
-            purchasedNumber.provider,
-
-          service:
-            purchasedNumber.service,
-
-          status:
-            "active",
-
-          purchasedAt:
-            serverTimestamp()
-
-        }
-      );
-
-
-      /*
-       * PURCHASE RECORD
-       */
-
-      await addDoc(
-        collection(
-          db,
-          "purchases"
-        ),
-        {
-
-          userId:
-            user.uid,
-
-          numberId:
-            numberId,
-
-          number:
-            purchasedNumber.number,
-
-          service:
-            purchasedNumber.service,
-
-          country:
-            purchasedNumber.country,
-
-          countryName:
-            purchasedNumber.countryName,
-
-          price:
-            purchasedNumber.price,
-
-          provider:
-            purchasedNumber.provider,
-
-          status:
-            "completed",
-
-          createdAt:
-            serverTimestamp()
-
-        }
-      );
-
-
-      /*
-       * TRANSACTION RECORD
-       */
-
-      await addDoc(
-        collection(
-          db,
-          "transactions"
-        ),
-        {
-
-          userId:
-            user.uid,
-
-          type:
-            "number_purchase",
-
-          numberId:
-            numberId,
-
-          number:
-            purchasedNumber.number,
-
-          service:
-            purchasedNumber.service,
-
-          amount:
-            purchasedNumber.price,
-
-          currency:
-            "USD",
-
-          status:
-            "completed",
-
-          createdAt:
-            serverTimestamp()
-
-        }
-      );
-
-
-      /*
-       * Clear temporary selection.
-       */
-
-      localStorage.removeItem(
-        "wavynumSelectedNumber"
-      );
-
-
-      /*
-       * Show success.
-       */
-
-      content.style.display =
-        "none";
-
-      successBox.style.display =
-        "block";
-
-
-    } catch (error) {
-
-      console.error(
-        "Purchase error:",
-        error
-      );
-
-
-      confirmBtn.disabled =
-        false;
-
-      confirmBtn.innerHTML = `
-
-        <i class="fa-solid fa-check"></i>
-        Confirm & Buy
-
-      `;
-
-
-      alert(
-        error.message ||
-        "Unable to complete purchase."
-      );
-
-    }
-
-  }
-
-
-  /* --------------------------------
-     CONFIRM BUTTON
-  -------------------------------- */
-
-  confirmBtn.addEventListener(
-    "click",
-    purchaseNumber
-  );
-
-
-  /* --------------------------------
-     BACK BUTTON
-  -------------------------------- */
-
-  backBtn.addEventListener(
-    "click",
-    () => {
-
-      window.location.href =
-        "number-selection.html?service=" +
-        encodeURIComponent(
-          selectedNumber?.service || ""
-        );
-
-    }
-  );
-
-
-  /* --------------------------------
-     VIEW MY NUMBERS
-  -------------------------------- */
-
-  viewNumberBtn.addEventListener(
-    "click",
-    () => {
-
-      window.location.href =
-        "my-numbers.html";
-
-    }
-  );
-
-
-  /* --------------------------------
-     AUTH
-  -------------------------------- */
-
-  onAuthStateChanged(
-    auth,
-    (user) => {
-
-      if (!user) {
-
-        loading.style.display =
-          "none";
-
-        errorBox.style.display =
-          "block";
-
-        errorMessage.textContent =
-          "Please sign in to purchase a number.";
-
-        return;
-
-      }
-
-
-      if (selectedNumber) {
-
-        displaySelectedNumber();
-
-        verifyNumber();
-
-      }
-
-    }
-  );
-
-</script>
+  </script>
 
 </body>
 </html>

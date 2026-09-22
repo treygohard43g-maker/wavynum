@@ -2,39 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
   <title>Support — Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=7">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=8">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
 
   <style>
+
+    /* =========================================================
+       WAVYNUM SUPPORT PAGE
+       ========================================================= */
+
+    html {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
       margin: 0;
+      width: 100%;
+      min-height: 100dvh;
+
       background: #050806;
       color: #f5fff7;
+
       font-family: Arial, sans-serif;
+
+      overflow-x: hidden;
     }
+
+    /* =========================================================
+       PAGE
+       ========================================================= */
 
     .support-page {
-      min-height: 100vh;
-      padding-bottom: 40px;
+      width: 100%;
+      min-height: 100dvh;
+      box-sizing: border-box;
+
+      padding-bottom:
+        env(safe-area-inset-bottom);
     }
 
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
     .support-header {
+      width: 100%;
       height: 72px;
-      padding: 0 20px;
+      min-height: 72px;
+
+      padding:
+        env(safe-area-inset-top)
+        20px
+        0
+        20px;
+
+      box-sizing: border-box;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       border-bottom: 1px solid rgba(255,255,255,.07);
+
       background: #080d0a;
     }
 
     .support-logo {
       color: #39e86f;
       text-decoration: none;
+
       font-size: 23px;
       font-weight: 800;
     }
@@ -42,18 +92,36 @@
     .back-button {
       width: 42px;
       height: 42px;
+
+      flex: 0 0 42px;
+
       border-radius: 13px;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       color: #fff;
       background: #101812;
+
       text-decoration: none;
+
+      box-sizing: border-box;
     }
+
+    /* =========================================================
+       MAIN CONTENT
+       ========================================================= */
 
     .support-container {
       width: min(900px, calc(100% - 28px));
+
       margin: 28px auto;
+
+      box-sizing: border-box;
+
+      padding-bottom:
+        calc(30px + env(safe-area-inset-bottom));
     }
 
     .support-intro {
@@ -62,34 +130,68 @@
 
     .eyebrow {
       color: #39e86f;
+
       font-size: 11px;
       font-weight: 800;
+
       letter-spacing: 1.4px;
     }
 
     .support-intro h1 {
       margin: 6px 0;
+
+      color: #f5fff7;
+
       font-size: 30px;
+      line-height: 1.2;
     }
 
     .support-intro p {
       margin: 0;
+
       color: #8e9b92;
+
       line-height: 1.5;
+
+      overflow-wrap: anywhere;
     }
 
+    /* =========================================================
+       SUPPORT CARD
+       ========================================================= */
+
     .support-card {
-      background: linear-gradient(145deg,#0d1510,#080d0a);
+      width: 100%;
+
+      box-sizing: border-box;
+
+      background:
+        linear-gradient(
+          145deg,
+          #0d1510,
+          #080d0a
+        );
+
       border: 1px solid rgba(57,232,111,.12);
+
       border-radius: 20px;
+
       padding: 18px;
+
       margin-bottom: 18px;
     }
 
     .support-card h2 {
       margin: 0 0 15px;
+
+      color: #f5fff7;
+
       font-size: 18px;
     }
+
+    /* =========================================================
+       SUPPORT FORM
+       ========================================================= */
 
     .support-form {
       display: grid;
@@ -100,18 +202,29 @@
     .support-form select,
     .support-form textarea {
       width: 100%;
+
       box-sizing: border-box;
+
       border: 1px solid rgba(255,255,255,.08);
+
       background: #050806;
+
       color: #fff;
+
       border-radius: 12px;
+
       padding: 14px;
+
       font: inherit;
+
+      font-size: 16px;
+
       outline: none;
     }
 
     .support-form textarea {
       min-height: 120px;
+
       resize: vertical;
     }
 
@@ -119,16 +232,29 @@
     .support-form select:focus,
     .support-form textarea:focus {
       border-color: #39e86f;
+
+      box-shadow:
+        0 0 0 3px rgba(57,232,111,.07);
     }
 
     .primary-button {
+      width: 100%;
+
       border: 0;
+
       background: #39e86f;
+
       color: #031007;
+
       padding: 14px 18px;
+
       border-radius: 12px;
+
       font-weight: 800;
+
       cursor: pointer;
+
+      touch-action: manipulation;
     }
 
     .primary-button:disabled {
@@ -136,17 +262,31 @@
       cursor: not-allowed;
     }
 
+    /* =========================================================
+       TICKETS
+       ========================================================= */
+
     .ticket-list {
       display: grid;
       gap: 10px;
     }
 
     .ticket {
+      width: 100%;
+
+      box-sizing: border-box;
+
       background: #080d0a;
+
       border: 1px solid rgba(255,255,255,.07);
+
       border-radius: 15px;
+
       padding: 15px;
+
       cursor: pointer;
+
+      touch-action: manipulation;
     }
 
     .ticket:hover {
@@ -155,32 +295,55 @@
 
     .ticket-top {
       display: flex;
+
+      align-items: flex-start;
       justify-content: space-between;
+
       gap: 12px;
+
+      min-width: 0;
     }
 
     .ticket-title {
+      min-width: 0;
+
       font-weight: 800;
+
+      overflow-wrap: anywhere;
     }
 
     .ticket-message {
       margin-top: 7px;
+
       color: #929e95;
+
       font-size: 13px;
+
       line-height: 1.45;
+
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .ticket-date {
       color: #657269;
+
       font-size: 11px;
+
       margin-top: 9px;
     }
 
     .status {
+      flex-shrink: 0;
+
       font-size: 10px;
+
       font-weight: 800;
+
       border-radius: 20px;
+
       padding: 5px 9px;
+
       white-space: nowrap;
     }
 
@@ -202,645 +365,1482 @@
     .empty-state,
     .loading-state {
       text-align: center;
+
       padding: 30px 15px;
+
       color: #77837b;
     }
 
-    /* CHAT */
+    /* =========================================================
+       CHAT OVERLAY
+       ========================================================= */
 
     .chat-overlay {
       position: fixed;
+
       inset: 0;
-      background: rgba(0,0,0,.75);
+
+      width: 100%;
+      height: 100dvh;
+
+      background: rgba(0,0,0,.78);
+
       display: none;
+
       align-items: flex-end;
       justify-content: center;
+
       z-index: 1000;
+
+      overflow: hidden;
+
+      box-sizing: border-box;
     }
 
     .chat-overlay.show {
       display: flex;
     }
 
+    /* =========================================================
+       CHAT BOX
+       ========================================================= */
+
     .chat-box {
       width: min(700px, 100%);
-      height: min(720px, 94vh);
+
+      height: min(
+        720px,
+        calc(100dvh - 18px)
+      );
+
+      max-height: calc(100dvh - 18px);
+
       background: #080d0a;
+
       border: 1px solid rgba(57,232,111,.12);
+
       border-radius: 22px 22px 0 0;
+
       display: flex;
+
       flex-direction: column;
+
       overflow: hidden;
+
+      box-sizing: border-box;
+
+      padding-bottom:
+        env(safe-area-inset-bottom);
     }
 
+    /* =========================================================
+       CHAT HEADER
+       ========================================================= */
+
     .chat-header {
-      padding: 16px;
+      flex: 0 0 auto;
+
+      min-height: 68px;
+
+      padding: 12px 14px;
+
       display: flex;
-      justify-content: space-between;
+
       align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,.07);
+      justify-content: space-between;
+
+      gap: 12px;
+
+      border-bottom:
+        1px solid rgba(255,255,255,.07);
+
+      box-sizing: border-box;
+    }
+
+    .chat-header > div {
+      min-width: 0;
     }
 
     .chat-header strong {
       display: block;
+
+      color: #f5fff7;
+
+      font-size: 15px;
+
+      white-space: nowrap;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
     }
 
     .chat-header small {
+      display: block;
+
+      margin-top: 3px;
+
       color: #768179;
+
+      font-size: 11px;
     }
 
     .close-chat {
-      border: 0;
-      background: #111912;
-      color: #fff;
+      flex: 0 0 38px;
+
       width: 38px;
       height: 38px;
+
+      border: 0;
+
+      background: #111912;
+
+      color: #fff;
+
       border-radius: 11px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
     }
 
+    /* =========================================================
+       MESSAGES
+       ========================================================= */
+
     .messages {
-      flex: 1;
+      flex: 1 1 auto;
+
+      min-height: 0;
+
+      width: 100%;
+
+      box-sizing: border-box;
+
       overflow-y: auto;
+
+      overflow-x: hidden;
+
       padding: 16px;
+
       display: flex;
+
       flex-direction: column;
+
       gap: 10px;
+
+      -webkit-overflow-scrolling: touch;
+
+      overscroll-behavior: contain;
     }
 
     .message {
-      max-width: 80%;
+      max-width: min(80%, 520px);
+
       padding: 11px 13px;
+
       border-radius: 15px;
+
       line-height: 1.45;
+
       font-size: 14px;
+
+      overflow-wrap: anywhere;
+
+      word-break: break-word;
+
+      box-sizing: border-box;
     }
 
     .message.user {
       align-self: flex-end;
+
       background: #39e86f;
+
       color: #031007;
+
       border-bottom-right-radius: 4px;
     }
 
     .message.admin {
       align-self: flex-start;
+
       background: #141d17;
+
       color: #eaf4ed;
+
       border-bottom-left-radius: 4px;
     }
 
     .message-time {
       display: block;
+
       font-size: 9px;
+
       opacity: .6;
+
       margin-top: 5px;
     }
 
+    /* =========================================================
+       CHAT INPUT
+       ========================================================= */
+
     .chat-form {
-      padding: 12px;
+      flex: 0 0 auto;
+
+      width: 100%;
+
+      box-sizing: border-box;
+
+      padding: 10px 12px;
+
       display: flex;
+
+      align-items: center;
+
       gap: 8px;
-      border-top: 1px solid rgba(255,255,255,.07);
+
+      border-top:
+        1px solid rgba(255,255,255,.07);
+
+      background: #080d0a;
     }
 
     .chat-form input {
-      flex: 1;
+      flex: 1 1 auto;
+
       min-width: 0;
+
+      width: 100%;
+
+      box-sizing: border-box;
+
       background: #050806;
+
       color: #fff;
+
       border: 1px solid rgba(255,255,255,.08);
+
       border-radius: 12px;
+
       padding: 13px;
+
       outline: none;
+
+      font-size: 16px;
+    }
+
+    .chat-form input:focus {
+      border-color:
+        rgba(57,232,111,.55);
     }
 
     .chat-form button {
+      flex: 0 0 48px;
+
       width: 48px;
+      height: 46px;
+
       border: 0;
+
       border-radius: 12px;
+
       background: #39e86f;
+
       color: #031007;
+
       cursor: pointer;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      touch-action: manipulation;
     }
 
-    .notice {
-      font-size: 12px;
-      color: #748078;
-      margin-top: 12px;
-    }
+    /* =========================================================
+       MOBILE
+       ========================================================= */
 
     @media (max-width: 600px) {
+
+      .support-header {
+        height: 64px;
+        min-height: 64px;
+
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .support-logo {
+        font-size: 21px;
+      }
+
       .support-container {
         width: calc(100% - 20px);
+
+        margin: 22px auto;
+
+        padding-bottom:
+          calc(30px + env(safe-area-inset-bottom));
       }
 
       .support-intro h1 {
         font-size: 25px;
       }
 
+      .support-card {
+        padding: 15px;
+
+        border-radius: 17px;
+      }
+
+      .support-card h2 {
+        font-size: 17px;
+      }
+
+      /* FULL SCREEN MOBILE CHAT */
+
+      .chat-overlay {
+        height: 100dvh;
+
+        align-items: flex-end;
+      }
+
       .chat-box {
-        height: 94vh;
+        width: 100%;
+
+        height: 100dvh;
+
+        max-height: 100dvh;
+
+        border-radius: 20px 20px 0 0;
+
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+      }
+
+      .chat-header {
+        min-height: 64px;
+
+        padding:
+          10px
+          12px
+          10px
+          14px;
+      }
+
+      .messages {
+        padding: 12px;
+
+        gap: 8px;
+      }
+
+      .message {
+        max-width: 84%;
+
+        font-size: 14px;
+
+        padding: 10px 12px;
+      }
+
+      .chat-form {
+        padding:
+          9px
+          10px
+          calc(9px + env(safe-area-inset-bottom))
+          10px;
+      }
+
+      .chat-form input {
+        min-height: 44px;
+
+        padding: 11px 12px;
+      }
+
+      .chat-form button {
+        width: 46px;
+        height: 44px;
+
+        flex-basis: 46px;
       }
     }
+
+    /* =========================================================
+       SMALL IPHONES
+       ========================================================= */
+
+    @media (max-width: 390px) {
+
+      .support-container {
+        width: calc(100% - 18px);
+      }
+
+      .support-card {
+        padding: 14px;
+      }
+
+      .chat-header {
+        min-height: 60px;
+      }
+
+      .messages {
+        padding: 10px;
+      }
+
+      .message {
+        max-width: 88%;
+      }
+
+      .chat-form {
+        gap: 6px;
+      }
+    }
+
   </style>
 </head>
 
 <body class="support-page">
 
-<header class="support-header">
-  <a href="dashboard.html" class="support-logo">Wavynum</a>
+  <!-- =======================================================
+       HEADER
+       ======================================================= -->
 
-  <a href="dashboard.html" class="back-button">
-    <i class="fa-solid fa-arrow-left"></i>
-  </a>
-</header>
+  <header class="support-header">
 
-<main class="support-container">
+    <a href="dashboard.html" class="support-logo">
+      Wavynum
+    </a>
 
-  <section class="support-intro">
-    <div class="eyebrow">CUSTOMER SUPPORT</div>
-    <h1>How can we help?</h1>
-    <p>
-      Create a support request and our support team can respond directly in your account.
-    </p>
-  </section>
+    <a href="dashboard.html" class="back-button">
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
 
-  <section class="support-card">
-    <h2>Start a conversation</h2>
+  </header>
 
-    <form id="supportForm" class="support-form">
 
-      <select id="category" required>
-        <option value="">Select a category</option>
-        <option value="Account">Account</option>
-        <option value="Number purchase">Number purchase</option>
-        <option value="Payment">Payment</option>
-        <option value="SMS">SMS / Inbox</option>
-        <option value="Technical">Technical issue</option>
-        <option value="Other">Other</option>
-      </select>
+  <!-- =======================================================
+       MAIN
+       ======================================================= -->
 
-      <input
-        id="subject"
-        type="text"
-        maxlength="100"
-        placeholder="Subject"
-        required
-      >
+  <main class="support-container">
 
-      <textarea
-        id="message"
-        maxlength="2000"
-        placeholder="Describe your issue..."
-        required
-      ></textarea>
+    <section class="support-intro">
 
-      <button id="submitButton" class="primary-button" type="submit">
-        Send support request
-      </button>
-
-    </form>
-
-    <div class="notice">
-      Your conversation is linked to your Wavynum account.
-    </div>
-  </section>
-
-  <section class="support-card">
-    <h2>Your conversations</h2>
-    <div id="ticketList" class="ticket-list">
-      <div class="loading-state">Loading conversations...</div>
-    </div>
-  </section>
-
-</main>
-
-<!-- CHAT -->
-
-<div id="chatOverlay" class="chat-overlay">
-
-  <div class="chat-box">
-
-    <div class="chat-header">
-      <div>
-        <strong id="chatSubject">Support</strong>
-        <small id="chatStatus">Open</small>
+      <div class="eyebrow">
+        CUSTOMER SUPPORT
       </div>
 
-      <button id="closeChat" class="close-chat">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
+      <h1>
+        How can we help?
+      </h1>
 
-    <div id="messages" class="messages"></div>
+      <p>
+        Create a support request and our support team can respond
+        directly in your account.
+      </p>
 
-    <form id="chatForm" class="chat-form">
+    </section>
 
-      <input
-        id="replyInput"
-        type="text"
-        maxlength="2000"
-        placeholder="Write a message..."
-        autocomplete="off"
-        required
+
+    <!-- CREATE SUPPORT REQUEST -->
+
+    <section class="support-card">
+
+      <h2>
+        Start a conversation
+      </h2>
+
+      <form
+        id="supportForm"
+        class="support-form"
       >
 
-      <button type="submit">
-        <i class="fa-solid fa-paper-plane"></i>
-      </button>
+        <select id="category" required>
 
-    </form>
+          <option value="">
+            Select a category
+          </option>
+
+          <option value="Account">
+            Account
+          </option>
+
+          <option value="Number purchase">
+            Number purchase
+          </option>
+
+          <option value="Payment">
+            Payment
+          </option>
+
+          <option value="SMS">
+            SMS / Inbox
+          </option>
+
+          <option value="Technical">
+            Technical issue
+          </option>
+
+          <option value="Other">
+            Other
+          </option>
+
+        </select>
+
+
+        <input
+          id="subject"
+          type="text"
+          maxlength="100"
+          placeholder="Subject"
+          required
+        >
+
+
+        <textarea
+          id="message"
+          maxlength="2000"
+          placeholder="Describe your issue..."
+          required
+        ></textarea>
+
+
+        <button
+          id="submitButton"
+          class="primary-button"
+          type="submit"
+        >
+          Send support request
+        </button>
+
+      </form>
+
+
+      <div class="notice">
+        Your conversation is linked to your Wavynum account.
+      </div>
+
+    </section>
+
+
+    <!-- USER CONVERSATIONS -->
+
+    <section class="support-card">
+
+      <h2>
+        Your conversations
+      </h2>
+
+      <div
+        id="ticketList"
+        class="ticket-list"
+      >
+
+        <div class="loading-state">
+          Loading conversations...
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =======================================================
+       CHAT
+       ======================================================= -->
+
+  <div
+    id="chatOverlay"
+    class="chat-overlay"
+  >
+
+    <div class="chat-box">
+
+
+      <!-- CHAT HEADER -->
+
+      <div class="chat-header">
+
+        <div>
+
+          <strong id="chatSubject">
+            Support
+          </strong>
+
+          <small id="chatStatus">
+            Open
+          </small>
+
+        </div>
+
+
+        <button
+          id="closeChat"
+          class="close-chat"
+          type="button"
+          aria-label="Close chat"
+        >
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- MESSAGES -->
+
+      <div
+        id="messages"
+        class="messages"
+      ></div>
+
+
+      <!-- MESSAGE FORM -->
+
+      <form
+        id="chatForm"
+        class="chat-form"
+      >
+
+        <input
+          id="replyInput"
+          type="text"
+          maxlength="2000"
+          placeholder="Write a message..."
+          autocomplete="off"
+          required
+        >
+
+        <button
+          type="submit"
+          aria-label="Send message"
+        >
+
+          <i class="fa-solid fa-paper-plane"></i>
+
+        </button>
+
+      </form>
+
+    </div>
 
   </div>
 
-</div>
 
-<script type="module">
+  <!-- =======================================================
+       FIREBASE / SUPPORT JAVASCRIPT
+       ======================================================= -->
 
-import { auth, db } from "./firebase.js";
+  <script type="module">
 
-import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+    import { auth, db } from "./firebase.js";
 
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  getDoc,
-  query,
-  where,
-  orderBy,
-  serverTimestamp,
-  onSnapshot
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-
-const supportForm = document.getElementById("supportForm");
-const submitButton = document.getElementById("submitButton");
-const ticketList = document.getElementById("ticketList");
-
-const chatOverlay = document.getElementById("chatOverlay");
-const closeChat = document.getElementById("closeChat");
-const chatSubject = document.getElementById("chatSubject");
-const chatStatus = document.getElementById("chatStatus");
-const messages = document.getElementById("messages");
-const chatForm = document.getElementById("chatForm");
-const replyInput = document.getElementById("replyInput");
-
-let currentUser = null;
-let currentTicketId = null;
-let unsubscribeMessages = null;
+    import {
+      collection,
+      addDoc,
+      getDocs,
+      doc,
+      getDoc,
+      query,
+      where,
+      orderBy,
+      serverTimestamp,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* AUTH */
+    /* =======================================================
+       ELEMENTS
+       ======================================================= */
 
-onAuthStateChanged(auth, async (user) => {
+    const supportForm =
+      document.getElementById("supportForm");
 
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
+    const submitButton =
+      document.getElementById("submitButton");
 
-  currentUser = user;
+    const ticketList =
+      document.getElementById("ticketList");
 
-  await loadTickets();
-});
+    const chatOverlay =
+      document.getElementById("chatOverlay");
+
+    const closeChat =
+      document.getElementById("closeChat");
+
+    const chatSubject =
+      document.getElementById("chatSubject");
+
+    const chatStatus =
+      document.getElementById("chatStatus");
+
+    const messages =
+      document.getElementById("messages");
+
+    const chatForm =
+      document.getElementById("chatForm");
+
+    const replyInput =
+      document.getElementById("replyInput");
 
 
-/* CREATE TICKET */
+    /* =======================================================
+       STATE
+       ======================================================= */
 
-supportForm.addEventListener("submit", async (event) => {
+    let currentUser = null;
 
-  event.preventDefault();
+    let currentTicketId = null;
 
-  if (!currentUser) return;
+    let unsubscribeMessages = null;
 
-  const category = document.getElementById("category").value;
-  const subject = document.getElementById("subject").value.trim();
-  const message = document.getElementById("message").value.trim();
 
-  if (!category || !subject || !message) return;
+    /* =======================================================
+       AUTH
+       ======================================================= */
 
-  submitButton.disabled = true;
-  submitButton.textContent = "Sending...";
+    onAuthStateChanged(
+      auth,
+      async (user) => {
 
-  try {
+        if (!user) {
 
-    const ticketRef = await addDoc(
-      collection(db, "supportTickets"),
-      {
-        userId: currentUser.uid,
-        userEmail: currentUser.email || "",
-        category,
-        subject,
-        status: "open",
-        lastMessage: message,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
+          window.location.href = "login.html";
+
+          return;
+        }
+
+        currentUser = user;
+
+        await loadTickets();
+
       }
     );
 
-    await addDoc(
-      collection(db, "supportTickets", ticketRef.id, "messages"),
-      {
-        senderId: currentUser.uid,
-        senderRole: "user",
-        message,
-        createdAt: serverTimestamp()
+
+    /* =======================================================
+       CREATE TICKET
+       ======================================================= */
+
+    supportForm.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+        if (!currentUser) return;
+
+
+        const category =
+          document.getElementById("category").value;
+
+        const subject =
+          document
+            .getElementById("subject")
+            .value
+            .trim();
+
+        const message =
+          document
+            .getElementById("message")
+            .value
+            .trim();
+
+
+        if (
+          !category ||
+          !subject ||
+          !message
+        ) {
+          return;
+        }
+
+
+        submitButton.disabled = true;
+
+        submitButton.textContent =
+          "Sending...";
+
+
+        try {
+
+          const ticketRef =
+            await addDoc(
+              collection(
+                db,
+                "supportTickets"
+              ),
+              {
+                userId:
+                  currentUser.uid,
+
+                userEmail:
+                  currentUser.email || "",
+
+                category,
+
+                subject,
+
+                status: "open",
+
+                lastMessage:
+                  message,
+
+                createdAt:
+                  serverTimestamp(),
+
+                updatedAt:
+                  serverTimestamp()
+              }
+            );
+
+
+          await addDoc(
+            collection(
+              db,
+              "supportTickets",
+              ticketRef.id,
+              "messages"
+            ),
+            {
+              senderId:
+                currentUser.uid,
+
+              senderRole:
+                "user",
+
+              message,
+
+              createdAt:
+                serverTimestamp()
+            }
+          );
+
+
+          supportForm.reset();
+
+
+          await loadTickets();
+
+
+          openTicket(
+            ticketRef.id
+          );
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          alert(
+            "Could not create your support request."
+          );
+
+        } finally {
+
+          submitButton.disabled = false;
+
+          submitButton.textContent =
+            "Send support request";
+
+        }
+
       }
     );
 
-    supportForm.reset();
 
-    await loadTickets();
+    /* =======================================================
+       LOAD USER TICKETS
+       ======================================================= */
 
-    openTicket(ticketRef.id);
+    async function loadTickets() {
 
-  } catch (error) {
-
-    console.error(error);
-    alert("Could not create your support request.");
-
-  } finally {
-
-    submitButton.disabled = false;
-    submitButton.textContent = "Send support request";
-  }
-
-});
+      if (!currentUser) return;
 
 
-/* LOAD USER TICKETS */
-
-async function loadTickets() {
-
-  if (!currentUser) return;
-
-  ticketList.innerHTML =
-    `<div class="loading-state">Loading conversations...</div>`;
-
-  try {
-
-    const ticketsQuery = query(
-      collection(db, "supportTickets"),
-      where("userId", "==", currentUser.uid)
-    );
-
-    const snapshot = await getDocs(ticketsQuery);
-
-    const tickets = [];
-
-    snapshot.forEach((item) => {
-      tickets.push({
-        id: item.id,
-        ...item.data()
-      });
-    });
-
-    tickets.sort((a, b) => {
-
-      const aTime = a.updatedAt?.toMillis?.() || 0;
-      const bTime = b.updatedAt?.toMillis?.() || 0;
-
-      return bTime - aTime;
-    });
-
-    if (!tickets.length) {
-
-      ticketList.innerHTML = `
-        <div class="empty-state">
-          <i class="fa-regular fa-comments"></i>
-          <p>You don't have any support conversations yet.</p>
-        </div>
-      `;
-
-      return;
-    }
-
-    ticketList.innerHTML = "";
-
-    tickets.forEach(ticket => {
-
-      const item = document.createElement("div");
-      item.className = "ticket";
-
-      const status = ticket.status || "open";
-
-      item.innerHTML = `
-        <div class="ticket-top">
-
-          <div class="ticket-title">
-            ${escapeHtml(ticket.subject || "Support request")}
+      ticketList.innerHTML =
+        `
+          <div class="loading-state">
+            Loading conversations...
           </div>
-
-          <span class="status status-${status}">
-            ${status.toUpperCase()}
-          </span>
-
-        </div>
-
-        <div class="ticket-message">
-          ${escapeHtml(ticket.lastMessage || "")}
-        </div>
-
-        <div class="ticket-date">
-          ${formatDate(ticket.updatedAt)}
-        </div>
-      `;
-
-      item.addEventListener("click", () => {
-        openTicket(ticket.id);
-      });
-
-      ticketList.appendChild(item);
-
-    });
-
-  } catch (error) {
-
-    console.error(error);
-
-    ticketList.innerHTML = `
-      <div class="empty-state">
-        Unable to load support conversations.
-      </div>
-    `;
-  }
-}
-
-
-/* OPEN CHAT */
-
-async function openTicket(ticketId) {
-
-  currentTicketId = ticketId;
-
-  const ticketSnap = await getDoc(
-    doc(db, "supportTickets", ticketId)
-  );
-
-  if (!ticketSnap.exists()) return;
-
-  const ticket = ticketSnap.data();
-
-  if (ticket.userId !== currentUser.uid) return;
-
-  chatSubject.textContent = ticket.subject || "Support";
-  chatStatus.textContent =
-    (ticket.status || "open").toUpperCase();
-
-  chatOverlay.classList.add("show");
-
-  if (unsubscribeMessages) {
-    unsubscribeMessages();
-  }
-
-  const messagesQuery = query(
-    collection(db, "supportTickets", ticketId, "messages"),
-    orderBy("createdAt", "asc")
-  );
-
-  unsubscribeMessages = onSnapshot(
-    messagesQuery,
-    (snapshot) => {
-
-      messages.innerHTML = "";
-
-      snapshot.forEach(item => {
-
-        const data = item.data();
-
-        const bubble = document.createElement("div");
-
-        bubble.className =
-          "message " +
-          (data.senderRole === "admin" ? "admin" : "user");
-
-        bubble.innerHTML = `
-          ${escapeHtml(data.message || "")}
-          <span class="message-time">
-            ${formatDate(data.createdAt)}
-          </span>
         `;
 
-        messages.appendChild(bubble);
-      });
 
-      messages.scrollTop = messages.scrollHeight;
+      try {
+
+        const ticketsQuery =
+          query(
+            collection(
+              db,
+              "supportTickets"
+            ),
+
+            where(
+              "userId",
+              "==",
+              currentUser.uid
+            )
+          );
+
+
+        const snapshot =
+          await getDocs(
+            ticketsQuery
+          );
+
+
+        const tickets = [];
+
+
+        snapshot.forEach(
+          (item) => {
+
+            tickets.push({
+              id: item.id,
+              ...item.data()
+            });
+
+          }
+        );
+
+
+        tickets.sort(
+          (a, b) => {
+
+            const aTime =
+              a.updatedAt?.toMillis?.() || 0;
+
+            const bTime =
+              b.updatedAt?.toMillis?.() || 0;
+
+            return bTime - aTime;
+
+          }
+        );
+
+
+        if (!tickets.length) {
+
+          ticketList.innerHTML =
+            `
+              <div class="empty-state">
+
+                <i
+                  class="fa-regular fa-comments"
+                ></i>
+
+                <p>
+                  You don't have any support
+                  conversations yet.
+                </p>
+
+              </div>
+            `;
+
+          return;
+        }
+
+
+        ticketList.innerHTML = "";
+
+
+        tickets.forEach(
+          (ticket) => {
+
+            const item =
+              document.createElement("div");
+
+
+            item.className =
+              "ticket";
+
+
+            const status =
+              ticket.status || "open";
+
+
+            item.innerHTML =
+              `
+                <div class="ticket-top">
+
+                  <div class="ticket-title">
+                    ${escapeHtml(
+                      ticket.subject ||
+                      "Support request"
+                    )}
+                  </div>
+
+                  <span
+                    class="status status-${status}"
+                  >
+                    ${status.toUpperCase()}
+                  </span>
+
+                </div>
+
+                <div class="ticket-message">
+                  ${escapeHtml(
+                    ticket.lastMessage || ""
+                  )}
+                </div>
+
+                <div class="ticket-date">
+                  ${formatDate(
+                    ticket.updatedAt
+                  )}
+                </div>
+              `;
+
+
+            item.addEventListener(
+              "click",
+              () => {
+
+                openTicket(
+                  ticket.id
+                );
+
+              }
+            );
+
+
+            ticketList.appendChild(
+              item
+            );
+
+          }
+        );
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        ticketList.innerHTML =
+          `
+            <div class="empty-state">
+              Unable to load support
+              conversations.
+            </div>
+          `;
+
+      }
+
     }
-  );
-}
 
 
-/* SEND USER MESSAGE */
+    /* =======================================================
+       OPEN CHAT
+       ======================================================= */
 
-chatForm.addEventListener("submit", async (event) => {
+    async function openTicket(
+      ticketId
+    ) {
 
-  event.preventDefault();
+      currentTicketId =
+        ticketId;
 
-  if (!currentUser || !currentTicketId) return;
 
-  const text = replyInput.value.trim();
+      const ticketSnap =
+        await getDoc(
+          doc(
+            db,
+            "supportTickets",
+            ticketId
+          )
+        );
 
-  if (!text) return;
 
-  replyInput.disabled = true;
+      if (!ticketSnap.exists()) {
+        return;
+      }
 
-  try {
 
-    await addDoc(
-      collection(
-        db,
-        "supportTickets",
-        currentTicketId,
-        "messages"
-      ),
-      {
-        senderId: currentUser.uid,
-        senderRole: "user",
-        message: text,
-        createdAt: serverTimestamp()
+      const ticket =
+        ticketSnap.data();
+
+
+      if (
+        ticket.userId !==
+        currentUser.uid
+      ) {
+        return;
+      }
+
+
+      chatSubject.textContent =
+        ticket.subject ||
+        "Support";
+
+
+      chatStatus.textContent =
+        (
+          ticket.status ||
+          "open"
+        ).toUpperCase();
+
+
+      chatOverlay.classList.add(
+        "show"
+      );
+
+
+      /* Prevent background scrolling */
+
+      document.body.style.overflow =
+        "hidden";
+
+
+      if (unsubscribeMessages) {
+
+        unsubscribeMessages();
+
+      }
+
+
+      const messagesQuery =
+        query(
+          collection(
+            db,
+            "supportTickets",
+            ticketId,
+            "messages"
+          ),
+
+          orderBy(
+            "createdAt",
+            "asc"
+          )
+        );
+
+
+      unsubscribeMessages =
+        onSnapshot(
+          messagesQuery,
+          (snapshot) => {
+
+            messages.innerHTML =
+              "";
+
+
+            snapshot.forEach(
+              (item) => {
+
+                const data =
+                  item.data();
+
+
+                const bubble =
+                  document.createElement(
+                    "div"
+                  );
+
+
+                bubble.className =
+                  "message " +
+                  (
+                    data.senderRole ===
+                    "admin"
+                      ? "admin"
+                      : "user"
+                  );
+
+
+                bubble.innerHTML =
+                  `
+                    ${escapeHtml(
+                      data.message || ""
+                    )}
+
+                    <span
+                      class="message-time"
+                    >
+                      ${formatDate(
+                        data.createdAt
+                      )}
+                    </span>
+                  `;
+
+
+                messages.appendChild(
+                  bubble
+                );
+
+              }
+            );
+
+
+            requestAnimationFrame(
+              () => {
+
+                messages.scrollTop =
+                  messages.scrollHeight;
+
+              }
+            );
+
+          }
+        );
+
+    }
+
+
+    /* =======================================================
+       SEND MESSAGE
+       ======================================================= */
+
+    chatForm.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+
+        if (
+          !currentUser ||
+          !currentTicketId
+        ) {
+          return;
+        }
+
+
+        const text =
+          replyInput.value.trim();
+
+
+        if (!text) {
+          return;
+        }
+
+
+        replyInput.disabled =
+          true;
+
+
+        try {
+
+          await addDoc(
+            collection(
+              db,
+              "supportTickets",
+              currentTicketId,
+              "messages"
+            ),
+            {
+              senderId:
+                currentUser.uid,
+
+              senderRole:
+                "user",
+
+              message:
+                text,
+
+              createdAt:
+                serverTimestamp()
+            }
+          );
+
+
+          await updateTicket(
+            currentTicketId,
+            text,
+            "open"
+          );
+
+
+          replyInput.value = "";
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          alert(
+            "Could not send message."
+          );
+
+
+        } finally {
+
+          replyInput.disabled =
+            false;
+
+          replyInput.focus();
+
+        }
+
       }
     );
 
-    await updateTicket(
-      currentTicketId,
-      text,
-      "open"
+
+    /* =======================================================
+       UPDATE TICKET
+       ======================================================= */
+
+    async function updateTicket(
+      ticketId,
+      lastMessage,
+      status
+    ) {
+
+      const {
+        updateDoc
+      } =
+        await import(
+          "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+        );
+
+
+      await updateDoc(
+        doc(
+          db,
+          "supportTickets",
+          ticketId
+        ),
+        {
+          lastMessage,
+
+          status,
+
+          updatedAt:
+            serverTimestamp()
+        }
+      );
+
+    }
+
+
+    /* =======================================================
+       CLOSE CHAT
+       ======================================================= */
+
+    closeChat.addEventListener(
+      "click",
+      () => {
+
+        chatOverlay.classList.remove(
+          "show"
+        );
+
+
+        document.body.style.overflow =
+          "";
+
+
+        if (unsubscribeMessages) {
+
+          unsubscribeMessages();
+
+          unsubscribeMessages =
+            null;
+
+        }
+
+
+        currentTicketId =
+          null;
+
+      }
     );
 
-    replyInput.value = "";
 
-  } catch (error) {
+    /* =======================================================
+       ESCAPE KEY
+       ======================================================= */
 
-    console.error(error);
-    alert("Could not send message.");
+    document.addEventListener(
+      "keydown",
+      (event) => {
 
-  } finally {
+        if (
+          event.key === "Escape" &&
+          chatOverlay.classList.contains(
+            "show"
+          )
+        ) {
 
-    replyInput.disabled = false;
-    replyInput.focus();
-  }
+          closeChat.click();
 
-});
+        }
+
+      }
+    );
 
 
-async function updateTicket(ticketId, lastMessage, status) {
+    /* =======================================================
+       HELPERS
+       ======================================================= */
 
-  const { updateDoc } =
-    await import("https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js");
+    function escapeHtml(value) {
 
-  await updateDoc(
-    doc(db, "supportTickets", ticketId),
-    {
-      lastMessage,
-      status,
-      updatedAt: serverTimestamp()
+      return String(value)
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
     }
-  );
-}
 
 
-/* CLOSE */
+    function formatDate(
+      timestamp
+    ) {
 
-closeChat.addEventListener("click", () => {
+      if (
+        !timestamp?.toDate
+      ) {
 
-  chatOverlay.classList.remove("show");
+        return "Just now";
 
-  if (unsubscribeMessages) {
-    unsubscribeMessages();
-    unsubscribeMessages = null;
-  }
-
-  currentTicketId = null;
-});
+      }
 
 
-/* HELPERS */
+      return timestamp
+        .toDate()
+        .toLocaleString();
 
-function escapeHtml(value) {
+    }
 
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-
-function formatDate(timestamp) {
-
-  if (!timestamp?.toDate) {
-    return "Just now";
-  }
-
-  return timestamp.toDate().toLocaleString();
-}
-
-</script>
+  </script>
 
 </body>
 </html>

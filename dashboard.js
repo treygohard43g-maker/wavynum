@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+const ADMIN_UID = "9msvItX8pAYdz4OLdm1QHGtXFQ33";
 
 import {
   doc,
@@ -130,6 +131,16 @@ document
 
 onAuthStateChanged(auth, async (user) => {
 
+  const adminSupportLink = document.getElementById("adminSupportLink");
+
+if (adminSupportLink) {
+  if (user && user.uid === ADMIN_UID) {
+    adminSupportLink.style.display = "flex";
+  } else {
+    adminSupportLink.style.display = "none";
+  }
+}
+  
   if (!user) {
 
     window.location.href = "login.html";

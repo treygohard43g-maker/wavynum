@@ -2651,4 +2651,343 @@ body.menu-open {
   }
 
 }
+/* =========================================================
+   WAVYNUM — FINAL MOBILE SCREEN POLISH
+   ========================================================= */
 
+html {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  width: 100%;
+  min-width: 0;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
+/* Prevent oversized content */
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+/* Better mobile controls */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 750px) {
+
+  /* ---------- GENERAL PAGE WIDTH ---------- */
+
+  main,
+  section,
+  header,
+  footer {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ---------- NAVBAR ---------- */
+
+  .navbar {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ---------- DASHBOARD ---------- */
+
+  .dashboard-page {
+    min-height: 100dvh;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .dashboard-main {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+
+    padding-left: 14px;
+    padding-right: 14px;
+
+    padding-bottom:
+      calc(70px + env(safe-area-inset-bottom));
+  }
+
+  .dashboard-header {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: 64px;
+    height: 64px;
+
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .dashboard-logo {
+    font-size: 21px;
+  }
+
+  .menu-button,
+  .notification-button {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    flex: 0 0 40px;
+  }
+
+  /* ---------- DASHBOARD CARDS ---------- */
+
+  .wallet-grid,
+  .quick-actions,
+  .active-number-card,
+  .transactions-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .wallet-card,
+  .quick-action-card {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .wallet-balance {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .quick-action-card p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  /* ---------- SIDE MENU ---------- */
+
+  .side-menu {
+    width: min(310px, 88vw);
+    height: 100dvh;
+    max-height: 100dvh;
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    padding-left: 14px;
+    padding-right: 14px;
+
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .side-navigation {
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .side-navigation::-webkit-scrollbar {
+    display: none;
+  }
+
+  .side-link {
+    min-height: 46px;
+    box-sizing: border-box;
+  }
+
+  .side-menu-bottom {
+    flex-shrink: 0;
+    padding-bottom:
+      calc(12px + env(safe-area-inset-bottom));
+  }
+
+  /* ---------- MARKETPLACE ---------- */
+
+  .numbers-main {
+    width: calc(100% - 24px);
+    max-width: 620px;
+    box-sizing: border-box;
+
+    padding-top: 24px;
+    padding-bottom:
+      calc(50px + env(safe-area-inset-bottom));
+  }
+
+  .service-grid {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .service-number-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .service-card-info {
+    min-width: 0;
+  }
+
+  .service-card-info h3,
+  .service-card-info p {
+    overflow-wrap: anywhere;
+  }
+
+  /* ---------- NUMBER SELECTION ---------- */
+
+  .available-number-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .available-number-main {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .available-number-main > div {
+    min-width: 0;
+  }
+
+  .available-number-main h3,
+  .available-number-main p {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .available-number-right {
+    flex-shrink: 0;
+  }
+
+  /* ---------- ADD FUNDS / WALLET ---------- */
+
+  .funds-main {
+    width: 100%;
+    max-width: 760px;
+    box-sizing: border-box;
+
+    padding-left: 16px;
+    padding-right: 16px;
+
+    padding-bottom:
+      calc(60px + env(safe-area-inset-bottom));
+  }
+
+  .funds-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .deposit-preview {
+    min-width: 0;
+    gap: 12px;
+  }
+
+  .deposit-preview strong {
+    overflow-wrap: anywhere;
+    text-align: right;
+  }
+
+  /* ---------- FORMS ---------- */
+
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  /* ---------- AUTH ---------- */
+
+  .auth-page {
+    min-height: 100dvh;
+    box-sizing: border-box;
+
+    padding-bottom:
+      calc(24px + env(safe-area-inset-bottom));
+  }
+
+  /* ---------- MODALS ---------- */
+
+  .modal,
+  .popup,
+  .dialog {
+    box-sizing: border-box;
+    max-width: calc(100vw - 24px);
+  }
+
+  /* ---------- TOUCH ---------- */
+
+  button,
+  a,
+  .side-link,
+  .service-number-card,
+  .choose-number-button {
+    touch-action: manipulation;
+  }
+}
+
+/* Extra-small iPhones */
+@media (max-width: 390px) {
+
+  .dashboard-main {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
+  .numbers-main {
+    width: calc(100% - 20px);
+  }
+
+  .service-number-card {
+    gap: 11px;
+    padding: 13px;
+  }
+
+  .service-brand-icon {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+  }
+
+  .available-number-card {
+    gap: 10px;
+    padding: 13px;
+  }
+
+  .available-number-right {
+    gap: 7px;
+  }
+}

@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Numbers — Wavynum</title>
+
+  <link rel="stylesheet" href="style.css?v=9">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <style>
+    .my-numbers-main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 22px 18px 55px;
+    }
+
+    .page-heading {
+      margin-bottom: 22px;
+    }
+
+    .page-heading .eyebrow {
+      margin: 0 0 6px;
+      color: #18d765;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+    }
+
+    .page-heading h1 {
+      margin: 0 0 7px;
+      color: #f0fff7;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .page-heading p {
+      margin: 0;
+      color: #84938c;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .numbers-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .owned-number-card {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+
+      padding: 13px;
+
+      background: #08130e;
+      border: 1px solid rgba(24,215,101,.16);
+      border-radius: 18px;
+    }
+
+    .owned-number-icon {
+      width: 54px;
+      height: 54px;
+      min-width: 54px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 15px;
+
+      background: rgba(24,215,101,.07);
+      color: #18d765;
+
+      font-size: 20px;
+    }
+
+    .owned-number-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .owned-number-info h3 {
+      margin: 0 0 4px;
+
+      color: #effff6;
+      font-size: 16px;
+      font-weight: 800;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .owned-number-info p {
+      margin: 0;
+
+      color: #7f9087;
+      font-size: 11px;
+    }
+
+    .number-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+
+      margin-top: 7px;
+      padding: 4px 8px;
+
+      border-radius: 20px;
+
+      background: rgba(24,215,101,.07);
+      color: #18d765;
+
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .number-actions {
+      flex-shrink: 0;
+    }
+
+    .sms-button {
+      border: 1px solid rgba(24,215,101,.18);
+      background: rgba(24,215,101,.06);
+
+      color: #18d765;
+
+      border-radius: 11px;
+
+      padding: 9px 11px;
+
+      font-size: 11px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    .sms-button i {
+      margin-right: 4px;
+    }
+
+    .empty-state {
+      padding: 42px 20px;
+
+      text-align: center;
+
+      background: #08130e;
+      border: 1px solid rgba(24,215,101,.12);
+      border-radius: 20px;
+    }
+
+    .empty-state-icon {
+      width: 65px;
+      height: 65px;
+
+      margin: 0 auto 14px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 18px;
+
+      background: rgba(24,215,101,.06);
+      color: #18d765;
+
+      font-size: 25px;
+    }
+
+    .empty-state h2 {
+      margin: 0 0 7px;
+
+      color: #eafff2;
+      font-size: 18px;
+    }
+
+    .empty-state p {
+      max-width: 340px;
+      margin: 0 auto 18px;
+
+      color: #7d8d85;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .buy-number-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+
+      padding: 11px 17px;
+
+      border-radius: 12px;
+
+      background: #18d765;
+      color: #041008;
+
+      text-decoration: none;
+
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .loading-state {
+      padding: 40px;
+      text-align: center;
+      color: #7f9087;
+      font-size: 13px;
+    }
+
+    .loading-state i {
+      margin-right: 7px;
+      color: #18d765;
+    }
+
+    /* ================= OTP MODAL ================= */
+
+    .otp-overlay {
+      position: fixed;
+      inset: 0;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background: rgba(0,0,0,.72);
+
+      z-index: 9999;
+    }
+
+    .otp-overlay.show {
+      display: flex;
+    }
+
+    .otp-modal {
+      width: 100%;
+      max-width: 390px;
+
+      padding: 22px;
+
+      background: #08130e;
+      border: 1px solid rgba(24,215,101,.18);
+      border-radius: 22px;
+
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+    }
+
+    .otp-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 20px;
+    }
+
+    .otp-modal-header h2 {
+      margin: 0;
+
+      color: #effff6;
+      font-size: 18px;
+    }
+
+    .close-otp {
+      width: 32px;
+      height: 32px;
+
+      border: none;
+      border-radius: 50%;
+
+      background: rgba(255,255,255,.05);
+      color: #8b9992;
+
+      cursor: pointer;
+    }
+
+    .sms-message {
+      padding: 17px;
+
+      background: #101b15;
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 15px;
+    }
+
+    .sms-message-top {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      margin-bottom: 12px;
+    }
+
+    .sms-message-icon {
+      width: 34px;
+      height: 34px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 10px;
+
+      background: rgba(24,215,101,.08);
+      color: #18d765;
+    }
+
+    .sms-message-top strong {
+      color: #eafff2;
+      font-size: 13px;
+    }
+
+    .sms-message p {
+      margin: 0;
+
+      color: #9aa9a1;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .otp-code {
+      margin: 15px 0 0;
+
+      padding: 13px;
+
+      text-align: center;
+
+      background: rgba(24,215,101,.06);
+      border: 1px dashed rgba(24,215,101,.25);
+      border-radius: 12px;
+
+      color: #18d765;
+
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 5px;
+    }
+
+    .copy-otp-button {
+      width: 100%;
+
+      margin-top: 12px;
+      padding: 12px;
+
+      border: none;
+      border-radius: 12px;
+
+      background: #18d765;
+      color: #041008;
+
+      font-size: 12px;
+      font-weight: 800;
+
+      cursor: pointer;
+    }
+
+    .demo-label {
+      margin-top: 12px;
+
+      color: #6f8078;
+      font-size: 10px;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+
+      .my-numbers-main {
+        padding: 18px 14px 45px;
+      }
+
+      .page-heading h1 {
+        font-size: 25px;
+      }
+
+      .owned-number-card {
+        padding: 11px;
+        gap: 10px;
+      }
+
+      .owned-number-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 13px;
+        font-size: 18px;
+      }
+
+      .owned-number-info h3 {
+        font-size: 14px;
+      }
+
+      .owned-number-info p {
+        font-size: 10px;
+      }
+
+      .sms-button {
+        padding: 8px 9px;
+        font-size: 10px;
+      }
+
+      .sms-button i {
+        margin-right: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body class="dashboard-page">
+
+  <header class="dashboard-header">
+
+    <a href="dashboard.html" class="dashboard-logo">
+      Wavynum
+    </a>
+
+    <a
+      href="dashboard.html"
+      class="back-button"
+      aria-label="Back to dashboard"
+    >
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+  </header>
+
+
+  <main class="my-numbers-main">
+
+    <section class="page-heading">
+
+      <p class="eyebrow">
+        MY NUMBERS
+      </p>
+
+      <h1>My Numbers</h1>
+
+      <p>
+        Numbers you have purchased from Wavynum.
+      </p>
+
+    </section>
+
+
+    <section
+      id="numbersContainer"
+      class="numbers-container"
+    >
+
+      <div class="loading-state">
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        Loading your numbers...
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- OTP MODAL -->
+
+  <div
+    id="otpOverlay"
+    class="otp-overlay"
+  >
+
+    <div class="otp-modal">
+
+      <div class="otp-modal-header">
+
+        <h2>
+          SMS Inbox
+        </h2>
+
+        <button
+          id="closeOtp"
+          class="close-otp"
+          type="button"
+          aria-label="Close"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+      </div>
+
+
+      <div class="sms-message">
+
+        <div class="sms-message-top">
+
+          <div class="sms-message-icon">
+            <i class="fa-solid fa-message"></i>
+          </div>
+
+          <strong id="otpService">
+            Wavynum
+          </strong>
+
+        </div>
+
+
+        <p>
+          Your simulated verification code is:
+        </p>
+
+
+        <div
+          id="otpCode"
+          class="otp-code"
+        >
+          ------
+        </div>
+
+
+        <button
+          id="copyOtp"
+          class="copy-otp-button"
+          type="button"
+        >
+          <i class="fa-solid fa-copy"></i>
+          Copy OTP
+        </button>
+
+
+        <div class="demo-label">
+
+          This is a simulated OTP for
+          development/testing. It is not an
+          actual SMS received from the selected
+          service.
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script type="module">
+
+    import {
+      auth,
+      db
+    } from "./firebase.js";
+
+
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+    import {
+      collection,
+      query,
+      where,
+      orderBy,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+    const numbersContainer =
+      document.getElementById(
+        "numbersContainer"
+      );
+
+
+    const otpOverlay =
+      document.getElementById(
+        "otpOverlay"
+      );
+
+
+    const closeOtp =
+      document.getElementById(
+        "closeOtp"
+      );
+
+
+    const otpCode =
+      document.getElementById(
+        "otpCode"
+      );
+
+
+    const otpService =
+      document.getElementById(
+        "otpService"
+      );
+
+
+    const copyOtp =
+      document.getElementById(
+        "copyOtp"
+      );
+
+
+    let currentOtp = "";
+
+
+    /* =========================================
+       EMPTY STATE
+    ========================================= */
+
+    function showEmptyState() {
+
+      numbersContainer.innerHTML = `
+
+        <div class="empty-state">
+
+          <div class="empty-state-icon">
+            <i class="fa-solid fa-phone"></i>
+          </div>
+
+          <h2>
+            You don't have any numbers yet
+          </h2>
+
+          <p>
+            Purchase a virtual number and it
+            will appear here automatically.
+          </p>
+
+          <a
+            href="buy-number.html"
+            class="buy-number-button"
+          >
+            <i class="fa-solid fa-cart-shopping"></i>
+            Buy a Number
+          </a>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /* =========================================
+       DISPLAY NUMBERS
+    ========================================= */
+
+    function displayNumbers(
+      docs
+    ) {
+
+      numbersContainer.innerHTML = "";
+
+
+      if (docs.length === 0) {
+
+        showEmptyState();
+
+        return;
+
+      }
+
+
+      docs.forEach(
+        numberDoc => {
+
+          const data =
+            numberDoc.data();
+
+
+          const card =
+            document.createElement(
+              "div"
+            );
+
+
+          card.className =
+            "owned-number-card";
+
+
+          card.innerHTML = `
+
+            <div class="owned-number-icon">
+
+              <i class="fa-solid fa-phone"></i>
+
+            </div>
+
+
+            <div class="owned-number-info">
+
+              <h3>
+                ${escapeHtml(
+                  data.number || "Unknown number"
+                )}
+              </h3>
+
+              <p>
+                ${escapeHtml(
+                  data.service || "Service"
+                )}
+                •
+                ${escapeHtml(
+                  data.countryName || ""
+                )}
+              </p>
+
+              <span class="number-status">
+
+                <i class="fa-solid fa-circle"></i>
+
+                ${escapeHtml(
+                  data.status || "active"
+                )}
+
+              </span>
+
+            </div>
+
+
+            <div class="number-actions">
+
+              <button
+                type="button"
+                class="sms-button"
+              >
+
+                <i class="fa-solid fa-message"></i>
+
+                OTP
+
+              </button>
+
+            </div>
+
+          `;
+
+
+          const smsButton =
+            card.querySelector(
+              ".sms-button"
+            );
+
+
+          smsButton.addEventListener(
+            "click",
+            () => {
+
+              openOtp(
+                data.service || "Wavynum",
+                data.demoOtp || "000000"
+              );
+
+            }
+          );
+
+
+          numbersContainer.appendChild(
+            card
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================
+       OTP MODAL
+    ========================================= */
+
+    function openOtp(
+      service,
+      otp
+    ) {
+
+      currentOtp =
+        String(otp);
+
+
+      otpService.textContent =
+        service;
+
+
+      otpCode.textContent =
+        currentOtp;
+
+
+      otpOverlay.classList.add(
+        "show"
+      );
+
+    }
+
+
+    function closeOtpModal() {
+
+      otpOverlay.classList.remove(
+        "show"
+      );
+
+    }
+
+
+    closeOtp.addEventListener(
+      "click",
+      closeOtpModal
+    );
+
+
+    otpOverlay.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target ===
+          otpOverlay
+        ) {
+
+          closeOtpModal();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       COPY OTP
+    ========================================= */
+
+    copyOtp.addEventListener(
+      "click",
+      async () => {
+
+        if (!currentOtp) {
+          return;
+        }
+
+
+        try {
+
+          await navigator.clipboard.writeText(
+            currentOtp
+          );
+
+
+          copyOtp.innerHTML =
+            '<i class="fa-solid fa-check"></i> Copied';
+
+
+          setTimeout(
+            () => {
+
+              copyOtp.innerHTML =
+                '<i class="fa-solid fa-copy"></i> Copy OTP';
+
+            },
+            1400
+          );
+
+
+        } catch (error) {
+
+          console.error(error);
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       BASIC HTML ESCAPING
+    ========================================= */
+
+    function escapeHtml(
+      value
+    ) {
+
+      return String(value)
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    /* =========================================
+       LOAD USER NUMBERS
+    ========================================= */
+
+    onAuthStateChanged(
+      auth,
+      async user => {
+
+        if (!user) {
+
+          numbersContainer.innerHTML = `
+
+            <div class="empty-state">
+
+              <div class="empty-state-icon">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+
+              <h2>
+                Sign in required
+              </h2>
+
+              <p>
+                Sign in to view the numbers
+                connected to your account.
+              </p>
+
+              <a
+                href="signin.html"
+                class="buy-number-button"
+              >
+                Sign In
+              </a>
+
+            </div>
+
+          `;
+
+          return;
+
+        }
+
+
+        try {
+
+          const numbersRef =
+            collection(
+              db,
+              "users",
+              user.uid,
+              "numbers"
+            );
+
+
+          const snapshot =
+            await getDocs(
+              numbersRef
+            );
+
+
+          displayNumbers(
+            snapshot.docs
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "Unable to load numbers:",
+            error
+          );
+
+
+          numbersContainer.innerHTML = `
+
+            <div class="empty-state">
+
+              <div class="empty-state-icon">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+              </div>
+
+              <h2>
+                Unable to load numbers
+              </h2>
+
+              <p>
+                There was a problem loading
+                your numbers. Check your
+                Firestore rules and try again.
+              </p>
+
+            </div>
+
+          `;
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>

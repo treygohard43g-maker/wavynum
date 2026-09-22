@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <title>Confirm Purchase — Wavynum</title>
+  <title>Choose Number - Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
 
   <link
     rel="stylesheet"
@@ -14,1108 +17,1271 @@
   >
 
   <style>
-    .confirmation-page {
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f7fb;
+      color: #111827;
+      font-family: Arial, sans-serif;
+    }
+
+    .selection-page {
       min-height: 100vh;
-      background: #050806;
-      color: #f0fdf4;
+      padding: 16px 12px 30px;
     }
 
-    .confirmation-main {
+    .selection-container {
       width: 100%;
-      max-width: 760px;
+      max-width: 650px;
       margin: 0 auto;
-      padding: 55px 20px 80px;
     }
 
-    .confirmation-header {
-      margin-bottom: 30px;
-    }
+    /* HEADER */
 
-    .confirmation-header .dashboard-eyebrow {
-      color: #39e86f;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.7px;
-    }
-
-    .confirmation-header h1 {
-      margin-top: 10px;
-      color: #ecfdf3;
-      font-size: clamp(32px, 6vw, 46px);
-      line-height: 1.08;
-      letter-spacing: -2px;
-    }
-
-    .confirmation-header p:last-child {
-      margin-top: 13px;
-      color: #78857d;
-      font-size: 15px;
-    }
-
-    .confirmation-card {
-      background: linear-gradient(145deg, #0c140f, #080d0a);
-      border: 1px solid rgba(34, 197, 94, 0.14);
-      border-radius: 22px;
-      padding: 25px;
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.30);
-    }
-
-    .service-row {
+    .top-bar {
       display: flex;
       align-items: center;
-      gap: 15px;
-      padding-bottom: 22px;
-      border-bottom: 1px solid rgba(34, 197, 94, 0.10);
+      gap: 11px;
+      margin-bottom: 15px;
     }
 
-    .service-icon {
-      width: 54px;
-      height: 54px;
+    .back-btn {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 12px;
+      background: #fff;
+      color: #111827;
+      box-shadow: 0 3px 12px rgba(0,0,0,.07);
+      cursor: pointer;
       flex-shrink: 0;
+    }
+
+    .title-area {
+      min-width: 0;
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    /* SERVICE HEADER */
+
+    .service-card {
+      background: #fff;
+      border-radius: 17px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.06);
+      margin-bottom: 12px;
+    }
+
+    .service-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #f3f4f6;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 14px;
-      background: rgba(34, 197, 94, 0.09);
-      border: 1px solid rgba(34, 197, 94, 0.16);
-      color: #39e86f;
-      font-size: 21px;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
-    .service-info h2 {
-      color: #ecfdf3;
-      font-size: 19px;
+    .service-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 5px;
+    }
+
+    .service-logo i {
+      font-size: 20px;
+      color: #6b7280;
+    }
+
+    .service-name {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .service-description {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    /* FILTERS */
+
+    .filters {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+    }
+
+    .filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-btn {
+      flex-shrink: 0;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      color: #4b5563;
+      border-radius: 20px;
+      padding: 7px 13px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .filter-btn.active {
+      background: #111827;
+      color: #fff;
+      border-color: #111827;
+    }
+
+    /* RESULT INFO */
+
+    .result-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 4px 2px 9px;
+    }
+
+    .result-count {
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .secure-label {
+      color: #16a34a;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* NUMBER LIST */
+
+    .numbers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    /* NUMBER CARD */
+
+    .number-card {
+      background: #fff;
+      border-radius: 17px;
+      padding: 13px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.055);
+      border: 1px solid #edf0f4;
+    }
+
+    .number-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .number-main {
+      min-width: 0;
+    }
+
+    .number-label {
+      color: #6b7280;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      font-weight: 700;
       margin-bottom: 3px;
     }
 
-    .service-info p {
-      color: #78857d;
-      font-size: 13px;
+    /* ACTUAL PHONE NUMBER */
+
+    .actual-number {
+      font-size: 20px;
+      font-weight: 900;
+      color: #111827;
+      letter-spacing: .3px;
+      line-height: 1.15;
+      word-break: break-word;
     }
 
-    .selected-number {
-      text-align: center;
-      padding: 34px 10px;
-    }
-
-    .selected-number-label {
-      display: block;
-      margin-bottom: 9px;
-      color: #58645b;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    .selected-number strong {
-      display: block;
-      color: #39e86f;
-      font-size: clamp(25px, 7vw, 34px);
-      font-weight: 800;
-    }
-
-    .details-box {
-      padding-top: 5px;
-      border-top: 1px solid rgba(34, 197, 94, 0.10);
-    }
-
-    .detail-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 14px 2px;
-      border-bottom: 1px solid rgba(34, 197, 94, 0.06);
-    }
-
-    .detail-row span {
-      color: #78857d;
-      font-size: 14px;
-    }
-
-    .detail-row strong {
-      color: #ecfdf3;
-      font-size: 14px;
+    .price-box {
+      flex-shrink: 0;
       text-align: right;
     }
 
-    .detail-row:last-child strong {
-      color: #39e86f;
-      font-size: 17px;
+    .price {
+      font-size: 18px;
+      font-weight: 900;
+      color: #111827;
     }
 
-    .wallet-card {
-      margin-top: 20px;
-      padding: 18px;
-      background: rgba(34, 197, 94, 0.055);
-      border: 1px solid rgba(34, 197, 94, 0.14);
-      border-radius: 16px;
+    .price-label {
+      color: #9ca3af;
+      font-size: 9px;
+      margin-top: 1px;
     }
 
-    .wallet-card-top {
+    /* CARD DETAILS */
+
+    .number-details {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 15px;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 9px;
     }
 
-    .wallet-label {
-      color: #78857d;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-    }
-
-    .wallet-amount {
-      margin-top: 5px;
-      color: #39e86f;
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    .wallet-icon-small {
-      width: 42px;
-      height: 42px;
-      display: flex;
+    .detail-pill {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      background: rgba(34, 197, 94, 0.10);
-      border: 1px solid rgba(34, 197, 94, 0.14);
-      color: #39e86f;
+      gap: 4px;
+      background: #f7f8fa;
+      color: #596273;
+      border-radius: 8px;
+      padding: 5px 7px;
+      font-size: 10px;
+      font-weight: 600;
     }
 
-    .buy-button {
+    .detail-pill i {
+      font-size: 9px;
+    }
+
+    /* CHOOSE BUTTON */
+
+    .choose-btn {
       width: 100%;
-      margin-top: 20px;
-      padding: 15px;
-      border: none;
+      border: 0;
       border-radius: 11px;
-      background: #22c55e;
-      color: #031108;
-      font-size: 15px;
+      background: #111827;
+      color: #fff;
+      padding: 10px 12px;
+      margin-top: 10px;
+      font-size: 13px;
       font-weight: 800;
       cursor: pointer;
-      transition: .2s ease;
     }
 
-    .buy-button:hover {
-      background: #39e86f;
-      transform: translateY(-2px);
+    .choose-btn:active {
+      transform: scale(.99);
     }
 
-    .buy-button:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-      transform: none;
+    /* LOADING */
+
+    .loading {
+      text-align: center;
+      padding: 45px 20px;
+      color: #6b7280;
     }
 
-    .back-link {
+    .loading i {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+
+    /* EMPTY */
+
+    .empty-state {
+      background: #fff;
+      border-radius: 18px;
+      padding: 35px 20px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,.05);
+    }
+
+    .empty-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: #f3f4f6;
+      margin: 0 auto 12px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      gap: 7px;
-      margin-top: 20px;
-      color: #68756c;
-      text-decoration: none;
-      font-size: 13px;
+      justify-content: center;
+      color: #6b7280;
+      font-size: 22px;
     }
 
-    .message {
-      display: none;
-      margin-top: 15px;
-      padding: 13px 14px;
-      border-radius: 11px;
+    .empty-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .empty-text {
+      color: #6b7280;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* ERROR */
+
+    .error-box {
+      background: #fff1f2;
+      color: #be123c;
+      border: 1px solid #fecdd3;
+      border-radius: 13px;
+      padding: 13px;
       font-size: 13px;
       line-height: 1.5;
     }
 
-    .message.show {
-      display: block;
-    }
+    @media (min-width: 600px) {
 
-    .message.error {
-      background: rgba(220, 38, 38, .10);
-      border: 1px solid rgba(220, 38, 38, .20);
-      color: #ff9b9b;
-    }
-
-    .message.success {
-      background: rgba(34, 197, 94, .09);
-      border: 1px solid rgba(34, 197, 94, .20);
-      color: #86efac;
-    }
-
-    .loading {
-      padding: 60px 20px;
-      text-align: center;
-      color: #78857d;
-    }
-
-    .loading i {
-      display: block;
-      margin-bottom: 12px;
-      color: #39e86f;
-      font-size: 23px;
-    }
-
-    @media (max-width: 750px) {
-      .confirmation-main {
-        padding: 35px 16px 60px;
+      .selection-page {
+        padding: 24px 18px 40px;
       }
 
-      .confirmation-header h1 {
-        font-size: 34px;
+      .numbers-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .confirmation-card {
-        padding: 18px;
-        border-radius: 18px;
+      .actual-number {
+        font-size: 18px;
       }
 
-      .selected-number {
-        padding: 28px 5px;
-      }
-
-      .selected-number strong {
-        font-size: 25px;
-      }
     }
+
   </style>
 </head>
 
-<body class="confirmation-page dashboard-page">
+<body>
 
-  <header class="dashboard-header">
+<div class="selection-page">
 
-    <a href="buy-number.html" class="dashboard-logo">
-      Wavynum
-    </a>
+  <div class="selection-container">
 
-    <a
-      href="number-selection.html"
-      class="back-button"
-      aria-label="Back"
-    >
-      <i class="fa-solid fa-arrow-left"></i>
-    </a>
+    <!-- HEADER -->
 
-  </header>
+    <div class="top-bar">
 
-  <main class="confirmation-main">
+      <button
+        class="back-btn"
+        id="backBtn"
+        aria-label="Go back"
+      >
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
 
-    <section class="confirmation-header">
+      <div class="title-area">
 
-      <p class="dashboard-eyebrow">
-        PURCHASE
-      </p>
+        <div class="page-title">
+          Choose a Number
+        </div>
 
-      <h1>
-        Confirm your number
-      </h1>
+        <div class="page-subtitle">
+          Select the number you want to purchase
+        </div>
 
-      <p>
-        Review the details before completing your purchase.
-      </p>
-
-    </section>
-
-    <div id="loadingState" class="loading">
-
-      <i class="fa-solid fa-spinner fa-spin"></i>
-
-      Loading purchase details...
+      </div>
 
     </div>
 
-    <section
-      id="confirmationContent"
-      class="confirmation-card"
-      style="display:none;"
-    >
 
-      <div class="service-row">
+    <!-- SERVICE -->
 
-        <div class="service-icon">
-          <i class="fa-solid fa-mobile-screen-button"></i>
+    <div class="service-card">
+
+      <div class="service-logo" id="serviceLogo">
+        <i class="fa-solid fa-phone"></i>
+      </div>
+
+      <div>
+
+        <div
+          class="service-name"
+          id="serviceName"
+        >
+          Loading...
         </div>
 
-        <div class="service-info">
-
-          <h2 id="serviceName">
-            Service
-          </h2>
-
-          <p id="countryName">
-            Country
-          </p>
-
+        <div class="service-description">
+          Available virtual numbers
         </div>
 
       </div>
 
-      <div class="selected-number">
+    </div>
 
-        <span class="selected-number-label">
-          Selected Number
-        </span>
 
-        <strong id="phoneNumber">
-          —
-        </strong>
+    <!-- COUNTRY FILTER -->
 
-      </div>
-
-      <div class="details-box">
-
-        <div class="detail-row">
-          <span>Service</span>
-          <strong id="serviceDetail">—</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Country</span>
-          <strong id="countryDetail">—</strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Purchase price</span>
-          <strong id="priceDetail">$0.00</strong>
-        </div>
-
-      </div>
-
-      <div class="wallet-card">
-
-        <div class="wallet-card-top">
-
-          <div>
-
-            <div class="wallet-label">
-              USD Wallet Balance
-            </div>
-
-            <div
-              id="walletBalance"
-              class="wallet-amount"
-            >
-              $0.00
-            </div>
-
-          </div>
-
-          <div class="wallet-icon-small">
-            <i class="fa-solid fa-dollar-sign"></i>
-          </div>
-
-        </div>
-
-      </div>
+    <div class="filters">
 
       <button
-        type="button"
-        id="buyButton"
-        class="buy-button"
+        class="filter-btn active"
+        data-country="all"
       >
-        Buy Number
+        All
       </button>
 
-      <div id="message" class="message"></div>
-
-      <a
-        href="number-selection.html"
-        class="back-link"
+      <button
+        class="filter-btn"
+        data-country="US"
       >
-        <i class="fa-solid fa-arrow-left"></i>
-        Choose another number
-      </a>
-
-    </section>
-
-  </main>
-
-  <script type="module">
-
-    import {
-      auth,
-      db
-    } from "./firebase.js";
+        🇺🇸 United States
+      </button>
 
-    import {
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+      <button
+        class="filter-btn"
+        data-country="UK"
+      >
+        🇬🇧 United Kingdom
+      </button>
 
-    import {
-      doc,
-      getDoc,
-      runTransaction,
-      collection,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+      <button
+        class="filter-btn"
+        data-country="CA"
+      >
+        🇨🇦 Canada
+      </button>
 
+    </div>
 
-    /* =========================================
-       GET SELECTED NUMBER
-    ========================================= */
 
-    const selectedRaw =
-      localStorage.getItem(
-        "wavynumSelectedNumber"
-      );
+    <!-- RESULTS INFO -->
 
+    <div class="result-info">
 
-    const loadingState =
-      document.getElementById(
-        "loadingState"
-      );
+      <div
+        class="result-count"
+        id="resultCount"
+      >
+        Loading numbers...
+      </div>
 
-    const confirmationContent =
-      document.getElementById(
-        "confirmationContent"
-      );
+      <div class="secure-label">
+        <i class="fa-solid fa-shield-halved"></i>
+        Secure
+      </div>
 
-    const serviceName =
-      document.getElementById(
-        "serviceName"
-      );
+    </div>
 
-    const countryName =
-      document.getElementById(
-        "countryName"
-      );
 
-    const phoneNumber =
-      document.getElementById(
-        "phoneNumber"
-      );
+    <!-- CONTENT -->
 
-    const serviceDetail =
-      document.getElementById(
-        "serviceDetail"
-      );
+    <div id="loading" class="loading">
 
-    const countryDetail =
-      document.getElementById(
-        "countryDetail"
-      );
+      <i class="fa-solid fa-spinner fa-spin"></i>
 
-    const priceDetail =
-      document.getElementById(
-        "priceDetail"
-      );
+      <div>
+        Loading available numbers...
+      </div>
 
-    const walletBalance =
-      document.getElementById(
-        "walletBalance"
-      );
+    </div>
 
-    const buyButton =
-      document.getElementById(
-        "buyButton"
-      );
 
-    const message =
-      document.getElementById(
-        "message"
-      );
+    <div
+      id="numbersList"
+      class="numbers-list"
+    ></div>
 
 
-    if (!selectedRaw) {
+  </div>
 
-      loadingState.innerHTML = `
-        <p>No number has been selected.</p>
-        <a href="buy-number.html">
-          Return to Buy Number
-        </a>
-      `;
+</div>
 
-      throw new Error(
-        "No selected number"
-      );
 
-    }
+<script type="module">
 
+  import { db } from "./firebase.js";
 
-    let selectedNumber;
+  import {
+    collection,
+    getDocs
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-    try {
 
-      selectedNumber =
-        JSON.parse(
-          selectedRaw
-        );
+  const serviceName =
+    document.getElementById("serviceName");
 
-    } catch (error) {
+  const serviceLogo =
+    document.getElementById("serviceLogo");
 
-      loadingState.innerHTML = `
-        <p>Invalid selected number data.</p>
-        <a href="buy-number.html">
-          Return to Buy Number
-        </a>
-      `;
+  const loading =
+    document.getElementById("loading");
 
-      throw error;
+  const numbersList =
+    document.getElementById("numbersList");
 
-    }
+  const resultCount =
+    document.getElementById("resultCount");
 
+  const backBtn =
+    document.getElementById("backBtn");
 
-    /* =========================================
-       IMPORTANT:
-       USE FIRESTORE DOCUMENT ID
-       FROM NUMBER-SELECTION.HTML
-    ========================================= */
 
-    if (!selectedNumber.id) {
+  let selectedService = "";
 
-      loadingState.innerHTML = `
-        <p>This selected number is missing its inventory ID.</p>
-        <a href="buy-number.html">
-          Select the number again
-        </a>
-      `;
+  let allNumbers = [];
 
-      throw new Error(
-        "Selected number has no Firestore document ID."
-      );
+  let activeCountry = "all";
 
-    }
 
+  /*
+   * SERVICE LOGOS
+   */
 
-    const price =
-      Number(
-        selectedNumber.price || 0
-      );
+  const serviceLogos = {
 
+    "facebook":
+      "https://cdn.simpleicons.org/facebook/1877F2",
 
-    serviceName.textContent =
-      selectedNumber.service ||
-      "Service";
+    "whatsapp":
+      "https://cdn.simpleicons.org/whatsapp/25D366",
 
-    countryName.textContent =
-      selectedNumber.countryName ||
-      selectedNumber.country ||
-      "Country";
+    "instagram":
+      "https://cdn.simpleicons.org/instagram/E4405F",
 
-    phoneNumber.textContent =
-      selectedNumber.number ||
-      "—";
+    "telegram":
+      "https://cdn.simpleicons.org/telegram/26A5E4",
 
-    serviceDetail.textContent =
-      selectedNumber.service ||
-      "—";
+    "snapchat":
+      "https://cdn.simpleicons.org/snapchat/FFFC00",
 
-    countryDetail.textContent =
-      selectedNumber.countryName ||
-      selectedNumber.country ||
-      "—";
+    "google voice":
+      "https://cdn.simpleicons.org/googlevoice/4285F4",
 
-    priceDetail.textContent =
-      "$" + price.toFixed(2);
+    "textplus":
+      "https://cdn.simpleicons.org/textplus/4CAF50",
 
+    "textnow":
+      "https://cdn.simpleicons.org/textnow/00A8FF",
 
-    /* =========================================
-       MESSAGES
-    ========================================= */
+    "textfree":
+      "https://cdn.simpleicons.org/textfree/1DA1F2",
 
-    function showMessage(
-      text,
-      type
-    ) {
+    "hushed":
+      "https://cdn.simpleicons.org/hushed/111111",
 
-      message.textContent =
-        text;
+    "burner":
+      "https://cdn.simpleicons.org/burner/111111",
 
-      message.className =
-        "message show " +
-        type;
+    "2ndline":
+      "https://cdn.simpleicons.org/2ndline/111111",
 
-    }
+    "freetone":
+      "https://cdn.simpleicons.org/freetone/111111",
 
+    "coverme":
+      "https://cdn.simpleicons.org/coverme/111111",
 
-    function hideMessage() {
+    "numero":
+      "https://cdn.simpleicons.org/numero/111111",
 
-      message.textContent =
-        "";
+    "mysudo":
+      "https://cdn.simpleicons.org/mysudo/111111",
 
-      message.className =
-        "message";
+    "twitter / x":
+      "https://cdn.simpleicons.org/x/000000"
 
-    }
+  };
 
 
-    function showWalletBalance(
-      balance
-    ) {
+  /*
+   * NORMALIZE SERVICE
+   */
 
-      walletBalance.textContent =
-        "$" +
-        Number(
-          balance
-        ).toFixed(2);
+  function normalizeService(value) {
 
-    }
+    return String(value || "")
+      .trim()
+      .toLowerCase();
 
+  }
 
-    /* =========================================
-       AUTH + WALLET
-    ========================================= */
 
-    onAuthStateChanged(
-      auth,
-      async (user) => {
+  /*
+   * NORMALIZE COUNTRY
+   */
 
-        if (!user) {
+  function normalizeCountry(value) {
 
-          window.location.href =
-            "login.html";
+    return String(value || "")
+      .trim()
+      .toUpperCase();
 
-          return;
+  }
 
-        }
 
+  /*
+   * GET SERVICE FROM URL
+   */
 
-        try {
-
-          const userRef =
-            doc(
-              db,
-              "users",
-              user.uid
-            );
-
-
-          const userSnapshot =
-            await getDoc(
-              userRef
-            );
-
-
-          if (!userSnapshot.exists()) {
-
-            loadingState.textContent =
-              "Your wallet account could not be found.";
-
-            return;
-
-          }
-
-
-          const userData =
-            userSnapshot.data();
-
-
-          const usd =
-            Number(
-              userData.usdBalance || 0
-            );
-
-
-          showWalletBalance(
-            usd
-          );
-
-
-          loadingState.style.display =
-            "none";
-
-          confirmationContent.style.display =
-            "block";
-
-
-          buyButton.onclick =
-            () => purchaseNumber(user);
-
-        } catch (error) {
-
-          console.error(
-            "Wallet loading error:",
-            error
-          );
-
-          loadingState.textContent =
-            "Unable to load your wallet balance.";
-
-        }
-
-      }
+  const params =
+    new URLSearchParams(
+      window.location.search
     );
 
 
-    /* =========================================
-       PURCHASE
-    ========================================= */
-
-    async function purchaseNumber(
-      user
-    ) {
-
-      hideMessage();
-
-      buyButton.disabled =
-        true;
-
-      buyButton.textContent =
-        "Processing...";
+  selectedService =
+    params.get("service") || "";
 
 
-      try {
+  selectedService =
+    decodeURIComponent(
+      selectedService
+    ).trim();
 
-        const userRef =
-          doc(
-            db,
-            "users",
-            user.uid
-          );
+
+  if (!selectedService) {
+
+    serviceName.textContent =
+      "Service not selected";
+
+  } else {
+
+    serviceName.textContent =
+      selectedService;
+
+  }
+
+
+  /*
+   * DISPLAY SERVICE LOGO
+   */
+
+  function displayServiceLogo() {
+
+    const key =
+      normalizeService(selectedService);
+
+    const logo =
+      serviceLogos[key];
+
+
+    if (!logo) {
+
+      serviceLogo.innerHTML =
+        '<i class="fa-solid fa-phone"></i>';
+
+      return;
+
+    }
+
+
+    serviceLogo.innerHTML = `
+      <img
+        src="${logo}"
+        alt="${selectedService}"
+        onerror="
+          this.style.display='none';
+          this.parentElement.innerHTML='<i class=&quot;fa-solid fa-phone&quot;></i>';
+        "
+      >
+    `;
+
+  }
+
+
+  displayServiceLogo();
+
+
+  /*
+   * COUNTRY FLAG
+   */
+
+  function getCountryFlag(country) {
+
+    const code =
+      normalizeCountry(country);
+
+
+    if (code === "US") return "🇺🇸";
+
+    if (code === "UK") return "🇬🇧";
+
+    if (code === "GB") return "🇬🇧";
+
+    if (code === "CA") return "🇨🇦";
+
+    return "🌍";
+
+  }
+
+
+  /*
+   * FORMAT PRICE
+   */
+
+  function formatPrice(value) {
+
+    const amount =
+      Number(value) || 0;
+
+    return "$" + amount.toFixed(2);
+
+  }
+
+
+  /*
+   * LOAD NUMBERS
+   */
+
+  async function loadNumbers() {
+
+    loading.style.display = "block";
+
+    numbersList.innerHTML = "";
+
+    resultCount.textContent =
+      "Loading numbers...";
+
+
+    try {
+
+      if (!selectedService) {
+
+        throw new Error(
+          "No service was selected."
+        );
+
+      }
+
+
+      /*
+       * IMPORTANT:
+       *
+       * The inventory collection is:
+       *
+       * numbers
+       *
+       * not:
+       *
+       * number
+       */
+
+      const snapshot =
+        await getDocs(
+          collection(db, "numbers")
+        );
+
+
+      allNumbers = [];
+
+
+      snapshot.forEach((docSnapshot) => {
+
+        const data =
+          docSnapshot.data();
 
 
         /*
-          THIS IS THE IMPORTANT FIX.
+         * Only show available inventory.
+         */
 
-          Use the actual Firestore document ID
-          saved by number-selection.html.
+        const status =
+          String(data.status || "")
+            .trim()
+            .toLowerCase();
 
-          Example:
 
-          numbers
-             └── ABC123XYZ
-                    ├── number
-                    ├── services
-                    └── status
-        */
+        if (status !== "available") {
+          return;
+        }
 
-        const numberRef =
-          doc(
-            db,
-            "numbers",
-            selectedNumber.id
+
+        /*
+         * SERVICES MUST BE AN ARRAY.
+         */
+
+        const services =
+          Array.isArray(data.services)
+            ? data.services
+            : [];
+
+
+        /*
+         * Compare normalized values.
+         *
+         * This handles values such as:
+         *
+         * "WhatsApp"
+         * " whatsapp "
+         * "FACEBOOK"
+         */
+
+        const selected =
+          normalizeService(
+            selectedService
           );
 
 
-        const ownedNumberId =
-          selectedNumber.id;
+        const supportsService =
+          services.some((item) => {
+
+            return normalizeService(item)
+              === selected;
+
+          });
 
 
-        const ownedNumberRef =
-          doc(
-            db,
-            "users",
-            user.uid,
-            "numbers",
-            ownedNumberId
-          );
+        if (!supportsService) {
+          return;
+        }
 
 
-        const purchaseRef =
-          doc(
-            collection(
-              db,
-              "purchases"
-            )
-          );
+        /*
+         * Store the REAL Firestore
+         * document ID.
+         */
+
+        allNumbers.push({
+
+          id: docSnapshot.id,
+
+          number:
+            data.number || "",
+
+          country:
+            data.country || "",
+
+          countryName:
+            data.countryName ||
+            "Unknown",
+
+          price:
+            Number(data.price) || 0,
+
+          provider:
+            data.provider ||
+            "Provider",
+
+          services:
+            services
+
+        });
+
+      });
 
 
-        const transactionRef =
-          doc(
-            collection(
-              db,
-              "transactions"
-            )
-          );
+      /*
+       * Sort cheapest first.
+       */
+
+      allNumbers.sort(
+        (a, b) =>
+          a.price - b.price
+      );
 
 
-        const otp =
-          Math.floor(
-            100000 +
-            Math.random() *
-            900000
-          ).toString();
+      loading.style.display = "none";
+
+      renderNumbers();
+
+    } catch (error) {
+
+      console.error(
+        "Error loading numbers:",
+        error
+      );
 
 
-        await runTransaction(
-          db,
-          async (transaction) => {
+      loading.style.display = "none";
 
-            const userSnapshot =
-              await transaction.get(
-                userRef
-              );
+      resultCount.textContent =
+        "Unable to load numbers";
 
 
-            if (!userSnapshot.exists()) {
+      numbersList.innerHTML = `
+        <div class="error-box">
+          <strong>Unable to load numbers</strong>
+          <br><br>
+          ${error.message}
+        </div>
+      `;
 
-              throw new Error(
-                "Wallet account not found."
-              );
+    }
 
-            }
-
-
-            const userData =
-              userSnapshot.data();
-
-
-            const currentBalance =
-              Number(
-                userData.usdBalance || 0
-              );
+  }
 
 
-            if (
-              currentBalance <
-              price
-            ) {
+  /*
+   * RENDER NUMBERS
+   */
 
-              throw new Error(
-                "Your USD wallet balance is too low for this purchase."
-              );
+  function renderNumbers() {
 
-            }
+    numbersList.innerHTML = "";
 
 
-            /* GET THE EXISTING NUMBER */
-
-            const numberSnapshot =
-              await transaction.get(
-                numberRef
-              );
+    let filteredNumbers =
+      allNumbers;
 
 
-            if (
-              !numberSnapshot.exists()
-            ) {
+    /*
+     * COUNTRY FILTER
+     */
 
-              throw new Error(
-                "This number no longer exists in inventory."
-              );
+    if (activeCountry !== "all") {
 
-            }
+      filteredNumbers =
+        allNumbers.filter((item) => {
 
-
-            const numberData =
-              numberSnapshot.data();
-
-
-            /* CHECK INVENTORY STATUS */
-
-            if (
-              String(
-                numberData.status || ""
-              ).trim().toLowerCase() !==
-              "available"
-            ) {
-
-              throw new Error(
-                "This number is no longer available."
-              );
-
-            }
-
-
-            const newBalance =
-              currentBalance -
-              price;
-
-
-            /* UPDATE USER WALLET */
-
-            transaction.update(
-              userRef,
-              {
-                usdBalance:
-                  newBalance
-              }
+          const country =
+            normalizeCountry(
+              item.country
             );
+
+
+          if (
+            activeCountry === "UK"
+            && country === "GB"
+          ) {
+            return true;
+          }
+
+
+          return country ===
+            activeCountry;
+
+        });
+
+    }
+
+
+    resultCount.textContent =
+      `${filteredNumbers.length} number${
+        filteredNumbers.length === 1
+          ? ""
+          : "s"
+      } available`;
+
+
+    if (filteredNumbers.length === 0) {
+
+      numbersList.innerHTML = `
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            <i class="fa-solid fa-phone-slash"></i>
+          </div>
+
+          <div class="empty-title">
+            No numbers available
+          </div>
+
+          <div class="empty-text">
+            There are currently no available
+            numbers for this service and country.
+          </div>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    filteredNumbers.forEach((item) => {
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "number-card";
+
+
+      /*
+       * ACTUAL NUMBER IS DISPLAYED HERE.
+       */
+
+      card.innerHTML = `
+
+        <div class="number-top">
+
+          <div class="number-main">
+
+            <div class="number-label">
+              Phone Number
+            </div>
+
+            <div class="actual-number">
+              ${escapeHtml(
+                item.number || "Unknown"
+              )}
+            </div>
+
+          </div>
+
+
+          <div class="price-box">
+
+            <div class="price">
+              ${formatPrice(item.price)}
+            </div>
+
+            <div class="price-label">
+              USD
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="number-details">
+
+          <div class="detail-pill">
+
+            <i class="fa-solid fa-globe"></i>
+
+            ${getCountryFlag(item.country)}
+
+            ${escapeHtml(
+              item.countryName
+            )}
+
+          </div>
+
+
+          <div class="detail-pill">
+
+            <i class="fa-solid fa-server"></i>
+
+            ${escapeHtml(
+              item.provider
+            )}
+
+          </div>
+
+
+          <div class="detail-pill">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            Available
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="choose-btn"
+          data-id="${escapeAttribute(
+            item.id
+          )}"
+        >
+
+          Choose Number
+
+          <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+      `;
+
+
+      numbersList.appendChild(card);
+
+    });
+
+
+    /*
+     * CHOOSE BUTTONS
+     */
+
+    document
+      .querySelectorAll(".choose-btn")
+      .forEach((button) => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const id =
+              button.dataset.id;
+
+
+            const item =
+              allNumbers.find(
+                number =>
+                  number.id === id
+              );
+
+
+            if (!item) {
+
+              alert(
+                "This number could not be found."
+              );
+
+              return;
+
+            }
 
 
             /*
-              UPDATE THE EXISTING INVENTORY
-              DOCUMENT TO SOLD.
-            */
+             * Save the REAL Firestore
+             * document ID.
+             */
 
-            transaction.update(
-              numberRef,
-              {
+            const selectedNumber = {
 
-                status:
-                  "sold",
+              id: item.id,
 
-                ownerId:
-                  user.uid,
+              service:
+                selectedService,
 
-                soldService:
-                  selectedNumber.service,
+              number:
+                item.number,
 
-                soldAt:
-                  serverTimestamp()
+              country:
+                item.country,
 
-              }
+              countryName:
+                item.countryName,
+
+              price:
+                item.price,
+
+              provider:
+                item.provider
+
+            };
+
+
+            localStorage.setItem(
+              "wavynumSelectedNumber",
+              JSON.stringify(
+                selectedNumber
+              )
             );
 
 
-            /* USER'S NUMBER */
-
-            transaction.set(
-              ownedNumberRef,
-              {
-
-                number:
-                  selectedNumber.number,
-
-                service:
-                  selectedNumber.service,
-
-                country:
-                  selectedNumber.country,
-
-                countryName:
-                  selectedNumber.countryName,
-
-                price:
-                  price,
-
-                status:
-                  "active",
-
-                demoOtp:
-                  otp,
-
-                sourceNumberId:
-                  selectedNumber.id,
-
-                purchasedAt:
-                  serverTimestamp()
-
-              }
-            );
-
-
-            /* PURCHASE RECORD */
-
-            transaction.set(
-              purchaseRef,
-              {
-
-                userId:
-                  user.uid,
-
-                numberId:
-                  selectedNumber.id,
-
-                number:
-                  selectedNumber.number,
-
-                service:
-                  selectedNumber.service,
-
-                country:
-                  selectedNumber.country,
-
-                price:
-                  price,
-
-                status:
-                  "completed",
-
-                purchasedAt:
-                  serverTimestamp()
-
-              }
-            );
-
-
-            /* WALLET TRANSACTION */
-
-            transaction.set(
-              transactionRef,
-              {
-
-                userId:
-                  user.uid,
-
-                type:
-                  "number_purchase",
-
-                amount:
-                  -price,
-
-                currency:
-                  "USD",
-
-                description:
-                  "Purchased " +
-                  selectedNumber.service +
-                  " number",
-
-                number:
-                  selectedNumber.number,
-
-                service:
-                  selectedNumber.service,
-
-                createdAt:
-                  serverTimestamp()
-
-              }
-            );
+            window.location.href =
+              "number-confirmation.html";
 
           }
         );
 
+      });
 
-        localStorage.removeItem(
-          "wavynumSelectedNumber"
-        );
-
-
-        showMessage(
-          "Number purchased successfully.",
-          "success"
-        );
+  }
 
 
-        buyButton.textContent =
-          "Purchase Complete";
+  /*
+   * ESCAPE HTML
+   */
+
+  function escapeHtml(value) {
+
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
 
 
-        setTimeout(
-          () => {
+  /*
+   * ESCAPE ATTRIBUTE
+   */
 
-            window.location.href =
-              "my-numbers.html";
+  function escapeAttribute(value) {
 
-          },
-          900
-        );
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
 
-
-      } catch (error) {
-
-        console.error(
-          "Purchase error:",
-          error
-        );
+  }
 
 
-        showMessage(
-          error.message ||
-          "Unable to complete purchase.",
-          "error"
-        );
+  /*
+   * COUNTRY FILTER BUTTONS
+   */
+
+  document
+    .querySelectorAll(".filter-btn")
+    .forEach((button) => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((btn) => {
+
+              btn.classList.remove(
+                "active"
+              );
+
+            });
 
 
-        buyButton.disabled =
-          false;
+          button.classList.add(
+            "active"
+          );
 
-        buyButton.textContent =
-          "Buy Number";
 
-      }
+          activeCountry =
+            button.dataset.country;
+
+
+          renderNumbers();
+
+        }
+      );
+
+    });
+
+
+  /*
+   * BACK
+   */
+
+  backBtn.addEventListener(
+    "click",
+    () => {
+
+      window.location.href =
+        "buy-number.html";
 
     }
+  );
 
-  </script>
+
+  /*
+   * START
+   */
+
+  loadNumbers();
+
+</script>
 
 </body>
 </html>

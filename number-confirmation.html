@@ -14,145 +14,190 @@
   >
 
   <style>
+    /* ================================
+       WAVYNUM CONFIRMATION PAGE
+       ================================ */
+
     .confirmation-main {
-      max-width: 700px;
+      width: min(100%, 720px);
       margin: 0 auto;
-      padding: 30px 18px 60px;
+      padding: 28px 18px 60px;
     }
 
     .confirmation-header {
       margin-bottom: 22px;
     }
 
-    .confirmation-card {
-      background: #fff;
-      border: 1px solid #e8e8ee;
-      border-radius: 22px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    .confirmation-header h1 {
+      margin: 4px 0 8px;
     }
 
-    .service-box {
+    .confirmation-header .dashboard-subtitle {
+      margin: 0;
+    }
+
+    .purchase-card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.18);
+      backdrop-filter: blur(12px);
+    }
+
+    .service-row {
       display: flex;
       align-items: center;
       gap: 14px;
       padding-bottom: 18px;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
     .service-icon {
       width: 52px;
       height: 52px;
-      border-radius: 15px;
-      background: #f1f3f7;
+      min-width: 52px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 21px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 20px;
     }
 
-    .service-box h2 {
+    .service-info h2 {
       margin: 0 0 4px;
       font-size: 18px;
     }
 
-    .service-box p {
+    .service-info p {
       margin: 0;
-      color: #777;
-      font-size: 14px;
+      opacity: .65;
+      font-size: 13px;
     }
 
-    .number-display {
+    .selected-number {
       text-align: center;
       padding: 28px 10px;
     }
 
-    .number-display span {
+    .selected-number-label {
       display: block;
-      color: #777;
-      font-size: 13px;
-      margin-bottom: 8px;
+      font-size: 12px;
+      opacity: .55;
+      margin-bottom: 9px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
     }
 
-    .number-display strong {
-      font-size: 26px;
+    .selected-number strong {
+      font-size: clamp(23px, 7vw, 31px);
       letter-spacing: .3px;
     }
 
-    .details {
-      border-top: 1px solid #eee;
-      padding-top: 16px;
+    .details-box {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 8px;
     }
 
     .detail-row {
       display: flex;
       justify-content: space-between;
-      gap: 15px;
-      padding: 10px 0;
+      align-items: center;
+      gap: 20px;
+      padding: 12px 2px;
       font-size: 14px;
     }
 
-    .detail-row span:first-child {
-      color: #777;
+    .detail-row span {
+      opacity: .58;
     }
 
     .detail-row strong {
       text-align: right;
     }
 
-    .wallet-box {
-      margin-top: 18px;
-      padding: 15px;
-      border-radius: 16px;
-      background: #f6f8fb;
+    .wallet-card {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.065);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .wallet-card-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
     }
 
-    .wallet-box span {
-      color: #666;
-      font-size: 14px;
+    .wallet-label {
+      font-size: 12px;
+      opacity: .58;
+      text-transform: uppercase;
+      letter-spacing: .06em;
     }
 
-    .wallet-box strong {
-      font-size: 18px;
+    .wallet-amount {
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 5px;
+    }
+
+    .wallet-icon-small {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.08);
     }
 
     .buy-button {
       width: 100%;
+      margin-top: 16px;
       border: 0;
-      border-radius: 15px;
-      padding: 15px;
-      margin-top: 18px;
-      background: #111827;
-      color: #fff;
+      border-radius: 16px;
+      padding: 16px;
+      background: #fff;
+      color: #111;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
+      transition: transform .18s ease, opacity .18s ease;
+    }
+
+    .buy-button:active {
+      transform: scale(.98);
     }
 
     .buy-button:disabled {
-      opacity: .6;
+      opacity: .55;
       cursor: not-allowed;
     }
 
     .back-link {
-      display: inline-flex;
+      display: flex;
+      justify-content: center;
       align-items: center;
       gap: 7px;
-      margin-top: 15px;
-      color: #555;
+      margin-top: 17px;
+      color: inherit;
+      opacity: .62;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .message {
       display: none;
-      margin-top: 15px;
-      padding: 13px;
-      border-radius: 13px;
-      font-size: 14px;
+      margin-top: 14px;
+      padding: 13px 14px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.4;
     }
 
     .message.show {
@@ -160,25 +205,58 @@
     }
 
     .message.error {
-      background: #fff0f0;
-      color: #b42318;
+      background: rgba(220,38,38,.13);
+      border: 1px solid rgba(220,38,38,.2);
+      color: #ff9b9b;
     }
 
     .message.success {
-      background: #edfdf3;
-      color: #087443;
+      background: rgba(34,197,94,.12);
+      border: 1px solid rgba(34,197,94,.2);
+      color: #8ff0ad;
     }
 
     .loading {
       text-align: center;
-      padding: 40px 10px;
-      color: #777;
+      padding: 45px 15px;
+      opacity: .6;
+    }
+
+    .loading i {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 430px) {
+
+      .confirmation-main {
+        padding: 22px 14px 45px;
+      }
+
+      .purchase-card {
+        padding: 15px;
+        border-radius: 21px;
+      }
+
+      .selected-number {
+        padding: 24px 6px;
+      }
+
+      .detail-row {
+        font-size: 13px;
+      }
+
+      .wallet-amount {
+        font-size: 20px;
+      }
+
     }
   </style>
 </head>
 
 <body class="dashboard-page">
 
+  <!-- HEADER -->
   <header class="dashboard-header">
 
     <a href="buy-number.html" class="dashboard-logo">
@@ -196,6 +274,7 @@
   </header>
 
 
+  <!-- MAIN -->
   <main class="confirmation-main">
 
     <section class="confirmation-header">
@@ -215,24 +294,34 @@
     </section>
 
 
+    <!-- LOADING -->
     <div id="loadingState" class="loading">
-      Loading purchase details...
+
+      <i class="fa-solid fa-spinner fa-spin"></i>
+
+      <div>
+        Loading purchase details...
+      </div>
+
     </div>
 
 
+    <!-- PURCHASE CONTENT -->
     <section
       id="confirmationContent"
-      class="confirmation-card"
+      class="purchase-card"
       style="display:none;"
     >
 
-      <div class="service-box">
+      <!-- SERVICE -->
+      <div class="service-row">
 
         <div class="service-icon">
           <i class="fa-solid fa-mobile-screen-button"></i>
         </div>
 
-        <div>
+        <div class="service-info">
+
           <h2 id="serviceName">
             Service
           </h2>
@@ -240,14 +329,16 @@
           <p id="countryName">
             Country
           </p>
+
         </div>
 
       </div>
 
 
-      <div class="number-display">
+      <!-- NUMBER -->
+      <div class="selected-number">
 
-        <span>
+        <span class="selected-number-label">
           Selected number
         </span>
 
@@ -258,39 +349,82 @@
       </div>
 
 
-      <div class="details">
+      <!-- DETAILS -->
+      <div class="details-box">
 
         <div class="detail-row">
-          <span>Service</span>
-          <strong id="serviceDetail">—</strong>
+
+          <span>
+            Service
+          </span>
+
+          <strong id="serviceDetail">
+            —
+          </strong>
+
         </div>
 
-        <div class="detail-row">
-          <span>Country</span>
-          <strong id="countryDetail">—</strong>
-        </div>
 
         <div class="detail-row">
-          <span>Purchase price</span>
-          <strong id="priceDetail">$0.00</strong>
+
+          <span>
+            Country
+          </span>
+
+          <strong id="countryDetail">
+            —
+          </strong>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <span>
+            Purchase price
+          </span>
+
+          <strong id="priceDetail">
+            $0.00
+          </strong>
+
         </div>
 
       </div>
 
 
-      <div class="wallet-box">
+      <!-- WALLET -->
+      <div class="wallet-card">
 
-        <span>
-          USD wallet balance
-        </span>
+        <div class="wallet-card-top">
 
-        <strong id="walletBalance">
-          $0.00
-        </strong>
+          <div>
+
+            <div class="wallet-label">
+              USD Wallet Balance
+            </div>
+
+            <div
+              class="wallet-amount"
+              id="walletBalance"
+            >
+              $0.00
+            </div>
+
+          </div>
+
+          <div class="wallet-icon-small">
+
+            <i class="fa-solid fa-dollar-sign"></i>
+
+          </div>
+
+        </div>
 
       </div>
 
 
+      <!-- BUY -->
       <button
         type="button"
         id="buyButton"
@@ -300,9 +434,14 @@
       </button>
 
 
-      <div id="message" class="message"></div>
+      <!-- MESSAGE -->
+      <div
+        id="message"
+        class="message"
+      ></div>
 
 
+      <!-- BACK -->
       <a
         href="number-selection.html"
         class="back-link"
@@ -316,6 +455,7 @@
   </main>
 
 
+  <!-- FIREBASE / PURCHASE LOGIC -->
   <script type="module">
 
     import { auth, db } from "./firebase.js";
@@ -395,7 +535,9 @@
       selectedNumber.service || "Service";
 
     countryName.textContent =
-      selectedNumber.countryName || selectedNumber.country || "Country";
+      selectedNumber.countryName ||
+      selectedNumber.country ||
+      "Country";
 
     phoneNumber.textContent =
       selectedNumber.number || "—";
@@ -404,7 +546,9 @@
       selectedNumber.service || "—";
 
     countryDetail.textContent =
-      selectedNumber.countryName || selectedNumber.country || "—";
+      selectedNumber.countryName ||
+      selectedNumber.country ||
+      "—";
 
     priceDetail.textContent =
       "$" + price.toFixed(2);
@@ -442,7 +586,8 @@
 
       if (!user) {
 
-        window.location.href = "login.html";
+        window.location.href =
+          "login.html";
 
         return;
 
@@ -453,6 +598,7 @@
 
         const userRef =
           doc(db, "users", user.uid);
+
 
         const userSnapshot =
           await getDoc(userRef);
@@ -472,10 +618,15 @@
           userSnapshot.data();
 
 
-        // IMPORTANT:
-        // The dashboard uses usdBalance.
+        /*
+          IMPORTANT:
+          Wavynum uses usdBalance.
+        */
+
         const usd =
-          Number(userData.usdBalance || 0);
+          Number(
+            userData.usdBalance || 0
+          );
 
 
         showWalletBalance(usd);
@@ -522,7 +673,11 @@
       try {
 
         const userRef =
-          doc(db, "users", user.uid);
+          doc(
+            db,
+            "users",
+            user.uid
+          );
 
 
         const numberId =
@@ -531,7 +686,11 @@
 
 
         const numberRef =
-          doc(db, "numbers", numberId);
+          doc(
+            db,
+            "numbers",
+            numberId
+          );
 
 
         const ownedNumberRef =
@@ -545,11 +704,21 @@
 
 
         const purchaseRef =
-          doc(collection(db, "purchases"));
+          doc(
+            collection(
+              db,
+              "purchases"
+            )
+          );
 
 
         const transactionRef =
-          doc(collection(db, "transactions"));
+          doc(
+            collection(
+              db,
+              "transactions"
+            )
+          );
 
 
         const otp =
@@ -564,7 +733,9 @@
           async (transaction) => {
 
             const userSnapshot =
-              await transaction.get(userRef);
+              await transaction.get(
+                userRef
+              );
 
 
             if (!userSnapshot.exists()) {
@@ -580,7 +751,6 @@
               userSnapshot.data();
 
 
-            // USE THE CORRECT USD FIELD
             const currentBalance =
               Number(
                 userData.usdBalance || 0
@@ -597,7 +767,9 @@
 
 
             const numberSnapshot =
-              await transaction.get(numberRef);
+              await transaction.get(
+                numberRef
+              );
 
 
             if (numberSnapshot.exists()) {
@@ -616,7 +788,8 @@
             transaction.update(
               userRef,
               {
-                usdBalance: newBalance
+                usdBalance:
+                  newBalance
               }
             );
 

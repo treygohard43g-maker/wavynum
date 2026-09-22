@@ -6,7 +6,7 @@
 
   <title>Dashboard — Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=7">
 
   <link
     rel="stylesheet"
@@ -16,7 +16,9 @@
 
 <body class="dashboard-page">
 
-  <!-- Top Navigation -->
+  <!-- ==============================
+       TOP NAVIGATION
+  =============================== -->
   <header class="dashboard-header">
 
     <button class="menu-button" id="menuButton" aria-label="Open menu">
@@ -27,15 +29,17 @@
       Wavynum
     </a>
 
-    <button class="notification-button" aria-label="Notifications">
+    <button class="notification-button" id="notificationButton" aria-label="Notifications">
       <i class="fa-regular fa-bell"></i>
-      <span class="notification-dot"></span>
+      <span class="notification-dot" id="notificationDot"></span>
     </button>
 
   </header>
 
 
-  <!-- Side Menu -->
+  <!-- ==============================
+       SIDE MENU
+  =============================== -->
   <aside class="side-menu" id="sideMenu">
 
     <div class="side-menu-header">
@@ -59,28 +63,27 @@
         <span>Dashboard</span>
       </a>
 
-      <a href="#" class="side-link">
+      <a href="my-numbers.html" class="side-link">
         <i class="fa-solid fa-mobile-screen-button"></i>
         <span>My Numbers</span>
       </a>
 
-      <a href="#" class="side-link">
+      <a href="sms-inbox.html" class="side-link">
         <i class="fa-regular fa-message"></i>
         <span>SMS Inbox</span>
       </a>
 
-      <!-- BUY NUMBER -->
       <a href="buy-number.html" class="side-link">
         <i class="fa-solid fa-cart-shopping"></i>
         <span>Buy Number</span>
       </a>
 
-      <a href="#" class="side-link">
+      <a href="#wallet" class="side-link menu-section-link">
         <i class="fa-solid fa-wallet"></i>
         <span>Wallet</span>
       </a>
 
-      <a href="#" class="side-link">
+      <a href="#transactions" class="side-link menu-section-link">
         <i class="fa-solid fa-arrow-right-arrow-left"></i>
         <span>Transactions</span>
       </a>
@@ -92,12 +95,12 @@
 
       <div class="menu-divider"></div>
 
-      <a href="#" class="side-link">
+      <a href="settings.html" class="side-link">
         <i class="fa-solid fa-gear"></i>
         <span>Settings</span>
       </a>
 
-      <a href="#" class="side-link">
+      <a href="support.html" class="side-link">
         <i class="fa-solid fa-headset"></i>
         <span>Support</span>
       </a>
@@ -108,8 +111,11 @@
     <div class="side-menu-bottom">
 
       <button class="logout-button" id="logoutButton">
+
         <i class="fa-solid fa-right-from-bracket"></i>
+
         <span>Log out</span>
+
       </button>
 
     </div>
@@ -117,18 +123,24 @@
   </aside>
 
 
-  <!-- Menu Overlay -->
+  <!-- OVERLAY -->
   <div class="menu-overlay" id="menuOverlay"></div>
 
 
-  <!-- Main Dashboard -->
+  <!-- ==============================
+       MAIN DASHBOARD
+  =============================== -->
   <main class="dashboard-main">
 
-    <!-- Welcome -->
+
+    <!-- WELCOME -->
     <section class="dashboard-welcome">
 
       <div>
-        <p class="dashboard-eyebrow">ACCOUNT OVERVIEW</p>
+
+        <p class="dashboard-eyebrow">
+          ACCOUNT OVERVIEW
+        </p>
 
         <h1>
           Welcome back
@@ -137,6 +149,7 @@
         <p class="dashboard-subtitle">
           Manage your numbers, wallet and messages.
         </p>
+
       </div>
 
       <a href="add-funds.html" class="dashboard-add-button">
@@ -147,17 +160,21 @@
     </section>
 
 
-    <!-- Wallet Cards -->
-    <section class="wallet-grid">
+    <!-- ==============================
+         WALLET
+    =============================== -->
+    <section class="wallet-grid" id="wallet">
 
       <div class="wallet-card primary-wallet">
 
         <div class="wallet-card-top">
+
           <span>USD Balance</span>
 
           <div class="wallet-icon">
             <i class="fa-solid fa-dollar-sign"></i>
           </div>
+
         </div>
 
         <div class="wallet-balance" id="usdBalance">
@@ -174,11 +191,13 @@
       <div class="wallet-card">
 
         <div class="wallet-card-top">
+
           <span>NGN Balance</span>
 
           <div class="wallet-icon">
             <i class="fa-solid fa-naira-sign"></i>
           </div>
+
         </div>
 
         <div class="wallet-balance" id="ngnBalance">
@@ -194,20 +213,30 @@
     </section>
 
 
-    <!-- Quick Actions -->
+    <!-- ==============================
+         QUICK ACTIONS
+    =============================== -->
     <section class="dashboard-section">
 
       <div class="section-title-row">
 
         <div>
-          <p class="dashboard-eyebrow">QUICK ACCESS</p>
-          <h2>What do you want to do?</h2>
+
+          <p class="dashboard-eyebrow">
+            QUICK ACCESS
+          </p>
+
+          <h2>
+            What do you want to do?
+          </h2>
+
         </div>
 
       </div>
 
 
       <div class="quick-actions">
+
 
         <!-- BUY NUMBER -->
         <a href="buy-number.html" class="quick-action-card">
@@ -218,7 +247,10 @@
 
           <div>
             <h3>Buy a number</h3>
-            <p>Choose a virtual number for your service.</p>
+
+            <p>
+              Choose a virtual number for your service.
+            </p>
           </div>
 
           <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
@@ -235,7 +267,10 @@
 
           <div>
             <h3>Add funds</h3>
-            <p>Fund your Wavynum wallet securely.</p>
+
+            <p>
+              Fund your Wavynum wallet securely.
+            </p>
           </div>
 
           <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
@@ -244,7 +279,7 @@
 
 
         <!-- SMS INBOX -->
-        <a href="#" class="quick-action-card">
+        <a href="sms-inbox.html" class="quick-action-card">
 
           <div class="quick-action-icon">
             <i class="fa-regular fa-message"></i>
@@ -252,7 +287,30 @@
 
           <div>
             <h3>Open SMS inbox</h3>
-            <p>View messages received by your numbers.</p>
+
+            <p>
+              View messages received by your numbers.
+            </p>
+          </div>
+
+          <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
+
+        </a>
+
+
+        <!-- MY NUMBERS -->
+        <a href="my-numbers.html" class="quick-action-card">
+
+          <div class="quick-action-icon">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+          </div>
+
+          <div>
+            <h3>My numbers</h3>
+
+            <p>
+              Manage your purchased numbers.
+            </p>
           </div>
 
           <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
@@ -264,29 +322,44 @@
     </section>
 
 
-    <!-- Active Number -->
+    <!-- ==============================
+         ACTIVE NUMBER
+    =============================== -->
     <section class="dashboard-section">
 
       <div class="section-title-row">
 
         <div>
-          <p class="dashboard-eyebrow">ACTIVE NUMBER</p>
-          <h2>My current number</h2>
+
+          <p class="dashboard-eyebrow">
+            ACTIVE NUMBER
+          </p>
+
+          <h2>
+            My current number
+          </h2>
+
         </div>
 
-        <a href="#" class="section-link">
+        <a href="my-numbers.html" class="section-link">
           View all
         </a>
 
       </div>
 
 
-      <div class="active-number-card">
+      <div class="active-number-card" id="activeNumberCard">
 
         <div class="number-status">
+
           <span class="status-indicator"></span>
-          Active
+
+          <span id="activeNumberStatus">
+            Loading...
+          </span>
+
         </div>
+
 
         <div class="number-content">
 
@@ -295,20 +368,37 @@
           </div>
 
           <div>
-            <span class="number-country">United States</span>
-            <h3>+1 (000) 000-0000</h3>
+
+            <span class="number-country" id="activeNumberCountry">
+              —
+            </span>
+
+            <h3 id="activeNumber">
+              Loading number...
+            </h3>
+
           </div>
 
         </div>
 
+
         <div class="number-actions">
 
-          <button type="button" class="number-action">
+          <button
+            type="button"
+            class="number-action"
+            id="copyNumberButton"
+          >
             <i class="fa-regular fa-copy"></i>
             Copy
           </button>
 
-          <button type="button" class="number-action">
+
+          <button
+            type="button"
+            class="number-action"
+            id="smsNumberButton"
+          >
             <i class="fa-regular fa-message"></i>
             SMS
           </button>
@@ -320,35 +410,52 @@
     </section>
 
 
-    <!-- Recent Transactions -->
-    <section class="dashboard-section">
+    <!-- ==============================
+         TRANSACTIONS
+    =============================== -->
+    <section
+      class="dashboard-section"
+      id="transactions"
+    >
 
       <div class="section-title-row">
 
         <div>
-          <p class="dashboard-eyebrow">ACTIVITY</p>
-          <h2>Recent transactions</h2>
+
+          <p class="dashboard-eyebrow">
+            ACTIVITY
+          </p>
+
+          <h2>
+            Recent transactions
+          </h2>
+
         </div>
 
-        <a href="#" class="section-link">
+        <a href="#transactions" class="section-link">
           View all
         </a>
 
       </div>
 
 
-      <div class="transactions-card">
+      <div
+        class="transactions-card"
+        id="transactionsList"
+      >
 
         <div class="empty-state">
 
           <div class="empty-icon">
-            <i class="fa-solid fa-receipt"></i>
+            <i class="fa-solid fa-spinner fa-spin"></i>
           </div>
 
-          <h3>No transactions yet</h3>
+          <h3>
+            Loading transactions
+          </h3>
 
           <p>
-            Your wallet activity will appear here.
+            Please wait...
           </p>
 
         </div>
@@ -358,35 +465,49 @@
     </section>
 
 
-    <!-- SMS Preview -->
+    <!-- ==============================
+         SMS PREVIEW
+    =============================== -->
     <section class="dashboard-section">
 
       <div class="section-title-row">
 
         <div>
-          <p class="dashboard-eyebrow">MESSAGES</p>
-          <h2>SMS inbox</h2>
+
+          <p class="dashboard-eyebrow">
+            MESSAGES
+          </p>
+
+          <h2>
+            SMS inbox
+          </h2>
+
         </div>
 
-        <a href="#" class="section-link">
+        <a href="sms-inbox.html" class="section-link">
           Open inbox
         </a>
 
       </div>
 
 
-      <div class="transactions-card">
+      <div
+        class="transactions-card"
+        id="smsPreview"
+      >
 
         <div class="empty-state">
 
           <div class="empty-icon">
-            <i class="fa-regular fa-message"></i>
+            <i class="fa-solid fa-spinner fa-spin"></i>
           </div>
 
-          <h3>No messages</h3>
+          <h3>
+            Loading messages
+          </h3>
 
           <p>
-            Messages received by your numbers will appear here.
+            Checking your numbers...
           </p>
 
         </div>
@@ -398,35 +519,10 @@
   </main>
 
 
-  <!-- Menu Script -->
-  <script>
-
-    const menuButton = document.getElementById("menuButton");
-    const closeMenu = document.getElementById("closeMenu");
-    const sideMenu = document.getElementById("sideMenu");
-    const menuOverlay = document.getElementById("menuOverlay");
-
-    function openMenu() {
-      sideMenu.classList.add("open");
-      menuOverlay.classList.add("active");
-      document.body.classList.add("menu-open");
-    }
-
-    function closeSideMenu() {
-      sideMenu.classList.remove("open");
-      menuOverlay.classList.remove("active");
-      document.body.classList.remove("menu-open");
-    }
-
-    menuButton.addEventListener("click", openMenu);
-    closeMenu.addEventListener("click", closeSideMenu);
-    menuOverlay.addEventListener("click", closeSideMenu);
-
-  </script>
-
-
-  <!-- Firebase Dashboard Logic -->
-  <script type="module" src="dashboard.js?v=2"></script>
+  <!-- ==============================
+       DASHBOARD JAVASCRIPT
+  =============================== -->
+  <script type="module" src="dashboard.js?v=3"></script>
 
 </body>
 </html>

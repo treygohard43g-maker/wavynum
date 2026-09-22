@@ -2,31 +2,557 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <title>Select Number — Wavynum</title>
+  <title>Choose Number - Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=11">
 
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   >
+
+  <style>
+
+    /* =====================================================
+       WAVYNUM NUMBER SELECTION
+       Matches existing Wavynum dark / green marketplace
+       ===================================================== */
+
+    .number-selection-main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 18px 55px;
+    }
+
+    /* ================= HEADER ================= */
+
+    .selection-header {
+      margin-bottom: 17px;
+    }
+
+    .selection-header h1 {
+      margin: 0 0 6px;
+      color: #f0fff7;
+      font-size: 27px;
+      font-weight: 800;
+    }
+
+    .selection-header p {
+      margin: 0;
+      color: #899890;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    /* ================= SERVICE BAR ================= */
+
+    .selected-service {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      padding: 11px 13px;
+
+      background: #08130e;
+      border: 1px solid rgba(24, 215, 101, .18);
+      border-radius: 16px;
+
+      margin-bottom: 13px;
+    }
+
+    .selected-service-logo {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #101a15;
+      border: 1px solid rgba(24, 215, 101, .20);
+      border-radius: 13px;
+
+      overflow: hidden;
+    }
+
+    .selected-service-logo img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .selected-service-logo i {
+      color: #18d765;
+      font-size: 22px;
+    }
+
+    .selected-service-name {
+      color: #ecfff5;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .selected-service-subtitle {
+      color: #7f9087;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    /* ================= FILTERS ================= */
+
+    .country-filters {
+      display: flex;
+      gap: 7px;
+
+      overflow-x: auto;
+
+      padding-bottom: 4px;
+      margin-bottom: 13px;
+
+      scrollbar-width: none;
+    }
+
+    .country-filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .country-filter {
+      flex-shrink: 0;
+
+      border: 1px solid rgba(24, 215, 101, .16);
+      background: #08130e;
+
+      color: #8b9b93;
+
+      border-radius: 20px;
+
+      padding: 7px 12px;
+
+      font-size: 11px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    .country-filter.active {
+      background: #18d765;
+      border-color: #18d765;
+      color: #031008;
+    }
+
+    /* ================= RESULTS HEADER ================= */
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 9px;
+    }
+
+    .results-count {
+      color: #82928a;
+      font-size: 11px;
+    }
+
+    .available-label {
+      color: #18d765;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    /* ================= NUMBER LIST ================= */
+
+    .number-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ================= NUMBER CARD ================= */
+
+    .number-card {
+      width: 100%;
+
+      background: #08130e;
+      border: 1px solid rgba(24, 215, 101, .16);
+
+      border-radius: 16px;
+
+      padding: 12px;
+
+      transition:
+        transform .18s ease,
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+    }
+
+    .number-card:hover {
+      transform: translateY(-1px);
+
+      background: #0a1811;
+
+      border-color: rgba(24, 215, 101, .38);
+
+      box-shadow: 0 7px 18px rgba(0,0,0,.18);
+    }
+
+    /* ================= NUMBER TOP ================= */
+
+    .number-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 12px;
+    }
+
+    .number-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .number-label {
+      color: #708078;
+
+      font-size: 9px;
+
+      text-transform: uppercase;
+      letter-spacing: .6px;
+
+      font-weight: 700;
+
+      margin-bottom: 3px;
+    }
+
+    /* ACTUAL PHONE NUMBER */
+
+    .actual-phone-number {
+      color: #f0fff7;
+
+      font-size: 19px;
+
+      font-weight: 900;
+
+      letter-spacing: .2px;
+
+      line-height: 1.2;
+
+      word-break: break-word;
+    }
+
+    /* ================= PRICE ================= */
+
+    .number-price {
+      flex-shrink: 0;
+
+      text-align: right;
+    }
+
+    .number-price-value {
+      color: #18d765;
+
+      font-size: 17px;
+
+      font-weight: 900;
+    }
+
+    .number-price-label {
+      color: #66766e;
+
+      font-size: 8px;
+
+      margin-top: 1px;
+    }
+
+    /* ================= DETAILS ================= */
+
+    .number-details {
+      display: flex;
+
+      align-items: center;
+
+      flex-wrap: wrap;
+
+      gap: 6px;
+
+      margin-top: 9px;
+    }
+
+    .number-detail {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 4px;
+
+      padding: 5px 7px;
+
+      background: #101a15;
+
+      border: 1px solid rgba(24, 215, 101, .08);
+
+      border-radius: 8px;
+
+      color: #809088;
+
+      font-size: 9px;
+
+      font-weight: 600;
+    }
+
+    .number-detail i {
+      color: #18d765;
+      font-size: 8px;
+    }
+
+    /* ================= CHOOSE BUTTON ================= */
+
+    .choose-number-btn {
+      width: 100%;
+
+      border: none;
+
+      border-radius: 10px;
+
+      background: #18d765;
+
+      color: #031008;
+
+      padding: 9px 11px;
+
+      margin-top: 9px;
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      cursor: pointer;
+    }
+
+    .choose-number-btn:active {
+      transform: scale(.99);
+    }
+
+    .choose-number-btn i {
+      margin-left: 4px;
+    }
+
+    /* ================= LOADING ================= */
+
+    .loading-box {
+      padding: 45px 20px;
+
+      text-align: center;
+
+      background: #08130e;
+
+      border: 1px solid rgba(24, 215, 101, .14);
+
+      border-radius: 16px;
+
+      color: #7f9087;
+
+      font-size: 12px;
+    }
+
+    .loading-box i {
+      color: #18d765;
+
+      font-size: 23px;
+
+      margin-bottom: 10px;
+    }
+
+    /* ================= EMPTY ================= */
+
+    .empty-box {
+      padding: 35px 20px;
+
+      text-align: center;
+
+      background: #08130e;
+
+      border: 1px solid rgba(24, 215, 101, .14);
+
+      border-radius: 16px;
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+
+      margin: 0 auto 11px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #101a15;
+
+      border-radius: 14px;
+
+      color: #18d765;
+
+      font-size: 20px;
+    }
+
+    .empty-title {
+      color: #dff9eb;
+
+      font-size: 15px;
+
+      font-weight: 800;
+
+      margin-bottom: 5px;
+    }
+
+    .empty-text {
+      color: #75857d;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+    }
+
+    /* ================= ERROR ================= */
+
+    .error-box {
+      padding: 14px;
+
+      background: rgba(255, 60, 60, .07);
+
+      border: 1px solid rgba(255, 80, 80, .20);
+
+      border-radius: 13px;
+
+      color: #ff9c9c;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+    }
+
+    /* ================= NOTICE ================= */
+
+    .selection-notice {
+      margin-top: 14px;
+
+      padding: 13px;
+
+      background: #08130e;
+
+      border: 1px solid rgba(24, 215, 101, .12);
+
+      border-radius: 14px;
+
+      color: #72827a;
+
+      font-size: 10px;
+
+      line-height: 1.5;
+    }
+
+    .selection-notice i {
+      color: #18d765;
+      margin-right: 4px;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 600px) {
+
+      .number-selection-main {
+        padding: 16px 14px 45px;
+      }
+
+      .selection-header h1 {
+        font-size: 24px;
+      }
+
+      .selection-header p {
+        font-size: 12px;
+      }
+
+      .selected-service {
+        padding: 9px 11px;
+      }
+
+      .selected-service-logo {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+      }
+
+      .selected-service-logo img {
+        width: 37px;
+        height: 37px;
+      }
+
+      .selected-service-name {
+        font-size: 15px;
+      }
+
+      .actual-phone-number {
+        font-size: 18px;
+      }
+
+      .number-price-value {
+        font-size: 16px;
+      }
+
+    }
+
+    @media (max-width: 360px) {
+
+      .number-selection-main {
+        padding-left: 11px;
+        padding-right: 11px;
+      }
+
+      .number-card {
+        padding: 10px;
+      }
+
+      .actual-phone-number {
+        font-size: 16px;
+      }
+
+      .number-price-value {
+        font-size: 15px;
+      }
+
+    }
+
+  </style>
 </head>
 
-<body class="dashboard-page">
+<body>
 
-  <!-- HEADER -->
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
   <header class="dashboard-header">
 
-    <a href="buy-number.html" class="dashboard-logo">
+    <a
+      href="dashboard.html"
+      class="dashboard-logo"
+    >
       Wavynum
     </a>
 
     <a
       href="buy-number.html"
       class="back-button"
-      aria-label="Back to services"
+      aria-label="Back"
     >
       <i class="fa-solid fa-arrow-left"></i>
     </a>
@@ -34,169 +560,151 @@
   </header>
 
 
-  <!-- MAIN -->
-  <main class="numbers-main">
+  <!-- =====================================================
+       MAIN
+       ===================================================== -->
 
-    <!-- PAGE HEADING -->
-    <section class="numbers-header">
+  <main class="number-selection-main">
 
-      <p class="dashboard-eyebrow">
-        VIRTUAL NUMBERS
+    <div class="selection-header">
+
+      <h1>Choose a number</h1>
+
+      <p>
+        Select an available number for your selected service.
       </p>
 
-      <h1 id="serviceTitle">
-        Available numbers
-      </h1>
-
-      <p id="serviceDescription">
-        Choose an available number for your selected service.
-      </p>
-
-    </section>
+    </div>
 
 
-    <!-- NUMBER INVENTORY -->
-    <section class="number-selection-section">
+    <!-- SELECTED SERVICE -->
 
-      <div class="marketplace-heading">
+    <div class="selected-service">
 
-        <div>
+      <div
+        class="selected-service-logo"
+        id="serviceLogo"
+      >
+        <i class="fa-solid fa-phone"></i>
+      </div>
 
-          <p class="dashboard-eyebrow">
-            LIVE INVENTORY
-          </p>
+      <div>
 
-          <h2>
-            Choose your number
-          </h2>
+        <div
+          class="selected-service-name"
+          id="serviceName"
+        >
+          Loading service...
+        </div>
 
+        <div class="selected-service-subtitle">
+          Available virtual numbers
         </div>
 
       </div>
 
-
-      <!-- COUNTRY FILTERS -->
-      <div class="country-filters">
-
-        <button
-          type="button"
-          class="country-filter active"
-          data-country="all"
-        >
-          All
-        </button>
-
-        <button
-          type="button"
-          class="country-filter"
-          data-country="US"
-        >
-          🇺🇸 US
-        </button>
-
-        <button
-          type="button"
-          class="country-filter"
-          data-country="GB"
-        >
-          🇬🇧 UK
-        </button>
-
-        <button
-          type="button"
-          class="country-filter"
-          data-country="CA"
-        >
-          🇨🇦 Canada
-        </button>
-
-      </div>
+    </div>
 
 
-      <!-- LOADING -->
-      <div
-        id="loadingNumbers"
-        class="empty-numbers"
+    <!-- COUNTRY FILTERS -->
+
+    <div class="country-filters">
+
+      <button
+        class="country-filter active"
+        data-country="all"
       >
+        All
+      </button>
 
-        <i class="fa-solid fa-spinner fa-spin"></i>
+      <button
+        class="country-filter"
+        data-country="US"
+      >
+        🇺🇸 US
+      </button>
 
-        <h3>
-          Loading numbers
-        </h3>
+      <button
+        class="country-filter"
+        data-country="UK"
+      >
+        🇬🇧 UK
+      </button>
 
-        <p>
-          Checking available inventory...
-        </p>
+      <button
+        class="country-filter"
+        data-country="CA"
+      >
+        🇨🇦 Canada
+      </button>
 
-      </div>
+    </div>
 
 
-      <!-- NUMBER LIST -->
+    <!-- RESULTS HEADER -->
+
+    <div class="results-header">
+
       <div
-        id="numberList"
-        class="number-list"
-        style="display:none;"
-      ></div>
+        class="results-count"
+        id="resultsCount"
+      >
+        Loading numbers...
+      </div>
 
-    </section>
+      <div class="available-label">
 
+        <i class="fa-solid fa-circle-check"></i>
 
-    <!-- COMPATIBILITY NOTICE -->
-    <section class="number-notice">
-
-      <div class="number-notice-icon">
-
-        <i class="fa-solid fa-shield-halved"></i>
+        Available
 
       </div>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    <div
+      class="loading-box"
+      id="loadingBox"
+    >
+
+      <i class="fa-solid fa-spinner fa-spin"></i>
 
       <div>
-
-        <strong>
-          Service compatibility
-        </strong>
-
-        <p>
-          Availability and service acceptance can vary.
-          Review the number details before purchasing.
-        </p>
-
+        Loading available numbers...
       </div>
 
-    </section>
+    </div>
 
 
-    <!-- INVENTORY NOTICE -->
-    <section class="demo-notice">
+    <!-- NUMBER LIST -->
 
-      <i class="fa-solid fa-circle-check"></i>
+    <div
+      class="number-list"
+      id="numberList"
+    ></div>
 
-      <div>
 
-        <strong>
-          Live provider inventory
-        </strong>
+    <!-- NOTICE -->
 
-        <p>
-          Numbers shown here are loaded from
-          the Wavynum inventory database.
-        </p>
+    <div class="selection-notice">
 
-      </div>
+      <i class="fa-solid fa-shield-halved"></i>
 
-    </section>
+      The phone number shown on each card is the actual
+      number you are selecting. Review the number and price
+      before continuing.
+
+    </div>
 
   </main>
 
 
-  <!-- FIREBASE -->
   <script type="module">
 
-    import {
-      db
-    } from "./firebase.js";
-
+    import { db } from "./firebase.js";
 
     import {
       collection,
@@ -204,51 +712,110 @@
     } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-    /* =========================================
-       GET SELECTED SERVICE
-    ========================================= */
+    const serviceName =
+      document.getElementById("serviceName");
 
-    const params =
+    const serviceLogo =
+      document.getElementById("serviceLogo");
+
+    const loadingBox =
+      document.getElementById("loadingBox");
+
+    const numberList =
+      document.getElementById("numberList");
+
+    const resultsCount =
+      document.getElementById("resultsCount");
+
+
+    let allNumbers = [];
+
+    let activeCountry = "all";
+
+
+    /*
+     * =====================================================
+     * READ SERVICE FROM URL
+     * =====================================================
+     *
+     * buy-number.html sends:
+     *
+     * number-selection.html?service=Facebook
+     *
+     * URLSearchParams automatically decodes
+     * Google%20Voice etc.
+     */
+
+    const urlParams =
       new URLSearchParams(
         window.location.search
       );
 
-
-    const service =
-      params.get("service") || "Other";
-
-
-    /* =========================================
-       PAGE ELEMENTS
-    ========================================= */
-
-    const serviceTitle =
-      document.getElementById(
-        "serviceTitle"
-      );
+    let selectedService =
+      urlParams.get("service");
 
 
-    const serviceDescription =
-      document.getElementById(
-        "serviceDescription"
-      );
+    /*
+     * Clean the service name.
+     */
+
+    selectedService =
+      selectedService
+        ? selectedService.trim()
+        : "";
 
 
-    const numberList =
-      document.getElementById(
-        "numberList"
-      );
+    /*
+     * =====================================================
+     * SERVICE ALIASES
+     * =====================================================
+     *
+     * These make the URL compatible with the
+     * values stored inside Firestore.
+     */
 
+    const serviceAliases = {
 
-    const loadingNumbers =
-      document.getElementById(
-        "loadingNumbers"
-      );
+      "facebook": "facebook",
 
+      "whatsapp": "whatsapp",
 
-    /* =========================================
-       NORMALIZE SERVICE NAME
-    ========================================= */
+      "instagram": "instagram",
+
+      "telegram": "telegram",
+
+      "snapchat": "snapchat",
+
+      "google voice": "google voice",
+
+      "textplus": "textplus",
+
+      "textnow": "textnow",
+
+      "textfree": "textfree",
+
+      "hushed": "hushed",
+
+      "burner": "burner",
+
+      "2ndline": "2ndline",
+
+      "freetone": "freetone",
+
+      "coverme": "coverme",
+
+      "numero": "numero",
+
+      "mysudo": "mysudo",
+
+      "twitter": "twitter / x",
+
+      "twitter / x": "twitter / x",
+
+      "x": "twitter / x"
+
+    };
+
 
     function normalizeService(value) {
 
@@ -259,58 +826,244 @@
     }
 
 
-    const selectedService =
-      normalizeService(service);
+    function getServiceKey(value) {
+
+      const normalized =
+        normalizeService(value);
+
+      return (
+        serviceAliases[normalized]
+        || normalized
+      );
+
+    }
 
 
-    /* =========================================
-       PAGE TITLE
-    ========================================= */
-
-    serviceTitle.textContent =
-      service + " numbers";
+    const selectedServiceKey =
+      getServiceKey(selectedService);
 
 
-    serviceDescription.textContent =
-      "Choose an available number for " +
-      service +
-      ".";
+    /*
+     * =====================================================
+     * SERVICE LOGOS
+     * =====================================================
+     */
+
+    const serviceLogos = {
+
+      "facebook":
+        "https://cdn.brandfetch.io/facebook.com/w/256/h/256",
+
+      "whatsapp":
+        "https://cdn.brandfetch.io/whatsapp.com/w/256/h/256",
+
+      "instagram":
+        "https://cdn.brandfetch.io/instagram.com/w/256/h/256",
+
+      "telegram":
+        "https://cdn.brandfetch.io/telegram.org/w/256/h/256",
+
+      "snapchat":
+        "https://cdn.brandfetch.io/snapchat.com/w/256/h/256",
+
+      "google voice":
+        "https://cdn.brandfetch.io/voice.google.com/w/256/h/256",
+
+      "textplus":
+        "https://cdn.brandfetch.io/textplus.com/w/256/h/256",
+
+      "textnow":
+        "https://cdn.brandfetch.io/textnow.com/w/256/h/256",
+
+      "textfree":
+        "https://cdn.brandfetch.io/textfree.us/w/256/h/256",
+
+      "hushed":
+        "https://cdn.brandfetch.io/hushed.com/w/256/h/256",
+
+      "burner":
+        "https://cdn.brandfetch.io/burnerapp.com/w/256/h/256",
+
+      "2ndline":
+        "https://cdn.brandfetch.io/2ndline.co/w/256/h/256",
+
+      "freetone":
+        "https://cdn.brandfetch.io/freetoneapp.com/w/256/h/256",
+
+      "coverme":
+        "https://cdn.brandfetch.io/coverme.ws/w/256/h/256",
+
+      "numero":
+        "https://cdn.brandfetch.io/numeroesim.com/w/256/h/256",
+
+      "mysudo":
+        "https://cdn.brandfetch.io/mysudo.com/w/256/h/256",
+
+      "twitter / x":
+        "https://cdn.brandfetch.io/x.com/w/256/h/256"
+
+    };
 
 
-    /* =========================================
-       NUMBER DATA
-    ========================================= */
+    /*
+     * =====================================================
+     * DISPLAY SERVICE
+     * =====================================================
+     */
 
-    let numbers = [];
+    function displayService() {
+
+      if (!selectedService) {
+
+        serviceName.textContent =
+          "No service selected";
+
+        serviceLogo.innerHTML =
+          '<i class="fa-solid fa-triangle-exclamation"></i>';
+
+        return;
+
+      }
 
 
-    /* =========================================
-       LOAD NUMBERS FROM FIRESTORE
-    ========================================= */
+      serviceName.textContent =
+        selectedService;
+
+
+      const logo =
+        serviceLogos[selectedServiceKey];
+
+
+      if (logo) {
+
+        serviceLogo.innerHTML = `
+
+          <img
+            src="${logo}"
+            alt="${selectedService}"
+            onerror="
+              this.style.display='none';
+              this.parentElement.innerHTML='<i class=&quot;fa-solid fa-phone&quot;></i>';
+            "
+          >
+
+        `;
+
+      } else {
+
+        serviceLogo.innerHTML =
+          '<i class="fa-solid fa-phone"></i>';
+
+      }
+
+    }
+
+
+    displayService();
+
+
+    /*
+     * =====================================================
+     * COUNTRY NORMALIZATION
+     * =====================================================
+     */
+
+    function normalizeCountry(value) {
+
+      return String(value || "")
+        .trim()
+        .toUpperCase();
+
+    }
+
+
+    /*
+     * =====================================================
+     * PRICE
+     * =====================================================
+     */
+
+    function formatPrice(value) {
+
+      const amount =
+        Number(value) || 0;
+
+      return "$" +
+        amount.toFixed(2);
+
+    }
+
+
+    /*
+     * =====================================================
+     * COUNTRY FLAG
+     * =====================================================
+     */
+
+    function countryFlag(country) {
+
+      const code =
+        normalizeCountry(country);
+
+
+      if (code === "US") return "🇺🇸";
+
+      if (code === "UK") return "🇬🇧";
+
+      if (code === "GB") return "🇬🇧";
+
+      if (code === "CA") return "🇨🇦";
+
+      return "🌍";
+
+    }
+
+
+    /*
+     * =====================================================
+     * LOAD FIRESTORE NUMBERS
+     * =====================================================
+     */
 
     async function loadNumbers() {
 
-      try {
+      if (!selectedService) {
 
-        loadingNumbers.style.display =
-          "block";
-
-
-        numberList.style.display =
+        loadingBox.style.display =
           "none";
 
+        resultsCount.textContent =
+          "No service selected";
 
-        numberList.innerHTML = "";
+        numberList.innerHTML = `
+
+          <div class="empty-box">
+
+            <div class="empty-icon">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+
+            <div class="empty-title">
+              No service was selected
+            </div>
+
+            <div class="empty-text">
+              Please return to Buy a Number
+              and select a service first.
+            </div>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
 
 
-        /*
-          IMPORTANT:
+      try {
 
-          Your Firestore collection
-          is "numbers" — PLURAL.
-        */
-
-        const snapshot =
+        const numbersSnapshot =
           await getDocs(
             collection(
               db,
@@ -319,36 +1072,36 @@
           );
 
 
-        numbers = [];
+        allNumbers = [];
 
 
-        snapshot.forEach(
-          (docSnapshot) => {
+        numbersSnapshot.forEach(
+          (numberDoc) => {
 
             const data =
-              docSnapshot.data();
+              numberDoc.data();
 
 
-            /* ---------------------------------
-               ONLY AVAILABLE NUMBERS
-            --------------------------------- */
+            /*
+             * Only available numbers.
+             */
 
-            if (
-              !data.status ||
+            const status =
               String(
-                data.status
-              ).trim().toLowerCase() !==
-              "available"
-            ) {
+                data.status || ""
+              )
+              .trim()
+              .toLowerCase();
 
+
+            if (status !== "available") {
               return;
-
             }
 
 
-            /* ---------------------------------
-               SERVICES ARRAY
-            --------------------------------- */
+            /*
+             * Firestore services array.
+             */
 
             const services =
               Array.isArray(
@@ -359,38 +1112,41 @@
 
 
             /*
-              Check whether this number
-              supports the selected service.
-            */
+             * Check whether this number
+             * supports the selected service.
+             */
 
             const supportsService =
               services.some(
-                item =>
-                  normalizeService(item) ===
-                  selectedService
+                (service) => {
+
+                  return (
+                    normalizeService(
+                      service
+                    ) ===
+                    selectedServiceKey
+                  );
+
+                }
               );
 
 
-            /*
-              If the number is not assigned
-              to this service, don't display it.
-            */
-
             if (!supportsService) {
-
               return;
-
             }
 
 
-            /* ---------------------------------
-               SAVE NUMBER
-            --------------------------------- */
+            /*
+             * IMPORTANT:
+             *
+             * Save the REAL Firestore
+             * document ID.
+             */
 
-            numbers.push({
+            allNumbers.push({
 
               id:
-                docSnapshot.id,
+                numberDoc.id,
 
               number:
                 data.number || "",
@@ -409,10 +1165,7 @@
 
               provider:
                 data.provider ||
-                "Provider",
-
-              services:
-                services
+                "Provider"
 
             });
 
@@ -420,36 +1173,53 @@
         );
 
 
-        loadingNumbers.style.display =
+        /*
+         * Cheapest first.
+         */
+
+        allNumbers.sort(
+          (a, b) =>
+            a.price - b.price
+        );
+
+
+        loadingBox.style.display =
           "none";
 
 
-        numberList.style.display =
-          "block";
-
-
-        displayNumbers("all");
-
+        renderNumbers();
 
       } catch (error) {
 
         console.error(
-          "Firestore error:",
+          "Wavynum number loading error:",
           error
         );
 
 
-        loadingNumbers.innerHTML = `
+        loadingBox.style.display =
+          "none";
 
-          <i class="fa-solid fa-triangle-exclamation"></i>
 
-          <h3>
-            Unable to load numbers
-          </h3>
+        resultsCount.textContent =
+          "Unable to load numbers";
 
-          <p>
-            Please refresh the page and try again.
-          </p>
+
+        numberList.innerHTML = `
+
+          <div class="error-box">
+
+            <strong>
+              Unable to load numbers
+            </strong>
+
+            <br><br>
+
+            ${escapeHtml(
+              error.message
+            )}
+
+          </div>
 
         `;
 
@@ -458,54 +1228,97 @@
     }
 
 
-    /* =========================================
-       DISPLAY NUMBERS
-    ========================================= */
+    /*
+     * =====================================================
+     * RENDER NUMBERS
+     * =====================================================
+     */
 
-    function displayNumbers(
-      country = "all"
-    ) {
+    function renderNumbers() {
 
       numberList.innerHTML = "";
 
 
-      const filteredNumbers =
-        country === "all"
-          ? numbers
-          : numbers.filter(
-              item =>
-                String(
-                  item.country
-                ).trim().toUpperCase() ===
-                String(
-                  country
-                ).trim().toUpperCase()
-            );
+      let filtered =
+        allNumbers;
 
 
-      /* =======================================
-         NO NUMBERS
-      ======================================= */
+      /*
+       * Country filter.
+       */
 
       if (
-        filteredNumbers.length === 0
+        activeCountry !==
+        "all"
+      ) {
+
+        filtered =
+          allNumbers.filter(
+            (item) => {
+
+              const country =
+                normalizeCountry(
+                  item.country
+                );
+
+
+              if (
+                activeCountry ===
+                  "UK"
+                &&
+                country === "GB"
+              ) {
+
+                return true;
+
+              }
+
+
+              return (
+                country ===
+                activeCountry
+              );
+
+            }
+          );
+
+      }
+
+
+      resultsCount.textContent =
+        `${filtered.length} number${
+          filtered.length === 1
+            ? ""
+            : "s"
+        } available`;
+
+
+      /*
+       * Nothing available.
+       */
+
+      if (
+        filtered.length === 0
       ) {
 
         numberList.innerHTML = `
 
-          <div class="empty-numbers">
+          <div class="empty-box">
 
-            <i class="fa-solid fa-phone-slash"></i>
+            <div class="empty-icon">
+              <i class="fa-solid fa-phone-slash"></i>
+            </div>
 
-            <h3>
+            <div class="empty-title">
               No numbers available
-            </h3>
+            </div>
 
-            <p>
-              There are currently no
-              available numbers for
-              ${escapeHtml(service)}.
-            </p>
+            <div class="empty-text">
+              There are currently no available
+              numbers for ${escapeHtml(
+                selectedService
+              )}.
+            </div>
 
           </div>
 
@@ -516,11 +1329,11 @@
       }
 
 
-      /* =======================================
-         CREATE NUMBER CARDS
-      ======================================= */
+      /*
+       * Create cards.
+       */
 
-      filteredNumbers.forEach(
+      filtered.forEach(
         (item) => {
 
           const card =
@@ -530,99 +1343,98 @@
 
 
           card.className =
-            "available-number-card";
+            "number-card";
 
 
           card.innerHTML = `
 
-            <div class="available-number-main">
+            <div class="number-card-top">
 
-              <div class="available-number-icon">
+              <div class="number-info">
 
-                <i class="fa-solid fa-phone"></i>
+                <div class="number-label">
+                  Actual phone number
+                </div>
 
-              </div>
-
-
-              <div>
-
-                <h3>
+                <div class="actual-phone-number">
                   ${escapeHtml(
                     item.number
                   )}
-                </h3>
+                </div>
+
+              </div>
 
 
-                <p>
-                  ${escapeHtml(
-                    item.countryName
+              <div class="number-price">
+
+                <div class="number-price-value">
+                  ${formatPrice(
+                    item.price
                   )}
-                </p>
+                </div>
 
-
-                <small
-                  style="
-                    display:block;
-                    margin-top:4px;
-                    opacity:.7;
-                  "
-                >
-
-                  Provider:
-                  ${escapeHtml(
-                    item.provider
-                  )}
-
-                </small>
+                <div class="number-price-label">
+                  USD
+                </div>
 
               </div>
 
             </div>
 
 
-            <div class="available-number-right">
+            <div class="number-details">
 
-              <strong>
-                $${item.price.toFixed(2)}
-              </strong>
+              <div class="number-detail">
+
+                <i class="fa-solid fa-globe"></i>
+
+                ${countryFlag(
+                  item.country
+                )}
+
+                ${escapeHtml(
+                  item.countryName
+                )}
+
+              </div>
 
 
-              <button
-                type="button"
-                class="choose-number-button"
-              >
+              <div class="number-detail">
 
-                Choose
+                <i class="fa-solid fa-server"></i>
 
-                <i
-                  class="fa-solid fa-arrow-right"
-                ></i>
+                ${escapeHtml(
+                  item.provider
+                )}
 
-              </button>
+              </div>
+
+
+              <div class="number-detail">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Available
+
+              </div>
 
             </div>
 
+
+            <button
+              class="choose-number-btn"
+              data-id="${escapeAttribute(
+                item.id
+              )}"
+            >
+
+              Choose Number
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
           `;
-
-
-          /* =====================================
-             CHOOSE BUTTON
-          ===================================== */
-
-          const chooseButton =
-            card.querySelector(
-              ".choose-number-button"
-            );
-
-
-          chooseButton.addEventListener(
-            "click",
-            () => {
-
-              selectNumber(item);
-
-            }
-          );
 
 
           numberList.appendChild(
@@ -632,138 +1444,195 @@
         }
       );
 
-    }
 
+      /*
+       * CHOOSE BUTTONS
+       */
 
-    /* =========================================
-       SELECT NUMBER
-    ========================================= */
-
-    function selectNumber(item) {
-
-      const selectedNumber = {
-
-        id:
-          item.id,
-
-        service:
-          service,
-
-        number:
-          item.number,
-
-        country:
-          item.country,
-
-        countryName:
-          item.countryName,
-
-        price:
-          item.price,
-
-        provider:
-          item.provider
-
-      };
-
-
-      localStorage.setItem(
-        "wavynumSelectedNumber",
-        JSON.stringify(
-          selectedNumber
+      document
+        .querySelectorAll(
+          ".choose-number-btn"
         )
-      );
+        .forEach(
+          (button) => {
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                const numberId =
+                  button.dataset.id;
 
 
-      window.location.href =
-        "number-confirmation.html";
-
-    }
-
-
-    /* =========================================
-       COUNTRY FILTERS
-    ========================================= */
-
-    const filterButtons =
-      document.querySelectorAll(
-        ".country-filter"
-      );
+                const selected =
+                  allNumbers.find(
+                    (item) =>
+                      item.id ===
+                      numberId
+                  );
 
 
-    filterButtons.forEach(
-      (button) => {
+                if (!selected) {
 
-        button.addEventListener(
-          "click",
-          () => {
+                  alert(
+                    "This number could not be found."
+                  );
 
-            filterButtons.forEach(
-              (btn) => {
+                  return;
 
-                btn.classList.remove(
-                  "active"
+                }
+
+
+                /*
+                 * Save EVERYTHING needed
+                 * by number-confirmation.html.
+                 */
+
+                const selectedNumber = {
+
+                  id:
+                    selected.id,
+
+                  service:
+                    selectedService,
+
+                  number:
+                    selected.number,
+
+                  country:
+                    selected.country,
+
+                  countryName:
+                    selected.countryName,
+
+                  price:
+                    selected.price,
+
+                  provider:
+                    selected.provider
+
+                };
+
+
+                localStorage.setItem(
+                  "wavynumSelectedNumber",
+                  JSON.stringify(
+                    selectedNumber
+                  )
                 );
 
+
+                window.location.href =
+                  "number-confirmation.html";
+
               }
-            );
-
-
-            button.classList.add(
-              "active"
-            );
-
-
-            displayNumbers(
-              button.dataset.country
             );
 
           }
         );
 
-      }
-    );
+    }
 
 
-    /* =========================================
-       HTML ESCAPE
-    ========================================= */
+    /*
+     * =====================================================
+     * COUNTRY FILTERS
+     * =====================================================
+     */
+
+    document
+      .querySelectorAll(
+        ".country-filter"
+      )
+      .forEach(
+        (button) => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              document
+                .querySelectorAll(
+                  ".country-filter"
+                )
+                .forEach(
+                  (btn) => {
+
+                    btn.classList.remove(
+                      "active"
+                    );
+
+                  }
+                );
+
+
+              button.classList.add(
+                "active"
+              );
+
+
+              activeCountry =
+                button.dataset.country;
+
+
+              renderNumbers();
+
+            }
+          );
+
+        }
+      );
+
+
+    /*
+     * =====================================================
+     * ESCAPE HTML
+     * =====================================================
+     */
 
     function escapeHtml(value) {
 
-      return String(value)
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
-        );
+      return String(
+        value || ""
+      )
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
 
     }
 
 
-    /* =========================================
-       START
-    ========================================= */
+    function escapeAttribute(value) {
+
+      return escapeHtml(
+        value
+      );
+
+    }
+
+
+    /*
+     * =====================================================
+     * START
+     * =====================================================
+     */
 
     loadNumbers();
 

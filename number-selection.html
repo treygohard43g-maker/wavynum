@@ -6,7 +6,7 @@
 
   <title>Select Number — Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 
   <link
     rel="stylesheet"
@@ -37,7 +37,7 @@
   <!-- Main -->
   <main class="numbers-main">
 
-    <!-- Page heading -->
+    <!-- Heading -->
     <section class="numbers-header">
 
       <p class="dashboard-eyebrow">
@@ -55,14 +55,14 @@
     </section>
 
 
-    <!-- Country filters -->
+    <!-- Inventory -->
     <section class="number-selection-section">
 
       <div class="marketplace-heading">
 
         <div>
           <p class="dashboard-eyebrow">
-            INVENTORY
+            LIVE INVENTORY
           </p>
 
           <h2>
@@ -73,6 +73,7 @@
       </div>
 
 
+      <!-- Country filters -->
       <div class="country-filters">
 
         <button
@@ -110,8 +111,31 @@
       </div>
 
 
+      <!-- Loading -->
+      <div
+        id="loadingNumbers"
+        class="empty-numbers"
+      >
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        <h3>
+          Loading numbers
+        </h3>
+
+        <p>
+          Checking available inventory...
+        </p>
+
+      </div>
+
+
       <!-- Number list -->
-      <div id="numberList" class="number-list"></div>
+      <div
+        id="numberList"
+        class="number-list"
+        style="display:none;"
+      ></div>
 
     </section>
 
@@ -139,20 +163,20 @@
     </section>
 
 
-    <!-- Development notice -->
+    <!-- Inventory notice -->
     <section class="demo-notice">
 
-      <i class="fa-solid fa-circle-info"></i>
+      <i class="fa-solid fa-circle-check"></i>
 
       <div>
 
         <strong>
-          Development mode
+          Live provider inventory
         </strong>
 
         <p>
-          Number inventory is currently simulated.
-          Authorized number providers can be connected later.
+          Numbers shown here are loaded from the
+          Wavynum inventory database.
         </p>
 
       </div>
@@ -162,7 +186,18 @@
   </main>
 
 
-  <script>
+  <!-- Firebase / Firestore -->
+  <script type="module">
+
+    import {
+      db
+    } from "./firebase.js";
+
+    import {
+      collection,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
 
     /* --------------------------------
        GET SELECTED SERVICE
@@ -188,6 +223,9 @@
     const numberList =
       document.getElementById("numberList");
 
+    const loadingNumbers =
+      document.getElementById("loadingNumbers");
+
 
     serviceTitle.textContent =
       service + " numbers";
@@ -199,61 +237,107 @@
 
 
     /* --------------------------------
-       SIMULATED INVENTORY
+       INVENTORY
     -------------------------------- */
 
-    const numbers = [
+    let numbers = [];
 
-      {
-        number: "+1 (202) 555-0147",
-        country: "US",
-        countryName: "United States",
-        price: 4.99
-      },
 
-      {
-        number: "+1 (305) 555-0182",
-        country: "US",
-        countryName: "United States",
-        price: 5.49
-      },
+    /* --------------------------------
+       LOAD NUMBERS FROM FIRESTORE
+    -------------------------------- */
 
-      {
-        number: "+1 (415) 555-0128",
-        country: "US",
-        countryName: "United States",
-        price: 6.99
-      },
+    async function loadNumbers() {
 
-      {
-        number: "+44 20 7946 0318",
-        country: "GB",
-        countryName: "United Kingdom",
-        price: 7.99
-      },
+      try {
 
-      {
-        number: "+44 20 7946 0482",
-        country: "GB",
-        countryName: "United Kingdom",
-        price: 8.49
-      },
+        loadingNumbers.style.display = "block";
+        numberList.style.display = "none";
 
-      {
-        number: "+1 (416) 555-0194",
-        country: "CA",
-        countryName: "Canada",
-        price: 6.49
-      },
+        numberList.innerHTML = "";
 
-      {
-        number: "+1 (647) 555-0136",
-        country: "CA",
-        countryName: "Canada",
-        price: 7.49
+
+        const snapshot =
+          await getDocs(
+            collection(db, "numbers")
+          );
+
+
+        numbers = [];
+
+
+        snapshot.forEach(doc => {
+
+          const data = doc.data();
+
+
+          /*
+            Only show numbers that are
+            currently available.
+          */
+
+          if (
+            data.status &&
+            data.status.toLowerCase() === "available"
+          ) {
+
+            numbers.push({
+
+              id: doc.id,
+
+              number:
+                data.number || "",
+
+              country:
+                data.country || "",
+
+              countryName:
+                data.countryName || "Unknown",
+
+              price:
+                Number(data.price) || 0,
+
+              provider:
+                data.provider || "Provider"
+
+            });
+
+          }
+
+        });
+
+
+        loadingNumbers.style.display = "none";
+        numberList.style.display = "block";
+
+
+        displayNumbers("all");
+
+      } catch (error) {
+
+        console.error(
+          "Error loading numbers:",
+          error
+        );
+
+
+        loadingNumbers.innerHTML = `
+
+          <i class="fa-solid fa-triangle-exclamation"></i>
+
+          <h3>
+            Unable to load numbers
+          </h3>
+
+          <p>
+            Please refresh the page and try again.
+          </p>
+
+        `;
+
       }
 
-    ];
+    }
 
 
     /* --------------------------------
@@ -269,14 +353,19 @@
         country === "all"
           ? numbers
           : numbers.filter(
-              item => item.country === country
+              item =>
+                item.country === country
             );
 
 
-      if (filteredNumbers.length === 0) {
+      if (
+        filteredNumbers.length === 0
+      ) {
 
         numberList.innerHTML = `
+
           <div class="empty-numbers">
+
             <i class="fa-solid fa-phone-slash"></i>
 
             <h3>
@@ -284,13 +373,16 @@
             </h3>
 
             <p>
-              There are currently no numbers
-              available for this country.
+              There are currently no available
+              numbers for this country.
             </p>
+
           </div>
+
         `;
 
         return;
+
       }
 
 
@@ -314,12 +406,23 @@
             <div>
 
               <h3>
-                ${item.number}
+                ${escapeHtml(item.number)}
               </h3>
 
               <p>
-                ${item.countryName}
+                ${escapeHtml(item.countryName)}
               </p>
+
+              <small
+                style="
+                  display:block;
+                  margin-top:4px;
+                  opacity:.7;
+                "
+              >
+                Provider:
+                ${escapeHtml(item.provider)}
+              </small>
 
             </div>
 
@@ -372,29 +475,37 @@
 
       const selectedNumber = {
 
-        service: service,
+        id:
+          item.id,
 
-        number: item.number,
+        service:
+          service,
 
-        country: item.country,
+        number:
+          item.number,
 
-        countryName: item.countryName,
+        country:
+          item.country,
 
-        price: item.price
+        countryName:
+          item.countryName,
+
+        price:
+          item.price,
+
+        provider:
+          item.provider
 
       };
 
 
       localStorage.setItem(
         "wavynumSelectedNumber",
-        JSON.stringify(selectedNumber)
+        JSON.stringify(
+          selectedNumber
+        )
       );
 
-
-      /*
-        The next page will handle
-        confirmation and purchase.
-      */
 
       window.location.href =
         "number-confirmation.html";
@@ -419,10 +530,18 @@
         () => {
 
           filterButtons.forEach(btn => {
-            btn.classList.remove("active");
+
+            btn.classList.remove(
+              "active"
+            );
+
           });
 
-          button.classList.add("active");
+
+          button.classList.add(
+            "active"
+          );
+
 
           displayNumbers(
             button.dataset.country
@@ -435,10 +554,46 @@
 
 
     /* --------------------------------
-       INITIAL LOAD
+       SAFE HTML
     -------------------------------- */
 
-    displayNumbers();
+    function escapeHtml(value) {
+
+      return String(value)
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    /* --------------------------------
+       START
+    -------------------------------- */
+
+    loadNumbers();
 
   </script>
 

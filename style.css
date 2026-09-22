@@ -2478,3 +2478,20 @@ body.menu-open {
   border: 1px solid rgba(34, 197, 94, 0.2);
   color: #39e86f;
 }
+/* Wavynum service cards - make the entire card tappable */
+.service-number-card {
+  position: relative;
+  z-index: 5;
+  pointer-events: auto !important;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.service-number-card * {
+  pointer-events: none;
+}
+
+.service-number-card:hover {
+  cursor: pointer;
+}

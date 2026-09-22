@@ -6,11 +6,15 @@
 
   <title>SMS Inbox — Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=7">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=8">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
 
   <style>
+
     /* =========================================
        WAVYNUM SMS INBOX
        ========================================= */
@@ -21,30 +25,42 @@
       color: #f0fdf4;
     }
 
-    /* Header */
+
+    /* =========================================
+       HEADER
+       ========================================= */
+
     .sms-header {
       height: 72px;
       padding: 0 20px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
 
       background: rgba(5, 8, 6, 0.96);
-      border-bottom: 1px solid rgba(34, 197, 94, 0.12);
+
+      border-bottom:
+        1px solid rgba(34, 197, 94, 0.12);
 
       position: sticky;
       top: 0;
       z-index: 20;
+
       backdrop-filter: blur(14px);
     }
+
 
     .sms-logo {
       color: #39e86f;
       text-decoration: none;
+
       font-size: 22px;
       font-weight: 800;
+
       letter-spacing: -0.5px;
     }
+
 
     .sms-back {
       width: 40px;
@@ -55,79 +71,121 @@
       justify-content: center;
 
       border-radius: 12px;
+
       color: #d8e8dd;
       background: #0c140f;
-      border: 1px solid rgba(34, 197, 94, 0.14);
+
+      border:
+        1px solid rgba(34, 197, 94, 0.14);
 
       text-decoration: none;
+
       transition: 0.2s;
     }
 
+
     .sms-back:hover {
       color: #39e86f;
-      border-color: rgba(34, 197, 94, 0.35);
+
+      border-color:
+        rgba(34, 197, 94, 0.35);
+
       transform: translateY(-1px);
     }
 
-    /* Main */
+
+    /* =========================================
+       MAIN
+       ========================================= */
+
     .sms-main {
       width: min(900px, calc(100% - 28px));
+
       margin: 0 auto;
+
       padding: 30px 0 50px;
     }
+
 
     .sms-heading {
       margin-bottom: 22px;
     }
 
+
     .sms-eyebrow {
       margin: 0 0 7px;
+
       color: #39e86f;
+
       font-size: 11px;
       font-weight: 800;
+
       letter-spacing: 1.5px;
     }
 
+
     .sms-heading h1 {
       margin: 0;
-      font-size: clamp(28px, 7vw, 40px);
+
+      font-size:
+        clamp(28px, 7vw, 40px);
+
       line-height: 1.1;
+
       letter-spacing: -1px;
+
       color: #ecfdf3;
     }
 
+
     .sms-heading p {
       margin: 10px 0 0;
+
       color: #78857d;
+
       font-size: 14px;
       line-height: 1.6;
     }
 
-    /* Number selector */
-    .number-selector {
-      background: linear-gradient(
-        145deg,
-        #0c140f,
-        #080d0a
-      );
 
-      border: 1px solid rgba(34, 197, 94, 0.13);
+    /* =========================================
+       NUMBER SELECTOR
+       ========================================= */
+
+    .number-selector {
+      background:
+        linear-gradient(
+          145deg,
+          #0c140f,
+          #080d0a
+        );
+
+      border:
+        1px solid rgba(34, 197, 94, 0.13);
+
       border-radius: 20px;
+
       padding: 15px;
 
       margin-bottom: 18px;
     }
 
+
     .selector-label {
       display: block;
+
       margin: 0 0 9px 3px;
 
       color: #7e8a82;
+
       font-size: 11px;
       font-weight: 700;
+
       letter-spacing: 0.8px;
+
       text-transform: uppercase;
     }
+
 
     .number-select {
       width: 100%;
@@ -136,32 +194,46 @@
       padding: 0 14px;
 
       color: #ecfdf3;
+
       background: #050806;
 
-      border: 1px solid rgba(34, 197, 94, 0.18);
+      border:
+        1px solid rgba(34, 197, 94, 0.18);
+
       border-radius: 13px;
 
       font-size: 14px;
+
       outline: none;
     }
 
+
     .number-select:focus {
-      border-color: rgba(34, 197, 94, 0.55);
+      border-color:
+        rgba(34, 197, 94, 0.55);
     }
 
-    /* Inbox card */
+
+    /* =========================================
+       INBOX CARD
+       ========================================= */
+
     .inbox-card {
       overflow: hidden;
 
-      background: linear-gradient(
-        145deg,
-        #0c140f,
-        #080d0a
-      );
+      background:
+        linear-gradient(
+          145deg,
+          #0c140f,
+          #080d0a
+        );
 
-      border: 1px solid rgba(34, 197, 94, 0.13);
+      border:
+        1px solid rgba(34, 197, 94, 0.13);
+
       border-radius: 22px;
     }
+
 
     .inbox-top {
       padding: 18px;
@@ -169,21 +241,28 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 15px;
 
-      border-bottom: 1px solid rgba(34, 197, 94, 0.10);
+      border-bottom:
+        1px solid rgba(34, 197, 94, 0.10);
     }
+
 
     .number-info {
       display: flex;
       align-items: center;
+
       gap: 12px;
+
       min-width: 0;
     }
+
 
     .phone-icon {
       width: 46px;
       height: 46px;
+
       flex: 0 0 46px;
 
       display: flex;
@@ -192,61 +271,180 @@
 
       border-radius: 14px;
 
-      background: rgba(34, 197, 94, 0.10);
+      background:
+        rgba(34, 197, 94, 0.10);
+
       color: #39e86f;
 
       font-size: 18px;
     }
 
+
     .number-info h2 {
       margin: 0;
 
       color: #ecfdf3;
+
       font-size: 16px;
       font-weight: 750;
 
       white-space: nowrap;
+
       overflow: hidden;
+
       text-overflow: ellipsis;
     }
+
 
     .number-info p {
       margin: 4px 0 0;
 
       color: #78857d;
+
       font-size: 12px;
     }
+
 
     .active-badge {
       flex-shrink: 0;
 
       display: inline-flex;
       align-items: center;
+
       gap: 6px;
 
       padding: 7px 10px;
 
       border-radius: 999px;
 
-      background: rgba(34, 197, 94, 0.10);
+      background:
+        rgba(34, 197, 94, 0.10);
+
       color: #4ade80;
 
       font-size: 11px;
       font-weight: 700;
     }
 
+
     .active-dot {
       width: 6px;
       height: 6px;
+
       border-radius: 50%;
+
       background: #39e86f;
     }
 
-    /* Empty state */
+
+    /* =========================================
+       MESSAGE LIST
+       ========================================= */
+
+    .message-list {
+      padding: 12px;
+    }
+
+
+    .message-card {
+      padding: 15px;
+
+      display: flex;
+
+      gap: 12px;
+
+      background: #080d0a;
+
+      border:
+        1px solid rgba(34, 197, 94, 0.09);
+
+      border-radius: 16px;
+
+      margin-bottom: 9px;
+    }
+
+
+    .message-card:last-child {
+      margin-bottom: 0;
+    }
+
+
+    .message-icon {
+      width: 40px;
+      height: 40px;
+
+      flex: 0 0 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 12px;
+
+      background:
+        rgba(34, 197, 94, 0.09);
+
+      color: #39e86f;
+    }
+
+
+    .message-content {
+      min-width: 0;
+      flex: 1;
+    }
+
+
+    .message-row {
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 10px;
+    }
+
+
+    .message-sender {
+      color: #ecfdf3;
+
+      font-size: 14px;
+      font-weight: 700;
+
+      word-break: break-word;
+    }
+
+
+    .message-time {
+      color: #78857d;
+
+      font-size: 11px;
+
+      white-space: nowrap;
+    }
+
+
+    .message-text {
+      margin: 7px 0 0;
+
+      color: #a9b6ae;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+
+      word-break: break-word;
+    }
+
+
+    /* =========================================
+       EMPTY STATE
+       ========================================= */
+
     .empty-inbox {
       padding: 65px 20px;
+
       text-align: center;
     }
+
 
     .empty-icon {
       width: 70px;
@@ -260,390 +458,497 @@
 
       border-radius: 22px;
 
-      background: rgba(34, 197, 94, 0.08);
-      border: 1px solid rgba(34, 197, 94, 0.12);
+      background:
+        rgba(34, 197, 94, 0.08);
+
+      border:
+        1px solid rgba(34, 197, 94, 0.12);
 
       color: #39e86f;
+
       font-size: 27px;
     }
+
 
     .empty-inbox h3 {
       margin: 0;
 
       color: #ecfdf3;
+
       font-size: 17px;
     }
 
+
     .empty-inbox p {
       max-width: 420px;
+
       margin: 9px auto 0;
 
       color: #78857d;
+
       font-size: 13px;
+
       line-height: 1.6;
     }
 
-    /* Demo SMS */
-    .message-list {
-      padding: 12px;
-    }
 
-    .message-card {
-      padding: 15px;
+    /* =========================================
+       LOADING
+       ========================================= */
 
-      display: flex;
-      gap: 12px;
+    .loading-state {
+      padding: 55px 20px;
 
-      background: #080d0a;
-      border: 1px solid rgba(34, 197, 94, 0.09);
-      border-radius: 16px;
+      text-align: center;
 
-      margin-bottom: 9px;
-    }
-
-    .message-card:last-child {
-      margin-bottom: 0;
-    }
-
-    .message-icon {
-      width: 40px;
-      height: 40px;
-      flex: 0 0 40px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      border-radius: 12px;
-
-      background: rgba(34, 197, 94, 0.09);
-      color: #39e86f;
-    }
-
-    .message-content {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .message-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .message-sender {
-      color: #ecfdf3;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .message-time {
       color: #78857d;
-      font-size: 11px;
-      white-space: nowrap;
     }
 
-    .message-text {
-      margin: 7px 0 0;
 
-      color: #a9b6ae;
+    .loading-state i {
+      display: block;
+
+      color: #39e86f;
+
+      font-size: 24px;
+
+      margin-bottom: 12px;
+    }
+
+
+    /* =========================================
+       ERROR
+       ========================================= */
+
+    .error-state {
+      padding: 45px 20px;
+
+      text-align: center;
+    }
+
+
+    .error-state i {
+      display: block;
+
+      color: #f59e0b;
+
+      font-size: 25px;
+
+      margin-bottom: 12px;
+    }
+
+
+    .error-state h3 {
+      margin: 0;
+
+      color: #ecfdf3;
+
+      font-size: 16px;
+    }
+
+
+    .error-state p {
+      margin: 8px auto 0;
+
+      max-width: 400px;
+
+      color: #78857d;
+
       font-size: 13px;
+
       line-height: 1.5;
     }
 
-    .otp-code {
-      display: inline-block;
 
-      margin-top: 9px;
-      padding: 6px 9px;
+    /* =========================================
+       REAL SMS NOTICE
+       ========================================= */
 
-      border-radius: 8px;
-
-      background: rgba(34, 197, 94, 0.09);
-      color: #4ade80;
-
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    /* Demo notice */
-    .demo-notice {
+    .sms-notice {
       margin-top: 18px;
 
       display: flex;
+
       gap: 12px;
 
       padding: 15px;
 
       border-radius: 17px;
 
-      background: rgba(34, 197, 94, 0.045);
-      border: 1px solid rgba(34, 197, 94, 0.10);
+      background:
+        rgba(34, 197, 94, 0.045);
+
+      border:
+        1px solid rgba(34, 197, 94, 0.10);
 
       color: #78857d;
+
       font-size: 12px;
+
       line-height: 1.5;
     }
 
-    .demo-notice i {
+
+    .sms-notice i {
       margin-top: 2px;
+
       color: #39e86f;
     }
 
-    .demo-notice strong {
+
+    .sms-notice strong {
       display: block;
+
       margin-bottom: 3px;
+
       color: #b8c7bd;
     }
 
-    /* Loading */
-    .loading-state {
-      padding: 55px 20px;
-      text-align: center;
-      color: #78857d;
-    }
 
-    .loading-state i {
-      color: #39e86f;
-      font-size: 24px;
-      margin-bottom: 12px;
-    }
+    /* =========================================
+       MOBILE
+       ========================================= */
 
-    /* Error */
-    .error-state {
-      padding: 45px 20px;
-      text-align: center;
-    }
-
-    .error-state i {
-      color: #f59e0b;
-      font-size: 25px;
-      margin-bottom: 12px;
-    }
-
-    .error-state h3 {
-      margin: 0;
-      color: #ecfdf3;
-      font-size: 16px;
-    }
-
-    .error-state p {
-      margin: 8px auto 0;
-      max-width: 400px;
-      color: #78857d;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    /* Mobile */
     @media (max-width: 520px) {
+
       .sms-header {
         height: 64px;
+
         padding: 0 15px;
       }
+
 
       .sms-logo {
         font-size: 20px;
       }
 
+
       .sms-main {
-        width: min(100% - 20px, 900px);
+        width:
+          min(100% - 20px, 900px);
+
         padding-top: 24px;
       }
+
 
       .sms-heading {
         margin-bottom: 17px;
       }
 
+
       .inbox-top {
         padding: 14px;
       }
 
+
       .phone-icon {
         width: 42px;
         height: 42px;
+
         flex-basis: 42px;
       }
+
 
       .number-info h2 {
         font-size: 14px;
       }
 
+
       .active-badge {
         padding: 6px 8px;
+
         font-size: 10px;
       }
+
 
       .message-list {
         padding: 9px;
       }
 
+
       .message-card {
         padding: 13px;
       }
 
+
       .message-row {
         align-items: flex-start;
       }
+
     }
+
   </style>
 </head>
 
+
 <body class="sms-page">
 
-  <!-- HEADER -->
-  <header class="sms-header">
-    <a href="dashboard.html" class="sms-logo">Wavynum</a>
 
-    <a href="dashboard.html"
-       class="sms-back"
-       aria-label="Back to dashboard">
-      <i class="fa-solid fa-arrow-left"></i>
+  <!-- HEADER -->
+
+  <header class="sms-header">
+
+    <a
+      href="dashboard.html"
+      class="sms-logo"
+    >
+      Wavynum
     </a>
+
+
+    <a
+      href="dashboard.html"
+      class="sms-back"
+      aria-label="Back to dashboard"
+    >
+
+      <i class="fa-solid fa-arrow-left"></i>
+
+    </a>
+
   </header>
 
 
+
   <!-- MAIN -->
+
   <main class="sms-main">
 
-    <!-- PAGE TITLE -->
-    <section class="sms-heading">
-      <p class="sms-eyebrow">MESSAGES</p>
 
-      <h1>SMS Inbox</h1>
+    <!-- PAGE TITLE -->
+
+    <section class="sms-heading">
+
+      <p class="sms-eyebrow">
+        MESSAGES
+      </p>
+
+
+      <h1>
+        SMS Inbox
+      </h1>
+
 
       <p>
         View messages received on your Wavynum numbers.
       </p>
+
     </section>
 
 
+
     <!-- NUMBER SELECTOR -->
+
     <section class="number-selector">
 
-      <label class="selector-label" for="numberSelect">
+      <label
+        class="selector-label"
+        for="numberSelect"
+      >
         Select number
       </label>
 
-      <select id="numberSelect" class="number-select">
+
+      <select
+        id="numberSelect"
+        class="number-select"
+      >
+
         <option value="">
           Loading your numbers...
         </option>
+
       </select>
 
     </section>
 
 
+
     <!-- INBOX -->
+
     <section class="inbox-card">
+
 
       <div class="inbox-top">
 
+
         <div class="number-info">
 
+
           <div class="phone-icon">
-            <i class="fa-solid fa-mobile-screen-button"></i>
+
+            <i
+              class="fa-solid fa-mobile-screen-button"
+            ></i>
+
           </div>
 
+
           <div>
+
             <h2 id="selectedNumber">
               No number selected
             </h2>
 
+
             <p id="selectedService">
               Select one of your numbers
             </p>
+
           </div>
 
+
         </div>
 
+
         <div class="active-badge">
+
           <span class="active-dot"></span>
+
           Active
+
         </div>
+
 
       </div>
 
 
-      <!-- MESSAGES -->
+
+      <!-- REAL MESSAGES -->
+
       <div id="messageArea">
 
         <div class="loading-state">
-          <i class="fa-solid fa-spinner fa-spin"></i>
-          <div>Loading inbox...</div>
+
+          <i
+            class="fa-solid fa-spinner fa-spin"
+          ></i>
+
+          Loading inbox...
+
         </div>
 
       </div>
 
+
     </section>
 
 
-    <!-- DEVELOPMENT NOTICE -->
-    <section class="demo-notice">
+
+    <!-- NOTICE -->
+
+    <section class="sms-notice">
 
       <i class="fa-solid fa-circle-info"></i>
 
-      <div>
-        <strong>Development mode</strong>
 
-        SMS messages shown here are simulated for development.
-        Real incoming SMS can be connected later through an authorized
-        SMS-number provider.
+      <div>
+
+        <strong>
+          Live SMS inbox
+        </strong>
+
+        Incoming messages delivered through the
+        connected SMS provider will appear here
+        automatically.
+
       </div>
 
     </section>
+
 
   </main>
 
 
+
   <!-- FIREBASE -->
+
   <script type="module">
 
-    import { auth, db } from "./firebase.js";
+
+    import {
+      auth,
+      db
+    } from "./firebase.js";
+
 
     import {
       onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
+
     import {
       collection,
-      getDocs
+      getDocs,
+      query,
+      where,
+      onSnapshot
     } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+
     const numberSelect =
-      document.getElementById("numberSelect");
+      document.getElementById(
+        "numberSelect"
+      );
+
 
     const selectedNumber =
-      document.getElementById("selectedNumber");
+      document.getElementById(
+        "selectedNumber"
+      );
+
 
     const selectedService =
-      document.getElementById("selectedService");
+      document.getElementById(
+        "selectedService"
+      );
+
 
     const messageArea =
-      document.getElementById("messageArea");
+      document.getElementById(
+        "messageArea"
+      );
+
 
 
     let ownedNumbers = [];
+
+    let currentUser = null;
+
+    let unsubscribeMessages = null;
+
 
 
     /* =========================================
        AUTH
        ========================================= */
 
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(
+      auth,
+      async (user) => {
 
-      if (!user) {
 
-        window.location.href = "login.html";
+        if (!user) {
 
-        return;
+          window.location.href =
+            "signin.html";
+
+          return;
+
+        }
+
+
+        currentUser = user;
+
+
+        await loadNumbers(
+          user.uid
+        );
+
       }
+    );
 
-      await loadNumbers(user.uid);
-
-    });
 
 
     /* =========================================
@@ -652,96 +957,160 @@
 
     async function loadNumbers(uid) {
 
+
       try {
 
+
         const numbersRef =
-          collection(db, "users", uid, "numbers");
+          collection(
+            db,
+            "users",
+            uid,
+            "numbers"
+          );
+
 
         const snapshot =
-          await getDocs(numbersRef);
+          await getDocs(
+            numbersRef
+          );
+
 
         ownedNumbers = [];
 
-        snapshot.forEach((docSnap) => {
 
-          ownedNumbers.push({
-            id: docSnap.id,
-            ...docSnap.data()
-          });
+        snapshot.forEach(
+          (docSnap) => {
 
-        });
+            ownedNumbers.push({
+
+              id:
+                docSnap.id,
+
+              ...docSnap.data()
+
+            });
+
+          }
+        );
 
 
-        numberSelect.innerHTML = "";
+        numberSelect.innerHTML =
+          "";
 
 
-        if (ownedNumbers.length === 0) {
+        if (
+          ownedNumbers.length === 0
+        ) {
+
 
           numberSelect.innerHTML =
-            `<option value="">No numbers purchased</option>`;
+            `
+              <option value="">
+                No numbers purchased
+              </option>
+            `;
+
 
           selectedNumber.textContent =
             "No number selected";
 
+
           selectedService.textContent =
             "Purchase a number first";
+
 
           showEmptyInbox(
             "You don't have any numbers yet.",
             "Purchase a Wavynum number to start receiving SMS."
           );
 
+
           return;
+
         }
 
 
-        ownedNumbers.forEach((item, index) => {
+        ownedNumbers.forEach(
+          (item, index) => {
 
-          const option =
-            document.createElement("option");
 
-          option.value = index;
+            const option =
+              document.createElement(
+                "option"
+              );
 
-          option.textContent =
-            item.number || "Unknown number";
 
-          numberSelect.appendChild(option);
+            option.value =
+              index;
 
-        });
+
+            option.textContent =
+              item.number ||
+              "Unknown number";
+
+
+            numberSelect.appendChild(
+              option
+            );
+
+          }
+        );
 
 
         displayNumber(0);
 
+
       } catch (error) {
+
 
         console.error(
           "Error loading numbers:",
           error
         );
 
+
         numberSelect.innerHTML =
-          `<option value="">Unable to load numbers</option>`;
+          `
+            <option value="">
+              Unable to load numbers
+            </option>
+          `;
+
 
         selectedNumber.textContent =
           "Inbox unavailable";
 
+
         selectedService.textContent =
           "Please try again";
 
-        messageArea.innerHTML = `
-          <div class="error-state">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <h3>Unable to load your numbers</h3>
-            <p>
-              Please check your connection and Firestore rules,
-              then refresh the page.
-            </p>
-          </div>
-        `;
+
+        messageArea.innerHTML =
+          `
+            <div class="error-state">
+
+              <i
+                class="fa-solid fa-triangle-exclamation"
+              ></i>
+
+              <h3>
+                Unable to load your numbers
+              </h3>
+
+              <p>
+                Please check your connection
+                and Firestore rules, then
+                refresh the page.
+              </p>
+
+            </div>
+          `;
 
       }
 
     }
+
 
 
     /* =========================================
@@ -752,178 +1121,493 @@
       "change",
       () => {
 
-        const index =
-          Number(numberSelect.value);
 
-        displayNumber(index);
+        const index =
+          Number(
+            numberSelect.value
+          );
+
+
+        displayNumber(
+          index
+        );
 
       }
     );
 
 
+
     /* =========================================
-       DISPLAY SELECTED NUMBER
+       DISPLAY NUMBER
        ========================================= */
 
     function displayNumber(index) {
 
+
       const item =
         ownedNumbers[index];
 
+
       if (!item) {
+
 
         showEmptyInbox(
           "No number selected",
           "Choose one of your Wavynum numbers above."
         );
 
+
         return;
+
       }
 
 
       selectedNumber.textContent =
-        item.number || "Unknown number";
+        item.number ||
+        "Unknown number";
 
 
       selectedService.textContent =
         item.service
-          ? item.service + " • " + (item.countryName || "")
-          : item.countryName || "Virtual number";
+          ? item.service +
+            " • " +
+            (
+              item.countryName ||
+              ""
+            )
+          : (
+              item.countryName ||
+              "Virtual number"
+            );
 
 
-      /*
-       * DEVELOPMENT SIMULATION
-       *
-       * We generate demo messages based on
-       * the selected number.
-       */
-
-      showDemoMessages(item);
+      listenForMessages(
+        item.number
+      );
 
     }
+
 
 
     /* =========================================
-       DEMO MESSAGES
+       LISTEN FOR REAL SMS
        ========================================= */
 
-    function showDemoMessages(item) {
-
-      const service =
-        item.service || "Service";
-
-
-      messageArea.innerHTML = `
-        <div class="message-list">
-
-          <div class="message-card">
-
-            <div class="message-icon">
-              <i class="fa-solid fa-message"></i>
-            </div>
-
-            <div class="message-content">
-
-              <div class="message-row">
-
-                <span class="message-sender">
-                  ${escapeHTML(service)}
-                </span>
-
-                <span class="message-time">
-                  Just now
-                </span>
-
-              </div>
-
-              <p class="message-text">
-                This is a simulated SMS message for
-                development and testing.
-              </p>
-
-              <span class="otp-code">
-                DEMO 482731
-              </span>
-
-            </div>
-
-          </div>
+    function listenForMessages(
+      phoneNumber
+    ) {
 
 
-          <div class="message-card">
+      if (
+        unsubscribeMessages
+      ) {
 
-            <div class="message-icon">
-              <i class="fa-solid fa-shield-halved"></i>
-            </div>
+        unsubscribeMessages();
 
-            <div class="message-content">
+        unsubscribeMessages =
+          null;
 
-              <div class="message-row">
+      }
 
-                <span class="message-sender">
-                  Wavynum
-                </span>
 
-                <span class="message-time">
-                  Demo
-                </span>
+      if (
+        !currentUser ||
+        !phoneNumber
+      ) {
 
-              </div>
+        showEmptyInbox(
+          "No messages yet",
+          "Incoming SMS messages will appear here."
+        );
 
-              <p class="message-text">
-                Your number is active and ready for
-                authorized SMS-provider integration.
-              </p>
+        return;
 
-            </div>
+      }
+
+
+      messageArea.innerHTML =
+        `
+          <div class="loading-state">
+
+            <i
+              class="fa-solid fa-spinner fa-spin"
+            ></i>
+
+            Loading messages...
 
           </div>
+        `;
 
-        </div>
-      `;
+
+
+      const smsRef =
+        collection(
+          db,
+          "smsMessages"
+        );
+
+
+
+      const smsQuery =
+        query(
+
+          smsRef,
+
+          where(
+            "userId",
+            "==",
+            currentUser.uid
+          ),
+
+          where(
+            "to",
+            "==",
+            phoneNumber
+          )
+
+        );
+
+
+
+      unsubscribeMessages =
+        onSnapshot(
+
+          smsQuery,
+
+          (snapshot) => {
+
+
+            const messages = [];
+
+
+            snapshot.forEach(
+              (docSnap) => {
+
+                messages.push({
+
+                  id:
+                    docSnap.id,
+
+                  ...docSnap.data()
+
+                });
+
+              }
+            );
+
+
+            /* ==============================
+               SORT NEWEST FIRST
+               ============================== */
+
+            messages.sort(
+              (a, b) => {
+
+                const dateA =
+                  new Date(
+                    a.receivedAt ||
+                    a.createdAt ||
+                    0
+                  ).getTime();
+
+
+                const dateB =
+                  new Date(
+                    b.receivedAt ||
+                    b.createdAt ||
+                    0
+                  ).getTime();
+
+
+                return dateB - dateA;
+
+              }
+            );
+
+
+            displayMessages(
+              messages
+            );
+
+          },
+
+
+          (error) => {
+
+
+            console.error(
+              "SMS listener error:",
+              error
+            );
+
+
+            messageArea.innerHTML =
+              `
+                <div class="error-state">
+
+                  <i
+                    class="fa-solid fa-triangle-exclamation"
+                  ></i>
+
+                  <h3>
+                    Unable to load SMS
+                  </h3>
+
+                  <p>
+                    The inbox could not read
+                    your SMS messages. Please
+                    check your Firestore rules.
+                  </p>
+
+                </div>
+              `;
+
+          }
+
+        );
 
     }
+
+
+
+    /* =========================================
+       DISPLAY REAL SMS
+       ========================================= */
+
+    function displayMessages(
+      messages
+    ) {
+
+
+      if (
+        messages.length === 0
+      ) {
+
+
+        showEmptyInbox(
+          "No messages yet",
+          "When an SMS arrives on this number, it will appear here automatically."
+        );
+
+
+        return;
+
+      }
+
+
+
+      messageArea.innerHTML =
+        `
+          <div class="message-list">
+          </div>
+        `;
+
+
+      const messageList =
+        messageArea.querySelector(
+          ".message-list"
+        );
+
+
+
+      messages.forEach(
+        (item) => {
+
+
+          const card =
+            document.createElement(
+              "div"
+            );
+
+
+          card.className =
+            "message-card";
+
+
+          const sender =
+            item.from ||
+            "Unknown sender";
+
+
+          const message =
+            item.message ||
+            "";
+
+
+          const time =
+            formatDate(
+              item.receivedAt ||
+              item.createdAt
+            );
+
+
+
+          card.innerHTML =
+            `
+              <div class="message-icon">
+
+                <i
+                  class="fa-solid fa-message"
+                ></i>
+
+              </div>
+
+
+              <div class="message-content">
+
+                <div class="message-row">
+
+                  <span class="message-sender">
+                    ${escapeHTML(sender)}
+                  </span>
+
+
+                  <span class="message-time">
+                    ${escapeHTML(time)}
+                  </span>
+
+                </div>
+
+
+                <p class="message-text">
+                  ${escapeHTML(message)}
+                </p>
+
+              </div>
+            `;
+
+
+          messageList.appendChild(
+            card
+          );
+
+        }
+      );
+
+    }
+
 
 
     /* =========================================
        EMPTY STATE
        ========================================= */
 
-    function showEmptyInbox(title, description) {
+    function showEmptyInbox(
+      title,
+      description
+    ) {
 
-      messageArea.innerHTML = `
-        <div class="empty-inbox">
 
-          <div class="empty-icon">
-            <i class="fa-regular fa-message"></i>
+      messageArea.innerHTML =
+        `
+          <div class="empty-inbox">
+
+            <div class="empty-icon">
+
+              <i
+                class="fa-regular fa-message"
+              ></i>
+
+            </div>
+
+
+            <h3>
+              ${escapeHTML(title)}
+            </h3>
+
+
+            <p>
+              ${escapeHTML(description)}
+            </p>
+
           </div>
-
-          <h3>
-            ${escapeHTML(title)}
-          </h3>
-
-          <p>
-            ${escapeHTML(description)}
-          </p>
-
-        </div>
-      `;
+        `;
 
     }
+
+
+
+    /* =========================================
+       DATE FORMAT
+       ========================================= */
+
+    function formatDate(
+      value
+    ) {
+
+
+      if (!value) {
+
+        return "Unknown time";
+
+      }
+
+
+      const date =
+        new Date(value);
+
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+
+        return "Unknown time";
+
+      }
+
+
+      return date.toLocaleString(
+        [],
+        {
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit"
+        }
+      );
+
+    }
+
 
 
     /* =========================================
        HTML ESCAPE
        ========================================= */
 
-    function escapeHTML(value) {
+    function escapeHTML(
+      value
+    ) {
 
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+      return String(
+        value ?? ""
+      )
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
     }
 

@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Confirm Number — Wavynum</title>
+
+  <link rel="stylesheet" href="style.css?v=9">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <style>
+    .confirmation-main {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 25px 18px 60px;
+    }
+
+    .confirmation-header {
+      margin-bottom: 22px;
+    }
+
+    .confirmation-header .eyebrow {
+      color: #18d765;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      margin-bottom: 7px;
+    }
+
+    .confirmation-header h1 {
+      margin: 0 0 7px;
+      color: #f0fff7;
+      font-size: 28px;
+    }
+
+    .confirmation-header p {
+      margin: 0;
+      color: #84938c;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .confirmation-card {
+      background: #08130e;
+      border: 1px solid rgba(24, 215, 101, .18);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+
+    .number-preview {
+      padding: 22px 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .phone-icon {
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 13px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 18px;
+      background: rgba(24,215,101,.08);
+      color: #18d765;
+      font-size: 25px;
+    }
+
+    .number-preview h2 {
+      margin: 0 0 5px;
+      color: #f1fff7;
+      font-size: 23px;
+    }
+
+    .number-preview p {
+      margin: 0;
+      color: #7e8e86;
+      font-size: 12px;
+    }
+
+    .details {
+      padding: 18px 20px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: #7f8e87;
+      font-size: 13px;
+    }
+
+    .detail-value {
+      color: #eafff2;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .price-value {
+      color: #18d765;
+      font-size: 18px;
+    }
+
+    .balance-box {
+      margin: 0 20px 18px;
+      padding: 14px 15px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+
+      background: rgba(24,215,101,.055);
+      border: 1px solid rgba(24,215,101,.12);
+      border-radius: 14px;
+    }
+
+    .balance-box span {
+      color: #87968f;
+      font-size: 12px;
+    }
+
+    .balance-box strong {
+      color: #eafff2;
+      font-size: 16px;
+    }
+
+    .buy-button {
+      width: calc(100% - 40px);
+      margin: 0 20px 20px;
+
+      border: none;
+      border-radius: 14px;
+
+      padding: 15px;
+
+      background: #18d765;
+      color: #041008;
+
+      font-size: 15px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition:
+        transform .15s ease,
+        opacity .15s ease;
+    }
+
+    .buy-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .buy-button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .cancel-link {
+      display: block;
+      text-align: center;
+      margin-top: 14px;
+
+      color: #718079;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .cancel-link:hover {
+      color: #a5b4ad;
+    }
+
+    .message {
+      display: none;
+      margin: 0 20px 18px;
+      padding: 13px 14px;
+
+      border-radius: 13px;
+
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .message.error {
+      display: block;
+      color: #ffb4b4;
+      background: rgba(255,70,70,.07);
+      border: 1px solid rgba(255,70,70,.15);
+    }
+
+    .message.success {
+      display: block;
+      color: #aaffc7;
+      background: rgba(24,215,101,.07);
+      border: 1px solid rgba(24,215,101,.15);
+    }
+
+    @media (max-width: 600px) {
+
+      .confirmation-main {
+        padding: 20px 14px 50px;
+      }
+
+      .confirmation-header h1 {
+        font-size: 25px;
+      }
+
+      .number-preview h2 {
+        font-size: 21px;
+      }
+
+      .confirmation-card {
+        border-radius: 19px;
+      }
+    }
+  </style>
+</head>
+
+<body class="dashboard-page">
+
+  <header class="dashboard-header">
+
+    <a href="buy-number.html" class="dashboard-logo">
+      Wavynum
+    </a>
+
+    <a
+      href="number-selection.html"
+      class="back-button"
+      aria-label="Back"
+    >
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+  </header>
+
+
+  <main class="confirmation-main">
+
+    <section class="confirmation-header">
+
+      <p class="eyebrow">
+        CONFIRM PURCHASE
+      </p>
+
+      <h1>Confirm your number</h1>
+
+      <p>
+        Review the details below before purchasing this number.
+      </p>
+
+    </section>
+
+
+    <section class="confirmation-card">
+
+      <div class="number-preview">
+
+        <div class="phone-icon">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+
+        <h2 id="numberDisplay">
+          Loading...
+        </h2>
+
+        <p id="countryDisplay">
+          Loading...
+        </p>
+
+      </div>
+
+
+      <div class="details">
+
+        <div class="detail-row">
+
+          <span class="detail-label">
+            Service
+          </span>
+
+          <span
+            class="detail-value"
+            id="serviceDisplay"
+          >
+            —
+          </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <span class="detail-label">
+            Country
+          </span>
+
+          <span
+            class="detail-value"
+            id="countryNameDisplay"
+          >
+            —
+          </span>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <span class="detail-label">
+            Purchase price
+          </span>
+
+          <strong
+            class="detail-value price-value"
+            id="priceDisplay"
+          >
+            $0.00
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="balance-box">
+
+        <span>
+          Your wallet balance
+        </span>
+
+        <strong id="balanceDisplay">
+          Loading...
+        </strong>
+
+      </div>
+
+
+      <div
+        id="message"
+        class="message"
+      ></div>
+
+
+      <button
+        id="buyButton"
+        class="buy-button"
+        type="button"
+        disabled
+      >
+        <i class="fa-solid fa-lock"></i>
+        Buy Number
+      </button>
+
+    </section>
+
+
+    <a
+      href="number-selection.html"
+      class="cancel-link"
+    >
+      Choose a different number
+    </a>
+
+  </main>
+
+
+  <script type="module">
+
+    import {
+      auth,
+      db
+    } from "./firebase.js";
+
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+    import {
+      doc,
+      getDoc,
+      runTransaction,
+      collection,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+    /* =========================================
+       SELECTED NUMBER
+    ========================================= */
+
+    const storedNumber =
+      localStorage.getItem(
+        "wavynumSelectedNumber"
+      );
+
+
+    if (!storedNumber) {
+
+      window.location.href =
+        "buy-number.html";
+
+    }
+
+
+    let selectedNumber;
+
+    try {
+
+      selectedNumber =
+        JSON.parse(storedNumber);
+
+    } catch (error) {
+
+      localStorage.removeItem(
+        "wavynumSelectedNumber"
+      );
+
+      window.location.href =
+        "buy-number.html";
+
+    }
+
+
+    /* =========================================
+       ELEMENTS
+    ========================================= */
+
+    const numberDisplay =
+      document.getElementById(
+        "numberDisplay"
+      );
+
+    const countryDisplay =
+      document.getElementById(
+        "countryDisplay"
+      );
+
+    const serviceDisplay =
+      document.getElementById(
+        "serviceDisplay"
+      );
+
+    const countryNameDisplay =
+      document.getElementById(
+        "countryNameDisplay"
+      );
+
+    const priceDisplay =
+      document.getElementById(
+        "priceDisplay"
+      );
+
+    const balanceDisplay =
+      document.getElementById(
+        "balanceDisplay"
+      );
+
+    const buyButton =
+      document.getElementById(
+        "buyButton"
+      );
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+
+    /* =========================================
+       DISPLAY SELECTED NUMBER
+    ========================================= */
+
+    numberDisplay.textContent =
+      selectedNumber.number;
+
+    countryDisplay.textContent =
+      selectedNumber.countryName;
+
+    serviceDisplay.textContent =
+      selectedNumber.service;
+
+    countryNameDisplay.textContent =
+      selectedNumber.countryName;
+
+    priceDisplay.textContent =
+      "$" +
+      Number(selectedNumber.price).toFixed(2);
+
+
+    /* =========================================
+       MESSAGE
+    ========================================= */
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+    }
+
+
+    /* =========================================
+       CURRENT USER
+    ========================================= */
+
+    let currentUser = null;
+    let currentBalance = 0;
+
+
+    onAuthStateChanged(
+      auth,
+      async user => {
+
+        if (!user) {
+
+          showMessage(
+            "Please sign in before purchasing a number.",
+            "error"
+          );
+
+          buyButton.disabled = true;
+
+          return;
+
+        }
+
+
+        currentUser = user;
+
+
+        try {
+
+          const userRef =
+            doc(
+              db,
+              "users",
+              user.uid
+            );
+
+          const userSnap =
+            await getDoc(userRef);
+
+
+          if (!userSnap.exists()) {
+
+            currentBalance = 0;
+
+          } else {
+
+            const data =
+              userSnap.data();
+
+            currentBalance =
+              Number(data.balance || 0);
+
+          }
+
+
+          balanceDisplay.textContent =
+            "$" +
+            currentBalance.toFixed(2);
+
+
+          if (
+            currentBalance <
+            Number(selectedNumber.price)
+          ) {
+
+            showMessage(
+              "Your wallet balance is too low for this purchase.",
+              "error"
+            );
+
+            buyButton.disabled = true;
+
+            return;
+
+          }
+
+
+          buyButton.disabled = false;
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          showMessage(
+            "Unable to load your wallet balance.",
+            "error"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       BUY NUMBER
+    ========================================= */
+
+    buyButton.addEventListener(
+      "click",
+      async () => {
+
+        if (!currentUser) {
+
+          showMessage(
+            "Please sign in before purchasing.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        const price =
+          Number(selectedNumber.price);
+
+
+        buyButton.disabled = true;
+
+        buyButton.innerHTML =
+          '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+
+
+        try {
+
+          const userRef =
+            doc(
+              db,
+              "users",
+              currentUser.uid
+            );
+
+
+          /*
+            Create a deterministic ID from
+            the phone number so the same
+            simulated number cannot be sold
+            twice.
+          */
+
+          const numberId =
+            selectedNumber.number
+              .replace(/\D/g, "");
+
+
+          const inventoryRef =
+            doc(
+              db,
+              "numbers",
+              numberId
+            );
+
+
+          const purchaseRef =
+            doc(
+              collection(
+                db,
+                "purchases"
+              )
+            );
+
+
+          const userNumberRef =
+            doc(
+              db,
+              "users",
+              currentUser.uid,
+              "numbers",
+              numberId
+            );
+
+
+          const transactionRef =
+            doc(
+              collection(
+                db,
+                "transactions"
+              )
+            );
+
+
+          await runTransaction(
+            db,
+            async transaction => {
+
+              const userSnap =
+                await transaction.get(
+                  userRef
+                );
+
+
+              if (!userSnap.exists()) {
+
+                throw new Error(
+                  "USER_NOT_FOUND"
+                );
+
+              }
+
+
+              const userData =
+                userSnap.data();
+
+
+              const balance =
+                Number(
+                  userData.balance || 0
+                );
+
+
+              if (balance < price) {
+
+                throw new Error(
+                  "INSUFFICIENT_BALANCE"
+                );
+
+              }
+
+
+              const inventorySnap =
+                await transaction.get(
+                  inventoryRef
+                );
+
+
+              if (inventorySnap.exists()) {
+
+                const inventoryData =
+                  inventorySnap.data();
+
+
+                if (
+                  inventoryData.status ===
+                  "sold"
+                ) {
+
+                  throw new Error(
+                    "NUMBER_ALREADY_SOLD"
+                  );
+
+                }
+
+              }
+
+
+              const userNumberSnap =
+                await transaction.get(
+                  userNumberRef
+                );
+
+
+              if (userNumberSnap.exists()) {
+
+                throw new Error(
+                  "NUMBER_ALREADY_OWNED"
+                );
+
+              }
+
+
+              const newBalance =
+                balance - price;
+
+
+              /*
+                Deduct wallet balance.
+              */
+
+              transaction.update(
+                userRef,
+                {
+                  balance: newBalance
+                }
+              );
+
+
+              /*
+                Reserve the number.
+              */
+
+              transaction.set(
+                inventoryRef,
+                {
+                  number:
+                    selectedNumber.number,
+
+                  service:
+                    selectedNumber.service,
+
+                  country:
+                    selectedNumber.country,
+
+                  countryName:
+                    selectedNumber.countryName,
+
+                  price:
+                    price,
+
+                  status:
+                    "sold",
+
+                  ownerId:
+                    currentUser.uid,
+
+                  soldAt:
+                    serverTimestamp()
+                }
+              );
+
+
+              /*
+                Add number to user's
+                My Numbers collection.
+              */
+
+              transaction.set(
+                userNumberRef,
+                {
+
+                  number:
+                    selectedNumber.number,
+
+                  service:
+                    selectedNumber.service,
+
+                  country:
+                    selectedNumber.country,
+
+                  countryName:
+                    selectedNumber.countryName,
+
+                  price:
+                    price,
+
+                  status:
+                    "active",
+
+                  purchasedAt:
+                    serverTimestamp(),
+
+                  /*
+                    Simulated OTP data.
+                    This is DEMO ONLY.
+                  */
+
+                  demoOtp:
+                    String(
+                      Math.floor(
+                        100000 +
+                        Math.random() *
+                        900000
+                      )
+                    )
+
+                }
+              );
+
+
+              /*
+                Purchase history.
+              */
+
+              transaction.set(
+                purchaseRef,
+                {
+
+                  userId:
+                    currentUser.uid,
+
+                  numberId:
+                    numberId,
+
+                  number:
+                    selectedNumber.number,
+
+                  service:
+                    selectedNumber.service,
+
+                  country:
+                    selectedNumber.country,
+
+                  price:
+                    price,
+
+                  status:
+                    "completed",
+
+                  purchasedAt:
+                    serverTimestamp()
+
+                }
+              );
+
+
+              /*
+                Wallet transaction.
+              */
+
+              transaction.set(
+                transactionRef,
+                {
+
+                  userId:
+                    currentUser.uid,
+
+                  type:
+                    "number_purchase",
+
+                  amount:
+                    -price,
+
+                  description:
+                    "Purchase of " +
+                    selectedNumber.number,
+
+                  number:
+                    selectedNumber.number,
+
+                  service:
+                    selectedNumber.service,
+
+                  createdAt:
+                    serverTimestamp()
+
+                }
+              );
+
+            }
+          );
+
+
+          /*
+            Clear temporary selection.
+          */
+
+          localStorage.removeItem(
+            "wavynumSelectedNumber"
+          );
+
+
+          showMessage(
+            "Number purchased successfully!",
+            "success"
+          );
+
+
+          buyButton.innerHTML =
+            '<i class="fa-solid fa-check"></i> Purchased';
+
+
+          /*
+            Give Firestore a moment to finish
+            displaying the successful state,
+            then go to My Numbers.
+          */
+
+          setTimeout(
+            () => {
+
+              window.location.href =
+                "my-numbers.html";
+
+            },
+            900
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "Purchase error:",
+            error
+          );
+
+
+          if (
+            error.message ===
+            "INSUFFICIENT_BALANCE"
+          ) {
+
+            showMessage(
+              "You do not have enough wallet balance for this number.",
+              "error"
+            );
+
+          } else if (
+            error.message ===
+            "NUMBER_ALREADY_SOLD"
+          ) {
+
+            showMessage(
+              "Sorry, this number has already been purchased.",
+              "error"
+            );
+
+          } else if (
+            error.message ===
+            "NUMBER_ALREADY_OWNED"
+          ) {
+
+            showMessage(
+              "You already own this number.",
+              "error"
+            );
+
+          } else if (
+            error.message ===
+            "USER_NOT_FOUND"
+          ) {
+
+            showMessage(
+              "Your Wavynum account could not be found.",
+              "error"
+            );
+
+          } else {
+
+            showMessage(
+              "The purchase could not be completed. Please try again.",
+              "error"
+            );
+
+          }
+
+
+          buyButton.disabled = false;
+
+          buyButton.innerHTML =
+            '<i class="fa-solid fa-lock"></i> Buy Number';
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>

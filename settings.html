@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Settings — Wavynum</title>
+
+  <link rel="stylesheet" href="style.css?v=7">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <style>
+    .settings-page {
+      min-height: 100vh;
+      background: #050806;
+      color: #f0fdf4;
+    }
+
+    .settings-main {
+      width: min(100% - 24px, 850px);
+      margin: 0 auto;
+      padding: 22px 0 50px;
+    }
+
+    .settings-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #78857d;
+      text-decoration: none;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    .settings-back:hover {
+      color: #39e86f;
+    }
+
+    .settings-heading {
+      margin-bottom: 24px;
+    }
+
+    .settings-heading h1 {
+      margin: 5px 0 0;
+      color: #ecfdf3;
+      font-size: 30px;
+    }
+
+    .settings-heading p:last-child {
+      margin: 8px 0 0;
+      color: #78857d;
+      font-size: 13px;
+    }
+
+    .settings-section {
+      margin-bottom: 20px;
+    }
+
+    .settings-section-title {
+      margin: 0 0 10px;
+      color: #ecfdf3;
+      font-size: 17px;
+    }
+
+    .settings-card {
+      overflow: hidden;
+      border: 1px solid rgba(34,197,94,.1);
+      border-radius: 20px;
+      background: #0c140f;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px;
+      border-bottom: 1px solid rgba(34,197,94,.08);
+    }
+
+    .profile-avatar {
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: rgba(34,197,94,.1);
+      color: #39e86f;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .profile-header h2 {
+      margin: 0;
+      color: #ecfdf3;
+      font-size: 15px;
+    }
+
+    .profile-header p {
+      margin: 5px 0 0;
+      color: #78857d;
+      font-size: 12px;
+      word-break: break-all;
+    }
+
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      min-height: 64px;
+      padding: 13px 17px;
+      border-bottom: 1px solid rgba(34,197,94,.07);
+    }
+
+    .settings-row:last-child {
+      border-bottom: 0;
+    }
+
+    .settings-row-info {
+      min-width: 0;
+    }
+
+    .settings-row-info strong {
+      display: block;
+      color: #d9fbe5;
+      font-size: 13px;
+    }
+
+    .settings-row-info span {
+      display: block;
+      margin-top: 4px;
+      color: #78857d;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .settings-value {
+      max-width: 55%;
+      color: #8d9a91;
+      font-size: 12px;
+      text-align: right;
+      word-break: break-all;
+    }
+
+    .settings-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 38px;
+      padding: 8px 13px;
+      border: 1px solid rgba(34,197,94,.13);
+      border-radius: 10px;
+      background: rgba(34,197,94,.05);
+      color: #4ade80;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .settings-action:hover {
+      background: rgba(34,197,94,.1);
+    }
+
+    .danger-card {
+      border-color: rgba(248,113,113,.12);
+    }
+
+    .logout-button-settings {
+      width: 100%;
+      min-height: 50px;
+      border: 0;
+      border-radius: 13px;
+      background: rgba(248,113,113,.08);
+      color: #f87171;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .logout-button-settings:hover {
+      background: rgba(248,113,113,.13);
+    }
+
+    .demo-note {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid rgba(34,197,94,.1);
+      border-radius: 16px;
+      background: rgba(34,197,94,.035);
+    }
+
+    .demo-note i {
+      color: #39e86f;
+      margin-top: 2px;
+    }
+
+    .demo-note strong {
+      display: block;
+      color: #d9fbe5;
+      font-size: 12px;
+    }
+
+    .demo-note p {
+      margin: 5px 0 0;
+      color: #78857d;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .message {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 100;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 11px 15px;
+      border: 1px solid rgba(34,197,94,.15);
+      border-radius: 12px;
+      background: #0c140f;
+      color: #d9fbe5;
+      font-size: 12px;
+      box-shadow: 0 15px 35px rgba(0,0,0,.35);
+      transition: .2s ease;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 560px) {
+
+      .settings-main {
+        width: min(100% - 20px, 850px);
+      }
+
+      .settings-row {
+        align-items: flex-start;
+      }
+
+      .settings-value {
+        max-width: 48%;
+      }
+    }
+  </style>
+</head>
+
+<body class="settings-page">
+
+  <header class="dashboard-header">
+
+    <a href="dashboard.html" class="dashboard-logo">
+      Wavynum
+    </a>
+
+    <a
+      href="dashboard.html"
+      class="back-button"
+      aria-label="Back to dashboard"
+    >
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+  </header>
+
+
+  <main class="settings-main">
+
+    <a href="dashboard.html" class="settings-back">
+      <i class="fa-solid fa-arrow-left"></i>
+      Back to dashboard
+    </a>
+
+
+    <section class="settings-heading">
+
+      <p class="dashboard-eyebrow">
+        ACCOUNT
+      </p>
+
+      <h1>
+        Settings
+      </h1>
+
+      <p>
+        Manage your Wavynum account information.
+      </p>
+
+    </section>
+
+
+    <!-- ACCOUNT -->
+    <section class="settings-section">
+
+      <h2 class="settings-section-title">
+        Account
+      </h2>
+
+      <div class="settings-card">
+
+        <div class="profile-header">
+
+          <div
+            class="profile-avatar"
+            id="profileAvatar"
+          >
+            W
+          </div>
+
+          <div>
+
+            <h2>
+              Wavynum account
+            </h2>
+
+            <p id="accountEmail">
+              Loading...
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="settings-row">
+
+          <div class="settings-row-info">
+
+            <strong>
+              Email address
+            </strong>
+
+            <span>
+              Your account login email
+            </span>
+
+          </div>
+
+          <div
+            class="settings-value"
+            id="emailValue"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="settings-row">
+
+          <div class="settings-row-info">
+
+            <strong>
+              Account ID
+            </strong>
+
+            <span>
+              Your unique Wavynum account identifier
+            </span>
+
+          </div>
+
+          <div
+            class="settings-value"
+            id="uidValue"
+          >
+            —
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- WALLET -->
+    <section class="settings-section">
+
+      <h2 class="settings-section-title">
+        Wallet
+      </h2>
+
+      <div class="settings-card">
+
+        <div class="settings-row">
+
+          <div class="settings-row-info">
+
+            <strong>
+              USD Balance
+            </strong>
+
+            <span>
+              Available wallet balance
+            </span>
+
+          </div>
+
+          <div
+            class="settings-value"
+            id="usdValue"
+          >
+            $0.00
+          </div>
+
+        </div>
+
+
+        <div class="settings-row">
+
+          <div class="settings-row-info">
+
+            <strong>
+              NGN Balance
+            </strong>
+
+            <span>
+              Available wallet balance
+            </span>
+
+          </div>
+
+          <div
+            class="settings-value"
+            id="ngnValue"
+          >
+            ₦0.00
+          </div>
+
+        </div>
+
+
+        <div class="settings-row">
+
+          <div class="settings-row-info">
+
+            <strong>
+              Wallet
+            </strong>
+
+            <span>
+              View your complete wallet
+            </span>
+
+          </div>
+
+          <a
+            href="wallet.html"
+            class="settings-action"
+          >
+            Open
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ACCOUNT ACTIONS -->
+    <section class="settings-section">
+
+      <h2 class="settings-section-title">
+        Account actions
+      </h2>
+
+      <div class="settings-card">
+
+        <div class="settings-row">
+
+          <div class="settings-row-info">
+
+            <strong>
+              My numbers
+            </strong>
+
+            <span>
+              View your purchased virtual numbers
+            </span>
+
+          </div>
+
+          <a
+            href="my-numbers.html"
+            class="settings-action"
+          >
+            Open
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+
+        </div>
+
+
+        <div class="settings-row">
+
+          <div class="settings-row-info">
+
+            <strong>
+              SMS inbox
+            </strong>
+
+            <span>
+              View messages associated with your numbers
+            </span>
+
+          </div>
+
+          <a
+            href="sms-inbox.html"
+            class="settings-action"
+          >
+            Open
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+
+        </div>
+
+
+        <div class="settings-row">
+
+          <div class="settings-row-info">
+
+            <strong>
+              Transactions
+            </strong>
+
+            <span>
+              View wallet activity and purchases
+            </span>
+
+          </div>
+
+          <a
+            href="transactions.html"
+            class="settings-action"
+          >
+            Open
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LOGOUT -->
+    <section class="settings-section">
+
+      <h2 class="settings-section-title">
+        Sign out
+      </h2>
+
+      <div class="settings-card danger-card">
+
+        <div style="padding:15px;">
+
+          <button
+            type="button"
+            class="logout-button-settings"
+            id="settingsLogout"
+          >
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Log out of Wavynum
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DEVELOPMENT NOTE -->
+    <div class="demo-note">
+
+      <i class="fa-solid fa-circle-info"></i>
+
+      <div>
+
+        <strong>
+          Account settings
+        </strong>
+
+        <p>
+          Your account and wallet information is loaded
+          from your Wavynum Firebase account.
+        </p>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <div
+    class="message"
+    id="message"
+  ></div>
+
+
+  <script type="module">
+
+    import { auth, db } from "./firebase.js";
+
+    import {
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+    import {
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+    const accountEmail =
+      document.getElementById("accountEmail");
+
+    const emailValue =
+      document.getElementById("emailValue");
+
+    const uidValue =
+      document.getElementById("uidValue");
+
+    const profileAvatar =
+      document.getElementById("profileAvatar");
+
+    const usdValue =
+      document.getElementById("usdValue");
+
+    const ngnValue =
+      document.getElementById("ngnValue");
+
+    const settingsLogout =
+      document.getElementById("settingsLogout");
+
+    const message =
+      document.getElementById("message");
+
+
+    function showMessage(text) {
+
+      message.textContent = text;
+
+      message.classList.add("show");
+
+      setTimeout(() => {
+        message.classList.remove("show");
+      }, 2000);
+
+    }
+
+
+    onAuthStateChanged(auth, async (user) => {
+
+      if (!user) {
+
+        window.location.href = "login.html";
+
+        return;
+      }
+
+
+      const email =
+        user.email || "Wavynum user";
+
+
+      accountEmail.textContent =
+        email;
+
+      emailValue.textContent =
+        email;
+
+      uidValue.textContent =
+        user.uid;
+
+
+      if (email) {
+
+        profileAvatar.textContent =
+          email.charAt(0).toUpperCase();
+
+      }
+
+
+      try {
+
+        const userRef =
+          doc(db, "users", user.uid);
+
+        const snapshot =
+          await getDoc(userRef);
+
+
+        if (snapshot.exists()) {
+
+          const data =
+            snapshot.data();
+
+
+          const usd =
+            Number(data.usdBalance || 0);
+
+          const ngn =
+            Number(data.ngnBalance || 0);
+
+
+          usdValue.textContent =
+            "$" + usd.toFixed(2);
+
+          ngnValue.textContent =
+            "₦" + ngn.toFixed(2);
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Settings wallet error:",
+          error
+        );
+
+      }
+
+    });
+
+
+    settingsLogout?.addEventListener(
+      "click",
+      async () => {
+
+        try {
+
+          settingsLogout.disabled = true;
+
+          settingsLogout.innerHTML =
+            `<i class="fa-solid fa-spinner fa-spin"></i> Logging out...`;
+
+
+          await signOut(auth);
+
+
+          window.location.href =
+            "login.html";
+
+
+        } catch (error) {
+
+          console.error(
+            "Logout error:",
+            error
+          );
+
+
+          settingsLogout.disabled =
+            false;
+
+          settingsLogout.innerHTML =
+            `<i class="fa-solid fa-right-from-bracket"></i> Log out of Wavynum`;
+
+          showMessage(
+            "Unable to log out. Please try again."
+          );
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>

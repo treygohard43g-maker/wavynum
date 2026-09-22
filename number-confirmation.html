@@ -6,7 +6,7 @@
 
   <title>Confirm Purchase — Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=10">
 
   <link
     rel="stylesheet"
@@ -14,10 +14,6 @@
   >
 
   <style>
-    /* =========================
-       WAVYNUM CONFIRMATION
-    ========================= */
-
     .confirmation-page {
       min-height: 100vh;
       background: #050806;
@@ -56,59 +52,33 @@
       font-size: 15px;
     }
 
-    /* MAIN CARD */
-
     .confirmation-card {
-      background:
-        linear-gradient(
-          145deg,
-          #0c140f,
-          #080d0a
-        );
-
+      background: linear-gradient(145deg, #0c140f, #080d0a);
       border: 1px solid rgba(34, 197, 94, 0.14);
-
       border-radius: 22px;
-
       padding: 25px;
-
-      box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.30);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.30);
     }
-
-    /* SERVICE */
 
     .service-row {
       display: flex;
       align-items: center;
       gap: 15px;
-
       padding-bottom: 22px;
-
-      border-bottom:
-        1px solid rgba(34, 197, 94, 0.10);
+      border-bottom: 1px solid rgba(34, 197, 94, 0.10);
     }
 
     .service-icon {
       width: 54px;
       height: 54px;
-
       flex-shrink: 0;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       border-radius: 14px;
-
-      background:
-        rgba(34, 197, 94, 0.09);
-
-      border:
-        1px solid rgba(34, 197, 94, 0.16);
-
+      background: rgba(34, 197, 94, 0.09);
+      border: 1px solid rgba(34, 197, 94, 0.16);
       color: #39e86f;
-
       font-size: 21px;
     }
 
@@ -123,63 +93,40 @@
       font-size: 13px;
     }
 
-    /* NUMBER */
-
     .selected-number {
       text-align: center;
-
       padding: 34px 10px;
     }
 
     .selected-number-label {
       display: block;
-
       margin-bottom: 9px;
-
       color: #58645b;
-
       font-size: 11px;
-
       font-weight: 800;
-
       letter-spacing: 1.5px;
-
       text-transform: uppercase;
     }
 
     .selected-number strong {
       display: block;
-
       color: #39e86f;
-
       font-size: clamp(25px, 7vw, 34px);
-
       font-weight: 800;
-
-      letter-spacing: -0.5px;
     }
-
-    /* DETAILS */
 
     .details-box {
       padding-top: 5px;
-
-      border-top:
-        1px solid rgba(34, 197, 94, 0.10);
+      border-top: 1px solid rgba(34, 197, 94, 0.10);
     }
 
     .detail-row {
       display: flex;
-
       align-items: center;
       justify-content: space-between;
-
       gap: 20px;
-
       padding: 14px 2px;
-
-      border-bottom:
-        1px solid rgba(34, 197, 94, 0.06);
+      border-bottom: 1px solid rgba(34, 197, 94, 0.06);
     }
 
     .detail-row span {
@@ -198,153 +145,90 @@
       font-size: 17px;
     }
 
-    /* WALLET */
-
     .wallet-card {
       margin-top: 20px;
-
       padding: 18px;
-
-      background:
-        rgba(34, 197, 94, 0.055);
-
-      border:
-        1px solid rgba(34, 197, 94, 0.14);
-
+      background: rgba(34, 197, 94, 0.055);
+      border: 1px solid rgba(34, 197, 94, 0.14);
       border-radius: 16px;
     }
 
     .wallet-card-top {
       display: flex;
-
       align-items: center;
       justify-content: space-between;
-
       gap: 15px;
     }
 
     .wallet-label {
       color: #78857d;
-
       font-size: 11px;
-
       font-weight: 800;
-
       letter-spacing: 1.2px;
-
       text-transform: uppercase;
     }
 
     .wallet-amount {
       margin-top: 5px;
-
       color: #39e86f;
-
       font-size: 24px;
-
       font-weight: 800;
     }
 
     .wallet-icon-small {
       width: 42px;
       height: 42px;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       border-radius: 12px;
-
-      background:
-        rgba(34, 197, 94, 0.10);
-
-      border:
-        1px solid rgba(34, 197, 94, 0.14);
-
+      background: rgba(34, 197, 94, 0.10);
+      border: 1px solid rgba(34, 197, 94, 0.14);
       color: #39e86f;
     }
 
-    /* BUY BUTTON */
-
     .buy-button {
       width: 100%;
-
       margin-top: 20px;
-
       padding: 15px;
-
       border: none;
-
       border-radius: 11px;
-
       background: #22c55e;
-
       color: #031108;
-
       font-size: 15px;
-
       font-weight: 800;
-
       cursor: pointer;
-
-      box-shadow:
-        0 8px 25px rgba(34, 197, 94, 0.14);
-
       transition: .2s ease;
     }
 
     .buy-button:hover {
       background: #39e86f;
-
       transform: translateY(-2px);
     }
 
     .buy-button:disabled {
       opacity: .55;
-
       cursor: not-allowed;
-
       transform: none;
     }
 
-    /* BACK */
-
     .back-link {
       display: flex;
-
       justify-content: center;
       align-items: center;
-
       gap: 7px;
-
       margin-top: 20px;
-
       color: #68756c;
-
       text-decoration: none;
-
       font-size: 13px;
-
-      transition: .2s ease;
     }
-
-    .back-link:hover {
-      color: #39e86f;
-    }
-
-    /* MESSAGE */
 
     .message {
       display: none;
-
       margin-top: 15px;
-
       padding: 13px 14px;
-
       border-radius: 11px;
-
       font-size: 13px;
-
       line-height: 1.5;
     }
 
@@ -354,66 +238,40 @@
 
     .message.error {
       background: rgba(220, 38, 38, .10);
-
-      border:
-        1px solid rgba(220, 38, 38, .20);
-
+      border: 1px solid rgba(220, 38, 38, .20);
       color: #ff9b9b;
     }
 
     .message.success {
-      background:
-        rgba(34, 197, 94, .09);
-
-      border:
-        1px solid rgba(34, 197, 94, .20);
-
+      background: rgba(34, 197, 94, .09);
+      border: 1px solid rgba(34, 197, 94, .20);
       color: #86efac;
     }
 
-    /* LOADING */
-
     .loading {
       padding: 60px 20px;
-
       text-align: center;
-
       color: #78857d;
     }
 
     .loading i {
       display: block;
-
       margin-bottom: 12px;
-
       color: #39e86f;
-
       font-size: 23px;
     }
 
-    /* MOBILE */
-
     @media (max-width: 750px) {
-
       .confirmation-main {
-        padding:
-          35px
-          16px
-          60px;
-      }
-
-      .confirmation-header {
-        margin-bottom: 23px;
+        padding: 35px 16px 60px;
       }
 
       .confirmation-header h1 {
         font-size: 34px;
-        letter-spacing: -1.5px;
       }
 
       .confirmation-card {
         padding: 18px;
-
         border-radius: 18px;
       }
 
@@ -424,49 +282,15 @@
       .selected-number strong {
         font-size: 25px;
       }
-
-    }
-
-    @media (max-width: 380px) {
-
-      .confirmation-main {
-        padding-left: 13px;
-        padding-right: 13px;
-      }
-
-      .confirmation-card {
-        padding: 15px;
-      }
-
-      .service-icon {
-        width: 48px;
-        height: 48px;
-      }
-
-      .detail-row {
-        font-size: 13px;
-      }
-
-      .wallet-amount {
-        font-size: 21px;
-      }
-
     }
   </style>
 </head>
 
-
 <body class="confirmation-page dashboard-page">
-
-
-  <!-- HEADER -->
 
   <header class="dashboard-header">
 
-    <a
-      href="buy-number.html"
-      class="dashboard-logo"
-    >
+    <a href="buy-number.html" class="dashboard-logo">
       Wavynum
     </a>
 
@@ -480,13 +304,7 @@
 
   </header>
 
-
-  <!-- MAIN -->
-
   <main class="confirmation-main">
-
-
-    <!-- TITLE -->
 
     <section class="confirmation-header">
 
@@ -504,13 +322,7 @@
 
     </section>
 
-
-    <!-- LOADING -->
-
-    <div
-      id="loadingState"
-      class="loading"
-    >
+    <div id="loadingState" class="loading">
 
       <i class="fa-solid fa-spinner fa-spin"></i>
 
@@ -518,24 +330,16 @@
 
     </div>
 
-
-    <!-- CARD -->
-
     <section
       id="confirmationContent"
       class="confirmation-card"
       style="display:none;"
     >
 
-
-      <!-- SERVICE -->
-
       <div class="service-row">
 
         <div class="service-icon">
-
           <i class="fa-solid fa-mobile-screen-button"></i>
-
         </div>
 
         <div class="service-info">
@@ -552,9 +356,6 @@
 
       </div>
 
-
-      <!-- NUMBER -->
-
       <div class="selected-number">
 
         <span class="selected-number-label">
@@ -567,53 +368,24 @@
 
       </div>
 
-
-      <!-- DETAILS -->
-
       <div class="details-box">
 
         <div class="detail-row">
-
-          <span>
-            Service
-          </span>
-
-          <strong id="serviceDetail">
-            —
-          </strong>
-
+          <span>Service</span>
+          <strong id="serviceDetail">—</strong>
         </div>
 
-
         <div class="detail-row">
-
-          <span>
-            Country
-          </span>
-
-          <strong id="countryDetail">
-            —
-          </strong>
-
+          <span>Country</span>
+          <strong id="countryDetail">—</strong>
         </div>
 
-
         <div class="detail-row">
-
-          <span>
-            Purchase price
-          </span>
-
-          <strong id="priceDetail">
-            $0.00
-          </strong>
-
+          <span>Purchase price</span>
+          <strong id="priceDetail">$0.00</strong>
         </div>
 
       </div>
-
-
-      <!-- WALLET -->
 
       <div class="wallet-card">
 
@@ -635,17 +407,12 @@
           </div>
 
           <div class="wallet-icon-small">
-
             <i class="fa-solid fa-dollar-sign"></i>
-
           </div>
 
         </div>
 
       </div>
-
-
-      <!-- PURCHASE -->
 
       <button
         type="button"
@@ -655,39 +422,26 @@
         Buy Number
       </button>
 
-
-      <!-- MESSAGE -->
-
-      <div
-        id="message"
-        class="message"
-      ></div>
-
-
-      <!-- BACK -->
+      <div id="message" class="message"></div>
 
       <a
         href="number-selection.html"
         class="back-link"
       >
-
         <i class="fa-solid fa-arrow-left"></i>
-
         Choose another number
-
       </a>
-
 
     </section>
 
   </main>
 
-
-  <!-- FIREBASE -->
-
   <script type="module">
 
-    import { auth, db } from "./firebase.js";
+    import {
+      auth,
+      db
+    } from "./firebase.js";
 
     import {
       onAuthStateChanged
@@ -701,6 +455,10 @@
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+
+    /* =========================================
+       GET SELECTED NUMBER
+    ========================================= */
 
     const selectedRaw =
       localStorage.getItem(
@@ -764,10 +522,6 @@
       );
 
 
-    /* =========================
-       SELECTED NUMBER
-    ========================= */
-
     if (!selectedRaw) {
 
       loadingState.innerHTML = `
@@ -784,8 +538,49 @@
     }
 
 
-    const selectedNumber =
-      JSON.parse(selectedRaw);
+    let selectedNumber;
+
+    try {
+
+      selectedNumber =
+        JSON.parse(
+          selectedRaw
+        );
+
+    } catch (error) {
+
+      loadingState.innerHTML = `
+        <p>Invalid selected number data.</p>
+        <a href="buy-number.html">
+          Return to Buy Number
+        </a>
+      `;
+
+      throw error;
+
+    }
+
+
+    /* =========================================
+       IMPORTANT:
+       USE FIRESTORE DOCUMENT ID
+       FROM NUMBER-SELECTION.HTML
+    ========================================= */
+
+    if (!selectedNumber.id) {
+
+      loadingState.innerHTML = `
+        <p>This selected number is missing its inventory ID.</p>
+        <a href="buy-number.html">
+          Select the number again
+        </a>
+      `;
+
+      throw new Error(
+        "Selected number has no Firestore document ID."
+      );
+
+    }
 
 
     const price =
@@ -798,36 +593,31 @@
       selectedNumber.service ||
       "Service";
 
-
     countryName.textContent =
       selectedNumber.countryName ||
       selectedNumber.country ||
       "Country";
 
-
     phoneNumber.textContent =
       selectedNumber.number ||
       "—";
 
-
     serviceDetail.textContent =
       selectedNumber.service ||
       "—";
-
 
     countryDetail.textContent =
       selectedNumber.countryName ||
       selectedNumber.country ||
       "—";
 
-
     priceDetail.textContent =
       "$" + price.toFixed(2);
 
 
-    /* =========================
+    /* =========================================
        MESSAGES
-    ========================= */
+    ========================================= */
 
     function showMessage(
       text,
@@ -838,7 +628,8 @@
         text;
 
       message.className =
-        "message show " + type;
+        "message show " +
+        type;
 
     }
 
@@ -860,14 +651,16 @@
 
       walletBalance.textContent =
         "$" +
-        Number(balance).toFixed(2);
+        Number(
+          balance
+        ).toFixed(2);
 
     }
 
 
-    /* =========================
+    /* =========================================
        AUTH + WALLET
-    ========================= */
+    ========================================= */
 
     onAuthStateChanged(
       auth,
@@ -913,8 +706,6 @@
             userSnapshot.data();
 
 
-          /* Wavynum USD field */
-
           const usd =
             Number(
               userData.usdBalance || 0
@@ -929,16 +720,12 @@
           loadingState.style.display =
             "none";
 
-
           confirmationContent.style.display =
             "block";
 
 
-          buyButton.addEventListener(
-            "click",
-            () => purchaseNumber(user)
-          );
-
+          buyButton.onclick =
+            () => purchaseNumber(user);
 
         } catch (error) {
 
@@ -946,7 +733,6 @@
             "Wallet loading error:",
             error
           );
-
 
           loadingState.textContent =
             "Unable to load your wallet balance.";
@@ -957,9 +743,9 @@
     );
 
 
-    /* =========================
+    /* =========================================
        PURCHASE
-    ========================= */
+    ========================================= */
 
     async function purchaseNumber(
       user
@@ -984,20 +770,31 @@
           );
 
 
-        const numberId =
-          selectedNumber.number
-            .replace(
-              /\D/g,
-              ""
-            );
+        /*
+          THIS IS THE IMPORTANT FIX.
 
+          Use the actual Firestore document ID
+          saved by number-selection.html.
+
+          Example:
+
+          numbers
+             └── ABC123XYZ
+                    ├── number
+                    ├── services
+                    └── status
+        */
 
         const numberRef =
           doc(
             db,
             "numbers",
-            numberId
+            selectedNumber.id
           );
+
+
+        const ownedNumberId =
+          selectedNumber.id;
 
 
         const ownedNumberRef =
@@ -1006,7 +803,7 @@
             "users",
             user.uid,
             "numbers",
-            numberId
+            ownedNumberId
           );
 
 
@@ -1077,6 +874,8 @@
             }
 
 
+            /* GET THE EXISTING NUMBER */
+
             const numberSnapshot =
               await transaction.get(
                 numberRef
@@ -1084,11 +883,31 @@
 
 
             if (
-              numberSnapshot.exists()
+              !numberSnapshot.exists()
             ) {
 
               throw new Error(
-                "This number has already been purchased."
+                "This number no longer exists in inventory."
+              );
+
+            }
+
+
+            const numberData =
+              numberSnapshot.data();
+
+
+            /* CHECK INVENTORY STATUS */
+
+            if (
+              String(
+                numberData.status || ""
+              ).trim().toLowerCase() !==
+              "available"
+            ) {
+
+              throw new Error(
+                "This number is no longer available."
               );
 
             }
@@ -1099,7 +918,7 @@
               price;
 
 
-            /* UPDATE USD */
+            /* UPDATE USER WALLET */
 
             transaction.update(
               userRef,
@@ -1110,32 +929,23 @@
             );
 
 
-            /* INVENTORY */
+            /*
+              UPDATE THE EXISTING INVENTORY
+              DOCUMENT TO SOLD.
+            */
 
-            transaction.set(
+            transaction.update(
               numberRef,
               {
-
-                number:
-                  selectedNumber.number,
-
-                service:
-                  selectedNumber.service,
-
-                country:
-                  selectedNumber.country,
-
-                countryName:
-                  selectedNumber.countryName,
-
-                price:
-                  price,
 
                 status:
                   "sold",
 
                 ownerId:
                   user.uid,
+
+                soldService:
+                  selectedNumber.service,
 
                 soldAt:
                   serverTimestamp()
@@ -1144,7 +954,7 @@
             );
 
 
-            /* USER NUMBER */
+            /* USER'S NUMBER */
 
             transaction.set(
               ownedNumberRef,
@@ -1171,6 +981,9 @@
                 demoOtp:
                   otp,
 
+                sourceNumberId:
+                  selectedNumber.id,
+
                 purchasedAt:
                   serverTimestamp()
 
@@ -1178,7 +991,7 @@
             );
 
 
-            /* PURCHASE */
+            /* PURCHASE RECORD */
 
             transaction.set(
               purchaseRef,
@@ -1188,7 +1001,7 @@
                   user.uid,
 
                 numberId:
-                  numberId,
+                  selectedNumber.id,
 
                 number:
                   selectedNumber.number,
@@ -1212,7 +1025,7 @@
             );
 
 
-            /* TRANSACTION */
+            /* WALLET TRANSACTION */
 
             transaction.set(
               transactionRef,

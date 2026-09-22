@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Transactions — Wavynum</title>
+
+  <link rel="stylesheet" href="style.css?v=7">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <style>
+    .transactions-page {
+      min-height: 100vh;
+      background: #050806;
+      color: #f0fdf4;
+    }
+
+    .transactions-main {
+      width: min(100% - 24px, 900px);
+      margin: 0 auto;
+      padding: 22px 0 50px;
+    }
+
+    .transactions-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #78857d;
+      text-decoration: none;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    .transactions-back:hover {
+      color: #39e86f;
+    }
+
+    .transactions-heading {
+      margin-bottom: 24px;
+    }
+
+    .transactions-heading h1 {
+      margin: 5px 0 0;
+      color: #ecfdf3;
+      font-size: 30px;
+    }
+
+    .transactions-heading p:last-child {
+      margin: 8px 0 0;
+      color: #78857d;
+      font-size: 13px;
+    }
+
+    .transaction-summary {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .summary-card {
+      padding: 18px;
+      border: 1px solid rgba(34,197,94,.11);
+      border-radius: 18px;
+      background: linear-gradient(145deg, #0c140f, #080d0a);
+    }
+
+    .summary-card span {
+      color: #78857d;
+      font-size: 12px;
+    }
+
+    .summary-card strong {
+      display: block;
+      margin-top: 8px;
+      color: #ecfdf3;
+      font-size: 22px;
+    }
+
+    .transaction-list {
+      overflow: hidden;
+      border: 1px solid rgba(34,197,94,.1);
+      border-radius: 20px;
+      background: #0c140f;
+    }
+
+    .transaction-item {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 16px;
+      border-bottom: 1px solid rgba(34,197,94,.07);
+    }
+
+    .transaction-item:last-child {
+      border-bottom: 0;
+    }
+
+    .transaction-icon {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 13px;
+      background: rgba(34,197,94,.09);
+      color: #39e86f;
+    }
+
+    .transaction-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .transaction-details strong {
+      display: block;
+      color: #ecfdf3;
+      font-size: 13px;
+    }
+
+    .transaction-details p {
+      margin: 4px 0 0;
+      color: #78857d;
+      font-size: 11px;
+    }
+
+    .transaction-amount {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .transaction-amount strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .transaction-amount span {
+      display: block;
+      margin-top: 4px;
+      color: #78857d;
+      font-size: 10px;
+    }
+
+    .amount-positive {
+      color: #4ade80;
+    }
+
+    .amount-negative {
+      color: #f87171;
+    }
+
+    .empty-transactions {
+      padding: 55px 20px;
+      text-align: center;
+    }
+
+    .empty-transactions .empty-icon {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 17px;
+      background: rgba(34,197,94,.08);
+      color: #39e86f;
+      font-size: 20px;
+    }
+
+    .empty-transactions h3 {
+      margin: 0;
+      color: #ecfdf3;
+      font-size: 16px;
+    }
+
+    .empty-transactions p {
+      margin: 7px auto 0;
+      max-width: 300px;
+      color: #78857d;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .loading-transactions {
+      padding: 45px 20px;
+      text-align: center;
+      color: #78857d;
+      font-size: 13px;
+    }
+
+    .status-badge {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 3px 7px;
+      border-radius: 6px;
+      background: rgba(34,197,94,.08);
+      color: #4ade80;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 560px) {
+
+      .transaction-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .transaction-item {
+        padding: 14px 12px;
+      }
+
+      .transaction-icon {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+      }
+
+      .transaction-details strong {
+        font-size: 12px;
+      }
+
+      .transaction-amount strong {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body class="transactions-page">
+
+  <header class="dashboard-header">
+
+    <a href="dashboard.html" class="dashboard-logo">
+      Wavynum
+    </a>
+
+    <a
+      href="dashboard.html"
+      class="back-button"
+      aria-label="Back to dashboard"
+    >
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+  </header>
+
+
+  <main class="transactions-main">
+
+    <a href="dashboard.html" class="transactions-back">
+      <i class="fa-solid fa-arrow-left"></i>
+      Back to dashboard
+    </a>
+
+
+    <section class="transactions-heading">
+
+      <p class="dashboard-eyebrow">
+        ACCOUNT ACTIVITY
+      </p>
+
+      <h1>
+        Transactions
+      </h1>
+
+      <p>
+        View your Wavynum wallet and number purchase activity.
+      </p>
+
+    </section>
+
+
+    <!-- SUMMARY -->
+    <section class="transaction-summary">
+
+      <div class="summary-card">
+
+        <span>
+          Total transactions
+        </span>
+
+        <strong id="transactionCount">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <span>
+          Number purchases
+        </span>
+
+        <strong id="purchaseCount">
+          0
+        </strong>
+
+      </div>
+
+    </section>
+
+
+    <!-- TRANSACTION LIST -->
+    <section
+      class="transaction-list"
+      id="transactionList"
+    >
+
+      <div class="loading-transactions">
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        <div style="margin-top:8px;">
+          Loading transactions...
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script type="module">
+
+    import { auth, db } from "./firebase.js";
+
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+    import {
+      collection,
+      getDocs,
+      query,
+      orderBy
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+    const transactionList =
+      document.getElementById("transactionList");
+
+    const transactionCount =
+      document.getElementById("transactionCount");
+
+    const purchaseCount =
+      document.getElementById("purchaseCount");
+
+
+    onAuthStateChanged(auth, async (user) => {
+
+      if (!user) {
+
+        window.location.href = "login.html";
+
+        return;
+      }
+
+
+      await loadTransactions(user.uid);
+
+    });
+
+
+    async function loadTransactions(uid) {
+
+      try {
+
+        const transactionsRef =
+          collection(db, "transactions");
+
+
+        let snapshot;
+
+
+        try {
+
+          const transactionQuery =
+            query(
+              transactionsRef,
+              orderBy("createdAt", "desc")
+            );
+
+          snapshot =
+            await getDocs(transactionQuery);
+
+        } catch (error) {
+
+          console.warn(
+            "Using transaction fallback:",
+            error
+          );
+
+          snapshot =
+            await getDocs(transactionsRef);
+
+        }
+
+
+        const transactions = [];
+
+
+        snapshot.forEach((docSnap) => {
+
+          const data =
+            docSnap.data();
+
+
+          if (data.userId === uid) {
+
+            transactions.push({
+              id: docSnap.id,
+              ...data
+            });
+
+          }
+
+        });
+
+
+        transactions.sort((a, b) => {
+
+          return (
+            getTime(b.createdAt) -
+            getTime(a.createdAt)
+          );
+
+        });
+
+
+        renderTransactions(transactions);
+
+
+      } catch (error) {
+
+        console.error(
+          "Transaction loading error:",
+          error
+        );
+
+
+        transactionList.innerHTML = `
+          <div class="empty-transactions">
+
+            <div class="empty-icon">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <h3>
+              Unable to load transactions
+            </h3>
+
+            <p>
+              Please try again later.
+            </p>
+
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    function renderTransactions(transactions) {
+
+      transactionCount.textContent =
+        transactions.length;
+
+
+      const purchases =
+        transactions.filter(item => {
+
+          const type =
+            String(
+              item.type ||
+              item.category ||
+              ""
+            ).toLowerCase();
+
+          return (
+            type.includes("purchase") ||
+            type.includes("number")
+          );
+
+        });
+
+
+      purchaseCount.textContent =
+        purchases.length;
+
+
+      if (!transactions.length) {
+
+        transactionList.innerHTML = `
+          <div class="empty-transactions">
+
+            <div class="empty-icon">
+              <i class="fa-solid fa-receipt"></i>
+            </div>
+
+            <h3>
+              No transactions yet
+            </h3>
+
+            <p>
+              Your wallet activity and number purchases
+              will appear here.
+            </p>
+
+          </div>
+        `;
+
+        return;
+      }
+
+
+      transactionList.innerHTML =
+        transactions.map(item => {
+
+          const type =
+            item.type ||
+            item.category ||
+            "Transaction";
+
+
+          const amount =
+            getAmount(item);
+
+
+          const status =
+            item.status ||
+            "completed";
+
+
+          const isPurchase =
+            String(type)
+              .toLowerCase()
+              .includes("purchase") ||
+            String(type)
+              .toLowerCase()
+              .includes("number");
+
+
+          const date =
+            formatDate(item.createdAt);
+
+
+          const service =
+            item.service ||
+            item.description ||
+            "";
+
+
+          return `
+
+            <div class="transaction-item">
+
+              <div class="transaction-icon">
+
+                <i class="fa-solid ${
+                  isPurchase
+                    ? "fa-mobile-screen-button"
+                    : "fa-arrow-right-arrow-left"
+                }"></i>
+
+              </div>
+
+
+              <div class="transaction-details">
+
+                <strong>
+                  ${escapeHTML(type)}
+                </strong>
+
+                <p>
+                  ${escapeHTML(service || date)}
+                </p>
+
+                <span class="status-badge">
+                  ${escapeHTML(status)}
+                </span>
+
+              </div>
+
+
+              <div class="transaction-amount">
+
+                <strong class="${
+                  isPurchase
+                    ? "amount-negative"
+                    : "amount-positive"
+                }">
+
+                  ${isPurchase ? "-" : "+"}
+                  $${amount.toFixed(2)}
+
+                </strong>
+
+                <span>
+                  ${escapeHTML(date)}
+                </span>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }).join("");
+
+    }
+
+
+    function getAmount(item) {
+
+      const values = [
+        item.amount,
+        item.price,
+        item.total,
+        item.usdAmount
+      ];
+
+
+      for (const value of values) {
+
+        const amount =
+          Number(value);
+
+
+        if (
+          Number.isFinite(amount)
+        ) {
+
+          return Math.abs(amount);
+
+        }
+
+      }
+
+
+      return 0;
+
+    }
+
+
+    function getTime(timestamp) {
+
+      if (!timestamp) {
+        return 0;
+      }
+
+
+      if (
+        typeof timestamp.toMillis === "function"
+      ) {
+
+        return timestamp.toMillis();
+
+      }
+
+
+      if (
+        timestamp.seconds !== undefined
+      ) {
+
+        return timestamp.seconds * 1000;
+
+      }
+
+
+      return 0;
+
+    }
+
+
+    function formatDate(timestamp) {
+
+      const time =
+        getTime(timestamp);
+
+
+      if (!time) {
+        return "Recent";
+      }
+
+
+      return new Date(time)
+        .toLocaleDateString(
+          undefined,
+          {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+          }
+        );
+
+    }
+
+
+    function escapeHTML(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+  </script>
+
+</body>
+</html>

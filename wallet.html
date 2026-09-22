@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Wallet — Wavynum</title>
+
+  <link rel="stylesheet" href="style.css?v=7">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <style>
+    .wallet-page {
+      min-height: 100vh;
+      background: #050806;
+      color: #f0fdf4;
+    }
+
+    .wallet-main {
+      width: min(100% - 32px, 900px);
+      margin: 0 auto;
+      padding: 30px 0 50px;
+    }
+
+    .wallet-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #8d9a91;
+      text-decoration: none;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    .wallet-back:hover {
+      color: #39e86f;
+    }
+
+    .wallet-heading {
+      margin-bottom: 24px;
+    }
+
+    .wallet-heading .dashboard-eyebrow {
+      margin-bottom: 6px;
+    }
+
+    .wallet-heading h1 {
+      margin: 0;
+      font-size: 30px;
+      color: #ecfdf3;
+    }
+
+    .wallet-heading p {
+      margin: 8px 0 0;
+      color: #78857d;
+      font-size: 14px;
+    }
+
+    .balance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .balance-card {
+      padding: 22px;
+      border-radius: 20px;
+      border: 1px solid rgba(34,197,94,.12);
+      background: linear-gradient(145deg, #0c140f, #080d0a);
+      box-shadow: 0 15px 40px rgba(0,0,0,.22);
+    }
+
+    .balance-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #8d9a91;
+      font-size: 13px;
+    }
+
+    .balance-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(34,197,94,.1);
+      color: #39e86f;
+    }
+
+    .balance-value {
+      margin-top: 18px;
+      color: #ecfdf3;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .balance-note {
+      margin-top: 7px;
+      color: #78857d;
+      font-size: 12px;
+    }
+
+    .wallet-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .wallet-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 52px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+      transition: .2s ease;
+    }
+
+    .wallet-action.primary {
+      background: #22c55e;
+      color: #031108;
+    }
+
+    .wallet-action.secondary {
+      border: 1px solid rgba(34,197,94,.15);
+      background: #0c140f;
+      color: #d9fbe5;
+    }
+
+    .wallet-action:hover {
+      transform: translateY(-2px);
+    }
+
+    .wallet-section {
+      margin-top: 24px;
+    }
+
+    .wallet-section-header {
+      margin-bottom: 12px;
+    }
+
+    .wallet-section-header h2 {
+      margin: 0;
+      color: #ecfdf3;
+      font-size: 18px;
+    }
+
+    .wallet-section-header p {
+      margin: 5px 0 0;
+      color: #78857d;
+      font-size: 12px;
+    }
+
+    .wallet-info {
+      padding: 18px;
+      border: 1px solid rgba(34,197,94,.1);
+      border-radius: 18px;
+      background: #0c140f;
+    }
+
+    .wallet-info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(34,197,94,.07);
+      font-size: 13px;
+    }
+
+    .wallet-info-row:last-child {
+      border-bottom: 0;
+    }
+
+    .wallet-info-row span:first-child {
+      color: #78857d;
+    }
+
+    .wallet-info-row span:last-child {
+      color: #d9fbe5;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .wallet-loading {
+      text-align: center;
+      padding: 25px;
+      color: #78857d;
+    }
+
+    @media (max-width: 600px) {
+
+      .wallet-main {
+        width: min(100% - 22px, 900px);
+        padding-top: 20px;
+      }
+
+      .balance-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .wallet-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .balance-value {
+        font-size: 26px;
+      }
+
+    }
+  </style>
+</head>
+
+<body class="wallet-page">
+
+  <header class="dashboard-header">
+
+    <a href="dashboard.html" class="dashboard-logo">
+      Wavynum
+    </a>
+
+    <a
+      href="dashboard.html"
+      class="back-button"
+      aria-label="Back to dashboard"
+    >
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+  </header>
+
+
+  <main class="wallet-main">
+
+    <a href="dashboard.html" class="wallet-back">
+      <i class="fa-solid fa-arrow-left"></i>
+      Back to dashboard
+    </a>
+
+
+    <section class="wallet-heading">
+
+      <p class="dashboard-eyebrow">
+        WAVYNUM WALLET
+      </p>
+
+      <h1>
+        Your wallet
+      </h1>
+
+      <p>
+        Manage your available balances and account funds.
+      </p>
+
+    </section>
+
+
+    <!-- BALANCES -->
+    <section class="balance-grid">
+
+      <div class="balance-card">
+
+        <div class="balance-card-top">
+
+          <span>
+            USD Balance
+          </span>
+
+          <div class="balance-icon">
+            <i class="fa-solid fa-dollar-sign"></i>
+          </div>
+
+        </div>
+
+        <div
+          class="balance-value"
+          id="usdBalance"
+        >
+          $0.00
+        </div>
+
+        <div class="balance-note">
+          Available for purchases
+        </div>
+
+      </div>
+
+
+      <div class="balance-card">
+
+        <div class="balance-card-top">
+
+          <span>
+            NGN Balance
+          </span>
+
+          <div class="balance-icon">
+            <i class="fa-solid fa-naira-sign"></i>
+          </div>
+
+        </div>
+
+        <div
+          class="balance-value"
+          id="ngnBalance"
+        >
+          ₦0.00
+        </div>
+
+        <div class="balance-note">
+          Available for purchases
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ACTIONS -->
+    <section class="wallet-actions">
+
+      <a
+        href="add-funds.html"
+        class="wallet-action primary"
+      >
+        <i class="fa-solid fa-circle-plus"></i>
+        Add Funds
+      </a>
+
+      <a
+        href="transactions.html"
+        class="wallet-action secondary"
+      >
+        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        Transactions
+      </a>
+
+    </section>
+
+
+    <!-- ACCOUNT INFORMATION -->
+    <section class="wallet-section">
+
+      <div class="wallet-section-header">
+
+        <h2>
+          Wallet information
+        </h2>
+
+        <p>
+          Current account information
+        </p>
+
+      </div>
+
+
+      <div
+        class="wallet-info"
+        id="walletInfo"
+      >
+
+        <div class="wallet-loading">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          Loading wallet...
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script type="module">
+
+    import { auth, db } from "./firebase.js";
+
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+    import {
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+    const usdBalance =
+      document.getElementById("usdBalance");
+
+    const ngnBalance =
+      document.getElementById("ngnBalance");
+
+    const walletInfo =
+      document.getElementById("walletInfo");
+
+
+    onAuthStateChanged(auth, async (user) => {
+
+      if (!user) {
+
+        window.location.href = "login.html";
+
+        return;
+      }
+
+
+      try {
+
+        const userRef =
+          doc(db, "users", user.uid);
+
+        const snapshot =
+          await getDoc(userRef);
+
+
+        if (!snapshot.exists()) {
+
+          usdBalance.textContent = "$0.00";
+          ngnBalance.textContent = "₦0.00";
+
+          walletInfo.innerHTML = `
+            <div class="wallet-loading">
+              Wallet information is not available yet.
+            </div>
+          `;
+
+          return;
+        }
+
+
+        const data =
+          snapshot.data();
+
+
+        const usd =
+          Number(data.usdBalance || 0);
+
+        const ngn =
+          Number(data.ngnBalance || 0);
+
+
+        usdBalance.textContent =
+          "$" + usd.toFixed(2);
+
+        ngnBalance.textContent =
+          "₦" + ngn.toFixed(2);
+
+
+        walletInfo.innerHTML = `
+
+          <div class="wallet-info-row">
+            <span>Account</span>
+            <span>${user.email || "Wavynum account"}</span>
+          </div>
+
+          <div class="wallet-info-row">
+            <span>USD available</span>
+            <span>$${usd.toFixed(2)}</span>
+          </div>
+
+          <div class="wallet-info-row">
+            <span>NGN available</span>
+            <span>₦${ngn.toFixed(2)}</span>
+          </div>
+
+          <div class="wallet-info-row">
+            <span>Account ID</span>
+            <span>${user.uid.slice(0, 12)}...</span>
+          </div>
+
+        `;
+
+
+      } catch (error) {
+
+        console.error(
+          "Wallet error:",
+          error
+        );
+
+
+        walletInfo.innerHTML = `
+          <div class="wallet-loading">
+            Unable to load wallet information.
+          </div>
+        `;
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>

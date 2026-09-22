@@ -2495,3 +2495,159 @@ body.menu-open {
 .service-number-card:hover {
   cursor: pointer;
 }
+
+/* =================================
+   NUMBER SELECTION PAGE
+================================= */
+
+.number-selection-section {
+  margin-top: 40px;
+}
+
+.country-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+
+.country-filter {
+  border: 1px solid rgba(37, 225, 108, 0.2);
+  background: #08110d;
+  color: #a7b5ad;
+  padding: 11px 16px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.country-filter.active {
+  background: #25e16c;
+  color: #041008;
+  border-color: #25e16c;
+}
+
+.number-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.available-number-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+  background: #08110d;
+  border: 1px solid rgba(37, 225, 108, 0.16);
+  border-radius: 22px;
+}
+
+.available-number-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.available-number-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 16px;
+  background: rgba(37, 225, 108, 0.08);
+  color: #25e16c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.available-number-main h3 {
+  margin: 0;
+  color: #f1fff6;
+  font-size: 16px;
+}
+
+.available-number-main p {
+  margin: 5px 0 0;
+  color: #7e9086;
+  font-size: 14px;
+}
+
+.available-number-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.available-number-right strong {
+  color: #25e16c;
+  white-space: nowrap;
+}
+
+.choose-number-button {
+  border: none;
+  background: #25e16c;
+  color: #041008;
+  padding: 11px 14px;
+  border-radius: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.choose-number-button i {
+  margin-left: 5px;
+}
+
+.empty-numbers {
+  text-align: center;
+  padding: 45px 20px;
+  background: #08110d;
+  border: 1px solid rgba(37, 225, 108, 0.15);
+  border-radius: 22px;
+}
+
+.empty-numbers > i {
+  color: #25e16c;
+  font-size: 30px;
+}
+
+.empty-numbers h3 {
+  color: #f1fff6;
+  margin: 15px 0 7px;
+}
+
+.empty-numbers p {
+  color: #7e9086;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+
+  .available-number-card {
+    padding: 15px;
+  }
+
+  .available-number-right {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .available-number-main h3 {
+    font-size: 14px;
+  }
+
+  .available-number-icon {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+  }
+
+  .choose-number-button {
+    padding: 9px 11px;
+    font-size: 12px;
+  }
+
+}

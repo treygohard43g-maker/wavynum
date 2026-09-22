@@ -11,7 +11,6 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <style>
-
     body {
       margin: 0;
       background: #050806;
@@ -42,6 +41,7 @@
     .admin-label {
       color: #89968e;
       font-size: 12px;
+      margin-top: 3px;
     }
 
     .admin-container {
@@ -161,7 +161,7 @@
       color: #718078;
     }
 
-    /* ADMIN CHAT */
+    /* CHAT */
 
     .overlay {
       position: fixed;
@@ -306,7 +306,6 @@
     }
 
     @media(max-width:700px) {
-
       .stats {
         grid-template-columns: 1fr;
       }
@@ -321,8 +320,10 @@
         border-radius: 0;
       }
 
+      .chat-actions button {
+        padding: 7px;
+      }
     }
-
   </style>
 </head>
 
@@ -340,7 +341,9 @@
 <main class="admin-container" id="adminContent">
 
   <div class="eyebrow">ADMIN SUPPORT</div>
+
   <h1>Customer conversations</h1>
+
   <div class="subtitle">
     Manage support requests from Wavynum users.
   </div>
@@ -365,12 +368,14 @@
   </section>
 
   <section id="ticketList" class="support-list">
-    <div class="empty">Loading support requests...</div>
+    <div class="empty">
+      Loading support requests...
+    </div>
   </section>
 
 </main>
 
-<!-- CHAT -->
+<!-- ADMIN CHAT -->
 
 <div id="overlay" class="overlay">
 
@@ -445,9 +450,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* PUT YOUR ADMIN UID HERE */
+/* YOUR ADMIN UID */
 
-const ADMIN_UID = "PUT_YOUR_ADMIN_UID_HERE";
+const ADMIN_UID = "9msvItX8pAYdz4OLdm1QHGtXFQ33";
 
 
 const adminContent = document.getElementById("adminContent");
@@ -521,10 +526,11 @@ function showAccessDenied(message) {
 
     </div>
   `;
+
 }
 
 
-/* LOAD ALL SUPPORT TICKETS */
+/* LOAD SUPPORT REQUESTS */
 
 async function loadTickets() {
 
@@ -582,6 +588,7 @@ async function loadTickets() {
         <div class="ticket-top">
 
           <div>
+
             <strong>
               ${escapeHtml(ticket.subject || "Support request")}
             </strong>
@@ -589,6 +596,7 @@ async function loadTickets() {
             <div class="email">
               ${escapeHtml(ticket.userEmail || "Unknown user")}
             </div>
+
           </div>
 
           <span class="status ${status}">
@@ -630,7 +638,7 @@ async function loadTickets() {
 }
 
 
-/* OPEN TICKET */
+/* OPEN CONVERSATION */
 
 async function openTicket(ticketId) {
 
@@ -767,18 +775,14 @@ replyForm.addEventListener("submit", async event => {
 });
 
 
-/* STATUS */
+/* CHANGE STATUS */
 
 pendingButton.addEventListener("click", () => {
-
   changeStatus("pending");
-
 });
 
 resolveButton.addEventListener("click", () => {
-
   changeStatus("resolved");
-
 });
 
 
@@ -791,7 +795,7 @@ async function changeStatus(status) {
     await updateDoc(
       doc(db, "supportTickets", currentTicketId),
       {
-        status,
+        status: status,
         updatedAt: serverTimestamp()
       }
     );
@@ -801,6 +805,7 @@ async function changeStatus(status) {
   } catch (error) {
 
     console.error(error);
+
     alert("Could not update ticket status.");
 
   }
@@ -808,17 +813,15 @@ async function changeStatus(status) {
 }
 
 
-/* CLOSE */
+/* CLOSE CHAT */
 
 closeButton.addEventListener("click", () => {
 
   overlay.classList.remove("show");
 
   if (unsubscribeMessages) {
-
     unsubscribeMessages();
     unsubscribeMessages = null;
-
   }
 
   currentTicketId = null;

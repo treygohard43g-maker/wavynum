@@ -1861,8 +1861,12 @@ ol {
     }
 
 
+    /* -----------------------------------------------------
+       HEADER
+    ----------------------------------------------------- */
+
     .nav-container {
-        min-height: 68px;
+        min-height: 64px;
     }
 
 
@@ -1883,27 +1887,49 @@ ol {
     }
 
 
+    /* -----------------------------------------------------
+       HERO
+    ----------------------------------------------------- */
+
     .hero-section {
         padding:
-            72px 0
-            70px;
+            58px 0
+            56px;
+    }
+
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+
+    .eyebrow {
+        margin-bottom: 20px;
+
+        padding: 7px 11px;
+
+        font-size: 11px;
     }
 
 
     .hero-content h1 {
-        font-size:
-            clamp(43px, 13vw, 62px);
+        max-width: 100%;
 
-        letter-spacing: -0.07em;
+        font-size:
+            clamp(40px, 11.5vw, 52px);
+
+        line-height: 1.02;
+
+        letter-spacing: -0.065em;
     }
 
 
     .hero-description {
-        margin-top: 22px;
+        margin-top: 20px;
 
         font-size: 15px;
 
-        line-height: 1.65;
+        line-height: 1.6;
     }
 
 
@@ -1911,21 +1937,43 @@ ol {
         align-items: stretch;
 
         flex-direction: column;
+
+        gap: 10px;
+
+        margin-top: 28px;
     }
 
 
     .hero-actions .button {
         width: 100%;
+
+        min-height: 50px;
     }
 
 
     .hero-trust {
-        gap: 11px 15px;
+        gap: 10px 15px;
+
+        margin-top: 20px;
+    }
+
+
+    .trust-item {
+        font-size: 11px;
+    }
+
+
+    /* -----------------------------------------------------
+       HERO PRODUCT PREVIEW
+    ----------------------------------------------------- */
+
+    .hero-grid {
+        gap: 45px;
     }
 
 
     .hero-visual {
-        min-height: 390px;
+        min-height: 360px;
     }
 
 
@@ -1933,10 +1981,34 @@ ol {
         width: 100%;
 
         border-radius: 18px;
+
+        transform: none;
+    }
+
+
+    .preview-topbar {
+        min-height: 56px;
+
+        padding: 0 15px;
     }
 
 
     .preview-body {
+        padding: 18px;
+    }
+
+
+    .preview-welcome {
+        margin-bottom: 15px;
+    }
+
+
+    .preview-welcome h3 {
+        font-size: 17px;
+    }
+
+
+    .balance-card {
         padding: 18px;
     }
 
@@ -1951,72 +2023,186 @@ ol {
     }
 
 
+    /* -----------------------------------------------------
+       GENERAL SECTIONS
+    ----------------------------------------------------- */
+
     .section {
-        padding: 80px 0;
+        padding: 64px 0;
     }
 
 
     .section-heading {
-        margin-bottom: 35px;
+        margin-bottom: 32px;
     }
 
 
     .section-heading h2,
     .faq-intro h2 {
-        font-size: 34px;
+        font-size: 32px;
+
+        line-height: 1.08;
+    }
+
+
+    .section-heading p {
+        margin-top: 14px;
+
+        font-size: 14px;
+
+        line-height: 1.65;
+    }
+
+
+    /* -----------------------------------------------------
+       SERVICES
+    ----------------------------------------------------- */
+
+    .service-grid {
+        gap: 14px;
     }
 
 
     .service-card {
-        min-height: 225px;
+        min-height: 205px;
 
         padding: 20px;
+
+        border-radius: 20px;
+    }
+
+
+    .service-icon {
+        width: 42px;
+        height: 42px;
     }
 
 
     .service-card h3 {
-        margin-top: 34px;
+        margin-top: 30px;
+
+        font-size: 18px;
+    }
+
+
+    .service-card p {
+        margin-top: 8px;
+
+        font-size: 13px;
+
+        line-height: 1.6;
+    }
+
+
+    .service-link {
+        padding-top: 18px;
+
+        font-size: 12px;
+    }
+
+
+    /* -----------------------------------------------------
+       HOW IT WORKS
+    ----------------------------------------------------- */
+
+    .steps-grid {
+        gap: 14px;
     }
 
 
     .step-card {
-        padding: 23px;
+        min-height: 185px;
+
+        padding: 22px;
+
+        border-radius: 20px;
     }
 
 
+    .step-number {
+        top: 18px;
+        right: 20px;
+    }
+
+
+    .step-icon {
+        width: 43px;
+        height: 43px;
+    }
+
+
+    .step-card h3 {
+        margin-top: 24px;
+
+        font-size: 18px;
+    }
+
+
+    .step-card p {
+        margin-top: 8px;
+
+        font-size: 13px;
+
+        line-height: 1.6;
+    }
+
+
+    /* -----------------------------------------------------
+       PRICING
+    ----------------------------------------------------- */
+
     .pricing-main {
-        padding: 30px 24px;
+        padding: 30px 22px;
     }
 
 
     .price {
-        font-size: 55px;
+        font-size: 52px;
     }
 
 
     .pricing-features {
         grid-template-columns: 1fr;
 
-        padding: 28px 24px;
+        gap: 13px;
+
+        padding: 26px 22px;
+    }
+
+
+    /* -----------------------------------------------------
+       FAQ
+    ----------------------------------------------------- */
+
+    .faq-layout {
+        gap: 35px;
     }
 
 
     .faq-item summary {
-        min-height: 67px;
+        min-height: 62px;
 
         font-size: 13px;
     }
 
 
     .faq-item p {
-        padding-right: 20px;
+        padding:
+            0 20px
+            20px 0;
 
         font-size: 12px;
+
+        line-height: 1.7;
     }
 
 
+    /* -----------------------------------------------------
+       FINAL CTA
+    ----------------------------------------------------- */
+
     .final-cta-section {
-        padding-bottom: 80px;
+        padding-bottom: 64px;
     }
 
 
@@ -2025,7 +2211,21 @@ ol {
 
         flex-direction: column;
 
-        padding: 32px 24px;
+        gap: 24px;
+
+        padding: 30px 22px;
+
+        border-radius: 22px;
+    }
+
+
+    .final-cta h2 {
+        font-size: 32px;
+    }
+
+
+    .final-cta p {
+        font-size: 13px;
     }
 
 
@@ -2034,10 +2234,21 @@ ol {
     }
 
 
+    /* -----------------------------------------------------
+       FOOTER
+    ----------------------------------------------------- */
+
+    .site-footer {
+        padding-top: 50px;
+    }
+
+
     .footer-main {
         grid-template-columns: 1fr 1fr;
 
-        gap: 35px 25px;
+        gap: 30px 22px;
+
+        padding-bottom: 40px;
     }
 
 
@@ -2051,7 +2262,7 @@ ol {
 
         flex-direction: column;
 
-        gap: 12px;
+        gap: 10px;
     }
 
 }
@@ -2063,14 +2274,36 @@ ol {
 
 @media (max-width: 380px) {
 
+    .hero-section {
+        padding:
+            52px 0
+            50px;
+    }
+
+
     .hero-content h1 {
-        font-size: 42px;
+        font-size: 40px;
+
+        letter-spacing: -0.06em;
+    }
+
+
+    .hero-description {
+        font-size: 14px;
     }
 
 
     .hero-trust {
         flex-direction: column;
+
         align-items: flex-start;
+
+        gap: 8px;
+    }
+
+
+    .hero-visual {
+        min-height: 330px;
     }
 
 
@@ -2081,6 +2314,41 @@ ol {
 
     .number-info strong {
         font-size: 10px;
+    }
+
+
+    .section {
+        padding: 56px 0;
+    }
+
+
+    .section-heading h2,
+    .faq-intro h2 {
+        font-size: 30px;
+    }
+
+
+    .service-card {
+        min-height: 195px;
+
+        padding: 18px;
+    }
+
+
+    .step-card {
+        min-height: 175px;
+
+        padding: 20px;
+    }
+
+
+    .final-cta {
+        padding: 26px 20px;
+    }
+
+
+    .final-cta h2 {
+        font-size: 29px;
     }
 
 }

@@ -13,40 +13,39 @@
 
   <link
     rel="stylesheet"
-    href="style.css?v=11"
-  >
-
-  <link
-    rel="stylesheet"
-    href="number-selection.css?v=2"
+    href="style.css?v=13"
   >
 
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   >
+
+  <link
+    rel="stylesheet"
+    href="number-selection.css?v=1"
+  >
 </head>
 
-<body class="number-selection-page">
+<body class="wavynum-number-selection">
 
-  <main class="number-selection-main">
+  <main class="number-selection-page">
 
     <!-- HEADER -->
-
-    <header class="selection-header">
+    <header class="number-selection-header">
 
       <a
         href="buy-number.html"
-        class="selection-back"
-        aria-label="Back to buy number"
+        class="number-selection-back"
+        aria-label="Back"
       >
         <i class="fa-solid fa-arrow-left"></i>
       </a>
 
-      <div class="selection-heading">
+      <div class="number-selection-heading">
 
-        <span class="selection-eyebrow">
-          Number marketplace
+        <span>
+          NUMBER MARKETPLACE
         </span>
 
         <h1>
@@ -63,37 +62,29 @@
 
 
     <!-- SELECTED SERVICE -->
+    <section class="selected-service-card">
 
-    <section
-      class="selected-service"
-      aria-label="Selected service"
-    >
-
-      <div class="selected-service-logo">
+      <div class="selected-service-icon">
 
         <img
-          id="serviceLogo"
+          id="selectedServiceLogo"
           alt=""
         >
 
         <i
-          id="serviceFallbackIcon"
+          id="selectedServiceFallback"
           class="fa-solid fa-layer-group"
-          aria-hidden="true"
         ></i>
 
       </div>
 
-      <div class="selected-service-info">
+      <div>
 
         <span class="selected-service-label">
-          Service
+          SERVICE
         </span>
 
-        <strong
-          id="serviceName"
-          class="selected-service-name"
-        >
+        <strong id="selectedServiceName">
           Loading...
         </strong>
 
@@ -102,23 +93,19 @@
     </section>
 
 
-    <!-- COUNTRY FILTERS -->
+    <!-- COUNTRY -->
+    <section class="country-section">
 
-    <section
-      class="country-filter-section"
-      aria-label="Filter numbers by country"
-    >
-
-      <div class="section-label">
+      <div class="country-title">
         <i class="fa-solid fa-globe"></i>
-        Country
+        <span>Country</span>
       </div>
 
-      <div class="filters">
+      <div class="country-buttons">
 
         <button
           type="button"
-          class="filter-btn active"
+          class="country-button active"
           data-country="all"
         >
           <i class="fa-solid fa-earth-americas"></i>
@@ -127,7 +114,7 @@
 
         <button
           type="button"
-          class="filter-btn"
+          class="country-button"
           data-country="US"
         >
           <i class="fa-solid fa-flag-usa"></i>
@@ -136,7 +123,7 @@
 
         <button
           type="button"
-          class="filter-btn"
+          class="country-button"
           data-country="CA"
         >
           <i class="fa-solid fa-flag"></i>
@@ -145,7 +132,7 @@
 
         <button
           type="button"
-          class="filter-btn"
+          class="country-button"
           data-country="GB"
         >
           <i class="fa-solid fa-flag"></i>
@@ -158,27 +145,23 @@
 
 
     <!-- INVENTORY STATUS -->
-
     <div
-      id="diagnostic"
+      id="inventoryStatus"
       class="inventory-status"
-      aria-live="polite"
     >
       Loading inventory...
     </div>
 
 
     <!-- NUMBERS -->
-
     <section
-      id="numbersList"
-      class="numbers-list"
-      aria-live="polite"
+      id="numberList"
+      class="number-list"
     >
 
-      <div class="state-box">
+      <div class="number-state">
 
-        <div class="state-icon">
+        <div class="number-state-icon">
           <i class="fa-solid fa-spinner fa-spin"></i>
         </div>
 
@@ -197,11 +180,15 @@
   </main>
 
 
+  <!-- IMPORTANT:
+       This page does NOT load script.js.
+       It uses only number-selection.js.
+  -->
+
   <script
     type="module"
-    src="number-selection.js?v=9"
+    src="number-selection.js?v=1"
   ></script>
 
 </body>
-
 </html>

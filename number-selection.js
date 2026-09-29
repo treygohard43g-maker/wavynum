@@ -5,11 +5,13 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+
 /* =========================================================
    WAVYNUM — NUMBER SELECTION
 ========================================================= */
 
 const SERVICE_CONFIG = {
+
   facebook: {
     name: "Facebook"
   },
@@ -77,6 +79,7 @@ const SERVICE_CONFIG = {
   twitter: {
     name: "Twitter / X"
   }
+
 };
 
 
@@ -84,20 +87,27 @@ const SERVICE_CONFIG = {
    ELEMENTS
 ========================================================= */
 
-const serviceNameElement =
-  document.getElementById("selectedServiceName");
+const serviceName =
+  document.getElementById("serviceName");
 
-const serviceDescriptionElement =
-  document.getElementById("selectedServiceDescription");
+const serviceLogo =
+  document.getElementById("serviceLogo");
+
+const serviceFallbackIcon =
+  document.getElementById(
+    "serviceFallbackIcon"
+  );
 
 const numbersList =
   document.getElementById("numbersList");
 
-const inventoryStatus =
-  document.getElementById("inventoryStatus");
+const diagnostic =
+  document.getElementById("diagnostic");
 
-const countryButtons =
-  document.querySelectorAll(".country-filter");
+const filterButtons =
+  document.querySelectorAll(
+    ".filter-btn"
+  );
 
 
 /* =========================================================
@@ -112,15 +122,77 @@ let selectedService = "";
 
 
 /* =========================================================
-   NORMALIZE TEXT
+   SERVICE LOGOS
+========================================================= */
+
+const SERVICE_LOGOS = {
+
+  facebook:
+    "https://cdn.brandfetch.io/facebook.com/w/256/h/256",
+
+  whatsapp:
+    "https://cdn.brandfetch.io/whatsapp.com/w/256/h/256",
+
+  instagram:
+    "https://cdn.brandfetch.io/instagram.com/w/256/h/256",
+
+  telegram:
+    "https://cdn.brandfetch.io/telegram.org/w/256/h/256",
+
+  snapchat:
+    "https://cdn.brandfetch.io/snapchat.com/w/256/h/256",
+
+  "google voice":
+    "https://cdn.brandfetch.io/voice.google.com/w/256/h/256",
+
+  textplus:
+    "https://cdn.brandfetch.io/textplus.com/w/256/h/256",
+
+  textnow:
+    "https://cdn.brandfetch.io/textnow.com/w/256/h/256",
+
+  textfree:
+    "https://cdn.brandfetch.io/textfree.us/w/256/h/256",
+
+  hushed:
+    "https://cdn.brandfetch.io/hushed.com/w/256/h/256",
+
+  burner:
+    "https://cdn.brandfetch.io/burnerapp.com/w/256/h/256",
+
+  "2ndline":
+    "https://cdn.brandfetch.io/2ndline.co/w/256/h/256",
+
+  freetone:
+    "https://cdn.brandfetch.io/freetone.com/w/256/h/256",
+
+  coverme:
+    "https://cdn.brandfetch.io/coverme.com/w/256/h/256",
+
+  numero:
+    "https://cdn.brandfetch.io/numeroesim.com/w/256/h/256",
+
+  mysudo:
+    "https://cdn.brandfetch.io/mysudo.com/w/256/h/256",
+
+  twitter:
+    "https://cdn.brandfetch.io/x.com/w/256/h/256"
+
+};
+
+
+/* =========================================================
+   NORMALIZE
 ========================================================= */
 
 function normalize(value) {
+
   return String(value ?? "")
     .trim()
     .toLowerCase()
     .replace(/[_-]+/g, " ")
     .replace(/\s+/g, " ");
+
 }
 
 
@@ -130,17 +202,26 @@ function normalize(value) {
 
 function canonicalService(value) {
 
-  const normalized = normalize(value);
+  const normalized =
+    normalize(value);
 
   const aliases = {
+
     "twitter / x": "twitter",
     "twitter/x": "twitter",
     "twitter x": "twitter",
     "x/twitter": "twitter",
-    "facebook messenger": "facebook"
+
+    "facebook messenger":
+      "facebook"
+
   };
 
-  return aliases[normalized] || normalized;
+  return (
+    aliases[normalized] ||
+    normalized
+  );
+
 }
 
 
@@ -156,6 +237,7 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+
 }
 
 
@@ -163,61 +245,113 @@ function escapeHtml(value) {
    SERVICE MATCH
 ========================================================= */
 
-function serviceMatches(services, requestedService) {
+function serviceMatches(
+  services,
+  requestedService
+) {
 
   if (!Array.isArray(services)) {
     return false;
   }
 
-  const requested = canonicalService(requestedService);
+  const requested =
+    canonicalService(
+      requestedService
+    );
 
-  return services.some(service => {
+  return services.some(
+    service =>
+      canonicalService(service) ===
+      requested
+  );
 
-    return canonicalService(service) === requested;
-
-  });
 }
 
 
 /* =========================================================
-   GET SERVICE FROM URL
+   READ SERVICE FROM URL
 ========================================================= */
 
-const params = new URLSearchParams(
-  window.location.search
-);
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
 selectedService =
   params.get("service") || "Other";
 
 
 /* =========================================================
-   SERVICE HEADER
+   RENDER SERVICE
 ========================================================= */
 
 function renderServiceHeader() {
 
   const key =
-    canonicalService(selectedService);
+    canonicalService(
+      selectedService
+    );
 
   const config =
     SERVICE_CONFIG[key];
 
-  if (serviceNameElement) {
 
-    serviceNameElement.textContent =
+  if (serviceName) {
+
+    serviceName.textContent =
       config?.name ||
       selectedService ||
       "Service";
+
   }
 
-  if (serviceDescriptionElement) {
 
-    serviceDescriptionElement.textContent =
-      `Choose an available number for ${
-        config?.name || selectedService
-      }.`;
+  if (serviceLogo) {
+
+    const logo =
+      SERVICE_LOGOS[key];
+
+    if (logo) {
+
+      serviceLogo.src = logo;
+
+      serviceLogo.style.display =
+        "block";
+
+      if (serviceFallbackIcon) {
+
+        serviceFallbackIcon.style.display =
+          "none";
+
+      }
+
+      serviceLogo.onerror = () => {
+
+        serviceLogo.style.display =
+          "none";
+
+        if (serviceFallbackIcon) {
+
+          serviceFallbackIcon.style.display =
+            "block";
+
+        }
+
+      };
+
+    } else {
+
+      serviceLogo.removeAttribute(
+        "src"
+      );
+
+      serviceLogo.style.display =
+        "none";
+
+    }
+
   }
+
 }
 
 
@@ -230,16 +364,32 @@ async function loadInventory() {
   try {
 
     numbersList.innerHTML = `
-      <div class="numbers-state">
-        <i class="fa-solid fa-spinner fa-spin"></i>
-        <span>Loading inventory...</span>
+      <div class="state-box">
+
+        <div class="state-icon">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+        </div>
+
+        <h2>
+          Loading numbers
+        </h2>
+
+        <p>
+          Checking available inventory.
+        </p>
+
       </div>
     `;
 
+
     const snapshot =
       await getDocs(
-        collection(db, "numbers")
+        collection(
+          db,
+          "numbers"
+        )
       );
+
 
     allNumbers = [];
 
@@ -248,120 +398,108 @@ async function loadInventory() {
     let compatibleCount = 0;
 
 
-    snapshot.forEach(documentSnapshot => {
+    snapshot.forEach(
+      documentSnapshot => {
 
-      const data =
-        documentSnapshot.data();
-
-
-      /* -----------------------------------------
-         STATUS
-      ----------------------------------------- */
-
-      const status =
-        normalize(data.status);
+        const data =
+          documentSnapshot.data();
 
 
-      if (status !== "available") {
-        return;
+        const status =
+          normalize(
+            data.status
+          );
+
+
+        if (
+          status !== "available"
+        ) {
+          return;
+        }
+
+
+        availableCount++;
+
+
+        if (
+          !serviceMatches(
+            data.services,
+            selectedService
+          )
+        ) {
+          return;
+        }
+
+
+        compatibleCount++;
+
+
+        const number =
+          data.number != null
+            ? String(
+                data.number
+              ).trim()
+            : "";
+
+
+        const rawPrice =
+          data.price != null
+            ? data.price
+            : 0;
+
+
+        const price =
+          Number(
+            String(rawPrice)
+              .replace("$", "")
+              .replace(/,/g, "")
+              .trim()
+          );
+
+
+        allNumbers.push({
+
+          id:
+            documentSnapshot.id,
+
+          number,
+
+          country:
+            String(
+              data.country ?? ""
+            ).trim(),
+
+          countryName:
+            String(
+              data.countryName ??
+              data.country_name ??
+              ""
+            ).trim(),
+
+          provider:
+            String(
+              data.provider ?? ""
+            ).trim(),
+
+          price:
+            Number.isFinite(price)
+              ? price
+              : 0
+
+        });
+
       }
-
-      availableCount++;
-
-
-      /* -----------------------------------------
-         SERVICE
-      ----------------------------------------- */
-
-      if (
-        !serviceMatches(
-          data.services,
-          selectedService
-        )
-      ) {
-        return;
-      }
-
-      compatibleCount++;
+    );
 
 
-      /* -----------------------------------------
-         NUMBER
-      ----------------------------------------- */
+    if (diagnostic) {
 
-      const phoneNumber =
-        data.number !== undefined &&
-        data.number !== null
-          ? String(data.number).trim()
-          : "";
+      diagnostic.textContent =
+        `${snapshot.size} documents · ` +
+        `${availableCount} available · ` +
+        `${compatibleCount} compatible`;
 
-
-      /* -----------------------------------------
-         PRICE
-      ----------------------------------------- */
-
-      const rawPrice =
-        data.price !== undefined &&
-        data.price !== null
-          ? data.price
-          : 0;
-
-      const numericPrice =
-        Number(
-          String(rawPrice)
-            .replace("$", "")
-            .replace(/,/g, "")
-            .trim()
-        );
-
-
-      /* -----------------------------------------
-         STORE NORMALIZED RECORD
-      ----------------------------------------- */
-
-      allNumbers.push({
-
-        id: documentSnapshot.id,
-
-        number: phoneNumber,
-
-        country:
-          String(
-            data.country ?? ""
-          ).trim(),
-
-        countryName:
-          String(
-            data.countryName ??
-            data.country_name ??
-            ""
-          ).trim(),
-
-        price:
-          Number.isFinite(numericPrice)
-            ? numericPrice
-            : 0,
-
-        provider:
-          String(
-            data.provider ?? ""
-          ).trim(),
-
-        services:
-          Array.isArray(data.services)
-            ? data.services
-            : [],
-
-        status
-      });
-
-    });
-
-
-    inventoryStatus.textContent =
-      `${snapshot.size} documents · ` +
-      `${availableCount} available · ` +
-      `${compatibleCount} compatible`;
+    }
 
 
     renderNumbers();
@@ -369,21 +507,34 @@ async function loadInventory() {
   } catch (error) {
 
     console.error(
-      "Failed to load inventory:",
+      "Wavynum inventory error:",
       error
     );
 
-    inventoryStatus.textContent =
-      "Unable to load inventory";
+
+    if (diagnostic) {
+
+      diagnostic.textContent =
+        "Unable to load inventory";
+
+    }
+
 
     numbersList.innerHTML = `
-      <div class="numbers-state error-state">
+      <div class="state-box">
 
-        <i class="fa-solid fa-circle-exclamation"></i>
+        <div class="state-icon">
+          <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
 
-        <span>
-          Unable to load available numbers.
-        </span>
+        <h2>
+          Inventory unavailable
+        </h2>
+
+        <p>
+          We couldn't load available numbers.
+          Please try again.
+        </p>
 
       </div>
     `;
@@ -394,29 +545,34 @@ async function loadInventory() {
 
 
 /* =========================================================
-   FILTER NUMBERS
+   FILTER
 ========================================================= */
 
 function getFilteredNumbers() {
 
-  return allNumbers.filter(item => {
+  return allNumbers.filter(
+    number => {
 
-    if (
-      selectedCountry === "all"
-    ) {
-      return true;
+      if (
+        selectedCountry === "all"
+      ) {
+        return true;
+      }
+
+      return normalize(
+        number.country
+      ) === normalize(
+        selectedCountry
+      );
+
     }
-
-    return normalize(item.country) ===
-      normalize(selectedCountry);
-
-  });
+  );
 
 }
 
 
 /* =========================================================
-   RENDER NUMBERS
+   RENDER NUMBER CARDS
 ========================================================= */
 
 function renderNumbers() {
@@ -428,134 +584,189 @@ function renderNumbers() {
   if (!numbers.length) {
 
     numbersList.innerHTML = `
-      <div class="numbers-state">
+      <div class="state-box">
 
-        <i class="fa-solid fa-phone-slash"></i>
+        <div class="state-icon">
+          <i class="fa-solid fa-phone-slash"></i>
+        </div>
 
-        <strong>
+        <h2>
           No numbers available
-        </strong>
+        </h2>
 
-        <span>
+        <p>
           There are currently no available
           numbers for this selection.
-        </span>
+        </p>
 
       </div>
     `;
 
     return;
+
   }
 
 
   numbersList.innerHTML =
-    numbers.map(item => {
+    numbers.map(
+      number => {
 
-      const displayNumber =
-        item.number || "Number unavailable";
-
-
-      const displayCountry =
-        item.countryName ||
-        item.country ||
-        "Unknown country";
+        const displayNumber =
+          number.number ||
+          "Number unavailable";
 
 
-      const displayCountryCode =
-        item.country || "";
+        const displayCountry =
+          number.countryName ||
+          number.country ||
+          "Unknown";
 
 
-      const displayProvider =
-        item.provider ||
-        "Provider unavailable";
+        const displayProvider =
+          number.provider ||
+          "Telnyx";
 
 
-      const displayPrice =
-        `$${item.price.toFixed(2)}`;
+        const displayPrice =
+          `$${number.price.toFixed(2)}`;
 
 
-      return `
+        return `
 
-        <article
-          class="number-card"
-          data-number-id="${escapeHtml(item.id)}"
-        >
+          <article
+            class="number-card"
+            data-number-id="${escapeHtml(
+              number.id
+            )}"
+          >
 
-          <div class="number-card-main">
+            <div class="number-card-inner">
 
-            <div class="number-card-country">
+              <div class="number-card-top">
 
-              <span>
-                ${escapeHtml(displayCountry)}
-              </span>
+                <div class="number-country">
 
-              <small>
-                ${escapeHtml(displayCountryCode)}
-              </small>
+                  <span
+                    class="number-country-label"
+                  >
+                    Country
+                  </span>
+
+                  <strong
+                    class="number-country-name"
+                  >
+                    ${escapeHtml(
+                      displayCountry
+                    )}
+                  </strong>
+
+                  <small
+                    class="number-country-code"
+                  >
+                    ${escapeHtml(
+                      number.country
+                    )}
+                  </small>
+
+                </div>
+
+
+                <span
+                  class="number-available"
+                >
+                  Available
+                </span>
+
+              </div>
+
+
+              <div class="number-phone-box">
+
+                <span
+                  class="number-phone-label"
+                >
+                  Phone number
+                </span>
+
+                <strong
+                  class="number-phone"
+                >
+                  ${escapeHtml(
+                    displayNumber
+                  )}
+                </strong>
+
+              </div>
+
+
+              <div
+                class="number-card-details"
+              >
+
+                <div class="number-detail">
+
+                  <span
+                    class="number-detail-label"
+                  >
+                    Provider
+                  </span>
+
+                  <span
+                    class="number-detail-value"
+                  >
+                    ${escapeHtml(
+                      displayProvider
+                    )}
+                  </span>
+
+                </div>
+
+
+                <div
+                  class="number-detail price"
+                >
+
+                  <span
+                    class="number-detail-label"
+                  >
+                    Price
+                  </span>
+
+                  <span
+                    class="number-detail-value"
+                  >
+                    ${displayPrice}
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <button
+                type="button"
+                class="number-choose-btn"
+                data-number-id="${escapeHtml(
+                  number.id
+                )}"
+              >
+
+                Choose number
+
+                <i
+                  class="fa-solid fa-arrow-right"
+                ></i>
+
+              </button>
 
             </div>
 
+          </article>
 
-            <div class="number-card-phone">
+        `;
 
-              <span class="phone-label">
-                Phone number
-              </span>
-
-              <strong>
-                ${escapeHtml(displayNumber)}
-              </strong>
-
-            </div>
-
-
-            <div class="number-card-provider">
-
-              <span>
-                Provider
-              </span>
-
-              <strong>
-                ${escapeHtml(displayProvider)}
-              </strong>
-
-            </div>
-
-
-            <div class="number-card-price">
-
-              <span>
-                Price
-              </span>
-
-              <strong>
-                ${displayPrice}
-              </strong>
-
-            </div>
-
-
-            <span class="number-card-status">
-              Available
-            </span>
-
-
-            <button
-              type="button"
-              class="number-card-button"
-              data-number-id="${escapeHtml(item.id)}"
-            >
-              Choose number
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-
-          </div>
-
-        </article>
-
-      `;
-
-    }).join("");
+      }
+    ).join("");
 
 
   attachChooseHandlers();
@@ -571,86 +782,93 @@ function attachChooseHandlers() {
 
   const buttons =
     document.querySelectorAll(
-      ".number-card-button"
+      ".number-choose-btn"
     );
 
 
-  buttons.forEach(button => {
+  buttons.forEach(
+    button => {
 
-    button.addEventListener(
-      "click",
-      () => {
+      button.addEventListener(
+        "click",
+        () => {
 
-        const numberId =
-          button.dataset.numberId;
+          const numberId =
+            button.dataset.numberId;
 
 
-        const selected =
-          allNumbers.find(
-            item => item.id === numberId
+          const selected =
+            allNumbers.find(
+              number =>
+                number.id ===
+                numberId
+            );
+
+
+          if (!selected) {
+
+            alert(
+              "This number is no longer available."
+            );
+
+            return;
+
+          }
+
+
+          if (!selected.number) {
+
+            alert(
+              "The phone number field is empty in this inventory record."
+            );
+
+            return;
+
+          }
+
+
+          localStorage.setItem(
+            "wavynumSelectedNumber",
+            JSON.stringify({
+
+              id:
+                selected.id,
+
+              service:
+                selectedService,
+
+              serviceKey:
+                canonicalService(
+                  selectedService
+                ),
+
+              number:
+                selected.number,
+
+              country:
+                selected.country,
+
+              countryName:
+                selected.countryName,
+
+              price:
+                selected.price,
+
+              provider:
+                selected.provider
+
+            })
           );
 
 
-        if (!selected) {
+          window.location.href =
+            "number-confirmation.html";
 
-          alert(
-            "This number is no longer available."
-          );
-
-          return;
         }
+      );
 
-
-        if (!selected.number) {
-
-          alert(
-            "The phone number field is empty in this inventory record."
-          );
-
-          return;
-        }
-
-
-        localStorage.setItem(
-          "wavynumSelectedNumber",
-          JSON.stringify({
-
-            id: selected.id,
-
-            service:
-              selectedService,
-
-            serviceKey:
-              canonicalService(
-                selectedService
-              ),
-
-            number:
-              selected.number,
-
-            country:
-              selected.country,
-
-            countryName:
-              selected.countryName,
-
-            price:
-              selected.price,
-
-            provider:
-              selected.provider
-
-          })
-        );
-
-
-        window.location.href =
-          "number-confirmation.html";
-
-      }
-    );
-
-  });
+    }
+  );
 
 }
 
@@ -659,32 +877,38 @@ function attachChooseHandlers() {
    COUNTRY FILTERS
 ========================================================= */
 
-countryButtons.forEach(button => {
+filterButtons.forEach(
+  button => {
 
-  button.addEventListener(
-    "click",
-    () => {
+    button.addEventListener(
+      "click",
+      () => {
 
-      countryButtons.forEach(
-        item =>
-          item.classList.remove("active")
-      );
-
-
-      button.classList.add("active");
-
-
-      selectedCountry =
-        button.dataset.country ||
-        "all";
+        filterButtons.forEach(
+          item =>
+            item.classList.remove(
+              "active"
+            )
+        );
 
 
-      renderNumbers();
+        button.classList.add(
+          "active"
+        );
 
-    }
-  );
 
-});
+        selectedCountry =
+          button.dataset.country ||
+          "all";
+
+
+        renderNumbers();
+
+      }
+    );
+
+  }
+);
 
 
 /* =========================================================

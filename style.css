@@ -2372,3 +2372,115 @@ ol {
     }
 
 }
+/* =========================================================
+   JAVASCRIPT INTERACTION STATES
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   MOBILE MENU — OPEN STATE
+--------------------------------------------------------- */
+
+@media (max-width: 980px) {
+
+    .mobile-menu.is-open {
+        display: block;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   HEADER — SCROLLED STATE
+--------------------------------------------------------- */
+
+.site-header.is-scrolled {
+    border-bottom-color:
+        rgba(255, 255, 255, 0.11);
+
+    background:
+        rgba(5, 8, 6, 0.94);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.18);
+}
+
+
+/* ---------------------------------------------------------
+   ACTIVE NAVIGATION
+--------------------------------------------------------- */
+
+.desktop-nav a.is-active {
+    color: var(--green);
+}
+
+
+/* ---------------------------------------------------------
+   SCROLL REVEAL
+--------------------------------------------------------- */
+
+.service-card,
+.step-card,
+.pricing-card,
+.faq-item,
+.final-cta {
+
+    transition:
+        opacity 500ms ease,
+        transform 500ms ease,
+        border-color var(--transition),
+        background var(--transition);
+}
+
+
+.service-card,
+.step-card,
+.pricing-card,
+.faq-item,
+.final-cta {
+
+    opacity: 0;
+    transform: translateY(18px);
+}
+
+
+.service-card.is-visible,
+.step-card.is-visible,
+.pricing-card.is-visible,
+.faq-item.is-visible,
+.final-cta.is-visible {
+
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ---------------------------------------------------------
+   BUTTON CLICK FEEDBACK
+--------------------------------------------------------- */
+
+.button.is-clicked,
+.nav-cta.is-clicked,
+.mobile-menu-cta.is-clicked {
+
+    transform: scale(0.98);
+}
+
+
+/* ---------------------------------------------------------
+   ACCESSIBILITY — REDUCED MOTION
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .service-card,
+    .step-card,
+    .pricing-card,
+    .faq-item,
+    .final-cta {
+
+        opacity: 1;
+        transform: none;
+    }
+
+}

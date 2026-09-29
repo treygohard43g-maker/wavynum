@@ -3,167 +3,569 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Wavynum — Virtual Numbers</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
+    <meta
+        name="description"
+        content="Wavynum gives you access to virtual phone numbers for supported online services, with simple number management from one platform."
+    >
+
+    <title>Wavynum — Virtual Numbers Made Simple</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
-    <!-- Navigation -->
-    <header class="navbar">
+    <!-- =========================================
+         NAVIGATION
+    ========================================== -->
 
-        <a href="#" class="logo">
-            Wavynum
-        </a>
+    <header class="site-header">
 
-        <nav class="nav-links">
-            <a href="#services">Services</a>
-            <a href="#how-it-works">How it works</a>
-            <a href="#support">Support</a>
-            <a href="login.html" class="login-link">Log in</a>
-            <a href="signup.html" class="nav-button">Get Started</a>
-        </nav>
+        <div class="container nav-container">
 
-        <button class="mobile-menu" onclick="toggleMenu()">
-            ☰
-        </button>
+            <a
+                href="#top"
+                class="brand"
+                aria-label="Wavynum home"
+            >
+                <span class="brand-mark">
+                    W
+                </span>
+
+                <span class="brand-name">
+                    Wavynum
+                </span>
+            </a>
+
+
+            <nav
+                class="desktop-nav"
+                aria-label="Main navigation"
+            >
+
+                <a href="#services">
+                    Services
+                </a>
+
+                <a href="#how-it-works">
+                    How it works
+                </a>
+
+                <a href="#pricing">
+                    Pricing
+                </a>
+
+                <a href="#faq">
+                    FAQ
+                </a>
+
+            </nav>
+
+
+            <div class="nav-actions">
+
+                <a
+                    href="login.html"
+                    class="login-link"
+                >
+                    Log in
+                </a>
+
+                <a
+                    href="signup.html"
+                    class="nav-cta"
+                >
+                    Get started
+                </a>
+
+                <button
+                    type="button"
+                    class="mobile-menu-button"
+                    id="mobileMenuButton"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="mobileMenu"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Mobile navigation -->
+
+        <div
+            class="mobile-menu"
+            id="mobileMenu"
+        >
+
+            <nav aria-label="Mobile navigation">
+
+                <a href="#services">
+                    Services
+                </a>
+
+                <a href="#how-it-works">
+                    How it works
+                </a>
+
+                <a href="#pricing">
+                    Pricing
+                </a>
+
+                <a href="#faq">
+                    FAQ
+                </a>
+
+                <div class="mobile-menu-divider"></div>
+
+                <a href="login.html">
+                    Log in
+                </a>
+
+                <a
+                    href="signup.html"
+                    class="mobile-menu-cta"
+                >
+                    Get started
+                </a>
+
+            </nav>
+
+        </div>
 
     </header>
 
 
-    <!-- Mobile navigation -->
-    <div class="mobile-nav" id="mobileNav">
 
-        <a href="#services">Services</a>
-        <a href="#how-it-works">How it works</a>
-        <a href="#support">Support</a>
-        <a href="login.html">Log in</a>
-        <a href="signup.html" class="mobile-start">Get Started</a>
-
-    </div>
+    <main id="top">
 
 
-    <!-- Hero -->
-    <main>
+        <!-- =========================================
+             HERO
+        ========================================== -->
 
-        <section class="hero">
+        <section class="hero-section">
 
-            <div class="hero-badge">
-                <span></span>
-                Secure virtual numbers
-            </div>
+            <div class="container hero-grid">
 
-            <h1>
-                Virtual numbers
-                <br>
-                <span>made simple.</span>
-            </h1>
 
-            <p class="hero-text">
-                Get access to virtual phone numbers for SMS verification,
-                online services and more — all from one simple platform.
-            </p>
+                <div class="hero-content">
 
-            <div class="hero-buttons">
+                    <div class="eyebrow">
 
-                <a href="signup.html" class="primary-button">
-                    Get started
-                    <span>→</span>
-                </a>
+                        <span class="status-dot"></span>
 
-                <a href="#how-it-works" class="secondary-button">
-                    Learn how it works
-                </a>
+                        Virtual numbers, simplified
 
-            </div>
+                    </div>
 
-            <div class="trusted-text">
-                Simple • Fast • Private
+
+                    <h1>
+                        Stay connected
+                        <span>without the complexity.</span>
+                    </h1>
+
+
+                    <p class="hero-description">
+                        Get virtual phone numbers for supported online
+                        services and manage them from one simple,
+                        secure platform.
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="signup.html"
+                            class="button button-primary"
+                        >
+                            Get started
+
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+
+                        <a
+                            href="#how-it-works"
+                            class="button button-secondary"
+                        >
+                            <i class="fa-regular fa-circle-play"></i>
+
+                            How it works
+                        </a>
+
+                    </div>
+
+
+                    <div class="hero-trust">
+
+                        <div class="trust-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Simple setup
+
+                        </div>
+
+
+                        <div class="trust-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Clear pricing
+
+                        </div>
+
+
+                        <div class="trust-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Easy management
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Product preview -->
+
+                <div class="hero-visual">
+
+                    <div class="dashboard-preview">
+
+                        <div class="preview-topbar">
+
+                            <div class="preview-brand">
+
+                                <span class="preview-logo">
+                                    W
+                                </span>
+
+                                <span>
+                                    Wavynum
+                                </span>
+
+                            </div>
+
+
+                            <div class="preview-avatar">
+                                <i class="fa-regular fa-user"></i>
+                            </div>
+
+                        </div>
+
+
+                        <div class="preview-body">
+
+                            <div class="preview-welcome">
+
+                                <div>
+
+                                    <span>
+                                        Dashboard
+                                    </span>
+
+                                    <h3>
+                                        Your numbers
+                                    </h3>
+
+                                </div>
+
+                                <span class="preview-date">
+                                    Today
+                                </span>
+
+                            </div>
+
+
+                            <div class="balance-card">
+
+                                <span class="balance-label">
+                                    Available balance
+                                </span>
+
+                                <strong>
+                                    $24.50
+                                </strong>
+
+                                <span class="balance-note">
+                                    Ready to use
+                                </span>
+
+                            </div>
+
+
+                            <div class="preview-section-title">
+                                Active numbers
+                            </div>
+
+
+                            <div class="number-card">
+
+                                <div class="number-icon">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+
+
+                                <div class="number-info">
+
+                                    <strong>
+                                        +1 (202) 555-0148
+                                    </strong>
+
+                                    <span>
+                                        United States
+                                    </span>
+
+                                </div>
+
+
+                                <span class="number-status">
+                                    Active
+                                </span>
+
+                            </div>
+
+
+                            <div class="number-card">
+
+                                <div class="number-icon">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+
+
+                                <div class="number-info">
+
+                                    <strong>
+                                        +44 20 7946 0182
+                                    </strong>
+
+                                    <span>
+                                        United Kingdom
+                                    </span>
+
+                                </div>
+
+
+                                <span class="number-status">
+                                    Active
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="floating-card floating-card-one">
+
+                        <div class="floating-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Private inbox
+                            </strong>
+
+                            <span>
+                                Messages in one place
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="floating-card floating-card-two">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Number ready
+
+                    </div>
+
+                </div>
+
             </div>
 
         </section>
 
 
-        <!-- Services -->
-        <section class="services-section" id="services">
 
-            <div class="section-heading">
+        <!-- =========================================
+             SERVICES
+        ========================================== -->
 
-                <span class="section-label">
-                    SERVICES
-                </span>
+        <section
+            class="section services-section"
+            id="services"
+        >
 
-                <h2>
-                    One platform for your
-                    <span>verification needs.</span>
-                </h2>
-
-                <p>
-                    Choose a service, select an available number,
-                    and manage your messages from your dashboard.
-                </p>
-
-            </div>
+            <div class="container">
 
 
-            <div class="service-grid">
+                <div class="section-heading">
 
-                <div class="service-card">
+                    <span class="section-label">
+                        SERVICES
+                    </span>
 
-                    <div class="service-icon instagram">
-                        ◎
-                    </div>
 
-                    <div>
-                        <h3>Social platforms</h3>
-                        <p>
-                            Numbers for supported social platforms
-                            and online services.
-                        </p>
-                    </div>
+                    <h2>
+                        One platform for
+                        <span>your numbers.</span>
+                    </h2>
 
-                    <span class="arrow">→</span>
+
+                    <p>
+                        Browse available numbers for supported
+                        services and manage everything from your
+                        Wavynum account.
+                    </p>
 
                 </div>
 
 
-                <div class="service-card">
 
-                    <div class="service-icon messaging">
-                        ✉
-                    </div>
+                <div class="service-grid">
 
-                    <div>
-                        <h3>SMS verification</h3>
+
+                    <article class="service-card">
+
+                        <div class="service-card-top">
+
+                            <div class="service-icon">
+                                <i class="fa-solid fa-comments"></i>
+                            </div>
+
+                            <span class="service-arrow">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </span>
+
+                        </div>
+
+
+                        <h3>
+                            Messaging
+                        </h3>
+
+
                         <p>
-                            Receive supported verification messages
-                            directly in your private inbox.
+                            Access numbers for supported messaging
+                            services and receive eligible SMS messages.
                         </p>
-                    </div>
-
-                    <span class="arrow">→</span>
-
-                </div>
 
 
-                <div class="service-card">
+                        <span class="service-link">
+                            Explore numbers
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
 
-                    <div class="service-icon business">
-                        ◈
-                    </div>
+                    </article>
 
-                    <div>
-                        <h3>Online services</h3>
+
+
+                    <article class="service-card">
+
+                        <div class="service-card-top">
+
+                            <div class="service-icon">
+                                <i class="fa-solid fa-share-nodes"></i>
+                            </div>
+
+                            <span class="service-arrow">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </span>
+
+                        </div>
+
+
+                        <h3>
+                            Social platforms
+                        </h3>
+
+
                         <p>
-                            Access numbers for supported websites
-                            and applications.
+                            Find numbers for supported social and
+                            online platforms where virtual numbers
+                            are accepted.
                         </p>
-                    </div>
 
-                    <span class="arrow">→</span>
+
+                        <span class="service-link">
+                            Explore numbers
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+
+                    </article>
+
+
+
+                    <article class="service-card">
+
+                        <div class="service-card-top">
+
+                            <div class="service-icon">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+
+                            <span class="service-arrow">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </span>
+
+                        </div>
+
+
+                        <h3>
+                            Online services
+                        </h3>
+
+
+                        <p>
+                            Choose from available numbers for supported
+                            websites, applications and online services.
+                        </p>
+
+
+                        <span class="service-link">
+                            Explore numbers
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+
+                    </article>
 
                 </div>
 
@@ -172,67 +574,119 @@
         </section>
 
 
-        <!-- How it works -->
-        <section class="how-section" id="how-it-works">
 
-            <div class="section-heading">
+        <!-- =========================================
+             HOW IT WORKS
+        ========================================== -->
 
-                <span class="section-label">
-                    HOW IT WORKS
-                </span>
+        <section
+            class="section how-section"
+            id="how-it-works"
+        >
 
-                <h2>
-                    Three simple steps.
-                </h2>
-
-            </div>
+            <div class="container">
 
 
-            <div class="steps">
+                <div class="section-heading centered">
 
-                <div class="step">
+                    <span class="section-label">
+                        HOW IT WORKS
+                    </span>
 
-                    <div class="step-number">
-                        01
-                    </div>
 
-                    <h3>Choose a service</h3>
+                    <h2>
+                        From number to inbox
+                        <span>in a few steps.</span>
+                    </h2>
+
 
                     <p>
-                        Select the service you need a number for.
+                        Wavynum keeps the process simple so you can
+                        spend less time managing numbers.
                     </p>
 
                 </div>
 
 
-                <div class="step">
 
-                    <div class="step-number">
-                        02
-                    </div>
-
-                    <h3>Get a number</h3>
-
-                    <p>
-                        Select an available number and reserve it
-                        to your account.
-                    </p>
-
-                </div>
+                <div class="steps-grid">
 
 
-                <div class="step">
+                    <article class="step-card">
 
-                    <div class="step-number">
-                        03
-                    </div>
+                        <div class="step-number">
+                            01
+                        </div>
 
-                    <h3>Receive messages</h3>
 
-                    <p>
-                        Supported incoming SMS messages appear
-                        in your private inbox.
-                    </p>
+                        <div class="step-icon">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+
+
+                        <h3>
+                            Choose a number
+                        </h3>
+
+
+                        <p>
+                            Browse available countries, services
+                            and numbers that match your needs.
+                        </p>
+
+                    </article>
+
+
+
+                    <article class="step-card">
+
+                        <div class="step-number">
+                            02
+                        </div>
+
+
+                        <div class="step-icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+
+
+                        <h3>
+                            Purchase it
+                        </h3>
+
+
+                        <p>
+                            Review the price and confirm your
+                            purchase through your Wavynum account.
+                        </p>
+
+                    </article>
+
+
+
+                    <article class="step-card">
+
+                        <div class="step-number">
+                            03
+                        </div>
+
+
+                        <div class="step-icon">
+                            <i class="fa-solid fa-inbox"></i>
+                        </div>
+
+
+                        <h3>
+                            Manage messages
+                        </h3>
+
+
+                        <p>
+                            View eligible incoming messages from
+                            supported services in your account.
+                        </p>
+
+                    </article>
 
                 </div>
 
@@ -241,65 +695,482 @@
         </section>
 
 
-        <!-- CTA -->
-        <section class="cta-section">
 
-            <div>
+        <!-- =========================================
+             PRICING
+        ========================================== -->
 
-                <span class="section-label">
-                    READY?
-                </span>
+        <section
+            class="section pricing-section"
+            id="pricing"
+        >
 
-                <h2>
-                    Start using Wavynum.
-                </h2>
+            <div class="container">
 
-                <p>
-                    Create your account and explore available services.
-                </p>
+
+                <div class="section-heading centered">
+
+                    <span class="section-label">
+                        PRICING
+                    </span>
+
+
+                    <h2>
+                        Pay for what
+                        <span>you use.</span>
+                    </h2>
+
+
+                    <p>
+                        Pricing depends on the country, provider,
+                        service and availability of each number.
+                    </p>
+
+                </div>
+
+
+
+                <div class="pricing-card">
+
+
+                    <div class="pricing-main">
+
+                        <span class="pricing-small">
+                            Numbers starting from
+                        </span>
+
+
+                        <div class="price">
+
+                            <span>
+                                $
+                            </span>
+
+                            4.99
+
+                        </div>
+
+
+                        <p>
+                            Example starting price. Actual prices
+                            are shown before you confirm a purchase.
+                        </p>
+
+
+                        <a
+                            href="signup.html"
+                            class="button button-primary"
+                        >
+                            Explore numbers
+
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+
+
+                    <div class="pricing-features">
+
+                        <div class="pricing-feature">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Clear pricing before purchase
+
+                        </div>
+
+
+                        <div class="pricing-feature">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Available numbers shown in real time
+
+                        </div>
+
+
+                        <div class="pricing-feature">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Manage purchases from your account
+
+                        </div>
+
+
+                        <div class="pricing-feature">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            No hidden checkout step
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <a href="signup.html" class="cta-button">
-                Create account →
-            </a>
+        </section>
+
+
+
+        <!-- =========================================
+             FAQ
+        ========================================== -->
+
+        <section
+            class="section faq-section"
+            id="faq"
+        >
+
+            <div class="container faq-layout">
+
+
+                <div class="faq-intro">
+
+                    <span class="section-label">
+                        FAQ
+                    </span>
+
+
+                    <h2>
+                        Questions?
+                        <span>We've got answers.</span>
+                    </h2>
+
+
+                    <p>
+                        Learn more about numbers, availability,
+                        purchases and supported services.
+                    </p>
+
+
+                    <a
+                        href="mailto:support@wavynum.com"
+                        class="text-link"
+                    >
+                        Contact support
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+
+
+                <div class="faq-list">
+
+
+                    <details class="faq-item">
+
+                        <summary>
+
+                            What is a virtual number?
+
+                            <span class="faq-icon">
+                                <i class="fa-solid fa-plus"></i>
+                            </span>
+
+                        </summary>
+
+
+                        <p>
+                            A virtual number is a phone number that
+                            can be managed through an online service
+                            rather than being tied directly to a
+                            traditional physical SIM card.
+                        </p>
+
+                    </details>
+
+
+
+                    <details class="faq-item">
+
+                        <summary>
+
+                            How do I get a number?
+
+                            <span class="faq-icon">
+                                <i class="fa-solid fa-plus"></i>
+                            </span>
+
+                        </summary>
+
+
+                        <p>
+                            Create an account, browse the available
+                            numbers, select a supported service and
+                            review the price before completing your
+                            purchase.
+                        </p>
+
+                    </details>
+
+
+
+                    <details class="faq-item">
+
+                        <summary>
+
+                            Will every service accept a virtual number?
+
+                            <span class="faq-icon">
+                                <i class="fa-solid fa-plus"></i>
+                            </span>
+
+                        </summary>
+
+
+                        <p>
+                            No. Acceptance depends on the individual
+                            service and its policies. Wavynum should
+                            only be used with services that permit
+                            virtual numbers.
+                        </p>
+
+                    </details>
+
+
+
+                    <details class="faq-item">
+
+                        <summary>
+
+                            Can I use Wavynum for account verification?
+
+                            <span class="faq-icon">
+                                <i class="fa-solid fa-plus"></i>
+                            </span>
+
+                        </summary>
+
+
+                        <p>
+                            Only where the relevant service permits
+                            the use of virtual numbers. Wavynum is
+                            not intended to bypass identity checks,
+                            KYC requirements or security controls.
+                        </p>
+
+                    </details>
+
+
+
+                    <details class="faq-item">
+
+                        <summary>
+
+                            What happens if a number is unavailable?
+
+                            <span class="faq-icon">
+                                <i class="fa-solid fa-plus"></i>
+                            </span>
+
+                        </summary>
+
+
+                        <p>
+                            Availability can change quickly. If a
+                            number is no longer available, you can
+                            browse the other numbers currently listed
+                            in your account.
+                        </p>
+
+                    </details>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             FINAL CTA
+        ========================================== -->
+
+        <section class="final-cta-section">
+
+            <div class="container">
+
+                <div class="final-cta">
+
+                    <div>
+
+                        <span class="section-label">
+                            GET STARTED
+                        </span>
+
+
+                        <h2>
+                            Your next number
+                            <span>starts here.</span>
+                        </h2>
+
+
+                        <p>
+                            Create your Wavynum account and explore
+                            currently available numbers.
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="signup.html"
+                        class="button button-light"
+                    >
+                        Create your account
+
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
 
         </section>
 
     </main>
 
 
-    <!-- Footer -->
-    <footer id="support">
 
-        <div class="footer-logo">
-            Wavynum
-        </div>
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
 
-        <p>
-            © 2026 Wavynum. All rights reserved.
-        </p>
+    <footer class="site-footer">
 
-        <div class="footer-links">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Support</a>
+        <div class="container">
+
+
+            <div class="footer-main">
+
+
+                <div class="footer-brand">
+
+                    <a
+                        href="#top"
+                        class="brand"
+                    >
+
+                        <span class="brand-mark">
+                            W
+                        </span>
+
+                        <span class="brand-name">
+                            Wavynum
+                        </span>
+
+                    </a>
+
+
+                    <p>
+                        Simple virtual numbers for supported
+                        online services.
+                    </p>
+
+                </div>
+
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Product
+                    </h3>
+
+                    <a href="#services">
+                        Services
+                    </a>
+
+                    <a href="#how-it-works">
+                        How it works
+                    </a>
+
+                    <a href="#pricing">
+                        Pricing
+                    </a>
+
+                </div>
+
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Company
+                    </h3>
+
+                    <a href="#faq">
+                        FAQ
+                    </a>
+
+                    <a href="mailto:support@wavynum.com">
+                        Support
+                    </a>
+
+                    <a href="#">
+                        Contact
+                    </a>
+
+                </div>
+
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Legal
+                    </h3>
+
+                    <a href="#">
+                        Privacy
+                    </a>
+
+                    <a href="#">
+                        Terms
+                    </a>
+
+                    <a href="#">
+                        Acceptable use
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 Wavynum. All rights reserved.
+                </p>
+
+
+                <div class="footer-status">
+
+                    <span class="status-dot"></span>
+
+                    Platform status
+
+                </div>
+
+            </div>
+
         </div>
 
     </footer>
 
 
-    <script>
 
-        function toggleMenu() {
-
-            const menu = document.getElementById("mobileNav");
-
-            menu.classList.toggle("active");
-
-        }
-
-    </script>
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
 
 </body>
 

@@ -1,1177 +1,540 @@
-<!DOCTYPE html>
-<html lang="en">
+/* =========================================================
+   WAVYNUM — GLOBAL JAVASCRIPT
+   Landing page interactions
+========================================================= */
 
-<head>
-    <meta charset="UTF-8">
+"use strict";
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="Wavynum gives you access to virtual phone numbers for supported online services, with simple number management from one platform."
-    >
-
-    <title>Wavynum — Virtual Numbers Made Simple</title>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+/* =========================================================
+   DOM READY
+========================================================= */
 
-    <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
+document.addEventListener("DOMContentLoaded", () => {
 
-    <!-- Main stylesheet -->
-    <link rel="stylesheet" href="style.css">
-</head>
+    initMobileMenu();
+    initSmoothScrolling();
+    initFaq();
+    initHeaderState();
+    initScrollReveal();
+    initButtonFeedback();
 
+});
 
-<body>
 
-    <!-- =========================================
-         NAVIGATION
-    ========================================== -->
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
 
-    <header class="site-header">
+function initMobileMenu() {
 
-        <div class="container nav-container">
+    const menuButton = document.getElementById("mobileMenuButton");
+    const mobileMenu = document.getElementById("mobileMenu");
 
-            <a
-                href="#top"
-                class="brand"
-                aria-label="Wavynum home"
-            >
-                <span class="brand-mark">
-                    W
-                </span>
+    if (!menuButton || !mobileMenu) {
+        return;
+    }
 
-                <span class="brand-name">
-                    Wavynum
-                </span>
-            </a>
 
+    const menuLinks = mobileMenu.querySelectorAll("a");
 
-            <nav
-                class="desktop-nav"
-                aria-label="Main navigation"
-            >
 
-                <a href="#services">
-                    Services
-                </a>
+    function openMenu() {
 
-                <a href="#how-it-works">
-                    How it works
-                </a>
+        mobileMenu.classList.add("is-open");
 
-                <a href="#pricing">
-                    Pricing
-                </a>
+        menuButton.setAttribute("aria-expanded", "true");
+        menuButton.setAttribute("aria-label", "Close navigation menu");
 
-                <a href="#faq">
-                    FAQ
-                </a>
+        const icon = menuButton.querySelector("i");
 
-            </nav>
+        if (icon) {
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-xmark");
+        }
 
+        document.body.classList.add("menu-open");
+    }
 
-            <div class="nav-actions">
 
-                <a
-                    href="login.html"
-                    class="login-link"
-                >
-                    Log in
-                </a>
+    function closeMenu() {
 
-                <a
-                    href="signup.html"
-                    class="nav-cta"
-                >
-                    Get started
-                </a>
+        mobileMenu.classList.remove("is-open");
 
-                <button
-                    type="button"
-                    class="mobile-menu-button"
-                    id="mobileMenuButton"
-                    aria-label="Open navigation menu"
-                    aria-expanded="false"
-                    aria-controls="mobileMenu"
-                >
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Open navigation menu");
 
-            </div>
+        const icon = menuButton.querySelector("i");
 
-        </div>
+        if (icon) {
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+        }
 
+        document.body.classList.remove("menu-open");
+    }
 
-        <!-- Mobile navigation -->
 
-        <div
-            class="mobile-menu"
-            id="mobileMenu"
-        >
+    menuButton.addEventListener("click", () => {
 
-            <nav aria-label="Mobile navigation">
+        const isOpen =
+            mobileMenu.classList.contains("is-open");
 
-                <a href="#services">
-                    Services
-                </a>
+        if (isOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
 
-                <a href="#how-it-works">
-                    How it works
-                </a>
+    });
 
-                <a href="#pricing">
-                    Pricing
-                </a>
 
-                <a href="#faq">
-                    FAQ
-                </a>
+    menuLinks.forEach(link => {
 
-                <div class="mobile-menu-divider"></div>
+        link.addEventListener("click", () => {
+            closeMenu();
+        });
 
-                <a href="login.html">
-                    Log in
-                </a>
+    });
 
-                <a
-                    href="signup.html"
-                    class="mobile-menu-cta"
-                >
-                    Get started
-                </a>
 
-            </nav>
+    document.addEventListener("click", event => {
 
-        </div>
+        const clickedInsideMenu =
+            mobileMenu.contains(event.target);
 
-    </header>
+        const clickedButton =
+            menuButton.contains(event.target);
 
+        if (
+            mobileMenu.classList.contains("is-open") &&
+            !clickedInsideMenu &&
+            !clickedButton
+        ) {
+            closeMenu();
+        }
 
+    });
 
-    <main id="top">
 
+    document.addEventListener("keydown", event => {
 
-        <!-- =========================================
-             HERO
-        ========================================== -->
+        if (
+            event.key === "Escape" &&
+            mobileMenu.classList.contains("is-open")
+        ) {
+            closeMenu();
+            menuButton.focus();
+        }
 
-        <section class="hero-section">
+    });
 
-            <div class="container hero-grid">
 
+    window.addEventListener("resize", () => {
 
-                <div class="hero-content">
+        if (window.innerWidth > 768) {
+            closeMenu();
+        }
 
-                    <div class="eyebrow">
+    });
 
-                        <span class="status-dot"></span>
+}
 
-                        Virtual numbers, simplified
 
-                    </div>
+/* =========================================================
+   SMOOTH SCROLLING
+========================================================= */
 
+function initSmoothScrolling() {
 
-                    <h1>
-                        Stay connected
-                        <span>without the complexity.</span>
-                    </h1>
+    const links =
+        document.querySelectorAll('a[href^="#"]');
 
 
-                    <p class="hero-description">
-                        Get virtual phone numbers for supported online
-                        services and manage them from one simple,
-                        secure platform.
-                    </p>
+    links.forEach(link => {
 
+        link.addEventListener("click", event => {
 
-                    <div class="hero-actions">
+            const targetId =
+                link.getAttribute("href");
 
-                        <a
-                            href="signup.html"
-                            class="button button-primary"
-                        >
-                            Get started
+            if (
+                !targetId ||
+                targetId === "#"
+            ) {
+                return;
+            }
 
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
 
+            const target =
+                document.querySelector(targetId);
 
-                        <a
-                            href="#how-it-works"
-                            class="button button-secondary"
-                        >
-                            <i class="fa-regular fa-circle-play"></i>
+            if (!target) {
+                return;
+            }
 
-                            How it works
-                        </a>
 
-                    </div>
+            event.preventDefault();
 
 
-                    <div class="hero-trust">
+            const header =
+                document.querySelector(".site-header");
 
-                        <div class="trust-item">
 
-                            <i class="fa-solid fa-check"></i>
+            const headerHeight =
+                header ? header.offsetHeight : 0;
 
-                            Simple setup
 
-                        </div>
+            const targetPosition =
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                headerHeight -
+                20;
 
 
-                        <div class="trust-item">
+            window.scrollTo({
+                top: targetPosition,
+                behavior: getScrollBehavior()
+            });
 
-                            <i class="fa-solid fa-check"></i>
+        });
 
-                            Clear pricing
+    });
 
-                        </div>
+}
 
 
-                        <div class="trust-item">
+/* =========================================================
+   SCROLL BEHAVIOR
+   Respects reduced-motion preference
+========================================================= */
 
-                            <i class="fa-solid fa-check"></i>
+function getScrollBehavior() {
 
-                            Easy management
+    const prefersReducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
 
-                        </div>
+    return prefersReducedMotion
+        ? "auto"
+        : "smooth";
 
-                    </div>
+}
 
-                </div>
 
+/* =========================================================
+   FAQ ACCORDION
+========================================================= */
 
+function initFaq() {
 
-                <!-- Product preview -->
+    const faqItems =
+        document.querySelectorAll(".faq-item");
 
-                <div class="hero-visual">
 
-                    <div class="dashboard-preview">
+    if (!faqItems.length) {
+        return;
+    }
 
-                        <div class="preview-topbar">
 
-                            <div class="preview-brand">
+    faqItems.forEach(item => {
 
-                                <span class="preview-logo">
-                                    W
-                                </span>
+        item.addEventListener("toggle", () => {
 
-                                <span>
-                                    Wavynum
-                                </span>
+            if (!item.open) {
+                return;
+            }
 
-                            </div>
 
+            faqItems.forEach(otherItem => {
 
-                            <div class="preview-avatar">
-                                <i class="fa-regular fa-user"></i>
-                            </div>
+                if (
+                    otherItem !== item &&
+                    otherItem.open
+                ) {
+                    otherItem.removeAttribute("open");
+                }
 
-                        </div>
+            });
 
+        });
 
-                        <div class="preview-body">
+    });
 
-                            <div class="preview-welcome">
+}
 
-                                <div>
 
-                                    <span>
-                                        Dashboard
-                                    </span>
+/* =========================================================
+   HEADER SCROLL STATE
+========================================================= */
 
-                                    <h3>
-                                        Your numbers
-                                    </h3>
+function initHeaderState() {
 
-                                </div>
+    const header =
+        document.querySelector(".site-header");
 
-                                <span class="preview-date">
-                                    Today
-                                </span>
 
-                            </div>
+    if (!header) {
+        return;
+    }
 
 
-                            <div class="balance-card">
+    function updateHeader() {
 
-                                <span class="balance-label">
-                                    Available balance
-                                </span>
+        if (window.scrollY > 20) {
 
-                                <strong>
-                                    $24.50
-                                </strong>
+            header.classList.add("is-scrolled");
 
-                                <span class="balance-note">
-                                    Ready to use
-                                </span>
+        } else {
 
-                            </div>
+            header.classList.remove("is-scrolled");
 
+        }
 
-                            <div class="preview-section-title">
-                                Active numbers
-                            </div>
+    }
 
 
-                            <div class="number-card">
+    updateHeader();
 
-                                <div class="number-icon">
-                                    <i class="fa-solid fa-phone"></i>
-                                </div>
 
+    window.addEventListener(
+        "scroll",
+        updateHeader,
+        { passive: true }
+    );
 
-                                <div class="number-info">
+}
 
-                                    <strong>
-                                        +1 (202) 555-0148
-                                    </strong>
 
-                                    <span>
-                                        United States
-                                    </span>
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
 
-                                </div>
+function initScrollReveal() {
 
+    const revealElements =
+        document.querySelectorAll(
+            ".service-card, " +
+            ".step-card, " +
+            ".pricing-card, " +
+            ".faq-item, " +
+            ".final-cta"
+        );
 
-                                <span class="number-status">
-                                    Active
-                                </span>
 
-                            </div>
+    if (!revealElements.length) {
+        return;
+    }
 
 
-                            <div class="number-card">
+    const reducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
 
-                                <div class="number-icon">
-                                    <i class="fa-solid fa-phone"></i>
-                                </div>
 
+    if (reducedMotion) {
 
-                                <div class="number-info">
+        revealElements.forEach(element => {
+            element.classList.add("is-visible");
+        });
 
-                                    <strong>
-                                        +44 20 7946 0182
-                                    </strong>
+        return;
+    }
 
-                                    <span>
-                                        United Kingdom
-                                    </span>
 
-                                </div>
+    if (!("IntersectionObserver" in window)) {
 
+        revealElements.forEach(element => {
+            element.classList.add("is-visible");
+        });
 
-                                <span class="number-status">
-                                    Active
-                                </span>
+        return;
+    }
 
-                            </div>
 
-                        </div>
+    const observer =
+        new IntersectionObserver(
+            entries => {
 
-                    </div>
+                entries.forEach(entry => {
 
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
 
-                    <div class="floating-card floating-card-one">
 
-                        <div class="floating-icon">
-                            <i class="fa-solid fa-shield-halved"></i>
-                        </div>
+                    entry.target.classList.add(
+                        "is-visible"
+                    );
 
-                        <div>
 
-                            <strong>
-                                Private inbox
-                            </strong>
+                    observer.unobserve(
+                        entry.target
+                    );
 
-                            <span>
-                                Messages in one place
-                            </span>
+                });
 
-                        </div>
+            },
+            {
+                threshold: 0.12,
+                rootMargin: "0px 0px -40px 0px"
+            }
+        );
 
-                    </div>
 
+    revealElements.forEach(element => {
+        observer.observe(element);
+    });
 
-                    <div class="floating-card floating-card-two">
+}
 
-                        <i class="fa-solid fa-circle-check"></i>
 
-                        Number ready
+/* =========================================================
+   BUTTON / LINK FEEDBACK
+========================================================= */
 
-                    </div>
+function initButtonFeedback() {
 
-                </div>
+    const buttons =
+        document.querySelectorAll(
+            ".button, .nav-cta, .mobile-menu-cta"
+        );
 
-            </div>
 
-        </section>
+    buttons.forEach(button => {
 
+        button.addEventListener("click", () => {
 
+            button.classList.add("is-clicked");
 
-        <!-- =========================================
-             SERVICES
-        ========================================== -->
+            window.setTimeout(() => {
 
-        <section
-            class="section services-section"
-            id="services"
-        >
+                button.classList.remove(
+                    "is-clicked"
+                );
 
-            <div class="container">
+            }, 180);
 
+        });
 
-                <div class="section-heading">
+    });
 
-                    <span class="section-label">
-                        SERVICES
-                    </span>
+}
 
 
-                    <h2>
-                        One platform for
-                        <span>your numbers.</span>
-                    </h2>
+/* =========================================================
+   ACTIVE SECTION TRACKING
+========================================================= */
 
+function initActiveSectionTracking() {
 
-                    <p>
-                        Browse available numbers for supported
-                        services and manage everything from your
-                        Wavynum account.
-                    </p>
+    const sections =
+        document.querySelectorAll(
+            "main section[id]"
+        );
 
-                </div>
 
+    const navigationLinks =
+        document.querySelectorAll(
+            '.desktop-nav a[href^="#"], ' +
+            '.mobile-menu a[href^="#"]'
+        );
 
 
-                <div class="service-grid">
+    if (
+        !sections.length ||
+        !navigationLinks.length
+    ) {
+        return;
+    }
 
 
-                    <article class="service-card">
+    if (!("IntersectionObserver" in window)) {
+        return;
+    }
 
-                        <div class="service-card-top">
 
-                            <div class="service-icon">
-                                <i class="fa-solid fa-comments"></i>
-                            </div>
+    const observer =
+        new IntersectionObserver(
+            entries => {
 
-                            <span class="service-arrow">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </span>
+                entries.forEach(entry => {
 
-                        </div>
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
 
 
-                        <h3>
-                            Messaging
-                        </h3>
+                    const sectionId =
+                        entry.target.id;
 
 
-                        <p>
-                            Access numbers for supported messaging
-                            services and receive eligible SMS messages.
-                        </p>
+                    navigationLinks.forEach(link => {
 
+                        const targetId =
+                            link
+                                .getAttribute("href")
+                                ?.replace("#", "");
 
-                        <span class="service-link">
-                            Explore numbers
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </span>
 
-                    </article>
+                        link.classList.toggle(
+                            "is-active",
+                            targetId === sectionId
+                        );
 
+                    });
 
+                });
 
-                    <article class="service-card">
+            },
+            {
+                rootMargin: "-35% 0px -55% 0px",
+                threshold: 0
+            }
+        );
 
-                        <div class="service-card-top">
 
-                            <div class="service-icon">
-                                <i class="fa-solid fa-share-nodes"></i>
-                            </div>
+    sections.forEach(section => {
+        observer.observe(section);
+    });
 
-                            <span class="service-arrow">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </span>
+}
 
-                        </div>
 
+/* =========================================================
+   INITIALIZE ACTIVE NAVIGATION
+========================================================= */
 
-                        <h3>
-                            Social platforms
-                        </h3>
+document.addEventListener(
+    "DOMContentLoaded",
+    initActiveSectionTracking
+);
 
 
-                        <p>
-                            Find numbers for supported social and
-                            online platforms where virtual numbers
-                            are accepted.
-                        </p>
+/* =========================================================
+   EXTERNAL / PLACEHOLDER LINKS
+========================================================= */
 
+document.addEventListener("click", event => {
 
-                        <span class="service-link">
-                            Explore numbers
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </span>
+    const link =
+        event.target.closest(
+            'a[href="#"]'
+        );
 
-                    </article>
 
+    if (!link) {
+        return;
+    }
 
 
-                    <article class="service-card">
+    /*
+       Placeholder links currently use "#".
+       Prevent the browser from jumping to the top.
+    */
 
-                        <div class="service-card-top">
+    event.preventDefault();
 
-                            <div class="service-icon">
-                                <i class="fa-solid fa-globe"></i>
-                            </div>
-
-                            <span class="service-arrow">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </span>
-
-                        </div>
-
-
-                        <h3>
-                            Online services
-                        </h3>
-
-
-                        <p>
-                            Choose from available numbers for supported
-                            websites, applications and online services.
-                        </p>
-
-
-                        <span class="service-link">
-                            Explore numbers
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </span>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================================
-             HOW IT WORKS
-        ========================================== -->
-
-        <section
-            class="section how-section"
-            id="how-it-works"
-        >
-
-            <div class="container">
-
-
-                <div class="section-heading centered">
-
-                    <span class="section-label">
-                        HOW IT WORKS
-                    </span>
-
-
-                    <h2>
-                        From number to inbox
-                        <span>in a few steps.</span>
-                    </h2>
-
-
-                    <p>
-                        Wavynum keeps the process simple so you can
-                        spend less time managing numbers.
-                    </p>
-
-                </div>
-
-
-
-                <div class="steps-grid">
-
-
-                    <article class="step-card">
-
-                        <div class="step-number">
-                            01
-                        </div>
-
-
-                        <div class="step-icon">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </div>
-
-
-                        <h3>
-                            Choose a number
-                        </h3>
-
-
-                        <p>
-                            Browse available countries, services
-                            and numbers that match your needs.
-                        </p>
-
-                    </article>
-
-
-
-                    <article class="step-card">
-
-                        <div class="step-number">
-                            02
-                        </div>
-
-
-                        <div class="step-icon">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-
-
-                        <h3>
-                            Purchase it
-                        </h3>
-
-
-                        <p>
-                            Review the price and confirm your
-                            purchase through your Wavynum account.
-                        </p>
-
-                    </article>
-
-
-
-                    <article class="step-card">
-
-                        <div class="step-number">
-                            03
-                        </div>
-
-
-                        <div class="step-icon">
-                            <i class="fa-solid fa-inbox"></i>
-                        </div>
-
-
-                        <h3>
-                            Manage messages
-                        </h3>
-
-
-                        <p>
-                            View eligible incoming messages from
-                            supported services in your account.
-                        </p>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================================
-             PRICING
-        ========================================== -->
-
-        <section
-            class="section pricing-section"
-            id="pricing"
-        >
-
-            <div class="container">
-
-
-                <div class="section-heading centered">
-
-                    <span class="section-label">
-                        PRICING
-                    </span>
-
-
-                    <h2>
-                        Pay for what
-                        <span>you use.</span>
-                    </h2>
-
-
-                    <p>
-                        Pricing depends on the country, provider,
-                        service and availability of each number.
-                    </p>
-
-                </div>
-
-
-
-                <div class="pricing-card">
-
-
-                    <div class="pricing-main">
-
-                        <span class="pricing-small">
-                            Numbers starting from
-                        </span>
-
-
-                        <div class="price">
-
-                            <span>
-                                $
-                            </span>
-
-                            4.99
-
-                        </div>
-
-
-                        <p>
-                            Example starting price. Actual prices
-                            are shown before you confirm a purchase.
-                        </p>
-
-
-                        <a
-                            href="signup.html"
-                            class="button button-primary"
-                        >
-                            Explore numbers
-
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-
-                    </div>
-
-
-
-                    <div class="pricing-features">
-
-                        <div class="pricing-feature">
-
-                            <i class="fa-solid fa-check"></i>
-
-                            Clear pricing before purchase
-
-                        </div>
-
-
-                        <div class="pricing-feature">
-
-                            <i class="fa-solid fa-check"></i>
-
-                            Available numbers shown in real time
-
-                        </div>
-
-
-                        <div class="pricing-feature">
-
-                            <i class="fa-solid fa-check"></i>
-
-                            Manage purchases from your account
-
-                        </div>
-
-
-                        <div class="pricing-feature">
-
-                            <i class="fa-solid fa-check"></i>
-
-                            No hidden checkout step
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================================
-             FAQ
-        ========================================== -->
-
-        <section
-            class="section faq-section"
-            id="faq"
-        >
-
-            <div class="container faq-layout">
-
-
-                <div class="faq-intro">
-
-                    <span class="section-label">
-                        FAQ
-                    </span>
-
-
-                    <h2>
-                        Questions?
-                        <span>We've got answers.</span>
-                    </h2>
-
-
-                    <p>
-                        Learn more about numbers, availability,
-                        purchases and supported services.
-                    </p>
-
-
-                    <a
-                        href="mailto:support@wavynum.com"
-                        class="text-link"
-                    >
-                        Contact support
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-
-                </div>
-
-
-
-                <div class="faq-list">
-
-
-                    <details class="faq-item">
-
-                        <summary>
-
-                            What is a virtual number?
-
-                            <span class="faq-icon">
-                                <i class="fa-solid fa-plus"></i>
-                            </span>
-
-                        </summary>
-
-
-                        <p>
-                            A virtual number is a phone number that
-                            can be managed through an online service
-                            rather than being tied directly to a
-                            traditional physical SIM card.
-                        </p>
-
-                    </details>
-
-
-
-                    <details class="faq-item">
-
-                        <summary>
-
-                            How do I get a number?
-
-                            <span class="faq-icon">
-                                <i class="fa-solid fa-plus"></i>
-                            </span>
-
-                        </summary>
-
-
-                        <p>
-                            Create an account, browse the available
-                            numbers, select a supported service and
-                            review the price before completing your
-                            purchase.
-                        </p>
-
-                    </details>
-
-
-
-                    <details class="faq-item">
-
-                        <summary>
-
-                            Will every service accept a virtual number?
-
-                            <span class="faq-icon">
-                                <i class="fa-solid fa-plus"></i>
-                            </span>
-
-                        </summary>
-
-
-                        <p>
-                            No. Acceptance depends on the individual
-                            service and its policies. Wavynum should
-                            only be used with services that permit
-                            virtual numbers.
-                        </p>
-
-                    </details>
-
-
-
-                    <details class="faq-item">
-
-                        <summary>
-
-                            Can I use Wavynum for account verification?
-
-                            <span class="faq-icon">
-                                <i class="fa-solid fa-plus"></i>
-                            </span>
-
-                        </summary>
-
-
-                        <p>
-                            Only where the relevant service permits
-                            the use of virtual numbers. Wavynum is
-                            not intended to bypass identity checks,
-                            KYC requirements or security controls.
-                        </p>
-
-                    </details>
-
-
-
-                    <details class="faq-item">
-
-                        <summary>
-
-                            What happens if a number is unavailable?
-
-                            <span class="faq-icon">
-                                <i class="fa-solid fa-plus"></i>
-                            </span>
-
-                        </summary>
-
-
-                        <p>
-                            Availability can change quickly. If a
-                            number is no longer available, you can
-                            browse the other numbers currently listed
-                            in your account.
-                        </p>
-
-                    </details>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================================
-             FINAL CTA
-        ========================================== -->
-
-        <section class="final-cta-section">
-
-            <div class="container">
-
-                <div class="final-cta">
-
-                    <div>
-
-                        <span class="section-label">
-                            GET STARTED
-                        </span>
-
-
-                        <h2>
-                            Your next number
-                            <span>starts here.</span>
-                        </h2>
-
-
-                        <p>
-                            Create your Wavynum account and explore
-                            currently available numbers.
-                        </p>
-
-                    </div>
-
-
-                    <a
-                        href="signup.html"
-                        class="button button-light"
-                    >
-                        Create your account
-
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-
-    <!-- =========================================
-         FOOTER
-    ========================================== -->
-
-    <footer class="site-footer">
-
-        <div class="container">
-
-
-            <div class="footer-main">
-
-
-                <div class="footer-brand">
-
-                    <a
-                        href="#top"
-                        class="brand"
-                    >
-
-                        <span class="brand-mark">
-                            W
-                        </span>
-
-                        <span class="brand-name">
-                            Wavynum
-                        </span>
-
-                    </a>
-
-
-                    <p>
-                        Simple virtual numbers for supported
-                        online services.
-                    </p>
-
-                </div>
-
-
-
-                <div class="footer-column">
-
-                    <h3>
-                        Product
-                    </h3>
-
-                    <a href="#services">
-                        Services
-                    </a>
-
-                    <a href="#how-it-works">
-                        How it works
-                    </a>
-
-                    <a href="#pricing">
-                        Pricing
-                    </a>
-
-                </div>
-
-
-
-                <div class="footer-column">
-
-                    <h3>
-                        Company
-                    </h3>
-
-                    <a href="#faq">
-                        FAQ
-                    </a>
-
-                    <a href="mailto:support@wavynum.com">
-                        Support
-                    </a>
-
-                    <a href="#">
-                        Contact
-                    </a>
-
-                </div>
-
-
-
-                <div class="footer-column">
-
-                    <h3>
-                        Legal
-                    </h3>
-
-                    <a href="#">
-                        Privacy
-                    </a>
-
-                    <a href="#">
-                        Terms
-                    </a>
-
-                    <a href="#">
-                        Acceptable use
-                    </a>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="footer-bottom">
-
-                <p>
-                    © 2026 Wavynum. All rights reserved.
-                </p>
-
-
-                <div class="footer-status">
-
-                    <span class="status-dot"></span>
-
-                    Platform status
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-
-
-    <!-- Main JavaScript -->
-    <script src="script.js"></script>
-
-</body>
-
-</html>
+});

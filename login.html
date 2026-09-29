@@ -1,71 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-  <title>Log In — Wavynum</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-  <link rel="stylesheet" href="style.css?v=2">
+    <meta
+        name="description"
+        content="Log in to your Wavynum account."
+    >
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  >
+    <title>Log In — Wavynum</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="auth-page">
 
-  <main class="auth-card">
+    <main class="auth-card">
 
-    <a href="index.html" class="auth-logo">
-      Wavynum
-    </a>
-
-    <h1>Welcome back</h1>
-
-    <p>Log in to your Wavynum account.</p>
-
-    <form id="loginForm">
-
-      <div class="form-group">
-        <label for="email">Email address</label>
-
-        <input
-          type="email"
-          id="email"
-          placeholder="you@example.com"
-          required
+        <a
+            href="index.html"
+            class="auth-logo"
+            aria-label="Wavynum home"
         >
-      </div>
+            Wavynum
+        </a>
 
-      <div class="form-group">
-        <label for="password">Password</label>
+        <div class="auth-heading">
+            <h1>Welcome back</h1>
 
-        <input
-          type="password"
-          id="password"
-          placeholder="Your password"
-          required
-        >
-      </div>
+            <p>
+                Log in to your Wavynum account.
+            </p>
+        </div>
 
-      <button type="submit" class="auth-button">
-        Log in
-      </button>
+        <form id="loginForm" novalidate>
 
-      <p id="loginMessage" class="auth-message"></p>
+            <div class="form-group">
+                <label for="email">
+                    Email address
+                </label>
 
-    </form>
+                <div class="input-wrapper">
+                    <i
+                        class="fa-regular fa-envelope"
+                        aria-hidden="true"
+                    ></i>
 
-    <div class="auth-footer">
-      Don't have an account?
-      <a href="signup.html">Create one</a>
-    </div>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+            </div>
 
-  </main>
+            <div class="form-group">
+                <label for="password">
+                    Password
+                </label>
 
-  <script type="module" src="login.js"></script>
+                <div class="input-wrapper">
+                    <i
+                        class="fa-solid fa-lock"
+                        aria-hidden="true"
+                    ></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Your password"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+            </div>
+
+            <button
+                type="submit"
+                class="auth-button"
+                id="loginButton"
+            >
+                Log in
+            </button>
+
+            <p
+                id="loginMessage"
+                class="auth-message"
+                role="alert"
+                aria-live="polite"
+            ></p>
+
+        </form>
+
+        <div class="auth-footer">
+            Don't have an account?
+            <a href="signup.html">Create one</a>
+        </div>
+
+    </main>
+
+    <script
+        type="module"
+        src="login.js"
+    ></script>
 
 </body>
 </html>

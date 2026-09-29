@@ -1846,245 +1846,357 @@ ol {
 
 }
 
-
-/* =========================================================
-   RESPONSIVE — MOBILE
-========================================================= */
+/* =========================================
+   MOBILE OPTIMIZATION
+   ========================================= */
 
 @media (max-width: 640px) {
 
+    /* -----------------------------------------
+       CONTAINER
+       ----------------------------------------- */
+
     .container {
-        width: min(
-            calc(100% - 28px),
-            var(--container)
-        );
+        width: min(100% - 32px, var(--container));
     }
 
+
+    /* -----------------------------------------
+       HEADER
+       ----------------------------------------- */
+
+    .site-header {
+        height: 74px;
+    }
 
     .nav-container {
-        min-height: 68px;
+        min-height: 74px;
     }
-
-
-    .brand-mark {
-        width: 32px;
-        height: 32px;
-    }
-
 
     .brand-name {
-        font-size: 16px;
+        font-size: 22px;
+    }
+
+    .brand-mark {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        font-size: 24px;
+    }
+
+    .mobile-menu-button {
+        width: 50px;
+        height: 50px;
     }
 
 
-    .login-link,
-    .nav-cta {
-        display: none;
-    }
-
+    /* -----------------------------------------
+       HERO
+       ----------------------------------------- */
 
     .hero-section {
-        padding:
-            72px 0
-            70px;
+        padding: 76px 0 70px;
     }
 
-
-    .hero-content h1 {
-        font-size:
-            clamp(43px, 13vw, 62px);
-
-        letter-spacing: -0.07em;
+    .hero-content {
+        max-width: 100%;
     }
 
+    .hero-eyebrow {
+        margin-bottom: 26px;
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .hero-title {
+        font-size: clamp(48px, 13vw, 68px);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+        margin-bottom: 26px;
+    }
 
     .hero-description {
-        margin-top: 22px;
-
-        font-size: 15px;
-
-        line-height: 1.65;
+        max-width: 100%;
+        font-size: 18px;
+        line-height: 1.55;
+        margin-bottom: 32px;
     }
-
 
     .hero-actions {
-        align-items: stretch;
-
-        flex-direction: column;
+        gap: 12px;
     }
-
 
     .hero-actions .button {
         width: 100%;
     }
 
-
     .hero-trust {
-        gap: 11px 15px;
+        margin-top: 28px;
+        gap: 12px 20px;
+        flex-wrap: wrap;
+    }
+
+    .hero-trust-item {
+        font-size: 14px;
     }
 
 
-    .hero-visual {
-        min-height: 390px;
+    /* -----------------------------------------
+       HERO PRODUCT PREVIEW
+       ----------------------------------------- */
+
+    .hero-preview {
+        margin-top: 52px;
     }
 
-
-    .dashboard-preview {
-        width: 100%;
-
-        border-radius: 18px;
+    .preview-card {
+        border-radius: 22px;
     }
 
-
-    .preview-body {
+    .preview-header {
         padding: 18px;
     }
 
-
-    .balance-card strong {
-        font-size: 27px;
+    .preview-body {
+        padding: 22px;
     }
 
+    .preview-balance {
+        padding: 24px;
+    }
+
+    .preview-balance-amount {
+        font-size: 32px;
+    }
+
+    .preview-number {
+        padding: 14px 0;
+    }
 
     .floating-card {
         display: none;
     }
 
 
-    .section {
-        padding: 80px 0;
-    }
+    /* -----------------------------------------
+       GENERAL SECTIONS
+       ----------------------------------------- */
 
+    .section {
+        padding: 78px 0;
+    }
 
     .section-heading {
-        margin-bottom: 35px;
+        margin-bottom: 38px;
+    }
+
+    .section-eyebrow {
+        margin-bottom: 18px;
+        font-size: 14px;
+        letter-spacing: 0.14em;
+    }
+
+    .section-title {
+        font-size: clamp(40px, 10vw, 56px);
+        line-height: 1.02;
+        letter-spacing: -0.045em;
+    }
+
+    .section-description {
+        font-size: 17px;
+        line-height: 1.55;
+        margin-top: 20px;
     }
 
 
-    .section-heading h2,
-    .faq-intro h2 {
-        font-size: 34px;
-    }
+    /* -----------------------------------------
+       SERVICES
+       ----------------------------------------- */
 
+    .services-grid {
+        gap: 18px;
+    }
 
     .service-card {
-        min-height: 225px;
-
-        padding: 20px;
+        min-height: auto;
+        padding: 30px 28px;
+        border-radius: 24px;
     }
 
+    .service-card-icon {
+        width: 58px;
+        height: 58px;
+        margin-bottom: 48px;
+    }
 
     .service-card h3 {
-        margin-top: 34px;
+        font-size: 28px;
+        margin-bottom: 14px;
     }
 
+    .service-card p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .service-card-link {
+        margin-top: 28px;
+        font-size: 16px;
+    }
+
+
+    /* -----------------------------------------
+       HOW IT WORKS
+       ----------------------------------------- */
+
+    .steps-grid {
+        gap: 18px;
+    }
 
     .step-card {
-        padding: 23px;
+        min-height: auto;
+        padding: 30px 28px;
+        border-radius: 24px;
+    }
+
+    .step-number {
+        font-size: 20px;
+    }
+
+    .step-icon {
+        width: 58px;
+        height: 58px;
+        margin-bottom: 46px;
+    }
+
+    .step-card h3 {
+        font-size: 28px;
+        margin-bottom: 14px;
+    }
+
+    .step-card p {
+        font-size: 16px;
+        line-height: 1.6;
     }
 
 
-    .pricing-main {
-        padding: 30px 24px;
+    /* -----------------------------------------
+       PRICING
+       ----------------------------------------- */
+
+    .pricing-section {
+        padding-top: 72px;
+        padding-bottom: 72px;
+    }
+
+    .pricing-card {
+        padding: 30px 26px;
+        border-radius: 24px;
+    }
+
+    .pricing-price {
+        font-size: 42px;
     }
 
 
-    .price {
-        font-size: 55px;
+    /* -----------------------------------------
+       FAQ
+       ----------------------------------------- */
+
+    .faq-list {
+        gap: 10px;
     }
-
-
-    .pricing-features {
-        grid-template-columns: 1fr;
-
-        padding: 28px 24px;
-    }
-
 
     .faq-item summary {
-        min-height: 67px;
+        padding: 22px 20px;
+        font-size: 17px;
+    }
 
-        font-size: 13px;
+    .faq-answer {
+        padding: 0 20px 22px;
+        font-size: 16px;
+        line-height: 1.6;
     }
 
 
-    .faq-item p {
-        padding-right: 20px;
-
-        font-size: 12px;
-    }
-
-
-    .final-cta-section {
-        padding-bottom: 80px;
-    }
-
+    /* -----------------------------------------
+       FINAL CTA
+       ----------------------------------------- */
 
     .final-cta {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        padding: 32px 24px;
+        padding: 72px 0;
     }
 
+    .final-cta-title {
+        font-size: clamp(40px, 10vw, 54px);
+        line-height: 1.02;
+    }
+
+    .final-cta-description {
+        font-size: 17px;
+        line-height: 1.55;
+    }
 
     .final-cta .button {
         width: 100%;
     }
 
 
-    .footer-main {
-        grid-template-columns: 1fr 1fr;
+    /* -----------------------------------------
+       FOOTER
+       ----------------------------------------- */
 
-        gap: 35px 25px;
+    .site-footer {
+        padding: 58px 0 32px;
     }
 
-
-    .footer-brand {
-        grid-column: 1 / -1;
+    .footer-grid {
+        gap: 36px;
     }
-
-
-    .footer-bottom {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 12px;
-    }
-
 }
 
 
-/* =========================================================
+/* =========================================
    SMALL PHONES
-========================================================= */
+   ========================================= */
 
 @media (max-width: 380px) {
 
-    .hero-content h1 {
-        font-size: 42px;
+    .container {
+        width: min(100% - 28px, var(--container));
     }
 
-
-    .hero-trust {
-        flex-direction: column;
-        align-items: flex-start;
+    .hero-section {
+        padding-top: 64px;
+        padding-bottom: 58px;
     }
 
-
-    .preview-welcome h3 {
-        font-size: 16px;
+    .hero-title {
+        font-size: 44px;
     }
 
-
-    .number-info strong {
-        font-size: 10px;
+    .hero-description {
+        font-size: 17px;
     }
 
+    .section {
+        padding: 64px 0;
+    }
+
+    .section-title {
+        font-size: 38px;
+    }
+
+    .service-card,
+    .step-card {
+        padding: 26px 22px;
+    }
+
+    .service-card h3,
+    .step-card h3 {
+        font-size: 25px;
+    }
 }
-
 
 /* =========================================================
    REDUCED MOTION

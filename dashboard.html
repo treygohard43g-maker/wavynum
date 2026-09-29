@@ -2,12 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Wavynum account dashboard"
+  >
 
   <title>Dashboard — Wavynum</title>
 
-  <link rel="stylesheet" href="style.css?v=7">
+  <!-- Global design system -->
+  <link
+    rel="stylesheet"
+    href="style.css?v=8"
+  >
 
+  <!-- Dashboard-specific styles -->
+  <link
+    rel="stylesheet"
+    href="dashboard.css?v=1"
+  >
+
+  <!-- Icons -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -16,37 +36,86 @@
 
 <body class="dashboard-page">
 
-  <!-- TOP NAVIGATION -->
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
   <header class="dashboard-header">
 
-    <button class="menu-button" id="menuButton" aria-label="Open menu">
-      <i class="fa-solid fa-bars"></i>
+    <button
+      type="button"
+      class="menu-button"
+      id="menuButton"
+      aria-label="Open navigation menu"
+      aria-controls="sideMenu"
+      aria-expanded="false"
+    >
+      <i class="fa-solid fa-bars" aria-hidden="true"></i>
     </button>
 
-    <a href="dashboard.html" class="dashboard-logo">
+    <a
+      href="dashboard.html"
+      class="dashboard-logo"
+      aria-label="Wavynum dashboard"
+    >
       Wavynum
     </a>
 
-    <button class="notification-button" id="notificationButton" aria-label="Notifications">
-      <i class="fa-regular fa-bell"></i>
-      <span class="notification-dot" id="notificationDot"></span>
+    <button
+      type="button"
+      class="notification-button"
+      id="notificationButton"
+      aria-label="Notifications"
+    >
+      <i
+        class="fa-regular fa-bell"
+        aria-hidden="true"
+      ></i>
+
+      <span
+        class="notification-dot"
+        id="notificationDot"
+        aria-hidden="true"
+      ></span>
     </button>
 
   </header>
 
 
-  <!-- SIDE MENU -->
-  <aside class="side-menu" id="sideMenu">
+  <!-- =====================================================
+       SIDE NAVIGATION
+  ====================================================== -->
+
+  <aside
+    class="side-menu"
+    id="sideMenu"
+    aria-label="Account navigation"
+  >
 
     <div class="side-menu-header">
 
-      <div>
-        <span class="menu-label">WAVYNUM</span>
-        <strong>Account Menu</strong>
+      <div class="side-menu-brand">
+
+        <span class="menu-label">
+          WAVYNUM
+        </span>
+
+        <strong>
+          Account Menu
+        </strong>
+
       </div>
 
-      <button class="close-menu" id="closeMenu" aria-label="Close menu">
-        <i class="fa-solid fa-xmark"></i>
+      <button
+        type="button"
+        class="close-menu"
+        id="closeMenu"
+        aria-label="Close navigation menu"
+      >
+        <i
+          class="fa-solid fa-xmark"
+          aria-hidden="true"
+        ></i>
       </button>
 
     </div>
@@ -54,62 +123,162 @@
 
     <nav class="side-navigation">
 
-      <a href="dashboard.html" class="side-link active">
-        <i class="fa-solid fa-house"></i>
-        <span>Dashboard</span>
+      <a
+        href="dashboard.html"
+        class="side-link active"
+      >
+        <i
+          class="fa-solid fa-house"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Dashboard
+        </span>
       </a>
 
-      <a href="my-numbers.html" class="side-link">
-        <i class="fa-solid fa-mobile-screen-button"></i>
-        <span>My Numbers</span>
+
+      <a
+        href="my-numbers.html"
+        class="side-link"
+      >
+        <i
+          class="fa-solid fa-mobile-screen-button"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          My Numbers
+        </span>
       </a>
 
-      <a href="sms-inbox.html" class="side-link">
-        <i class="fa-regular fa-message"></i>
-        <span>SMS Inbox</span>
+
+      <a
+        href="sms-inbox.html"
+        class="side-link"
+      >
+        <i
+          class="fa-regular fa-message"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          SMS Inbox
+        </span>
       </a>
 
-      <a href="buy-number.html" class="side-link">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span>Buy Number</span>
+
+      <a
+        href="buy-number.html"
+        class="side-link"
+      >
+        <i
+          class="fa-solid fa-cart-shopping"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Buy Number
+        </span>
       </a>
 
-      <a href="#wallet" class="side-link">
-        <i class="fa-solid fa-wallet"></i>
-        <span>Wallet</span>
+
+      <a
+        href="#wallet"
+        class="side-link"
+        data-menu-link
+      >
+        <i
+          class="fa-solid fa-wallet"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Wallet
+        </span>
       </a>
 
-      <a href="#transactions" class="side-link">
-        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-        <span>Transactions</span>
+
+      <a
+        href="#transactions"
+        class="side-link"
+        data-menu-link
+      >
+        <i
+          class="fa-solid fa-arrow-right-arrow-left"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Transactions
+        </span>
       </a>
 
-      <a href="add-funds.html" class="side-link">
-        <i class="fa-solid fa-circle-plus"></i>
-        <span>Add Funds</span>
+
+      <a
+        href="add-funds.html"
+        class="side-link"
+      >
+        <i
+          class="fa-solid fa-circle-plus"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Add Funds
+        </span>
       </a>
+
 
       <div class="menu-divider"></div>
 
-      <a href="settings.html" class="side-link">
-        <i class="fa-solid fa-gear"></i>
-        <span>Settings</span>
+
+      <a
+        href="settings.html"
+        class="side-link"
+      >
+        <i
+          class="fa-solid fa-gear"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Settings
+        </span>
       </a>
 
-      <a href="support.html" class="side-link">
-        <i class="fa-solid fa-headset"></i>
-        <span>Support</span>
+
+      <a
+        href="support.html"
+        class="side-link"
+      >
+        <i
+          class="fa-solid fa-headset"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Support
+        </span>
       </a>
 
-      <!-- ADMIN SUPPORT -->
+
+      <!-- Admin-only navigation -->
+
       <a
         href="admin-support.html"
         class="side-link admin-support-link"
         id="adminSupportLink"
-        style="display:none;"
+        hidden
       >
-        <i class="fa-solid fa-shield-halved"></i>
-        <span>Admin Support</span>
+        <i
+          class="fa-solid fa-shield-halved"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Admin Support
+        </span>
       </a>
 
     </nav>
@@ -117,12 +286,19 @@
 
     <div class="side-menu-bottom">
 
-      <button class="logout-button" id="logoutButton">
+      <button
+        type="button"
+        class="logout-button"
+        id="logoutButton"
+      >
+        <i
+          class="fa-solid fa-right-from-bracket"
+          aria-hidden="true"
+        ></i>
 
-        <i class="fa-solid fa-right-from-bracket"></i>
-
-        <span>Log out</span>
-
+        <span>
+          Log out
+        </span>
       </button>
 
     </div>
@@ -130,17 +306,30 @@
   </aside>
 
 
-  <!-- OVERLAY -->
-  <div class="menu-overlay" id="menuOverlay"></div>
+  <!-- =====================================================
+       MENU OVERLAY
+  ====================================================== -->
+
+  <div
+    class="menu-overlay"
+    id="menuOverlay"
+    aria-hidden="true"
+  ></div>
 
 
-  <!-- MAIN DASHBOARD -->
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
   <main class="dashboard-main">
 
-    <!-- WELCOME -->
+    <!-- ===================================================
+         WELCOME
+    ==================================================== -->
+
     <section class="dashboard-welcome">
 
-      <div>
+      <div class="welcome-content">
 
         <p class="dashboard-eyebrow">
           ACCOUNT OVERVIEW
@@ -156,66 +345,108 @@
 
       </div>
 
-      <a href="add-funds.html" class="dashboard-add-button">
-        <i class="fa-solid fa-plus"></i>
-        Add Funds
+
+      <a
+        href="add-funds.html"
+        class="dashboard-add-button"
+      >
+        <i
+          class="fa-solid fa-plus"
+          aria-hidden="true"
+        ></i>
+
+        <span>
+          Add Funds
+        </span>
       </a>
 
     </section>
 
 
-    <!-- WALLET -->
-    <section class="wallet-grid" id="wallet">
+    <!-- ===================================================
+         WALLET
+    ==================================================== -->
 
-      <div class="wallet-card primary-wallet">
+    <section
+      class="wallet-grid"
+      id="wallet"
+      aria-label="Wallet balances"
+    >
+
+      <article class="wallet-card primary-wallet">
 
         <div class="wallet-card-top">
 
-          <span>USD Balance</span>
+          <span>
+            USD Balance
+          </span>
 
           <div class="wallet-icon">
-            <i class="fa-solid fa-dollar-sign"></i>
+            <i
+              class="fa-solid fa-dollar-sign"
+              aria-hidden="true"
+            ></i>
           </div>
 
         </div>
 
-        <div class="wallet-balance" id="usdBalance">
+
+        <div
+          class="wallet-balance"
+          id="usdBalance"
+          aria-live="polite"
+        >
           $0.00
         </div>
 
+
         <p class="wallet-description">
           Available for purchases
         </p>
 
-      </div>
+      </article>
 
 
-      <div class="wallet-card">
+      <article class="wallet-card">
 
         <div class="wallet-card-top">
 
-          <span>NGN Balance</span>
+          <span>
+            NGN Balance
+          </span>
 
           <div class="wallet-icon">
-            <i class="fa-solid fa-naira-sign"></i>
+            <i
+              class="fa-solid fa-naira-sign"
+              aria-hidden="true"
+            ></i>
           </div>
 
         </div>
 
-        <div class="wallet-balance" id="ngnBalance">
+
+        <div
+          class="wallet-balance"
+          id="ngnBalance"
+          aria-live="polite"
+        >
           ₦0.00
         </div>
+
 
         <p class="wallet-description">
           Available for purchases
         </p>
 
-      </div>
+      </article>
 
     </section>
 
 
-    <!-- QUICK ACTIONS -->
+    <!-- ===================================================
+         QUICK ACTIONS
+    ==================================================== -->
+
     <section class="dashboard-section">
 
       <div class="section-title-row">
@@ -237,78 +468,130 @@
 
       <div class="quick-actions">
 
-        <a href="buy-number.html" class="quick-action-card">
+        <a
+          href="buy-number.html"
+          class="quick-action-card"
+        >
 
           <div class="quick-action-icon">
-            <i class="fa-solid fa-cart-shopping"></i>
+            <i
+              class="fa-solid fa-cart-shopping"
+              aria-hidden="true"
+            ></i>
           </div>
 
-          <div>
-            <h3>Buy a number</h3>
+          <div class="quick-action-content">
+
+            <h3>
+              Buy a number
+            </h3>
 
             <p>
               Choose a virtual number for your service.
             </p>
+
           </div>
 
-          <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
+          <i
+            class="fa-solid fa-arrow-right quick-action-arrow"
+            aria-hidden="true"
+          ></i>
 
         </a>
 
 
-        <a href="add-funds.html" class="quick-action-card">
+        <a
+          href="add-funds.html"
+          class="quick-action-card"
+        >
 
           <div class="quick-action-icon">
-            <i class="fa-solid fa-circle-plus"></i>
+            <i
+              class="fa-solid fa-circle-plus"
+              aria-hidden="true"
+            ></i>
           </div>
 
-          <div>
-            <h3>Add funds</h3>
+          <div class="quick-action-content">
+
+            <h3>
+              Add funds
+            </h3>
 
             <p>
               Fund your Wavynum wallet securely.
             </p>
+
           </div>
 
-          <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
+          <i
+            class="fa-solid fa-arrow-right quick-action-arrow"
+            aria-hidden="true"
+          ></i>
 
         </a>
 
 
-        <a href="sms-inbox.html" class="quick-action-card">
+        <a
+          href="sms-inbox.html"
+          class="quick-action-card"
+        >
 
           <div class="quick-action-icon">
-            <i class="fa-regular fa-message"></i>
+            <i
+              class="fa-regular fa-message"
+              aria-hidden="true"
+            ></i>
           </div>
 
-          <div>
-            <h3>Open SMS inbox</h3>
+          <div class="quick-action-content">
+
+            <h3>
+              Open SMS inbox
+            </h3>
 
             <p>
               View messages received by your numbers.
             </p>
+
           </div>
 
-          <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
+          <i
+            class="fa-solid fa-arrow-right quick-action-arrow"
+            aria-hidden="true"
+          ></i>
 
         </a>
 
 
-        <a href="my-numbers.html" class="quick-action-card">
+        <a
+          href="my-numbers.html"
+          class="quick-action-card"
+        >
 
           <div class="quick-action-icon">
-            <i class="fa-solid fa-mobile-screen-button"></i>
+            <i
+              class="fa-solid fa-mobile-screen-button"
+              aria-hidden="true"
+            ></i>
           </div>
 
-          <div>
-            <h3>My numbers</h3>
+          <div class="quick-action-content">
+
+            <h3>
+              My numbers
+            </h3>
 
             <p>
               Manage your purchased numbers.
             </p>
+
           </div>
 
-          <i class="fa-solid fa-arrow-right quick-action-arrow"></i>
+          <i
+            class="fa-solid fa-arrow-right quick-action-arrow"
+            aria-hidden="true"
+          ></i>
 
         </a>
 
@@ -317,7 +600,10 @@
     </section>
 
 
-    <!-- ACTIVE NUMBER -->
+    <!-- ===================================================
+         ACTIVE NUMBER
+    ==================================================== -->
+
     <section class="dashboard-section">
 
       <div class="section-title-row">
@@ -334,18 +620,27 @@
 
         </div>
 
-        <a href="my-numbers.html" class="section-link">
+        <a
+          href="my-numbers.html"
+          class="section-link"
+        >
           View all
         </a>
 
       </div>
 
 
-      <div class="active-number-card" id="activeNumberCard">
+      <article
+        class="active-number-card"
+        id="activeNumberCard"
+      >
 
         <div class="number-status">
 
-          <span class="status-indicator"></span>
+          <span
+            class="status-indicator"
+            aria-hidden="true"
+          ></span>
 
           <span id="activeNumberStatus">
             Loading...
@@ -357,12 +652,21 @@
         <div class="number-content">
 
           <div class="number-icon">
-            <i class="fa-solid fa-mobile-screen-button"></i>
+
+            <i
+              class="fa-solid fa-mobile-screen-button"
+              aria-hidden="true"
+            ></i>
+
           </div>
 
-          <div>
 
-            <span class="number-country" id="activeNumberCountry">
+          <div class="number-details">
+
+            <span
+              class="number-country"
+              id="activeNumberCountry"
+            >
               —
             </span>
 
@@ -381,9 +685,16 @@
             type="button"
             class="number-action"
             id="copyNumberButton"
+            disabled
           >
-            <i class="fa-regular fa-copy"></i>
-            Copy
+            <i
+              class="fa-regular fa-copy"
+              aria-hidden="true"
+            ></i>
+
+            <span>
+              Copy
+            </span>
           </button>
 
 
@@ -391,19 +702,29 @@
             type="button"
             class="number-action"
             id="smsNumberButton"
+            disabled
           >
-            <i class="fa-regular fa-message"></i>
-            SMS
+            <i
+              class="fa-regular fa-message"
+              aria-hidden="true"
+            ></i>
+
+            <span>
+              SMS
+            </span>
           </button>
 
         </div>
 
-      </div>
+      </article>
 
     </section>
 
 
-    <!-- TRANSACTIONS -->
+    <!-- ===================================================
+         TRANSACTIONS
+    ==================================================== -->
+
     <section
       class="dashboard-section"
       id="transactions"
@@ -423,7 +744,10 @@
 
         </div>
 
-        <a href="#transactions" class="section-link">
+        <a
+          href="#transactions"
+          class="section-link"
+        >
           View all
         </a>
 
@@ -433,12 +757,16 @@
       <div
         class="transactions-card"
         id="transactionsList"
+        aria-live="polite"
       >
 
         <div class="empty-state">
 
           <div class="empty-icon">
-            <i class="fa-solid fa-spinner fa-spin"></i>
+            <i
+              class="fa-solid fa-spinner fa-spin"
+              aria-hidden="true"
+            ></i>
           </div>
 
           <h3>
@@ -456,7 +784,10 @@
     </section>
 
 
-    <!-- SMS PREVIEW -->
+    <!-- ===================================================
+         SMS PREVIEW
+    ==================================================== -->
+
     <section class="dashboard-section">
 
       <div class="section-title-row">
@@ -473,7 +804,10 @@
 
         </div>
 
-        <a href="sms-inbox.html" class="section-link">
+        <a
+          href="sms-inbox.html"
+          class="section-link"
+        >
           Open inbox
         </a>
 
@@ -483,12 +817,16 @@
       <div
         class="transactions-card"
         id="smsPreview"
+        aria-live="polite"
       >
 
         <div class="empty-state">
 
           <div class="empty-icon">
-            <i class="fa-solid fa-spinner fa-spin"></i>
+            <i
+              class="fa-solid fa-spinner fa-spin"
+              aria-hidden="true"
+            ></i>
           </div>
 
           <h3>
@@ -508,7 +846,14 @@
   </main>
 
 
-  <script type="module" src="dashboard.js?v=4"></script>
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script
+    type="module"
+    src="dashboard.js?v=5"
+  ></script>
 
 </body>
 </html>

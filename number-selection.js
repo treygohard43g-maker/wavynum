@@ -157,10 +157,17 @@ function canonicalService(value) {
 
   const aliases = {
 
-    "twitter / x": "twitter",
-    "twitter/x": "twitter",
-    "twitter x": "twitter",
-    "x/twitter": "twitter",
+    "twitter / x":
+      "twitter",
+
+    "twitter/x":
+      "twitter",
+
+    "twitter x":
+      "twitter",
+
+    "x/twitter":
+      "twitter",
 
     "facebook messenger":
       "facebook"
@@ -252,7 +259,8 @@ function renderServiceHeader() {
 
     serviceLogo.src = logo;
 
-    serviceLogo.style.display = "block";
+    serviceLogo.style.display =
+      "block";
 
 
     if (serviceFallbackIcon) {
@@ -339,143 +347,6 @@ function parsePrice(value) {
 
 
 /* =========================================================
-   READ PHONE NUMBER
-========================================================= */
-
-function readPhoneNumber(documentSnapshot, data) {
-
-  /*
-   * Primary Firestore field:
-   *
-   * number
-   */
-
-  const directNumber =
-    documentSnapshot.get("number");
-
-
-  if (
-    directNumber !== null &&
-    directNumber !== undefined &&
-    String(directNumber).trim() !== ""
-  ) {
-
-    return String(directNumber).trim();
-
-  }
-
-
-  /*
-   * Fallback field names.
-   * These do not interfere with the
-   * normal "number" field.
-   */
-
-  const alternatives = [
-    "phoneNumber",
-    "phone_number",
-    "phone",
-    "numberValue"
-  ];
-
-
-  for (const field of alternatives) {
-
-    const value =
-      documentSnapshot.get(field);
-
-
-    if (
-      value !== null &&
-      value !== undefined &&
-      String(value).trim() !== ""
-    ) {
-
-      return String(value).trim();
-
-    }
-
-  }
-
-
-  /*
-   * Final fallback to the data object.
-   */
-
-  if (
-    data.number !== null &&
-    data.number !== undefined
-  ) {
-
-    const value =
-      String(data.number).trim();
-
-
-    if (value) {
-      return value;
-    }
-
-  }
-
-
-  return "";
-
-}
-
-
-/* =========================================================
-   READ PRICE
-========================================================= */
-
-function readPrice(documentSnapshot, data) {
-
-  const directPrice =
-    documentSnapshot.get("price");
-
-
-  if (
-    directPrice !== null &&
-    directPrice !== undefined &&
-    directPrice !== ""
-  ) {
-
-    return parsePrice(directPrice);
-
-  }
-
-
-  const alternatives = [
-    "amount",
-    "numberPrice",
-    "cost"
-  ];
-
-
-  for (const field of alternatives) {
-
-    const value =
-      documentSnapshot.get(field);
-
-
-    if (
-      value !== null &&
-      value !== undefined &&
-      value !== ""
-    ) {
-
-      return parsePrice(value);
-
-    }
-
-  }
-
-
-  return parsePrice(data.price);
-
-}
-
-
-/* =========================================================
    LOAD INVENTORY
 ========================================================= */
 
@@ -541,6 +412,7 @@ async function loadInventory() {
         ) {
 
           return;
+
         }
 
 
@@ -548,21 +420,19 @@ async function loadInventory() {
 
 
         /*
-         * IMPORTANT:
-         * Read these directly from Firestore.
+         * Read the actual Firestore fields
+         * directly from the document data.
          */
 
         const phoneNumber =
-          readPhoneNumber(
-            documentSnapshot,
-            data
-          );
+          String(
+            data.number ?? ""
+          ).trim();
 
 
         const price =
-          readPrice(
-            documentSnapshot,
-            data
+          parsePrice(
+            data.price
           );
 
 

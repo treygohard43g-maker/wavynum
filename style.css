@@ -2484,3 +2484,385 @@ ol {
     }
 
 }
+
+/* =========================================================
+   AUTHENTICATION PAGES
+========================================================= */
+
+.auth-page {
+    min-height: 100vh;
+    min-height: 100svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 32px 20px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(57, 232, 111, 0.08),
+            transparent 42%
+        ),
+        var(--bg);
+}
+
+
+/* =========================================================
+   AUTH CARD
+========================================================= */
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+
+    padding: 42px;
+
+    background: rgba(11, 17, 13, 0.94);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: var(--radius-24);
+
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(57, 232, 111, 0.02);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================================
+   AUTH LOGO
+========================================================= */
+
+.auth-logo {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 34px;
+
+    color: var(--green);
+
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+
+    text-decoration: none;
+
+    transition:
+        color var(--transition),
+        transform var(--transition);
+}
+
+.auth-logo:hover {
+    color: var(--green-bright);
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   AUTH HEADING
+========================================================= */
+
+.auth-heading {
+    margin-bottom: 30px;
+}
+
+.auth-heading h1 {
+    margin: 0 0 9px;
+
+    color: var(--text);
+
+    font-size: clamp(1.8rem, 4vw, 2.15rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.045em;
+}
+
+.auth-heading p {
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.auth-card form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.form-group label {
+    color: var(--text);
+
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   INPUT WRAPPER
+========================================================= */
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper > i {
+    position: absolute;
+
+    top: 50%;
+    left: 15px;
+
+    color: var(--muted);
+
+    font-size: 0.9rem;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+
+    transition: color var(--transition);
+}
+
+.input-wrapper input {
+    width: 100%;
+
+    min-height: 50px;
+
+    padding: 0 15px 0 44px;
+
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 0.94rem;
+
+    background: var(--surface-light);
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    transition:
+        border-color var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+}
+
+.input-wrapper input::placeholder {
+    color: var(--muted);
+}
+
+.input-wrapper input:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.input-wrapper input:focus {
+    background: var(--surface);
+
+    border-color: rgba(57, 232, 111, 0.65);
+
+    box-shadow:
+        0 0 0 3px rgba(57, 232, 111, 0.10);
+}
+
+.input-wrapper:focus-within > i {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   AUTH BUTTON
+========================================================= */
+
+.auth-button {
+    width: 100%;
+
+    min-height: 50px;
+
+    margin-top: 4px;
+
+    padding: 0 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #041007;
+
+    background: var(--green);
+
+    border: 1px solid var(--green);
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 0.94rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition),
+        opacity var(--transition);
+}
+
+.auth-button:hover {
+    background: var(--green-bright);
+
+    border-color: var(--green-bright);
+
+    box-shadow:
+        0 10px 28px rgba(57, 232, 111, 0.16);
+
+    transform: translateY(-1px);
+}
+
+.auth-button:active {
+    transform: translateY(0);
+}
+
+.auth-button:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   AUTH MESSAGE
+========================================================= */
+
+.auth-message {
+    min-height: 20px;
+
+    margin: -6px 0 0;
+
+    color: var(--muted);
+
+    font-size: 0.82rem;
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+.auth-message.success {
+    color: var(--green);
+}
+
+.auth-message.error {
+    color: #ff7474;
+}
+
+
+/* =========================================================
+   AUTH FOOTER
+========================================================= */
+
+.auth-footer {
+    margin-top: 28px;
+
+    color: var(--muted);
+
+    font-size: 0.86rem;
+
+    text-align: center;
+}
+
+.auth-footer a {
+    margin-left: 4px;
+
+    color: var(--green);
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color var(--transition);
+}
+
+.auth-footer a:hover {
+    color: var(--green-bright);
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .auth-page {
+        align-items: flex-start;
+
+        padding: 24px 16px;
+    }
+
+    .auth-card {
+        max-width: 100%;
+
+        padding: 32px 24px;
+
+        border-radius: 18px;
+    }
+
+    .auth-logo {
+        margin-bottom: 28px;
+    }
+
+    .auth-heading {
+        margin-bottom: 26px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .auth-page {
+        padding: 18px 12px;
+    }
+
+    .auth-card {
+        padding: 28px 18px;
+    }
+
+    .auth-heading h1 {
+        font-size: 1.7rem;
+    }
+
+}
+
+

@@ -1,75 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-  <title>Create Account — Wavynum</title>
+    <meta
+        name="description"
+        content="Create your Wavynum account and start using virtual numbers."
+    >
 
-  <link rel="stylesheet" href="style.css">
+    <title>Create Account — Wavynum</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="auth-page">
 
-  <main class="auth-card">
+    <main class="auth-card">
 
-    <a href="index.html" class="auth-logo">
-      Wavynum
-    </a>
-
-    <h1>Create your account</h1>
-
-    <p>Start using Wavynum today.</p>
-
-    <form id="signupForm">
-
-      <div class="form-group">
-        <label for="name">Full name</label>
-        <input
-          type="text"
-          id="name"
-          placeholder="Your full name"
-          required
+        <a
+            href="index.html"
+            class="auth-logo"
+            aria-label="Wavynum home"
         >
-      </div>
+            Wavynum
+        </a>
 
-      <div class="form-group">
-        <label for="email">Email address</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="you@example.com"
-          required
-        >
-      </div>
+        <div class="auth-heading">
+            <h1>Create your account</h1>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="At least 6 characters"
-          minlength="6"
-          required
-        >
-      </div>
+            <p>
+                Start using Wavynum today.
+            </p>
+        </div>
 
-      <button type="submit" class="auth-button">
-        Create account
-      </button>
+        <form id="signupForm" novalidate>
 
-      <p id="signupMessage" class="auth-message"></p>
+            <div class="form-group">
+                <label for="name">
+                    Full name
+                </label>
 
-    </form>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-user" aria-hidden="true"></i>
 
-    <div class="auth-footer">
-      Already have an account?
-      <a href="login.html">Log in</a>
-    </div>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Your full name"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+            </div>
 
-  </main>
+            <div class="form-group">
+                <label for="email">
+                    Email address
+                </label>
 
-  <script type="module" src="signup.js"></script>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock" aria-hidden="true"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="At least 6 characters"
+                        minlength="6"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+            </div>
+
+            <button
+                type="submit"
+                class="auth-button"
+                id="signupButton"
+            >
+                Create account
+            </button>
+
+            <p
+                id="signupMessage"
+                class="auth-message"
+                role="alert"
+                aria-live="polite"
+            ></p>
+
+        </form>
+
+        <div class="auth-footer">
+            Already have an account?
+            <a href="login.html">Log in</a>
+        </div>
+
+    </main>
+
+    <script
+        type="module"
+        src="signup.js"
+    ></script>
 
 </body>
 </html>

@@ -12,7 +12,7 @@
 
   <link
     rel="stylesheet"
-    href="style.css?v=12"
+    href="style.css?v=13"
   >
 
   <link
@@ -21,16 +21,11 @@
   >
 
   <style>
-    /*
-      Wavynum confirmation page
-      Green + black design
-    */
-
     body {
       background:
         radial-gradient(
           circle at top,
-          rgba(0, 255, 140, 0.08),
+          rgba(57, 232, 111, 0.08),
           transparent 35%
         ),
         #020604;
@@ -61,7 +56,7 @@
       color: #ffffff;
       text-decoration: none;
       background: #08130e;
-      border: 1px solid rgba(0, 255, 140, 0.22);
+      border: 1px solid rgba(57, 232, 111, 0.22);
     }
 
     .confirmation-header h1 {
@@ -79,7 +74,7 @@
     .confirmation-card {
       width: 100%;
       background: #08130e;
-      border: 1px solid rgba(0, 255, 140, 0.20);
+      border: 1px solid rgba(57, 232, 111, 0.20);
       border-radius: 18px;
       overflow: hidden;
       box-shadow: 0 12px 35px rgba(0,0,0,0.28);
@@ -91,7 +86,7 @@
       justify-content: space-between;
       gap: 15px;
       padding: 20px;
-      border-bottom: 1px solid rgba(0,255,140,0.10);
+      border-bottom: 1px solid rgba(57,232,111,0.10);
     }
 
     .number-label {
@@ -125,6 +120,31 @@
       color: rgba(255,255,255,0.50);
       font-size: 11px;
       margin-top: 2px;
+    }
+
+    .balance-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 14px 20px;
+      background: rgba(57,232,111,0.045);
+      border-bottom: 1px solid rgba(57,232,111,0.10);
+    }
+
+    .balance-label {
+      color: rgba(255,255,255,0.58);
+      font-size: 13px;
+    }
+
+    .balance-value {
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .balance-value.insufficient {
+      color: #ff7272;
     }
 
     .number-details {
@@ -196,7 +216,7 @@
 
     .notice {
       background: #08130e;
-      border: 1px solid rgba(0,255,140,0.18);
+      border: 1px solid rgba(57,232,111,0.18);
       border-radius: 15px;
       padding: 16px;
       color: rgba(255,255,255,0.72);
@@ -270,13 +290,16 @@
     }
 
     @media (max-width: 600px) {
-
       .confirmation-main {
         padding: 18px 13px 30px;
       }
 
       .confirmation-top {
         padding: 17px;
+      }
+
+      .balance-row {
+        padding: 13px 17px;
       }
 
       .number-details {
@@ -294,7 +317,6 @@
       .number-price-value {
         font-size: 18px;
       }
-
     }
   </style>
 </head>
@@ -306,8 +328,9 @@
     <div class="confirmation-header">
 
       <a
-        href="number-selection.html"
+        href="javascript:history.back()"
         class="confirmation-back"
+        aria-label="Go back"
       >
         <i class="fa-solid fa-arrow-left"></i>
       </a>
@@ -338,6 +361,7 @@
       class="notice error-notice"
     >
       <i class="fa-solid fa-circle-exclamation"></i>
+
       <span id="errorText">
         Unable to load this number.
       </span>
@@ -383,6 +407,24 @@
             USD
           </div>
 
+        </div>
+
+      </div>
+
+
+      <!-- BALANCE -->
+
+      <div class="balance-row">
+
+        <div class="balance-label">
+          Available balance
+        </div>
+
+        <div
+          id="balanceValue"
+          class="balance-value"
+        >
+          $0.00
         </div>
 
       </div>
@@ -448,7 +490,10 @@
             Status
           </div>
 
-          <div class="detail-value available">
+          <div
+            id="statusValue"
+            class="detail-value available"
+          >
             Available
           </div>
 
@@ -462,6 +507,7 @@
         <button
           id="purchaseButton"
           class="buy-button"
+          disabled
         >
           <i class="fa-solid fa-cart-shopping"></i>
           Buy Number
@@ -492,8 +538,7 @@
       <div
         id="purchasedNumber"
         class="success-number"
-      >
-      </div>
+      ></div>
 
       <a
         href="my-numbers.html"
@@ -524,13 +569,16 @@
     import {
       doc,
       getDoc,
-      setDoc,
       addDoc,
       collection,
       runTransaction,
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
 
     const loadingBox =
       document.getElementById("loadingBox");
@@ -553,6 +601,9 @@
     const numberPrice =
       document.getElementById("numberPrice");
 
+    const balanceValue =
+      document.getElementById("balanceValue");
+
     const countryName =
       document.getElementById("countryName");
 
@@ -562,6 +613,9 @@
     const serviceName =
       document.getElementById("serviceName");
 
+    const statusValue =
+      document.getElementById("statusValue");
+
     const purchaseButton =
       document.getElementById("purchaseButton");
 
@@ -569,40 +623,54 @@
       document.getElementById("purchasedNumber");
 
 
+    /* =====================================================
+       STATE
+    ===================================================== */
+
     let selectedNumber = null;
     let firestoreNumber = null;
+    let currentUser = null;
 
+
+    /* =====================================================
+       HELPERS
+    ===================================================== */
 
     function formatPrice(value) {
 
-      const price =
-        Number(value) || 0;
+      const price = Number(value);
 
-      return "$" + price.toFixed(2);
+      if (!Number.isFinite(price)) {
+        return "$0.00";
+      }
 
+      return `$${price.toFixed(2)}`;
     }
 
 
     function showError(message) {
 
-      loadingBox.style.display =
-        "none";
+      loadingBox.style.display = "none";
 
-      confirmationCard.style.display =
-        "none";
+      confirmationCard.style.display = "none";
 
-      errorBox.style.display =
-        "block";
+      errorBox.style.display = "block";
 
       errorText.textContent =
         message;
-
     }
 
 
-    /*
-      READ SELECTED NUMBER
-    */
+    function hideError() {
+
+      errorBox.style.display =
+        "none";
+    }
+
+
+    /* =====================================================
+       READ LOCAL STORAGE
+    ===================================================== */
 
     try {
 
@@ -617,7 +685,6 @@
         throw new Error(
           "No number has been selected."
         );
-
       }
 
 
@@ -631,9 +698,8 @@
       ) {
 
         throw new Error(
-          "The selected number is missing its Firestore ID."
+          "The selected number is missing its inventory ID."
         );
-
       }
 
     } catch (error) {
@@ -646,11 +712,11 @@
     }
 
 
-    /*
-      LOAD NUMBER DIRECTLY FROM FIRESTORE
-    */
+    /* =====================================================
+       LOAD NUMBER + USER BALANCE
+    ===================================================== */
 
-    async function loadNumber() {
+    async function loadNumber(user) {
 
       if (
         !selectedNumber ||
@@ -670,54 +736,57 @@
           );
 
 
-        const snapshot =
-          await getDoc(
-            numberRef
+        const userRef =
+          doc(
+            db,
+            "users",
+            user.uid
           );
 
 
-        if (!snapshot.exists()) {
+        const [
+          numberSnapshot,
+          userSnapshot
+        ] = await Promise.all([
+
+          getDoc(numberRef),
+
+          getDoc(userRef)
+
+        ]);
+
+
+        if (!numberSnapshot.exists()) {
 
           throw new Error(
             "This number no longer exists."
           );
-
         }
 
 
-        const data =
-          snapshot.data();
+        const numberData =
+          numberSnapshot.data();
 
 
         const status =
           String(
-            data.status || ""
+            numberData.status ?? ""
           )
           .trim()
           .toLowerCase();
 
 
-        if (
-          status !== "available"
-        ) {
+        if (status !== "available") {
 
           throw new Error(
             "Sorry, this number is no longer available."
           );
-
         }
 
 
-        /*
-          THIS IS THE FIX.
-
-          Get the real phone number
-          directly from Firestore.
-        */
-
         const realNumber =
           String(
-            data.number ?? ""
+            numberData.number ?? ""
           ).trim();
 
 
@@ -726,52 +795,72 @@
           throw new Error(
             "The phone number field is empty in this inventory record."
           );
-
         }
+
+
+        const price =
+          Number(
+            numberData.price
+          );
+
+
+        if (
+          !Number.isFinite(price) ||
+          price < 0
+        ) {
+
+          throw new Error(
+            "This inventory record has an invalid price."
+          );
+        }
+
+
+        const userData =
+          userSnapshot.exists()
+            ? userSnapshot.data()
+            : {};
+
+
+        const balance =
+          Number(
+            userData.usdBalance
+          ) || 0;
 
 
         firestoreNumber = {
 
           id:
-            snapshot.id,
+            numberSnapshot.id,
 
           number:
             realNumber,
 
           country:
             String(
-              data.country ?? ""
+              numberData.country ?? ""
             ).trim(),
 
           countryName:
             String(
-              data.countryName ??
-              "Unknown"
+              numberData.countryName ?? ""
             ).trim(),
 
-          price:
-            Number(
-              data.price
-            ) || 0,
+          price,
 
           provider:
             String(
-              data.provider ??
-              "Provider"
+              numberData.provider ?? ""
             ).trim(),
 
           service:
             String(
-              selectedNumber.service ??
-              ""
+              selectedNumber.service ?? ""
             ).trim()
 
         };
 
 
-        /*
-          DISPLAY ACTUAL NUMBER
-        */
+        /* DISPLAY */
 
         actualNumber.textContent =
           firestoreNumber.number;
@@ -783,8 +872,13 @@
           );
 
 
+        balanceValue.textContent =
+          formatPrice(balance);
+
+
         countryName.textContent =
           firestoreNumber.countryName ||
+          firestoreNumber.country ||
           "Unknown";
 
 
@@ -798,11 +892,36 @@
           "Service";
 
 
+        if (
+          balance >=
+          firestoreNumber.price
+        ) {
+
+          balanceValue.classList.remove(
+            "insufficient"
+          );
+
+          purchaseButton.disabled =
+            false;
+
+        } else {
+
+          balanceValue.classList.add(
+            "insufficient"
+          );
+
+          purchaseButton.disabled =
+            true;
+
+        }
+
+
         loadingBox.style.display =
           "none";
 
         confirmationCard.style.display =
           "block";
+
 
       } catch (error) {
 
@@ -821,9 +940,9 @@
     }
 
 
-    /*
-      CHECK LOGIN
-    */
+    /* =====================================================
+       AUTH
+    ===================================================== */
 
     onAuthStateChanged(
       auth,
@@ -836,36 +955,34 @@
           );
 
           return;
-
         }
 
 
-        await loadNumber();
+        currentUser =
+          user;
+
+
+        await loadNumber(user);
 
       }
     );
 
 
-    /*
-      BUY NUMBER
-    */
+    /* =====================================================
+       PURCHASE
+    ===================================================== */
 
     purchaseButton.addEventListener(
       "click",
       async () => {
 
-        const user =
-          auth.currentUser;
-
-
-        if (!user) {
+        if (!currentUser) {
 
           showError(
             "Please sign in before purchasing a number."
           );
 
           return;
-
         }
 
 
@@ -879,13 +996,14 @@
           );
 
           return;
-
         }
+
+
+        hideError();
 
 
         purchaseButton.disabled =
           true;
-
 
         purchaseButton.innerHTML =
           `
@@ -908,22 +1026,42 @@
             );
 
 
+          const userRef =
+            doc(
+              db,
+              "users",
+              currentUser.uid
+            );
+
+
           let purchasedNumberData =
             null;
 
 
           /*
-            ATOMIC INVENTORY CHECK
+            EVERYTHING THAT MUST HAPPEN
+            TOGETHER HAPPENS INSIDE ONE
+            FIRESTORE TRANSACTION.
           */
 
           await runTransaction(
             db,
             async (transaction) => {
 
-              const numberSnapshot =
-                await transaction.get(
+              const [
+                numberSnapshot,
+                userSnapshot
+              ] = await Promise.all([
+
+                transaction.get(
                   numberRef
-                );
+                ),
+
+                transaction.get(
+                  userRef
+                )
+
+              ]);
 
 
               if (
@@ -933,7 +1071,16 @@
                 throw new Error(
                   "This number no longer exists."
                 );
+              }
 
+
+              if (
+                !userSnapshot.exists()
+              ) {
+
+                throw new Error(
+                  "Your Wavynum account could not be found."
+                );
               }
 
 
@@ -941,9 +1088,13 @@
                 numberSnapshot.data();
 
 
+              const userData =
+                userSnapshot.data();
+
+
               const status =
                 String(
-                  numberData.status || ""
+                  numberData.status ?? ""
                 )
                 .trim()
                 .toLowerCase();
@@ -956,7 +1107,6 @@
                 throw new Error(
                   "Sorry, this number has already been purchased."
                 );
-
               }
 
 
@@ -971,8 +1121,44 @@
                 throw new Error(
                   "The phone number is missing from the inventory record."
                 );
-
               }
+
+
+              const price =
+                Number(
+                  numberData.price
+                );
+
+
+              if (
+                !Number.isFinite(price) ||
+                price < 0
+              ) {
+
+                throw new Error(
+                  "This number has an invalid price."
+                );
+              }
+
+
+              const balance =
+                Number(
+                  userData.usdBalance
+                ) || 0;
+
+
+              if (
+                balance < price
+              ) {
+
+                throw new Error(
+                  `Insufficient USD balance. You need ${formatPrice(price)} but your balance is ${formatPrice(balance)}.`
+                );
+              }
+
+
+              const newBalance =
+                balance - price;
 
 
               purchasedNumberData = {
@@ -984,28 +1170,33 @@
                   realNumber,
 
                 country:
-                  numberData.country ||
-                  "",
+                  String(
+                    numberData.country ?? ""
+                  ).trim(),
 
                 countryName:
-                  numberData.countryName ||
-                  "Unknown",
+                  String(
+                    numberData.countryName ?? ""
+                  ).trim(),
 
-                price:
-                  Number(
-                    numberData.price
-                  ) || 0,
+                price,
 
                 provider:
-                  numberData.provider ||
-                  "Provider",
+                  String(
+                    numberData.provider ?? ""
+                  ).trim(),
 
                 service:
+                  firestoreNumber.service ||
                   selectedNumber.service ||
                   ""
 
               };
 
+
+              /*
+                MARK INVENTORY SOLD
+              */
 
               transaction.update(
                 numberRef,
@@ -1015,13 +1206,30 @@
                     "sold",
 
                   ownerId:
-                    user.uid,
+                    currentUser.uid,
 
                   soldService:
-                    selectedNumber.service ||
-                    "",
+                    purchasedNumberData.service,
 
                   soldAt:
+                    serverTimestamp()
+
+                }
+              );
+
+
+              /*
+                DEDUCT WALLET BALANCE
+              */
+
+              transaction.update(
+                userRef,
+                {
+
+                  usdBalance:
+                    newBalance,
+
+                  updatedAt:
                     serverTimestamp()
 
                 }
@@ -1031,72 +1239,92 @@
           );
 
 
-          /*
-            USER NUMBER
-          */
+          /* =================================================
+             ADD TO MY NUMBERS
+          ================================================= */
 
-          await setDoc(
-
+          const userNumberRef =
             doc(
               db,
               "users",
-              user.uid,
+              currentUser.uid,
               "numbers",
-              numberId
-            ),
+              purchasedNumberData.id
+            );
 
-            {
 
-              numberId:
-                numberId,
+          await runTransaction(
+            db,
+            async (transaction) => {
 
-              number:
-                purchasedNumberData.number,
+              const existing =
+                await transaction.get(
+                  userNumberRef
+                );
 
-              country:
-                purchasedNumberData.country,
 
-              countryName:
-                purchasedNumberData.countryName,
+              if (existing.exists()) {
 
-              price:
-                purchasedNumberData.price,
+                throw new Error(
+                  "This number is already in your account."
+                );
+              }
 
-              provider:
-                purchasedNumberData.provider,
 
-              service:
-                purchasedNumberData.service,
+              transaction.set(
+                userNumberRef,
+                {
 
-              status:
-                "active",
+                  numberId:
+                    purchasedNumberData.id,
 
-              purchasedAt:
-                serverTimestamp()
+                  number:
+                    purchasedNumberData.number,
+
+                  country:
+                    purchasedNumberData.country,
+
+                  countryName:
+                    purchasedNumberData.countryName,
+
+                  price:
+                    purchasedNumberData.price,
+
+                  provider:
+                    purchasedNumberData.provider,
+
+                  service:
+                    purchasedNumberData.service,
+
+                  status:
+                    "active",
+
+                  purchasedAt:
+                    serverTimestamp()
+
+                }
+              );
 
             }
-
           );
 
 
-          /*
-            PURCHASE RECORD
-          */
+          /* =================================================
+             PURCHASE RECORD
+          ================================================= */
 
           await addDoc(
-
             collection(
               db,
               "purchases"
             ),
-
             {
 
               userId:
-                user.uid,
+                currentUser.uid,
 
               numberId:
-                numberId,
+                purchasedNumberData.id,
 
               number:
                 purchasedNumberData.number,
@@ -1123,31 +1351,28 @@
                 serverTimestamp()
 
             }
-
           );
 
 
-          /*
-            TRANSACTION RECORD
-          */
+          /* =================================================
+             TRANSACTION RECORD
+          ================================================= */
 
           await addDoc(
-
             collection(
               db,
               "transactions"
             ),
-
             {
 
               userId:
-                user.uid,
+                currentUser.uid,
 
               type:
                 "number_purchase",
 
               numberId:
-                numberId,
+                purchasedNumberData.id,
 
               number:
                 purchasedNumberData.number,
@@ -1165,13 +1390,12 @@
                 serverTimestamp()
 
             }
-
           );
 
 
-          /*
-            SUCCESS
-          */
+          /* =================================================
+             SUCCESS
+          ================================================= */
 
           localStorage.removeItem(
             "wavynumSelectedNumber"
@@ -1209,12 +1433,10 @@
             `;
 
 
-          errorBox.style.display =
-            "block";
-
-          errorText.textContent =
+          showError(
             error.message ||
-            "Purchase failed. Please try again.";
+            "Purchase failed. Please try again."
+          );
 
         }
 

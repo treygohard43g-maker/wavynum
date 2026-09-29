@@ -1,18 +1,28 @@
 /* =========================================================
    WAVYNUM — NUMBER SELECTION
-   Compact marketplace layout
+   Modern marketplace layout
 ========================================================= */
 
 .number-selection-page {
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
+  background:
+    radial-gradient(
+      circle at 80% 0%,
+      rgba(57, 232, 111, 0.055),
+      transparent 30%
+    ),
+    var(--bg);
 }
 
+
+/* =========================================================
+   MAIN
+========================================================= */
+
 .number-selection-main {
-  width: min(100% - 32px, 980px);
+  width: min(100% - 40px, 1040px);
   margin: 0 auto;
-  padding: 32px 0 60px;
+  padding: 42px 0 80px;
 }
 
 
@@ -23,65 +33,85 @@
 .selection-header {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 22px;
+  margin-bottom: 34px;
 }
 
-.selection-back {
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
 
-  display: flex;
+.selection-back {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  margin-top: 2px;
+  margin-top: 3px;
 
   color: var(--text-soft);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+
+  border-radius: 13px;
 
   text-decoration: none;
-  transition: var(--transition);
+
+  transition:
+    color var(--transition),
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
 }
+
 
 .selection-back:hover {
   color: var(--text);
-  border-color: var(--border-strong);
   background: var(--surface-light);
+  border-color: var(--border-strong);
+  transform: translateX(-2px);
 }
+
 
 .selection-heading {
   min-width: 0;
 }
 
+
 .selection-eyebrow {
   display: block;
-  margin-bottom: 5px;
+
+  margin-bottom: 7px;
 
   color: var(--green);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: .09em;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
   text-transform: uppercase;
 }
+
 
 .selection-heading h1 {
   margin: 0;
 
-  font-size: clamp(25px, 4vw, 34px);
-  line-height: 1.1;
-  letter-spacing: -.035em;
+  color: var(--text);
+
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 720;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
 }
 
-.selection-heading p {
-  margin: 7px 0 0;
 
-  color: var(--text-soft);
+.selection-heading p {
+  margin: 9px 0 0;
+
+  color: var(--text-muted);
+
   font-size: 14px;
-  line-height: 1.5;
+  font-weight: 450;
+  line-height: 1.6;
 }
 
 
@@ -92,23 +122,30 @@
 .selected-service {
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 15px;
 
-  width: fit-content;
-  min-width: 220px;
+  width: 100%;
 
-  margin-bottom: 22px;
-  padding: 11px 15px;
+  padding: 15px 17px;
 
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(57, 232, 111, 0.07),
+      rgba(255,255,255,0.018)
+    );
+
+  border: 1px solid rgba(57, 232, 111, 0.14);
+  border-radius: 17px;
+
+  margin-bottom: 30px;
 }
 
+
 .selected-service-logo {
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
 
   display: flex;
   align-items: center;
@@ -116,113 +153,160 @@
 
   overflow: hidden;
 
-  background: var(--surface-light);
-  border: 1px solid var(--border);
-  border-radius: 11px;
+  background: #ffffff;
+  border-radius: 13px;
+
+  box-shadow:
+    0 8px 22px rgba(0,0,0,0.16);
 }
 
+
 .selected-service-logo img {
-  width: 27px;
-  height: 27px;
+  width: 30px;
+  height: 30px;
+
   object-fit: contain;
 }
 
-.selected-service-logo i {
-  color: var(--green);
-  font-size: 17px;
+
+.selected-service-logo > i {
+  color: #18221b;
+  font-size: 19px;
 }
+
 
 .selected-service-info {
   min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
+
 
 .selected-service-label {
-  display: block;
-  margin-bottom: 2px;
-
   color: var(--text-muted);
+
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  line-height: 1.3;
   text-transform: uppercase;
-  letter-spacing: .07em;
 }
 
+
 .selected-service-name {
-  display: block;
+  overflow: hidden;
 
   color: var(--text);
-  font-size: 14px;
-  font-weight: 700;
+
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 
 /* =========================================================
-   COUNTRY FILTER
+   COUNTRY FILTER AREA
 ========================================================= */
 
 .country-filter-section {
-  margin-bottom: 17px;
+  margin-bottom: 18px;
 }
+
 
 .section-label {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
 
-  margin-bottom: 9px;
+  margin-bottom: 11px;
 
   color: var(--text-soft);
+
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 650;
+  letter-spacing: 0.01em;
 }
+
 
 .section-label i {
   color: var(--green);
   font-size: 12px;
 }
 
+
 .filters {
   display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
+  align-items: center;
+  gap: 8px;
+
+  overflow-x: auto;
+
+  padding-bottom: 4px;
+
+  scrollbar-width: none;
 }
+
+
+.filters::-webkit-scrollbar {
+  display: none;
+}
+
 
 .filter-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 8px;
 
-  min-height: 36px;
-  padding: 0 13px;
+  min-height: 38px;
+  padding: 0 14px;
+
+  flex: 0 0 auto;
 
   color: var(--text-soft);
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 9px;
 
-  font: inherit;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  font-family: var(--font);
   font-size: 12px;
   font-weight: 600;
 
   cursor: pointer;
-  transition: var(--transition);
+
+  transition:
+    color var(--transition),
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
 }
 
-.filter-btn:hover {
-  color: var(--text);
-  border-color: var(--border-strong);
-  background: var(--surface-light);
-}
-
-.filter-btn.active {
-  color: var(--green);
-  background: var(--green-soft);
-  border-color: rgba(57, 232, 111, .28);
-}
 
 .filter-btn i {
   font-size: 11px;
+}
+
+
+.filter-btn:hover {
+  color: var(--text);
+  background: var(--surface-light);
+  border-color: var(--border-strong);
+}
+
+
+.filter-btn.active {
+  color: #061009;
+  background: var(--green);
+  border-color: var(--green);
+
+  box-shadow:
+    0 7px 20px rgba(57, 232, 111, 0.12);
 }
 
 
@@ -232,10 +316,14 @@
 
 .inventory-status {
   min-height: 18px;
-  margin-bottom: 10px;
+
+  margin: 17px 2px 13px;
 
   color: var(--text-muted);
+
   font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
 }
 
 
@@ -246,7 +334,7 @@
 .numbers-list {
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 11px;
 }
 
 
@@ -257,9 +345,15 @@
 .number-card {
   width: 100%;
 
-  background: var(--surface);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.026),
+      rgba(255,255,255,0.012)
+    );
+
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 17px;
 
   overflow: hidden;
 
@@ -270,26 +364,88 @@
     box-shadow var(--transition);
 }
 
+
 .number-card:hover {
-  background: var(--surface-light);
-  border-color: rgba(57, 232, 111, .22);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(57,232,111,0.035),
+      rgba(255,255,255,0.014)
+    );
+
+  border-color: rgba(57, 232, 111, 0.20);
+
   transform: translateY(-1px);
-  box-shadow: var(--shadow-card);
+
+  box-shadow:
+    0 14px 38px rgba(0,0,0,0.20);
 }
+
 
 .number-card-inner {
   display: grid;
+
   grid-template-columns:
-    minmax(210px, 1.5fr)
-    minmax(120px, .8fr)
-    minmax(110px, .6fr)
+    minmax(250px, 1.7fr)
+    minmax(130px, 0.75fr)
+    minmax(100px, 0.55fr)
     auto;
 
   align-items: center;
-  gap: 20px;
 
-  min-height: 78px;
-  padding: 13px 15px;
+  gap: 24px;
+
+  min-height: 108px;
+
+  padding: 19px 20px;
+}
+
+
+/* =========================================================
+   COUNTRY
+========================================================= */
+
+.number-card-top {
+  display: contents;
+}
+
+
+.number-country {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+
+.number-country-label,
+.number-phone-label,
+.number-detail-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.075em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+
+.number-country-name {
+  color: var(--text-soft);
+
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1.4;
+}
+
+
+.number-country-code {
+  display: none;
 }
 
 
@@ -297,49 +453,25 @@
    PHONE NUMBER
 ========================================================= */
 
-.number-card-top {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-
+.number-phone-box {
   min-width: 0;
 }
 
-.number-country {
-  min-width: 0;
-}
 
-.number-country-label {
+.number-phone {
   display: block;
-  margin-bottom: 3px;
 
-  color: var(--text-muted);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-}
-
-.number-country-name {
-  display: inline-block;
-
-  max-width: 150px;
-
-  color: var(--text-soft);
-  font-size: 12px;
-  font-weight: 600;
-
-  white-space: nowrap;
   overflow: hidden;
+
+  color: var(--text);
+
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+
   text-overflow: ellipsis;
-}
-
-.number-country-code {
-  display: inline-block;
-  margin-left: 5px;
-
-  color: var(--text-muted);
-  font-size: 10px;
+  white-space: nowrap;
 }
 
 
@@ -348,52 +480,11 @@
 ========================================================= */
 
 .number-available {
-  flex-shrink: 0;
+  position: absolute;
 
-  padding: 5px 8px;
+  opacity: 0;
 
-  color: var(--green);
-  background: var(--green-soft);
-  border: 1px solid rgba(57, 232, 111, .18);
-  border-radius: 7px;
-
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-}
-
-
-/* =========================================================
-   PHONE BOX
-========================================================= */
-
-.number-phone-box {
-  min-width: 0;
-}
-
-.number-phone-label {
-  display: block;
-  margin-bottom: 3px;
-
-  color: var(--text-muted);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-}
-
-.number-phone {
-  display: block;
-
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: .01em;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  pointer-events: none;
 }
 
 
@@ -402,42 +493,33 @@
 ========================================================= */
 
 .number-card-details {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  min-width: 0;
+  display: contents;
 }
+
 
 .number-detail {
   min-width: 0;
 }
 
-.number-detail-label {
-  display: block;
-  margin-bottom: 3px;
-
-  color: var(--text-muted);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-}
 
 .number-detail-value {
   display: block;
 
   color: var(--text-soft);
+
   font-size: 12px;
   font-weight: 600;
+  line-height: 1.4;
 
   white-space: nowrap;
 }
 
+
 .number-detail.price .number-detail-value {
   color: var(--green);
-  font-size: 13px;
-  font-weight: 800;
+
+  font-size: 14px;
+  font-weight: 700;
 }
 
 
@@ -449,44 +531,57 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 9px;
 
-  min-height: 38px;
-  padding: 0 14px;
+  min-height: 40px;
 
-  color: #041006;
+  padding: 0 15px;
+
+  color: #061009;
   background: var(--green);
 
-  border: 0;
-  border-radius: 9px;
+  border: 1px solid var(--green);
+  border-radius: 10px;
 
-  font: inherit;
+  font-family: var(--font);
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 700;
 
   white-space: nowrap;
 
   cursor: pointer;
-  transition: var(--transition);
+
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
 }
 
-.number-choose-btn:hover {
-  background: var(--green-bright);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-green);
-}
-
-.number-choose-btn:active {
-  transform: translateY(0);
-}
 
 .number-choose-btn i {
   font-size: 10px;
 }
 
 
+.number-choose-btn:hover {
+  background: var(--green-bright);
+  border-color: var(--green-bright);
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 22px rgba(57, 232, 111, 0.16);
+}
+
+
+.number-choose-btn:active {
+  transform: translateY(0);
+}
+
+
 /* =========================================================
-   STATE BOX
+   EMPTY / ERROR / LOADING STATES
 ========================================================= */
 
 .state-box {
@@ -495,84 +590,91 @@
   align-items: center;
   justify-content: center;
 
-  min-height: 190px;
-  padding: 30px 20px;
+  min-height: 260px;
+
+  padding: 35px 20px;
 
   text-align: center;
 
   background: var(--surface);
+
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 18px;
 }
 
+
 .state-icon {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 
   color: var(--green);
+
   background: var(--green-soft);
-  border: 1px solid rgba(57, 232, 111, .15);
-  border-radius: 12px;
+
+  border: 1px solid rgba(57,232,111,0.10);
+
+  border-radius: 13px;
 }
+
 
 .state-icon i {
-  font-size: 15px;
+  font-size: 16px;
 }
+
 
 .state-box h2 {
-  margin: 0 0 5px;
-
-  color: var(--text);
-  font-size: 15px;
-}
-
-.state-box p {
-  max-width: 360px;
   margin: 0;
 
+  color: var(--text);
+
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+
+.state-box p {
+  max-width: 380px;
+
+  margin: 7px 0 0;
+
   color: var(--text-muted);
+
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 
 /* =========================================================
-   RESPONSIVE
+   TABLET
 ========================================================= */
 
 @media (max-width: 850px) {
 
   .number-card-inner {
     grid-template-columns:
-      minmax(190px, 1.4fr)
-      minmax(130px, 1fr)
+      minmax(220px, 1.5fr)
+      minmax(120px, 0.8fr)
       auto;
 
-    gap: 15px;
-  }
-
-  .number-card-top {
-    grid-column: 1;
-  }
-
-  .number-phone-box {
-    grid-column: 2;
+    gap: 18px;
   }
 
   .number-card-details {
-    grid-column: 1 / 3;
-    grid-row: 2;
+    display: flex;
+    align-items: center;
+    gap: 25px;
   }
 
   .number-choose-btn {
     grid-column: 3;
-    grid-row: 1 / 3;
+    grid-row: 1;
   }
 
 }
@@ -582,83 +684,132 @@
    MOBILE
 ========================================================= */
 
-@media (max-width: 620px) {
+@media (max-width: 650px) {
 
   .number-selection-main {
-    width: min(100% - 22px, 520px);
-    padding-top: 22px;
+    width: min(100% - 28px, 1040px);
+    padding-top: 28px;
+    padding-bottom: 55px;
   }
+
 
   .selection-header {
-    gap: 11px;
-    margin-bottom: 19px;
+    gap: 14px;
+    margin-bottom: 25px;
   }
+
 
   .selection-back {
-    width: 38px;
-    height: 38px;
-    flex-basis: 38px;
-    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+
+    border-radius: 11px;
   }
+
 
   .selection-heading h1 {
-    font-size: 25px;
+    font-size: 27px;
   }
 
+
   .selection-heading p {
+    margin-top: 7px;
     font-size: 12px;
   }
 
+
   .selected-service {
-    width: 100%;
-    min-width: 0;
-    margin-bottom: 18px;
+    padding: 13px 14px;
+    margin-bottom: 25px;
   }
 
-  .filters {
-    gap: 6px;
+
+  .selected-service-logo {
+    width: 43px;
+    height: 43px;
+    flex-basis: 43px;
+
+    border-radius: 11px;
   }
 
-  .filter-btn {
-    min-height: 34px;
-    padding: 0 10px;
-    font-size: 11px;
+
+  .selected-service-logo img {
+    width: 27px;
+    height: 27px;
   }
+
 
   .number-card-inner {
     display: grid;
 
     grid-template-columns: 1fr auto;
-    gap: 11px 13px;
 
-    padding: 13px;
+    gap: 15px 18px;
+
+    min-height: auto;
+
+    padding: 17px;
   }
+
 
   .number-card-top {
-    grid-column: 1 / -1;
-    grid-row: 1;
-
-    justify-content: space-between;
+    display: contents;
   }
+
 
   .number-phone-box {
     grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+
+  .number-phone {
+    font-size: 17px;
+  }
+
+
+  .number-country {
+    grid-column: 1;
     grid-row: 2;
   }
+
 
   .number-card-details {
     grid-column: 1;
     grid-row: 3;
 
-    gap: 18px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
   }
+
 
   .number-choose-btn {
     grid-column: 2;
     grid-row: 3;
 
-    min-height: 35px;
-    padding: 0 11px;
+    align-self: end;
+  }
+
+
+  .number-country-label {
+    display: none;
+  }
+
+
+  .number-country-name {
+    font-size: 11px;
+  }
+
+
+  .number-detail-value {
+    font-size: 11px;
+  }
+
+
+  .number-detail.price .number-detail-value {
+    font-size: 13px;
   }
 
 }
@@ -668,53 +819,59 @@
    SMALL PHONES
 ========================================================= */
 
-@media (max-width: 390px) {
+@media (max-width: 430px) {
 
   .number-selection-main {
-    width: min(100% - 16px, 520px);
+    width: min(100% - 22px, 1040px);
   }
 
-  .selection-eyebrow {
-    font-size: 10px;
+
+  .selection-header {
+    gap: 12px;
   }
+
 
   .selection-heading h1 {
-    font-size: 22px;
+    font-size: 25px;
   }
 
-  .selected-service {
-    padding: 9px 11px;
-  }
 
-  .number-card-inner {
-    padding: 11px;
-  }
-
-  .number-phone {
-    font-size: 13px;
-  }
-
-  .number-detail-value {
+  .selection-heading p {
     font-size: 11px;
   }
 
-  .number-choose-btn {
-    font-size: 10px;
-    padding: 0 9px;
+
+  .filter-btn {
+    min-height: 36px;
+    padding: 0 12px;
+
+    font-size: 11px;
   }
 
-}
+
+  .number-card-inner {
+    padding: 15px;
+  }
 
 
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
+  .number-phone {
+    font-size: 16px;
+  }
 
-.filter-btn:focus-visible,
-.number-choose-btn:focus-visible,
-.selection-back:focus-visible {
-  outline: 2px solid var(--green);
-  outline-offset: 3px;
+
+  .number-card-details {
+    gap: 17px;
+  }
+
+
+  .number-choose-btn {
+    min-height: 37px;
+
+    padding: 0 11px;
+
+    font-size: 10px;
+  }
+
 }
 
 
@@ -724,16 +881,11 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .number-card,
-  .number-choose-btn,
+  .selection-back,
   .filter-btn,
-  .selection-back {
+  .number-card,
+  .number-choose-btn {
     transition: none;
-  }
-
-  .number-card:hover,
-  .number-choose-btn:hover {
-    transform: none;
   }
 
 }

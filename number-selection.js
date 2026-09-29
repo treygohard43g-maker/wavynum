@@ -7,201 +7,88 @@ import {
 
 
 /* =========================================================
-   WAVYNUM — NUMBER SELECTION
-   Clean isolated implementation
+   WAVYNUM — NUMBER SELECTION DIAGNOSTIC
 ========================================================= */
 
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
-const serviceNameElement =
-  document.getElementById("selectedServiceName");
-
-const serviceLogoElement =
-  document.getElementById("selectedServiceLogo");
-
-const serviceFallbackElement =
-  document.getElementById("selectedServiceFallback");
-
-const inventoryStatusElement =
-  document.getElementById("inventoryStatus");
-
-const numberListElement =
-  document.getElementById("numberList");
-
-const countryButtons =
-  document.querySelectorAll(".country-button");
-
-
-/* =========================================================
-   URL
-========================================================= */
-
-const params =
-  new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
 
 const selectedService =
-  params.get("service") || "Other";
+  params.get("service") || "Facebook";
+
+
+const numberList =
+  document.getElementById("numberList");
+
+const inventoryStatus =
+  document.getElementById("inventoryStatus");
+
+const serviceName =
+  document.getElementById("selectedServiceName");
+
+const serviceLogo =
+  document.getElementById("selectedServiceLogo");
+
+const serviceFallback =
+  document.getElementById("selectedServiceFallback");
 
 
 /* =========================================================
-   STATE
+   SERVICE CONFIG
 ========================================================= */
 
-let inventory = [];
+const services = {
 
-let selectedCountry = "all";
+  facebook: {
+    name: "Facebook",
+    logo: "https://cdn.simpleicons.org/facebook/1877F2"
+  },
 
+  whatsapp: {
+    name: "WhatsApp",
+    logo: "https://cdn.simpleicons.org/whatsapp/25D366"
+  },
 
-/* =========================================================
-   SERVICE DATA
-========================================================= */
+  instagram: {
+    name: "Instagram",
+    logo: "https://cdn.simpleicons.org/instagram/E4405F"
+  },
 
-const serviceNames = {
-  facebook: "Facebook",
-  whatsapp: "WhatsApp",
-  instagram: "Instagram",
-  telegram: "Telegram",
-  snapchat: "Snapchat",
-  "google voice": "Google Voice",
-  textplus: "TextPlus",
-  textnow: "TextNow",
-  textfree: "TextFree",
-  hushed: "Hushed",
-  burner: "Burner",
-  "2ndline": "2ndLine",
-  freetone: "FreeTone",
-  coverme: "CoverMe",
-  numero: "Numero",
-  mysudo: "MySudo",
-  twitter: "Twitter / X"
-};
+  telegram: {
+    name: "Telegram",
+    logo: "https://cdn.simpleicons.org/telegram/26A5E4"
+  },
 
+  snapchat: {
+    name: "Snapchat",
+    logo: "https://cdn.simpleicons.org/snapchat/FFFC00"
+  },
 
-const serviceLogos = {
-  facebook:
-    "https://cdn.brandfetch.io/facebook.com/w/256/h/256",
+  googlevoice: {
+    name: "Google Voice",
+    logo: "https://cdn.simpleicons.org/googlevoice/4285F4"
+  },
 
-  whatsapp:
-    "https://cdn.brandfetch.io/whatsapp.com/w/256/h/256",
+  twitter: {
+    name: "Twitter",
+    logo: "https://cdn.simpleicons.org/x/FFFFFF"
+  }
 
-  instagram:
-    "https://cdn.brandfetch.io/instagram.com/w/256/h/256",
-
-  telegram:
-    "https://cdn.brandfetch.io/telegram.org/w/256/h/256",
-
-  snapchat:
-    "https://cdn.brandfetch.io/snapchat.com/w/256/h/256",
-
-  "google voice":
-    "https://cdn.brandfetch.io/voice.google.com/w/256/h/256",
-
-  textplus:
-    "https://cdn.brandfetch.io/textplus.com/w/256/h/256",
-
-  textnow:
-    "https://cdn.brandfetch.io/textnow.com/w/256/h/256",
-
-  textfree:
-    "https://cdn.brandfetch.io/textfree.us/w/256/h/256",
-
-  hushed:
-    "https://cdn.brandfetch.io/hushed.com/w/256/h/256",
-
-  burner:
-    "https://cdn.brandfetch.io/burnerapp.com/w/256/h/256",
-
-  "2ndline":
-    "https://cdn.brandfetch.io/2ndline.co/w/256/h/256",
-
-  freetone:
-    "https://cdn.brandfetch.io/freetone.com/w/256/h/256",
-
-  coverme:
-    "https://cdn.brandfetch.io/coverme.com/w/256/h/256",
-
-  numero:
-    "https://cdn.brandfetch.io/numeroesim.com/w/256/h/256",
-
-  mysudo:
-    "https://cdn.brandfetch.io/mysudo.com/w/256/h/256",
-
-  twitter:
-    "https://cdn.brandfetch.io/x.com/w/256/h/256"
 };
 
 
 /* =========================================================
-   NORMALIZE
+   HELPERS
 ========================================================= */
 
 function normalize(value) {
 
-  return String(value ?? "")
+  return String(value || "")
     .trim()
     .toLowerCase()
-    .replace(/[_-]+/g, " ")
-    .replace(/\s+/g, " ");
+    .replace(/[\s_-]+/g, "");
 
 }
 
-
-/* =========================================================
-   SERVICE MATCH
-========================================================= */
-
-function serviceMatches(services) {
-
-  if (!Array.isArray(services)) {
-    return false;
-  }
-
-  const requested =
-    normalize(selectedService);
-
-  return services.some(service => {
-
-    const current =
-      normalize(service);
-
-    if (current === requested) {
-      return true;
-    }
-
-    if (
-      requested === "twitter / x" &&
-      current === "twitter"
-    ) {
-      return true;
-    }
-
-    if (
-      requested === "twitter" &&
-      current === "twitter / x"
-    ) {
-      return true;
-    }
-
-    if (
-      requested === "facebook messenger" &&
-      current === "facebook"
-    ) {
-      return true;
-    }
-
-    return false;
-
-  });
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
 
 function escapeHtml(value) {
 
@@ -215,20 +102,43 @@ function escapeHtml(value) {
 }
 
 
-/* =========================================================
-   PRICE
-========================================================= */
-
 function getPrice(value) {
 
-  const price =
-    Number(value);
+  if (
+    typeof value === "number" &&
+    Number.isFinite(value)
+  ) {
 
-  if (!Number.isFinite(price)) {
-    return 0;
+    return value;
+
   }
 
-  return price;
+  const cleaned =
+    String(value ?? "")
+      .replace(/[^0-9.]/g, "");
+
+  const parsed =
+    Number.parseFloat(cleaned);
+
+  return Number.isFinite(parsed)
+    ? parsed
+    : 0;
+
+}
+
+
+function serviceMatches(servicesArray, service) {
+
+  if (!Array.isArray(servicesArray)) {
+    return false;
+  }
+
+  const target =
+    normalize(service);
+
+  return servicesArray.some(item =>
+    normalize(item) === target
+  );
 
 }
 
@@ -242,53 +152,221 @@ function renderService() {
   const key =
     normalize(selectedService);
 
-  const displayName =
-    serviceNames[key] ||
-    selectedService ||
-    "Service";
+  const config =
+    services[key];
 
+  serviceName.textContent =
+    config?.name || selectedService;
 
-  serviceNameElement.textContent =
-    displayName;
+  if (config?.logo) {
 
+    serviceLogo.src =
+      config.logo;
 
-  const logo =
-    serviceLogos[key];
-
-
-  if (!logo) {
-
-    serviceLogoElement.style.display =
-      "none";
-
-    serviceFallbackElement.style.display =
+    serviceLogo.style.display =
       "block";
 
-    return;
+    serviceFallback.style.display =
+      "none";
+
+  } else {
+
+    serviceLogo.style.display =
+      "none";
+
+    serviceFallback.style.display =
+      "block";
 
   }
 
-
-  serviceLogoElement.src =
-    logo;
-
-  serviceLogoElement.style.display =
-    "block";
-
-  serviceFallbackElement.style.display =
-    "none";
+}
 
 
-  serviceLogoElement.onerror =
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+function showEmpty(message) {
+
+  numberList.innerHTML = `
+
+    <div class="number-state">
+
+      <div class="number-state-icon">
+        <i class="fa-solid fa-phone-slash"></i>
+      </div>
+
+      <h2>
+        No numbers found
+      </h2>
+
+      <p>
+        ${escapeHtml(message)}
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   RENDER NUMBER
+========================================================= */
+
+function renderNumber(item) {
+
+  const phone =
+    item.number || "Inventory number missing";
+
+  const price =
+    Number.isFinite(item.price)
+      ? item.price.toFixed(2)
+      : "0.00";
+
+  numberList.innerHTML = `
+
+    <article class="number-card">
+
+      <div class="number-card-inner">
+
+        <div class="number-card-top">
+
+          <div class="number-country">
+
+            <span class="number-label">
+              COUNTRY
+            </span>
+
+            <strong>
+              ${escapeHtml(item.countryName || "Unknown")}
+            </strong>
+
+            <small>
+              ${escapeHtml(item.country || "")}
+            </small>
+
+          </div>
+
+          <span class="number-status">
+            Available
+          </span>
+
+        </div>
+
+
+        <div class="number-phone-section">
+
+          <span class="number-label">
+            PHONE NUMBER
+          </span>
+
+          <strong class="number-phone">
+            ${escapeHtml(phone)}
+          </strong>
+
+        </div>
+
+
+        <div class="number-card-bottom">
+
+          <div class="number-provider">
+
+            <span class="number-label">
+              PROVIDER
+            </span>
+
+            <strong>
+              ${escapeHtml(item.provider || "Unknown")}
+            </strong>
+
+          </div>
+
+
+          <div class="number-price">
+
+            <span class="number-label">
+              PRICE
+            </span>
+
+            <strong>
+              $${price}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="number-choose-btn"
+          data-number-id="${escapeHtml(item.id)}"
+        >
+
+          Choose number
+
+          <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+      </div>
+
+    </article>
+
+  `;
+
+
+  const button =
+    numberList.querySelector(
+      ".number-choose-btn"
+    );
+
+
+  button.addEventListener(
+    "click",
     () => {
 
-      serviceLogoElement.style.display =
-        "none";
+      const selection = {
 
-      serviceFallbackElement.style.display =
-        "block";
+        id: item.id,
 
-    };
+        service:
+          selectedService,
+
+        serviceKey:
+          normalize(selectedService),
+
+        number:
+          item.number,
+
+        country:
+          item.country,
+
+        countryName:
+          item.countryName,
+
+        price:
+          item.price,
+
+        provider:
+          item.provider
+
+      };
+
+
+      localStorage.setItem(
+        "wavynumSelectedNumber",
+        JSON.stringify(selection)
+      );
+
+
+      window.location.href =
+        "number-confirmation.html";
+
+    }
+  );
 
 }
 
@@ -299,24 +377,11 @@ function renderService() {
 
 async function loadInventory() {
 
-  numberListElement.innerHTML = `
-    <div class="number-state">
-
-      <div class="number-state-icon">
-        <i class="fa-solid fa-spinner fa-spin"></i>
-      </div>
-
-      <h2>Loading numbers</h2>
-
-      <p>
-        Checking available inventory.
-      </p>
-
-    </div>
-  `;
-
-
   try {
+
+    inventoryStatus.textContent =
+      "Loading inventory...";
+
 
     const snapshot =
       await getDocs(
@@ -324,123 +389,216 @@ async function loadInventory() {
       );
 
 
-    inventory = [];
+    if (snapshot.empty) {
+
+      inventoryStatus.textContent =
+        "0 available numbers";
+
+      showEmpty(
+        "There are currently no numbers in inventory."
+      );
+
+      return;
+
+    }
 
 
-    let availableTotal = 0;
-
-    let serviceTotal = 0;
+    const allNumbers = [];
 
 
-    snapshot.forEach(
-      documentSnapshot => {
+    snapshot.forEach(documentSnapshot => {
 
-        const data =
-          documentSnapshot.data();
-
-
-        /*
-         * ONLY AVAILABLE INVENTORY
-         */
-
-        const status =
-          normalize(data.status);
+      const data =
+        documentSnapshot.data();
 
 
-        if (status !== "available") {
-          return;
-        }
+      /* =====================================================
+         TEMPORARY DIAGNOSTIC
+         This shows EXACTLY what Firestore returned.
+      ===================================================== */
+
+      const diagnostic =
+        document.createElement("div");
+
+      diagnostic.style.cssText = `
+        margin: 12px 0;
+        padding: 14px;
+        border: 1px solid rgba(57,232,111,.35);
+        border-radius: 12px;
+        background: #07100a;
+        color: #b5c0b7;
+        font-size: 12px;
+        line-height: 1.7;
+        word-break: break-word;
+      `;
+
+      diagnostic.innerHTML = `
+
+        <strong style="color:#39e86f;">
+          FIRESTORE DIAGNOSTIC
+        </strong>
+
+        <br>
+
+        Document ID:
+        ${escapeHtml(documentSnapshot.id)}
+
+        <br>
+
+        Fields:
+        ${escapeHtml(
+          Object.keys(data).join(", ")
+        )}
+
+        <br>
+
+        number:
+        ${escapeHtml(
+          String(data.number)
+        )}
+
+        <br>
+
+        price:
+        ${escapeHtml(
+          String(data.price)
+        )}
+
+        <br>
+
+        number type:
+        ${escapeHtml(
+          typeof data.number
+        )}
+
+        <br>
+
+        price type:
+        ${escapeHtml(
+          typeof data.price
+        )}
+
+      `;
+
+      numberList.appendChild(
+        diagnostic
+      );
 
 
-        availableTotal++;
+      /* =====================================================
+         NORMAL DATA
+      ===================================================== */
+
+      const country =
+        String(
+          data.country ?? ""
+        ).trim();
 
 
-        /*
-         * MATCH SELECTED SERVICE
-         */
-
-        if (
-          !serviceMatches(
-            data.services
-          )
-        ) {
-
-          return;
-
-        }
+      const countryName =
+        String(
+          data.countryName ?? ""
+        ).trim();
 
 
-        serviceTotal++;
+      const provider =
+        String(
+          data.provider ?? ""
+        ).trim();
 
 
-        /*
-         * READ FIRESTORE VALUES DIRECTLY
-         */
-
-        const phoneNumber =
-          String(
-            data.number ?? ""
-          ).trim();
+      const phoneNumber =
+        String(
+          data.number ?? ""
+        ).trim();
 
 
-        const price =
-          getPrice(
-            data.price
-          );
+      const price =
+        getPrice(data.price);
 
 
-        const country =
-          String(
-            data.country ?? ""
-          ).trim();
+      const status =
+        normalize(data.status);
 
 
-        const countryName =
-          String(
-            data.countryName ?? ""
-          ).trim();
-
-
-        const provider =
-          String(
-            data.provider ?? ""
-          ).trim();
-
-
-        inventory.push({
-
-          id:
-            documentSnapshot.id,
-
-          number:
-            phoneNumber,
-
-          price:
-            price,
-
-          country:
-            country,
-
-          countryName:
-            countryName,
-
-          provider:
-            provider
-
-        });
-
+      if (status !== "available") {
+        return;
       }
-    );
 
 
-    inventoryStatusElement.textContent =
-      `${serviceTotal} available number${serviceTotal === 1 ? "" : "s"}`;
+      if (
+        !serviceMatches(
+          data.services,
+          selectedService
+        )
+      ) {
+        return;
+      }
 
 
-    renderNumbers();
+      allNumbers.push({
+
+        id:
+          documentSnapshot.id,
+
+        number:
+          phoneNumber,
+
+        country,
+
+        countryName,
+
+        provider,
+
+        price
+
+      });
+
+    });
 
 
-  } catch (error) {
+    inventoryStatus.textContent =
+      `${allNumbers.length} available number${
+        allNumbers.length === 1 ? "" : "s"
+      }`;
+
+
+    /*
+      Keep diagnostic visible while we inspect
+      the actual Firestore response.
+    */
+
+    if (!allNumbers.length) {
+
+      showEmpty(
+        "A number document was found, but it did not pass the availability or service filter."
+      );
+
+      return;
+
+    }
+
+
+    /*
+      The diagnostic is above the card.
+      Now render the actual inventory card.
+    */
+
+    const diagnosticElements =
+      numberList.querySelectorAll(
+        "[style*='FIRESTORE']"
+      );
+
+
+    const firstNumber =
+      allNumbers[0];
+
+
+    renderNumber(firstNumber);
+
+  }
+
+  catch (error) {
 
     console.error(
       "Wavynum inventory error:",
@@ -448,349 +606,51 @@ async function loadInventory() {
     );
 
 
-    inventoryStatusElement.textContent =
+    inventoryStatus.textContent =
       "Unable to load inventory";
 
 
-    numberListElement.innerHTML = `
-      <div class="number-state">
-
-        <div class="number-state-icon">
-          <i class="fa-solid fa-circle-exclamation"></i>
-        </div>
-
-        <h2>
-          Inventory unavailable
-        </h2>
-
-        <p>
-          We couldn't load the available numbers.
-          Please try again.
-        </p>
-
-      </div>
-    `;
-
-  }
-
-}
-
-
-/* =========================================================
-   FILTER
-========================================================= */
-
-function getVisibleNumbers() {
-
-  if (
-    selectedCountry === "all"
-  ) {
-
-    return inventory;
-
-  }
-
-
-  return inventory.filter(
-    item =>
-      normalize(item.country) ===
-      normalize(selectedCountry)
-  );
-
-}
-
-
-/* =========================================================
-   RENDER
-========================================================= */
-
-function renderNumbers() {
-
-  const numbers =
-    getVisibleNumbers();
-
-
-  if (!numbers.length) {
-
-    numberListElement.innerHTML = `
-      <div class="number-state">
-
-        <div class="number-state-icon">
-          <i class="fa-solid fa-phone-slash"></i>
-        </div>
-
-        <h2>
-          No numbers available
-        </h2>
-
-        <p>
-          There are currently no available
-          numbers for this service.
-        </p>
-
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  numberListElement.innerHTML =
-    numbers.map(item => {
-
-      const country =
-        item.countryName ||
-        item.country ||
-        "Unknown";
-
-
-      const provider =
-        item.provider ||
-        "Telnyx";
-
-
-      const phone =
-        item.number ||
-        "Inventory number missing";
-
-
-      const price =
-        item.price.toFixed(2);
-
-
-      return `
-
-        <article class="number-card">
-
-          <div class="number-card-inner">
-
-
-            <div class="number-card-top">
-
-              <div>
-
-                <span class="number-country-label">
-                  Country
-                </span>
-
-                <strong class="number-country-name">
-                  ${escapeHtml(country)}
-                </strong>
-
-                <small class="number-country-code">
-                  ${escapeHtml(item.country)}
-                </small>
-
-              </div>
-
-
-              <span class="number-available">
-                Available
-              </span>
-
-            </div>
-
-
-            <div class="number-phone-box">
-
-              <span class="number-phone-label">
-                Phone number
-              </span>
-
-              <strong class="number-phone">
-                ${escapeHtml(phone)}
-              </strong>
-
-            </div>
-
-
-            <div class="number-card-details">
-
-              <div class="number-detail">
-
-                <span class="number-detail-label">
-                  Provider
-                </span>
-
-                <span class="number-detail-value">
-                  ${escapeHtml(provider)}
-                </span>
-
-              </div>
-
-
-              <div class="number-detail price">
-
-                <span class="number-detail-label">
-                  Price
-                </span>
-
-                <span class="number-detail-value">
-                  $${price}
-                </span>
-
-              </div>
-
-            </div>
-
-
-            <button
-              type="button"
-              class="number-choose-btn"
-              data-number-id="${escapeHtml(item.id)}"
-            >
-              Choose number
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-
-
-          </div>
-
-        </article>
-
-      `;
-
-    }).join("");
-
-
-  attachChooseEvents();
-
-}
-
-
-/* =========================================================
-   CHOOSE NUMBER
-========================================================= */
-
-function attachChooseEvents() {
-
-  const buttons =
-    document.querySelectorAll(
-      ".number-choose-btn"
+    showEmpty(
+      error?.message ||
+      "Something went wrong while loading numbers."
     );
 
+  }
 
-  buttons.forEach(button => {
+}
+
+
+/* =========================================================
+   COUNTRY FILTERS
+========================================================= */
+
+document
+  .querySelectorAll(".country-button")
+  .forEach(button => {
 
     button.addEventListener(
       "click",
       () => {
 
-        const id =
-          button.dataset.numberId;
-
-
-        const selected =
-          inventory.find(
-            item =>
-              item.id === id
+        document
+          .querySelectorAll(".country-button")
+          .forEach(item =>
+            item.classList.remove("active")
           );
 
 
-        if (!selected) {
-
-          alert(
-            "This number is no longer available."
-          );
-
-          return;
-
-        }
-
-
-        if (!selected.number) {
-
-          alert(
-            "This inventory record does not contain a phone number."
-          );
-
-          return;
-
-        }
+        button.classList.add("active");
 
 
         /*
-         * SAVE EVERYTHING NEEDED
-         * BY NUMBER-CONFIRMATION.HTML
-         */
-
-        const selection = {
-
-          id:
-            selected.id,
-
-          service:
-            selectedService,
-
-          serviceKey:
-            normalize(selectedService),
-
-          number:
-            selected.number,
-
-          country:
-            selected.country,
-
-          countryName:
-            selected.countryName,
-
-          price:
-            selected.price,
-
-          provider:
-            selected.provider
-
-        };
-
-
-        localStorage.setItem(
-          "wavynumSelectedNumber",
-          JSON.stringify(selection)
-        );
-
-
-        window.location.href =
-          "number-confirmation.html";
+          Country filtering can be added after
+          we confirm the Firestore field issue.
+        */
 
       }
     );
 
   });
-
-}
-
-
-/* =========================================================
-   COUNTRY BUTTONS
-========================================================= */
-
-countryButtons.forEach(button => {
-
-  button.addEventListener(
-    "click",
-    () => {
-
-      countryButtons.forEach(
-        item =>
-          item.classList.remove("active")
-      );
-
-
-      button.classList.add("active");
-
-
-      selectedCountry =
-        button.dataset.country ||
-        "all";
-
-
-      renderNumbers();
-
-    }
-  );
-
-});
 
 
 /* =========================================================

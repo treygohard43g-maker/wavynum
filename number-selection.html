@@ -6,14 +6,22 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta
+    name="theme-color"
+    content="#050806"
   >
 
   <title>Select Number | Wavynum</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
-    href="style.css?v=13"
   >
 
   <link
@@ -23,28 +31,39 @@
 
   <link
     rel="stylesheet"
-    href="number-selection.css?v=1"
+    href="style.css?v=13"
+  >
+
+  <link
+    rel="stylesheet"
+    href="number-selection.css?v=3"
   >
 </head>
+
 
 <body class="wavynum-number-selection">
 
   <main class="number-selection-page">
 
-    <!-- HEADER -->
-    <header class="number-selection-header">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="selection-header">
 
       <a
         href="buy-number.html"
-        class="number-selection-back"
-        aria-label="Back"
+        class="selection-back"
+        aria-label="Back to buy number"
       >
         <i class="fa-solid fa-arrow-left"></i>
       </a>
 
-      <div class="number-selection-heading">
 
-        <span>
+      <div class="selection-heading">
+
+        <span class="eyebrow">
           NUMBER MARKETPLACE
         </span>
 
@@ -61,82 +80,138 @@
     </header>
 
 
-    <!-- SELECTED SERVICE -->
-    <section class="selected-service-card">
 
-      <div class="selected-service-icon">
+    <!-- =====================================================
+         SELECTED SERVICE
+    ====================================================== -->
+
+    <section
+      class="service-summary"
+      aria-labelledby="selectedServiceName"
+    >
+
+      <div class="service-summary-icon">
 
         <img
           id="selectedServiceLogo"
+          src=""
           alt=""
         >
 
         <i
           id="selectedServiceFallback"
           class="fa-solid fa-layer-group"
+          aria-hidden="true"
         ></i>
 
       </div>
 
-      <div>
 
-        <span class="selected-service-label">
-          SERVICE
+      <div class="service-summary-content">
+
+        <span class="section-label">
+          SELECTED SERVICE
         </span>
 
-        <strong id="selectedServiceName">
+        <h2 id="selectedServiceName">
           Loading...
-        </strong>
+        </h2>
 
       </div>
 
     </section>
 
 
-    <!-- COUNTRY -->
-    <section class="country-section">
 
-      <div class="country-title">
-        <i class="fa-solid fa-globe"></i>
-        <span>Country</span>
+    <!-- =====================================================
+         FILTERS
+    ====================================================== -->
+
+    <section class="inventory-controls">
+
+      <div class="controls-header">
+
+        <div>
+
+          <span class="section-label">
+            BROWSE INVENTORY
+          </span>
+
+          <h2>
+            Available countries
+          </h2>
+
+        </div>
+
+        <span
+          id="inventoryCount"
+          class="inventory-count"
+        >
+          —
+        </span>
+
       </div>
 
-      <div class="country-buttons">
+
+      <div
+        class="country-filter"
+        role="group"
+        aria-label="Filter by country"
+      >
 
         <button
           type="button"
-          class="country-button active"
+          class="country-filter-button active"
           data-country="all"
+          aria-pressed="true"
         >
           <i class="fa-solid fa-earth-americas"></i>
-          All
+          <span>All</span>
         </button>
+
 
         <button
           type="button"
-          class="country-button"
+          class="country-filter-button"
           data-country="US"
+          aria-pressed="false"
         >
-          <i class="fa-solid fa-flag-usa"></i>
-          United States
+          <span class="country-code">
+            US
+          </span>
+          <span>
+            United States
+          </span>
         </button>
+
 
         <button
           type="button"
-          class="country-button"
+          class="country-filter-button"
           data-country="CA"
+          aria-pressed="false"
         >
-          <i class="fa-solid fa-flag"></i>
-          Canada
+          <span class="country-code">
+            CA
+          </span>
+          <span>
+            Canada
+          </span>
         </button>
+
 
         <button
           type="button"
-          class="country-button"
+          class="country-filter-button"
           data-country="GB"
+          aria-pressed="false"
         >
-          <i class="fa-solid fa-flag"></i>
-          United Kingdom
+          <span class="country-code">
+            GB
+          </span>
+          <span>
+            United Kingdom
+          </span>
         </button>
 
       </div>
@@ -144,24 +219,35 @@
     </section>
 
 
-    <!-- INVENTORY STATUS -->
+
+    <!-- =====================================================
+         INVENTORY STATUS
+    ====================================================== -->
+
     <div
       id="inventoryStatus"
       class="inventory-status"
+      aria-live="polite"
     >
-      Loading inventory...
+      Loading available numbers...
     </div>
 
 
-    <!-- NUMBERS -->
+
+    <!-- =====================================================
+         NUMBER LIST
+    ====================================================== -->
+
     <section
       id="numberList"
       class="number-list"
+      aria-live="polite"
+      aria-label="Available phone numbers"
     >
 
       <div class="number-state">
 
-        <div class="number-state-icon">
+        <div class="state-icon">
           <i class="fa-solid fa-spinner fa-spin"></i>
         </div>
 
@@ -177,18 +263,15 @@
 
     </section>
 
+
   </main>
 
 
-  <!-- IMPORTANT:
-       This page does NOT load script.js.
-       It uses only number-selection.js.
-  -->
-
   <script
     type="module"
-    src="number-selection.js?v=1"
+    src="number-selection.js?v=3"
   ></script>
 
 </body>
+
 </html>

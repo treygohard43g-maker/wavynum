@@ -1,127 +1,117 @@
+import { db } from "./firebase.js";
+
 import {
   collection,
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-import {
-  db
-} from "./firebase.js";
-
 
 /* =========================================================
-   SERVICE CONFIGURATION
+   SERVICE CONFIG
 ========================================================= */
 
 const SERVICE_CONFIG = {
-
   facebook: {
     name: "Facebook",
     logo: "https://cdn.brandfetch.io/facebook.com/w/256/h/256",
-    icon: "fa-brands fa-facebook-f"
+    fallbackIcon: "fa-brands fa-facebook-f"
   },
 
   whatsapp: {
     name: "WhatsApp",
     logo: "https://cdn.brandfetch.io/whatsapp.com/w/256/h/256",
-    icon: "fa-brands fa-whatsapp"
+    fallbackIcon: "fa-brands fa-whatsapp"
   },
 
   instagram: {
     name: "Instagram",
     logo: "https://cdn.brandfetch.io/instagram.com/w/256/h/256",
-    icon: "fa-brands fa-instagram"
+    fallbackIcon: "fa-brands fa-instagram"
   },
 
   telegram: {
     name: "Telegram",
     logo: "https://cdn.brandfetch.io/telegram.org/w/256/h/256",
-    icon: "fa-brands fa-telegram"
+    fallbackIcon: "fa-brands fa-telegram"
   },
 
   snapchat: {
     name: "Snapchat",
     logo: "https://cdn.brandfetch.io/snapchat.com/w/256/h/256",
-    icon: "fa-brands fa-snapchat"
+    fallbackIcon: "fa-brands fa-snapchat"
   },
 
   "google voice": {
     name: "Google Voice",
     logo: "https://cdn.brandfetch.io/voice.google.com/w/256/h/256",
-    icon: "fa-solid fa-phone"
+    fallbackIcon: "fa-solid fa-phone"
   },
 
   textplus: {
     name: "TextPlus",
     logo: "https://cdn.brandfetch.io/textplus.com/w/256/h/256",
-    icon: "fa-solid fa-comment"
+    fallbackIcon: "fa-solid fa-comment"
   },
 
   textnow: {
     name: "TextNow",
     logo: "https://cdn.brandfetch.io/textnow.com/w/256/h/256",
-    icon: "fa-solid fa-comment-dots"
+    fallbackIcon: "fa-solid fa-comment-dots"
   },
 
   textfree: {
     name: "TextFree",
     logo: "https://cdn.brandfetch.io/textfree.us/w/256/h/256",
-    icon: "fa-solid fa-message"
+    fallbackIcon: "fa-solid fa-message"
   },
 
   hushed: {
     name: "Hushed",
     logo: "https://cdn.brandfetch.io/hushed.com/w/256/h/256",
-    icon: "fa-solid fa-phone"
+    fallbackIcon: "fa-solid fa-phone"
   },
 
   burner: {
     name: "Burner",
     logo: "https://cdn.brandfetch.io/burnerapp.com/w/256/h/256",
-    icon: "fa-solid fa-fire"
+    fallbackIcon: "fa-solid fa-fire"
   },
 
   "2ndline": {
     name: "2ndLine",
     logo: "https://cdn.brandfetch.io/2ndline.co/w/256/h/256",
-    icon: "fa-solid fa-phone-volume"
+    fallbackIcon: "fa-solid fa-phone-volume"
   },
 
   freetone: {
     name: "FreeTone",
     logo: "https://cdn.brandfetch.io/freetone.com/w/256/h/256",
-    icon: "fa-solid fa-phone"
+    fallbackIcon: "fa-solid fa-phone"
   },
 
   coverme: {
     name: "CoverMe",
-    logo: "https://cdn.brandfetch.io/coverme.ws/w/256/h/256",
-    icon: "fa-solid fa-shield-halved"
+    logo: "https://cdn.brandfetch.io/coverme.com/w/256/h/256",
+    fallbackIcon: "fa-solid fa-shield-halved"
   },
 
   numero: {
     name: "Numero",
     logo: "https://cdn.brandfetch.io/numeroesim.com/w/256/h/256",
-    icon: "fa-solid fa-hashtag"
+    fallbackIcon: "fa-solid fa-hashtag"
   },
 
   mysudo: {
     name: "MySudo",
     logo: "https://cdn.brandfetch.io/mysudo.com/w/256/h/256",
-    icon: "fa-solid fa-user-shield"
+    fallbackIcon: "fa-solid fa-user-shield"
   },
 
   twitter: {
-    name: "Twitter / X",
+    name: "Twitter",
     logo: "https://cdn.brandfetch.io/x.com/w/256/h/256",
-    icon: "fa-brands fa-x-twitter"
-  },
-
-  x: {
-    name: "Twitter / X",
-    logo: "https://cdn.brandfetch.io/x.com/w/256/h/256",
-    icon: "fa-brands fa-x-twitter"
+    fallbackIcon: "fa-brands fa-x-twitter"
   }
-
 };
 
 
@@ -130,202 +120,155 @@ const SERVICE_CONFIG = {
 ========================================================= */
 
 const SERVICE_ALIASES = {
-
   "twitter / x": "twitter",
-
   "twitter/x": "twitter",
-
   "twitter x": "twitter",
-
   "x/twitter": "twitter",
-
   "facebook messenger": "facebook"
-
 };
 
 
 /* =========================================================
-   DOM ELEMENTS
+   DOM
 ========================================================= */
+
+const serviceNameElement =
+  document.querySelector("#selectedServiceName");
+
+const serviceLogoElement =
+  document.querySelector("#selectedServiceLogo");
+
+const serviceFallbackElement =
+  document.querySelector("#selectedServiceFallback");
 
 const numbersList =
-  document.getElementById("numbersList");
+  document.querySelector("#numbersList");
 
-const diagnostic =
-  document.getElementById("diagnostic");
+const inventoryStatus =
+  document.querySelector("#inventoryStatus");
 
-const serviceName =
-  document.getElementById("serviceName");
-
-const serviceLogo =
-  document.getElementById("serviceLogo");
-
-const serviceLogoContainer =
-  document.querySelector(
-    ".selected-service-logo"
-  );
-
-const serviceFallbackIcon =
-  document.getElementById(
-    "serviceFallbackIcon"
-  );
+const countryButtons =
+  document.querySelectorAll(".country-filter");
 
 
 /* =========================================================
-   READ SERVICE FROM URL
+   STATE
 ========================================================= */
 
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
+let allNumbers = [];
+let selectedCountry = "ALL";
 
-const rawService =
-  params.get("service") || "";
+const params = new URLSearchParams(window.location.search);
+
+const requestedService =
+  params.get("service") || "Other";
 
 
 /* =========================================================
-   NORMALIZE SERVICE
+   HELPERS
 ========================================================= */
 
 function normalizeService(value) {
-
   return String(value ?? "")
     .trim()
     .toLowerCase()
     .replace(/\s+/g, " ");
-
 }
 
-
-/* =========================================================
-   CANONICAL SERVICE
-========================================================= */
 
 function canonicalService(value) {
+  const normalized = normalizeService(value);
 
-  const normalized =
-    normalizeService(value);
-
-  return (
-    SERVICE_ALIASES[normalized] ||
-    normalized
-  );
-
+  return SERVICE_ALIASES[normalized] || normalized;
 }
 
 
-/* =========================================================
-   SELECTED SERVICE
-========================================================= */
-
-const selectedServiceKey =
-  canonicalService(rawService);
-
-const selectedConfig =
-  SERVICE_CONFIG[selectedServiceKey] || null;
-
-const selectedServiceName =
-  selectedConfig?.name ||
-  rawService.trim() ||
-  "Unknown service";
-
-
-serviceName.textContent =
-  selectedServiceName;
-
-
-/* =========================================================
-   SERVICE LOGO
-========================================================= */
-
-function setFallbackIcon(iconClass) {
-
-  serviceFallbackIcon.className =
-    iconClass ||
-    "fa-solid fa-layer-group";
-
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 
-if (selectedConfig) {
-
-  setFallbackIcon(
-    selectedConfig.icon
-  );
-
-  serviceLogo.src =
-    selectedConfig.logo;
-
-  serviceLogo.alt =
-    `${selectedServiceName} logo`;
-
-  serviceLogo.addEventListener(
-    "error",
-    () => {
-
-      serviceLogoContainer
-        .classList
-        .add("logo-failed");
-
-    }
-  );
-
-} else {
-
-  serviceLogoContainer
-    .classList
-    .add("no-logo");
-
-}
-
-
-/* =========================================================
-   VARIABLES
-========================================================= */
-
-let allNumbers = [];
-
-let currentCountry = "all";
-
-
-/* =========================================================
-   SERVICE MATCHING
-========================================================= */
-
-function serviceMatches(
-  services,
-  requestedService
-) {
-
+function serviceMatches(services, requested) {
   if (!Array.isArray(services)) {
-
     return false;
-
   }
 
-
   const wanted =
-    canonicalService(
-      requestedService
-    );
+    canonicalService(requested);
+
+  return services.some((service) => {
+    return canonicalService(service) === wanted;
+  });
+}
 
 
-  return services.some(
-    (service) => {
+/* =========================================================
+   SERVICE HEADER
+========================================================= */
 
-      const available =
-        canonicalService(
-          service
-        );
+function renderServiceHeader() {
 
-      return (
-        available === wanted
-      );
+  const serviceKey =
+    canonicalService(requestedService);
 
+  const config =
+    SERVICE_CONFIG[serviceKey] || {
+      name: requestedService,
+      logo: null,
+      fallbackIcon: "fa-solid fa-layer-group"
+    };
+
+  if (serviceNameElement) {
+    serviceNameElement.textContent =
+      config.name;
+  }
+
+  if (serviceLogoElement) {
+
+    if (config.logo) {
+
+      serviceLogoElement.src =
+        config.logo;
+
+      serviceLogoElement.alt =
+        `${config.name} logo`;
+
+      serviceLogoElement.hidden =
+        false;
+
+      serviceLogoElement.onerror = () => {
+
+        serviceLogoElement.hidden =
+          true;
+
+        if (serviceFallbackElement) {
+          serviceFallbackElement.hidden =
+            false;
+
+          serviceFallbackElement.innerHTML =
+            `<i class="${config.fallbackIcon}"></i>`;
+        }
+      };
+
+    } else {
+
+      serviceLogoElement.hidden =
+        true;
+
+      if (serviceFallbackElement) {
+        serviceFallbackElement.hidden =
+          false;
+
+        serviceFallbackElement.innerHTML =
+          `<i class="${config.fallbackIcon}"></i>`;
+      }
     }
-  );
-
+  }
 }
 
 
@@ -333,214 +276,117 @@ function serviceMatches(
    LOAD INVENTORY
 ========================================================= */
 
-async function loadNumbers() {
-
-  if (!selectedServiceKey) {
-
-    diagnostic.innerHTML =
-      `
-      <strong>Missing service:</strong>
-      No service was selected.
-      `;
-
-    showState(
-      "fa-solid fa-circle-question",
-      "No service selected",
-      "Return to Buy Number and choose a service first."
-    );
-
-    return;
-
-  }
-
+async function loadInventory() {
 
   try {
 
-    diagnostic.textContent =
-      "Loading inventory...";
-
+    if (numbersList) {
+      numbersList.innerHTML = "";
+    }
 
     const snapshot =
       await getDocs(
-        collection(
-          db,
-          "numbers"
-        )
+        collection(db, "numbers")
       );
-
-
-    let totalDocuments = 0;
-
-    let availableNumbers = 0;
-
-    let serviceMatchesCount = 0;
-
 
     allNumbers = [];
 
+    let availableCount = 0;
+    let compatibleCount = 0;
 
-    snapshot.forEach(
-      (docSnap) => {
+    snapshot.forEach((documentSnapshot) => {
 
-        totalDocuments++;
+      const data =
+        documentSnapshot.data();
 
+      const status =
+        normalizeService(data.status);
 
-        const data =
-          docSnap.data();
-
-
-        /* =========================
-           STATUS
-        ========================= */
-
-        const status =
-          normalizeService(
-            data.status
-          );
-
-
-        if (
-          status !== "available"
-        ) {
-
-          return;
-
-        }
-
-
-        availableNumbers++;
-
-
-        /* =========================
-           SERVICES
-        ========================= */
-
-        const services =
-          Array.isArray(
-            data.services
-          )
-            ? data.services
-            : [];
-
-
-        const matches =
-          serviceMatches(
-            services,
-            selectedServiceKey
-          );
-
-
-        if (!matches) {
-
-          return;
-
-        }
-
-
-        serviceMatchesCount++;
-
-
-        /* =========================
-           SAVE NUMBER
-        ========================= */
-
-        allNumbers.push({
-
-          id:
-            docSnap.id,
-
-          number:
-            String(
-              data.number || ""
-            ).trim(),
-
-          country:
-            String(
-              data.country || ""
-            )
-            .trim()
-            .toUpperCase(),
-
-          countryName:
-            String(
-              data.countryName ||
-              "Unknown"
-            ).trim(),
-
-          price:
-            Number(
-              data.price
-            ) || 0,
-
-          provider:
-            String(
-              data.provider ||
-              "Provider"
-            ).trim(),
-
-          services
-
-        });
-
+      if (status !== "available") {
+        return;
       }
-    );
+
+      availableCount++;
+
+      const services =
+        Array.isArray(data.services)
+          ? data.services
+          : [];
+
+      const compatible =
+        serviceMatches(
+          services,
+          requestedService
+        );
+
+      if (!compatible) {
+        return;
+      }
+
+      compatibleCount++;
+
+      allNumbers.push({
+        id: documentSnapshot.id,
+
+        number:
+          String(data.number ?? "").trim(),
+
+        country:
+          String(data.country ?? "").trim(),
+
+        countryName:
+          String(data.countryName ?? "").trim(),
+
+        price:
+          data.price ?? "",
+
+        provider:
+          String(data.provider ?? "").trim(),
+
+        status:
+          String(data.status ?? "").trim(),
+
+        services
+      });
+
+    });
 
 
-    /* =========================
-       DIAGNOSTIC
-    ========================= */
+    if (inventoryStatus) {
 
-    diagnostic.innerHTML =
-      `
-      Inventory:
-      <strong>
-        ${totalDocuments}
-      </strong>
-      documents ·
+      inventoryStatus.textContent =
+        `${snapshot.size} documents · ` +
+        `${availableCount} available · ` +
+        `${compatibleCount} compatible`;
 
-      <strong>
-        ${availableNumbers}
-      </strong>
-      available ·
-
-      <strong>
-        ${serviceMatchesCount}
-      </strong>
-      compatible
-      `;
+    }
 
 
     renderNumbers();
 
-
   } catch (error) {
 
     console.error(
-      "Wavynum inventory error:",
+      "Inventory loading error:",
       error
     );
 
+    if (inventoryStatus) {
+      inventoryStatus.textContent =
+        "Unable to load inventory.";
+    }
 
-    diagnostic.innerHTML =
-      `
-      <strong>
-        Inventory error:
-      </strong>
-
-      ${escapeHtml(
-        error.message
-      )}
+    if (numbersList) {
+      numbersList.innerHTML = `
+        <div class="numbers-state numbers-state-error">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <h3>Unable to load numbers</h3>
+          <p>Please refresh the page and try again.</p>
+        </div>
       `;
-
-
-    showState(
-      "fa-solid fa-triangle-exclamation",
-      "Unable to load inventory",
-      error.message
-    );
+    }
 
   }
-
 }
 
 
@@ -550,179 +396,147 @@ async function loadNumbers() {
 
 function renderNumbers() {
 
-  const filtered =
-    allNumbers.filter(
-      (item) => {
+  if (!numbersList) {
+    return;
+  }
 
-        if (
-          currentCountry === "all"
-        ) {
-
-          return true;
-
-        }
-
-
-        return (
-          item.country ===
-          currentCountry
+  const filteredNumbers =
+    selectedCountry === "ALL"
+      ? allNumbers
+      : allNumbers.filter((item) =>
+          item.country.toUpperCase() ===
+          selectedCountry
         );
 
-      }
-    );
 
+  if (!filteredNumbers.length) {
 
-  if (
-    filtered.length === 0
-  ) {
-
-    showState(
-      "fa-solid fa-phone-slash",
-      "No numbers available",
-      `There are currently no available numbers for ${selectedServiceName}.`
-    );
+    numbersList.innerHTML = `
+      <div class="numbers-state">
+        <i class="fa-solid fa-phone-slash"></i>
+        <h3>No numbers available</h3>
+        <p>There are currently no numbers matching this selection.</p>
+      </div>
+    `;
 
     return;
-
   }
 
 
   numbersList.innerHTML =
-    filtered
-      .map(
-        createNumberCard
-      )
+    filteredNumbers
+      .map((item) => {
+
+        const number =
+          item.number || "Number unavailable";
+
+        const country =
+          item.countryName || item.country || "Unknown country";
+
+        const provider =
+          item.provider || "Provider unavailable";
+
+
+        const numericPrice =
+          Number(item.price);
+
+
+        const price =
+          Number.isFinite(numericPrice)
+            ? `$${numericPrice.toFixed(2)}`
+            : `$${escapeHtml(item.price || "0.00")}`;
+
+
+        return `
+          <article class="number-card">
+
+            <div class="number-card-main">
+
+              <div class="number-card-country">
+                <span class="number-country-icon">
+                  <i class="fa-solid fa-earth-americas"></i>
+                </span>
+
+                <div>
+                  <strong>
+                    ${escapeHtml(country)}
+                  </strong>
+
+                  <span>
+                    ${escapeHtml(item.country || "")}
+                  </span>
+                </div>
+              </div>
+
+
+              <div class="number-card-phone">
+                <span class="number-card-label">
+                  Phone number
+                </span>
+
+                <strong>
+                  ${escapeHtml(number)}
+                </strong>
+              </div>
+
+
+              <div class="number-card-provider">
+                <span class="number-card-label">
+                  Provider
+                </span>
+
+                <strong>
+                  ${escapeHtml(provider)}
+                </strong>
+              </div>
+
+
+              <div class="number-card-price">
+                <span class="number-card-label">
+                  Price
+                </span>
+
+                <strong>
+                  ${price}
+                </strong>
+              </div>
+
+            </div>
+
+
+            <button
+              type="button"
+              class="number-card-button"
+              data-number-id="${escapeHtml(item.id)}"
+            >
+              Choose number
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+          </article>
+        `;
+
+      })
       .join("");
 
 
-  attachChooseHandlers();
+  numbersList
+    .querySelectorAll(".number-card-button")
+    .forEach((button) => {
 
-}
+      button.addEventListener(
+        "click",
+        () => {
 
+          const numberId =
+            button.dataset.numberId;
 
-/* =========================================================
-   CREATE NUMBER CARD
-========================================================= */
+          chooseNumber(numberId);
 
-function createNumberCard(
-  item
-) {
+        }
+      );
 
-  return `
-    <article
-      class="number-card"
-      data-number-id="${escapeHtml(item.id)}"
-    >
-
-      <div class="number-top">
-
-        <div class="number-primary">
-
-          <div class="actual-phone-number">
-            ${escapeHtml(
-              item.number
-            )}
-          </div>
-
-          <div class="country-name">
-            ${escapeHtml(
-              item.countryName
-            )}
-          </div>
-
-        </div>
-
-
-        <div class="price">
-          $${item.price.toFixed(2)}
-        </div>
-
-      </div>
-
-
-      <div class="number-meta">
-
-        <span class="meta-item">
-
-          <i class="fa-solid fa-flag"></i>
-
-          ${escapeHtml(
-            item.country ||
-            "Unknown"
-          )}
-
-        </span>
-
-
-        <span class="meta-item">
-
-          <i class="fa-solid fa-server"></i>
-
-          ${escapeHtml(
-            item.provider
-          )}
-
-        </span>
-
-
-        <span class="meta-item">
-
-          <i class="fa-solid fa-circle-check"></i>
-
-          Available
-
-        </span>
-
-      </div>
-
-
-      <button
-        type="button"
-        class="choose-btn"
-        data-id="${escapeHtml(
-          item.id
-        )}"
-      >
-
-        Choose number
-
-        <i class="fa-solid fa-arrow-right"></i>
-
-      </button>
-
-    </article>
-  `;
-
-}
-
-
-/* =========================================================
-   CHOOSE BUTTONS
-========================================================= */
-
-function attachChooseHandlers() {
-
-  document
-    .querySelectorAll(
-      ".choose-btn"
-    )
-    .forEach(
-      (button) => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            chooseNumber(
-              button.dataset.id
-            );
-
-          }
-        );
-
-      }
-    );
-
+    });
 }
 
 
@@ -730,27 +544,15 @@ function attachChooseHandlers() {
    CHOOSE NUMBER
 ========================================================= */
 
-function chooseNumber(
-  numberId
-) {
+function chooseNumber(numberId) {
 
   const selected =
     allNumbers.find(
-      (item) =>
-        item.id === numberId
+      (item) => item.id === numberId
     );
-
 
   if (!selected) {
-
-    showState(
-      "fa-solid fa-triangle-exclamation",
-      "Number unavailable",
-      "This number could not be found in the current inventory."
-    );
-
     return;
-
   }
 
 
@@ -760,10 +562,12 @@ function chooseNumber(
       selected.id,
 
     service:
-      selectedServiceName,
+      SERVICE_CONFIG[
+        canonicalService(requestedService)
+      ]?.name || requestedService,
 
     serviceKey:
-      selectedServiceKey,
+      canonicalService(requestedService),
 
     number:
       selected.number,
@@ -785,15 +589,12 @@ function chooseNumber(
 
   localStorage.setItem(
     "wavynumSelectedNumber",
-    JSON.stringify(
-      selectedNumber
-    )
+    JSON.stringify(selectedNumber)
   );
 
 
   window.location.href =
     "number-confirmation.html";
-
 }
 
 
@@ -801,128 +602,37 @@ function chooseNumber(
    COUNTRY FILTERS
 ========================================================= */
 
-document
-  .querySelectorAll(
-    ".filter-btn"
-  )
-  .forEach(
-    (button) => {
+countryButtons.forEach((button) => {
 
-      button.addEventListener(
-        "click",
-        () => {
+  button.addEventListener(
+    "click",
+    () => {
 
-          document
-            .querySelectorAll(
-              ".filter-btn"
-            )
-            .forEach(
-              (btn) => {
-
-                btn.classList.remove(
-                  "active"
-                );
-
-              }
-            );
-
-
-          button.classList.add(
-            "active"
-          );
-
-
-          currentCountry =
-            button.dataset.country ||
-            "all";
-
-
-          renderNumbers();
-
+      countryButtons.forEach(
+        (item) => {
+          item.classList.remove("active");
         }
       );
+
+      button.classList.add("active");
+
+      selectedCountry =
+        String(
+          button.dataset.country || "ALL"
+        ).toUpperCase();
+
+      renderNumbers();
 
     }
   );
 
-
-/* =========================================================
-   STATE MESSAGE
-========================================================= */
-
-function showState(
-  icon,
-  title,
-  message
-) {
-
-  numbersList.innerHTML =
-    `
-    <div class="state-box">
-
-      <div class="state-icon">
-
-        <i class="${escapeHtml(
-          icon
-        )}"></i>
-
-      </div>
-
-      <h2>
-        ${escapeHtml(
-          title
-        )}
-      </h2>
-
-      <p>
-        ${escapeHtml(
-          message
-        )}
-      </p>
-
-    </div>
-    `;
-
-}
+});
 
 
 /* =========================================================
-   HTML ESCAPE
+   INIT
 ========================================================= */
 
-function escapeHtml(
-  value
-) {
+renderServiceHeader();
 
-  return String(
-    value ?? ""
-  )
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-/* =========================================================
-   START APPLICATION
-========================================================= */
-
-loadNumbers();
+loadInventory();

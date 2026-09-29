@@ -6,35 +6,49 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+/* =========================================================
+   WAVYNUM — NUMBER SELECTION
+========================================================= */
+
 const params = new URLSearchParams(
   window.location.search
 );
 
 const selectedService =
-  params.get("service") || "Facebook";
+  params.get("service") || "";
 
 
-const numberList =
-  document.getElementById("numberList");
+const elements = {
+  numberList:
+    document.getElementById("numberList"),
 
-const inventoryStatus =
-  document.getElementById("inventoryStatus");
+  inventoryStatus:
+    document.getElementById("inventoryStatus"),
 
-const serviceName =
-  document.getElementById("selectedServiceName");
+  inventoryCount:
+    document.getElementById("inventoryCount"),
 
-const serviceLogo =
-  document.getElementById("selectedServiceLogo");
+  serviceName:
+    document.getElementById("selectedServiceName"),
 
-const serviceFallback =
-  document.getElementById("selectedServiceFallback");
+  serviceLogo:
+    document.getElementById("selectedServiceLogo"),
+
+  serviceFallback:
+    document.getElementById("selectedServiceFallback")
+};
+
+
+let inventory = [];
+
+let activeCountry = "all";
 
 
 /* =========================================================
-   SERVICES
+   SERVICE CONFIGURATION
 ========================================================= */
 
-const services = {
+const serviceConfig = {
 
   facebook: {
     name: "Facebook",
@@ -64,6 +78,16 @@ const services = {
   googlevoice: {
     name: "Google Voice",
     logo: "https://cdn.simpleicons.org/googlevoice/4285F4"
+  },
+
+  textplus: {
+    name: "TextPlus",
+    logo: "https://cdn.simpleicons.org/textplus/39E86F"
+  },
+
+  textnow: {
+    name: "TextNow",
+    logo: "https://cdn.simpleicons.org/textnow/39E86F"
   },
 
   twitter: {
@@ -100,7 +124,7 @@ function escapeHtml(value) {
 }
 
 
-function getPrice(value) {
+function parsePrice(value) {
 
   if (
     typeof value === "number" &&
@@ -109,12 +133,13 @@ function getPrice(value) {
     return value;
   }
 
-  const cleaned =
-    String(value ?? "")
-      .replace(/[^0-9.]/g, "");
 
   const parsed =
-    Number.parseFloat(cleaned);
+    Number.parseFloat(
+      String(value ?? "")
+        .replace(/[^0-9.]/g, "")
+    );
+
 
   return Number.isFinite(parsed)
     ? parsed
@@ -124,19 +149,22 @@ function getPrice(value) {
 
 
 function serviceMatches(
-  servicesArray,
-  service
+  services,
+  targetService
 ) {
 
-  if (!Array.isArray(servicesArray)) {
+  if (!Array.isArray(services)) {
     return false;
   }
 
-  const target =
-    normalize(service);
 
-  return servicesArray.some(item =>
-    normalize(item) === target
+  const target =
+    normalize(targetService);
+
+
+  return services.some(
+    service =>
+      normalize(service) === target
   );
 
 }
@@ -148,35 +176,67 @@ function serviceMatches(
 
 function renderService() {
 
-  const key =
-    normalize(selectedService);
-
   const config =
-    services[key];
+    serviceConfig[
+      normalize(selectedService)
+    ];
 
-  serviceName.textContent =
-    config?.name || selectedService;
+
+  elements.serviceName.textContent =
+    config?.name ||
+    selectedService ||
+    "Service";
+
 
   if (config?.logo) {
 
-    serviceLogo.src =
+    elements.serviceLogo.src =
       config.logo;
 
-    serviceLogo.style.display =
+    elements.serviceLogo.style.display =
       "block";
 
-    serviceFallback.style.display =
+    elements.serviceFallback.style.display =
       "none";
 
   } else {
 
-    serviceLogo.style.display =
+    elements.serviceLogo.style.display =
       "none";
 
-    serviceFallback.style.display =
+    elements.serviceFallback.style.display =
       "block";
 
   }
+
+}
+
+
+/* =========================================================
+   LOADING STATE
+========================================================= */
+
+function showLoading() {
+
+  elements.numberList.innerHTML = `
+
+    <div class="number-state">
+
+      <div class="state-icon">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+      </div>
+
+      <h2>
+        Loading numbers
+      </h2>
+
+      <p>
+        Checking available inventory.
+      </p>
+
+    </div>
+
+  `;
 
 }
 
@@ -187,16 +247,16 @@ function renderService() {
 
 function showEmpty(message) {
 
-  numberList.innerHTML = `
+  elements.numberList.innerHTML = `
 
     <div class="number-state">
 
-      <div class="number-state-icon">
+      <div class="state-icon">
         <i class="fa-solid fa-phone-slash"></i>
       </div>
 
       <h2>
-        No numbers found
+        No numbers available
       </h2>
 
       <p>
@@ -211,25 +271,112 @@ function showEmpty(message) {
 
 
 /* =========================================================
-   RENDER NUMBER
+   ERROR STATE
 ========================================================= */
 
-function renderNumber(item) {
+function showError() {
 
-  const phone =
-    item.number || "Inventory number missing";
+  elements.numberList.innerHTML = `
+
+    <div class="number-state">
+
+      <div class="state-icon">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+
+      <h2>
+        Inventory unavailable
+      </h2>
+
+      <p>
+        We couldn't load the available numbers.
+        Please refresh and try again.
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   RENDER INVENTORY
+========================================================= */
+
+function renderInventory() {
+
+  const filtered =
+    inventory.filter(item => {
+
+      if (
+        activeCountry === "all"
+      ) {
+        return true;
+      }
+
+      return normalize(
+        item.country
+      ) === normalize(
+        activeCountry
+      );
+
+    });
+
+
+  elements.inventoryCount.textContent =
+    `${filtered.length} available`;
+
+
+  elements.inventoryStatus.textContent =
+    filtered.length === 1
+      ? "1 number available"
+      : `${filtered.length} numbers available`;
+
+
+  if (!filtered.length) {
+
+    showEmpty(
+      activeCountry === "all"
+        ? "There are currently no numbers available for this service."
+        : "There are no available numbers in this country."
+    );
+
+    return;
+
+  }
+
+
+  elements.numberList.innerHTML =
+    filtered.map(
+      renderNumberCard
+    ).join("");
+
+
+  bindChooseButtons();
+
+}
+
+
+/* =========================================================
+   NUMBER CARD
+========================================================= */
+
+function renderNumberCard(item) {
 
   const price =
-    Number.isFinite(item.price)
-      ? item.price.toFixed(2)
-      : "0.00";
+    item.price.toFixed(2);
 
 
-  numberList.innerHTML = `
+  return `
 
-    <article class="number-card">
+    <article
+      class="number-card"
+      data-number-id="${escapeHtml(item.id)}"
+    >
 
       <div class="number-card-inner">
+
 
         <div class="number-card-top">
 
@@ -241,23 +388,26 @@ function renderNumber(item) {
 
             <strong>
               ${escapeHtml(
-                item.countryName || "Unknown"
+                item.countryName ||
+                "Unknown country"
               )}
             </strong>
 
             <small>
               ${escapeHtml(
-                item.country || ""
+                item.country
               )}
             </small>
 
           </div>
+
 
           <span class="number-status">
             Available
           </span>
 
         </div>
+
 
 
         <div class="number-phone-section">
@@ -267,10 +417,13 @@ function renderNumber(item) {
           </span>
 
           <strong class="number-phone">
-            ${escapeHtml(phone)}
+            ${escapeHtml(
+              item.number
+            )}
           </strong>
 
         </div>
+
 
 
         <div class="number-card-bottom">
@@ -283,7 +436,8 @@ function renderNumber(item) {
 
             <strong>
               ${escapeHtml(
-                item.provider || "Unknown"
+                item.provider ||
+                "Unknown"
               )}
             </strong>
 
@@ -305,17 +459,24 @@ function renderNumber(item) {
         </div>
 
 
+
         <button
           type="button"
           class="number-choose-btn"
           data-number-id="${escapeHtml(item.id)}"
         >
 
-          Choose number
+          <span>
+            Choose number
+          </span>
 
-          <i class="fa-solid fa-arrow-right"></i>
+          <i
+            class="fa-solid fa-arrow-right"
+            aria-hidden="true"
+          ></i>
 
         </button>
+
 
       </div>
 
@@ -323,97 +484,125 @@ function renderNumber(item) {
 
   `;
 
+}
 
-  const button =
-    numberList.querySelector(
+
+/* =========================================================
+   CHOOSE NUMBER
+========================================================= */
+
+function bindChooseButtons() {
+
+  document
+    .querySelectorAll(
       ".number-choose-btn"
-    );
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const id =
+            button.dataset.numberId;
 
 
-  button.addEventListener(
-    "click",
-    () => {
-
-      const selection = {
-
-        id:
-          item.id,
-
-        service:
-          selectedService,
-
-        serviceKey:
-          normalize(selectedService),
-
-        number:
-          item.number,
-
-        country:
-          item.country,
-
-        countryName:
-          item.countryName,
-
-        price:
-          item.price,
-
-        provider:
-          item.provider
-
-      };
+          const selected =
+            inventory.find(
+              item =>
+                item.id === id
+            );
 
 
-      localStorage.setItem(
-        "wavynumSelectedNumber",
-        JSON.stringify(selection)
+          if (!selected) {
+            return;
+          }
+
+
+          const selection = {
+
+            id:
+              selected.id,
+
+            service:
+              selectedService,
+
+            serviceKey:
+              normalize(
+                selectedService
+              ),
+
+            number:
+              selected.number,
+
+            country:
+              selected.country,
+
+            countryName:
+              selected.countryName,
+
+            price:
+              selected.price,
+
+            provider:
+              selected.provider
+
+          };
+
+
+          localStorage.setItem(
+            "wavynumSelectedNumber",
+            JSON.stringify(selection)
+          );
+
+
+          button.disabled = true;
+
+
+          button.innerHTML = `
+            <span>
+              Continuing...
+            </span>
+
+            <i
+              class="fa-solid fa-spinner fa-spin"
+              aria-hidden="true"
+            ></i>
+          `;
+
+
+          window.location.href =
+            "number-confirmation.html";
+
+        }
       );
 
-
-      window.location.href =
-        "number-confirmation.html";
-
-    }
-  );
+    });
 
 }
 
 
 /* =========================================================
-   LOAD INVENTORY
+   LOAD FIRESTORE INVENTORY
 ========================================================= */
 
 async function loadInventory() {
 
+  showLoading();
+
+
   try {
-
-    inventoryStatus.textContent =
-      "Loading inventory...";
-
 
     const snapshot =
       await getDocs(
-        collection(db, "numbers")
+        collection(
+          db,
+          "numbers"
+        )
       );
 
 
-    if (snapshot.empty) {
-
-      inventoryStatus.textContent =
-        "0 available numbers";
-
-      showEmpty(
-        "There are currently no numbers in inventory."
-      );
-
-      return;
-
-    }
-
-
-    const allNumbers = [];
-
-
-    let diagnosticData = null;
+    inventory = [];
 
 
     snapshot.forEach(
@@ -423,36 +612,33 @@ async function loadInventory() {
           documentSnapshot.data();
 
 
-        /*
-          Capture the RAW Firestore response
-          before doing any conversion.
-        */
+        const status =
+          normalize(
+            data.status
+          );
 
-        if (!diagnosticData) {
 
-          diagnosticData = {
-
-            id:
-              documentSnapshot.id,
-
-            keys:
-              Object.keys(data),
-
-            number:
-              data.number,
-
-            price:
-              data.price,
-
-            numberType:
-              typeof data.number,
-
-            priceType:
-              typeof data.price
-
-          };
-
+        if (
+          status !== "available"
+        ) {
+          return;
         }
+
+
+        if (
+          !serviceMatches(
+            data.services,
+            selectedService
+          )
+        ) {
+          return;
+        }
+
+
+        const number =
+          String(
+            data.number ?? ""
+          ).trim();
 
 
         const country =
@@ -473,44 +659,34 @@ async function loadInventory() {
           ).trim();
 
 
-        const phoneNumber =
-          String(
-            data.number ?? ""
-          ).trim();
-
-
         const price =
-          getPrice(data.price);
+          parsePrice(
+            data.price
+          );
 
 
-        const status =
-          normalize(data.status);
+        /*
+          Ignore malformed inventory records.
+          This keeps broken documents from appearing
+          as $0.00 or "number missing".
+        */
 
-
-        if (
-          status !== "available"
-        ) {
+        if (!number) {
           return;
         }
 
 
-        if (
-          !serviceMatches(
-            data.services,
-            selectedService
-          )
-        ) {
+        if (price <= 0) {
           return;
         }
 
 
-        allNumbers.push({
+        inventory.push({
 
           id:
             documentSnapshot.id,
 
-          number:
-            phoneNumber,
+          number,
 
           country,
 
@@ -526,109 +702,7 @@ async function loadInventory() {
     );
 
 
-    /*
-      IMPORTANT:
-      Put the diagnostic in the inventory-status
-      area so renderNumber() cannot erase it.
-    */
-
-    if (diagnosticData) {
-
-      inventoryStatus.innerHTML = `
-
-        <div style="
-          padding:12px 14px;
-          margin-bottom:12px;
-          border:1px solid rgba(57,232,111,.35);
-          border-radius:12px;
-          background:#07100a;
-          font-size:12px;
-          line-height:1.7;
-          color:#b5c0b7;
-        ">
-
-          <strong style="
-            color:#39e86f;
-          ">
-            FIRESTORE DIAGNOSTIC
-          </strong>
-
-          <br>
-
-          Document ID:
-          ${escapeHtml(
-            diagnosticData.id
-          )}
-
-          <br>
-
-          Fields:
-          ${escapeHtml(
-            diagnosticData.keys.join(", ")
-          )}
-
-          <br>
-
-          number:
-          ${escapeHtml(
-            String(
-              diagnosticData.number
-            )
-          )}
-
-          <br>
-
-          price:
-          ${escapeHtml(
-            String(
-              diagnosticData.price
-            )
-          )}
-
-          <br>
-
-          number type:
-          ${escapeHtml(
-            diagnosticData.numberType
-          )}
-
-          <br>
-
-          price type:
-          ${escapeHtml(
-            diagnosticData.priceType
-          )}
-
-        </div>
-
-        <div>
-          ${allNumbers.length}
-          available number${
-            allNumbers.length === 1
-              ? ""
-              : "s"
-          }
-        </div>
-
-      `;
-
-    }
-
-
-    if (!allNumbers.length) {
-
-      showEmpty(
-        "A number document was found, but it did not pass the availability or service filter."
-      );
-
-      return;
-
-    }
-
-
-    renderNumber(
-      allNumbers[0]
-    );
+    renderInventory();
 
   }
 
@@ -641,14 +715,15 @@ async function loadInventory() {
     );
 
 
-    inventoryStatus.textContent =
+    elements.inventoryCount.textContent =
+      "Unavailable";
+
+
+    elements.inventoryStatus.textContent =
       "Unable to load inventory";
 
 
-    showEmpty(
-      error?.message ||
-      "Something went wrong while loading numbers."
-    );
+    showError();
 
   }
 
@@ -656,11 +731,13 @@ async function loadInventory() {
 
 
 /* =========================================================
-   COUNTRY BUTTONS
+   COUNTRY FILTERS
 ========================================================= */
 
 document
-  .querySelectorAll(".country-button")
+  .querySelectorAll(
+    ".country-filter-button"
+  )
   .forEach(button => {
 
     button.addEventListener(
@@ -668,12 +745,40 @@ document
       () => {
 
         document
-          .querySelectorAll(".country-button")
-          .forEach(item =>
-            item.classList.remove("active")
-          );
+          .querySelectorAll(
+            ".country-filter-button"
+          )
+          .forEach(item => {
 
-        button.classList.add("active");
+            item.classList.remove(
+              "active"
+            );
+
+            item.setAttribute(
+              "aria-pressed",
+              "false"
+            );
+
+          });
+
+
+        button.classList.add(
+          "active"
+        );
+
+
+        button.setAttribute(
+          "aria-pressed",
+          "true"
+        );
+
+
+        activeCountry =
+          button.dataset.country ||
+          "all";
+
+
+        renderInventory();
 
       }
     );
@@ -682,7 +787,7 @@ document
 
 
 /* =========================================================
-   START
+   INITIALIZE
 ========================================================= */
 
 renderService();

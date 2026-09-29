@@ -6,11 +6,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* =========================================================
-   WAVYNUM — NUMBER SELECTION DIAGNOSTIC
-========================================================= */
-
-const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(
+  window.location.search
+);
 
 const selectedService =
   params.get("service") || "Facebook";
@@ -33,7 +31,7 @@ const serviceFallback =
 
 
 /* =========================================================
-   SERVICE CONFIG
+   SERVICES
 ========================================================= */
 
 const services = {
@@ -108,9 +106,7 @@ function getPrice(value) {
     typeof value === "number" &&
     Number.isFinite(value)
   ) {
-
     return value;
-
   }
 
   const cleaned =
@@ -127,7 +123,10 @@ function getPrice(value) {
 }
 
 
-function serviceMatches(servicesArray, service) {
+function serviceMatches(
+  servicesArray,
+  service
+) {
 
   if (!Array.isArray(servicesArray)) {
     return false;
@@ -225,6 +224,7 @@ function renderNumber(item) {
       ? item.price.toFixed(2)
       : "0.00";
 
+
   numberList.innerHTML = `
 
     <article class="number-card">
@@ -240,11 +240,15 @@ function renderNumber(item) {
             </span>
 
             <strong>
-              ${escapeHtml(item.countryName || "Unknown")}
+              ${escapeHtml(
+                item.countryName || "Unknown"
+              )}
             </strong>
 
             <small>
-              ${escapeHtml(item.country || "")}
+              ${escapeHtml(
+                item.country || ""
+              )}
             </small>
 
           </div>
@@ -278,7 +282,9 @@ function renderNumber(item) {
             </span>
 
             <strong>
-              ${escapeHtml(item.provider || "Unknown")}
+              ${escapeHtml(
+                item.provider || "Unknown"
+              )}
             </strong>
 
           </div>
@@ -330,7 +336,8 @@ function renderNumber(item) {
 
       const selection = {
 
-        id: item.id,
+        id:
+          item.id,
 
         service:
           selectedService,
@@ -372,7 +379,7 @@ function renderNumber(item) {
 
 
 /* =========================================================
-   LOAD FIRESTORE INVENTORY
+   LOAD INVENTORY
 ========================================================= */
 
 async function loadInventory() {
@@ -406,167 +413,207 @@ async function loadInventory() {
     const allNumbers = [];
 
 
-    snapshot.forEach(documentSnapshot => {
-
-      const data =
-        documentSnapshot.data();
+    let diagnosticData = null;
 
 
-      /* =====================================================
-         TEMPORARY DIAGNOSTIC
-         This shows EXACTLY what Firestore returned.
-      ===================================================== */
+    snapshot.forEach(
+      documentSnapshot => {
 
-      const diagnostic =
-        document.createElement("div");
-
-      diagnostic.style.cssText = `
-        margin: 12px 0;
-        padding: 14px;
-        border: 1px solid rgba(57,232,111,.35);
-        border-radius: 12px;
-        background: #07100a;
-        color: #b5c0b7;
-        font-size: 12px;
-        line-height: 1.7;
-        word-break: break-word;
-      `;
-
-      diagnostic.innerHTML = `
-
-        <strong style="color:#39e86f;">
-          FIRESTORE DIAGNOSTIC
-        </strong>
-
-        <br>
-
-        Document ID:
-        ${escapeHtml(documentSnapshot.id)}
-
-        <br>
-
-        Fields:
-        ${escapeHtml(
-          Object.keys(data).join(", ")
-        )}
-
-        <br>
-
-        number:
-        ${escapeHtml(
-          String(data.number)
-        )}
-
-        <br>
-
-        price:
-        ${escapeHtml(
-          String(data.price)
-        )}
-
-        <br>
-
-        number type:
-        ${escapeHtml(
-          typeof data.number
-        )}
-
-        <br>
-
-        price type:
-        ${escapeHtml(
-          typeof data.price
-        )}
-
-      `;
-
-      numberList.appendChild(
-        diagnostic
-      );
+        const data =
+          documentSnapshot.data();
 
 
-      /* =====================================================
-         NORMAL DATA
-      ===================================================== */
+        /*
+          Capture the RAW Firestore response
+          before doing any conversion.
+        */
 
-      const country =
-        String(
-          data.country ?? ""
-        ).trim();
+        if (!diagnosticData) {
 
+          diagnosticData = {
 
-      const countryName =
-        String(
-          data.countryName ?? ""
-        ).trim();
+            id:
+              documentSnapshot.id,
 
+            keys:
+              Object.keys(data),
 
-      const provider =
-        String(
-          data.provider ?? ""
-        ).trim();
+            number:
+              data.number,
 
+            price:
+              data.price,
 
-      const phoneNumber =
-        String(
-          data.number ?? ""
-        ).trim();
+            numberType:
+              typeof data.number,
 
+            priceType:
+              typeof data.price
 
-      const price =
-        getPrice(data.price);
+          };
 
-
-      const status =
-        normalize(data.status);
+        }
 
 
-      if (status !== "available") {
-        return;
+        const country =
+          String(
+            data.country ?? ""
+          ).trim();
+
+
+        const countryName =
+          String(
+            data.countryName ?? ""
+          ).trim();
+
+
+        const provider =
+          String(
+            data.provider ?? ""
+          ).trim();
+
+
+        const phoneNumber =
+          String(
+            data.number ?? ""
+          ).trim();
+
+
+        const price =
+          getPrice(data.price);
+
+
+        const status =
+          normalize(data.status);
+
+
+        if (
+          status !== "available"
+        ) {
+          return;
+        }
+
+
+        if (
+          !serviceMatches(
+            data.services,
+            selectedService
+          )
+        ) {
+          return;
+        }
+
+
+        allNumbers.push({
+
+          id:
+            documentSnapshot.id,
+
+          number:
+            phoneNumber,
+
+          country,
+
+          countryName,
+
+          provider,
+
+          price
+
+        });
+
       }
-
-
-      if (
-        !serviceMatches(
-          data.services,
-          selectedService
-        )
-      ) {
-        return;
-      }
-
-
-      allNumbers.push({
-
-        id:
-          documentSnapshot.id,
-
-        number:
-          phoneNumber,
-
-        country,
-
-        countryName,
-
-        provider,
-
-        price
-
-      });
-
-    });
-
-
-    inventoryStatus.textContent =
-      `${allNumbers.length} available number${
-        allNumbers.length === 1 ? "" : "s"
-      }`;
+    );
 
 
     /*
-      Keep diagnostic visible while we inspect
-      the actual Firestore response.
+      IMPORTANT:
+      Put the diagnostic in the inventory-status
+      area so renderNumber() cannot erase it.
     */
+
+    if (diagnosticData) {
+
+      inventoryStatus.innerHTML = `
+
+        <div style="
+          padding:12px 14px;
+          margin-bottom:12px;
+          border:1px solid rgba(57,232,111,.35);
+          border-radius:12px;
+          background:#07100a;
+          font-size:12px;
+          line-height:1.7;
+          color:#b5c0b7;
+        ">
+
+          <strong style="
+            color:#39e86f;
+          ">
+            FIRESTORE DIAGNOSTIC
+          </strong>
+
+          <br>
+
+          Document ID:
+          ${escapeHtml(
+            diagnosticData.id
+          )}
+
+          <br>
+
+          Fields:
+          ${escapeHtml(
+            diagnosticData.keys.join(", ")
+          )}
+
+          <br>
+
+          number:
+          ${escapeHtml(
+            String(
+              diagnosticData.number
+            )
+          )}
+
+          <br>
+
+          price:
+          ${escapeHtml(
+            String(
+              diagnosticData.price
+            )
+          )}
+
+          <br>
+
+          number type:
+          ${escapeHtml(
+            diagnosticData.numberType
+          )}
+
+          <br>
+
+          price type:
+          ${escapeHtml(
+            diagnosticData.priceType
+          )}
+
+        </div>
+
+        <div>
+          ${allNumbers.length}
+          available number${
+            allNumbers.length === 1
+              ? ""
+              : "s"
+          }
+        </div>
+
+      `;
+
+    }
+
 
     if (!allNumbers.length) {
 
@@ -579,24 +626,12 @@ async function loadInventory() {
     }
 
 
-    /*
-      The diagnostic is above the card.
-      Now render the actual inventory card.
-    */
-
-    const diagnosticElements =
-      numberList.querySelectorAll(
-        "[style*='FIRESTORE']"
-      );
-
-
-    const firstNumber =
-      allNumbers[0];
-
-
-    renderNumber(firstNumber);
+    renderNumber(
+      allNumbers[0]
+    );
 
   }
+
 
   catch (error) {
 
@@ -621,7 +656,7 @@ async function loadInventory() {
 
 
 /* =========================================================
-   COUNTRY FILTERS
+   COUNTRY BUTTONS
 ========================================================= */
 
 document
@@ -638,14 +673,7 @@ document
             item.classList.remove("active")
           );
 
-
         button.classList.add("active");
-
-
-        /*
-          Country filtering can be added after
-          we confirm the Firestore field issue.
-        */
 
       }
     );

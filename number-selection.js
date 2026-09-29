@@ -11,7 +11,6 @@ import {
 ========================================================= */
 
 const SERVICE_CONFIG = {
-
   facebook: { name: "Facebook" },
   whatsapp: { name: "WhatsApp" },
   instagram: { name: "Instagram" },
@@ -29,7 +28,6 @@ const SERVICE_CONFIG = {
   numero: { name: "Numero" },
   mysudo: { name: "MySudo" },
   twitter: { name: "Twitter / X" }
-
 };
 
 
@@ -37,12 +35,8 @@ const SERVICE_CONFIG = {
    ELEMENTS
 ========================================================= */
 
-const serviceName =
-  document.getElementById("serviceName");
-
-const serviceLogo =
-  document.getElementById("serviceLogo");
-
+const serviceName = document.getElementById("serviceName");
+const serviceLogo = document.getElementById("serviceLogo");
 const serviceFallbackIcon =
   document.getElementById("serviceFallbackIcon");
 
@@ -163,10 +157,7 @@ function canonicalService(value) {
 
   };
 
-  return (
-    aliases[normalized] ||
-    normalized
-  );
+  return aliases[normalized] || normalized;
 
 }
 
@@ -205,8 +196,7 @@ function serviceMatches(
 
   return services.some(
     service =>
-      canonicalService(service) ===
-      requested
+      canonicalService(service) === requested
   );
 
 }
@@ -217,16 +207,14 @@ function serviceMatches(
 ========================================================= */
 
 const params =
-  new URLSearchParams(
-    window.location.search
-  );
+  new URLSearchParams(window.location.search);
 
 selectedService =
   params.get("service") || "Other";
 
 
 /* =========================================================
-   RENDER SERVICE
+   RENDER SERVICE HEADER
 ========================================================= */
 
 function renderServiceHeader() {
@@ -237,7 +225,6 @@ function renderServiceHeader() {
   const config =
     SERVICE_CONFIG[key];
 
-
   if (serviceName) {
 
     serviceName.textContent =
@@ -247,35 +234,24 @@ function renderServiceHeader() {
 
   }
 
+  if (!serviceLogo) {
+    return;
+  }
 
-  if (serviceLogo) {
+  const logo =
+    SERVICE_LOGOS[key];
 
-    const logo =
-      SERVICE_LOGOS[key];
+  if (logo) {
 
-    if (logo) {
+    serviceLogo.src = logo;
 
-      serviceLogo.src = logo;
+    serviceLogo.style.display = "block";
 
-      serviceLogo.style.display = "block";
+    if (serviceFallbackIcon) {
+      serviceFallbackIcon.style.display = "none";
+    }
 
-      if (serviceFallbackIcon) {
-        serviceFallbackIcon.style.display = "none";
-      }
-
-      serviceLogo.onerror = () => {
-
-        serviceLogo.style.display = "none";
-
-        if (serviceFallbackIcon) {
-          serviceFallbackIcon.style.display = "block";
-        }
-
-      };
-
-    } else {
-
-      serviceLogo.removeAttribute("src");
+    serviceLogo.onerror = () => {
 
       serviceLogo.style.display = "none";
 
@@ -283,6 +259,16 @@ function renderServiceHeader() {
         serviceFallbackIcon.style.display = "block";
       }
 
+    };
+
+  } else {
+
+    serviceLogo.removeAttribute("src");
+
+    serviceLogo.style.display = "none";
+
+    if (serviceFallbackIcon) {
+      serviceFallbackIcon.style.display = "block";
     }
 
   }
@@ -324,6 +310,52 @@ function parsePrice(value) {
 
 
 /* =========================================================
+   READ PHONE NUMBER
+========================================================= */
+
+function getPhoneNumber(data) {
+
+  /*
+   * The Firestore field is:
+   *
+   * number
+   *
+   * We explicitly read it here instead of relying
+   * on the rendering layer to interpret it.
+   */
+
+  if (
+    Object.prototype.hasOwnProperty.call(
+      data,
+      "number"
+    )
+  ) {
+
+    const value =
+      data.number;
+
+    if (
+      value !== null &&
+      value !== undefined
+    ) {
+
+      const phone =
+        String(value).trim();
+
+      if (phone.length > 0) {
+        return phone;
+      }
+
+    }
+
+  }
+
+  return "";
+
+}
+
+
+/* =========================================================
    LOAD INVENTORY
 ========================================================= */
 
@@ -331,21 +363,25 @@ async function loadInventory() {
 
   try {
 
-    numbersList.innerHTML = `
-      <div class="state-box">
+    if (numbersList) {
 
-        <div class="state-icon">
-          <i class="fa-solid fa-spinner fa-spin"></i>
+      numbersList.innerHTML = `
+        <div class="state-box">
+
+          <div class="state-icon">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+          </div>
+
+          <h2>Loading numbers</h2>
+
+          <p>
+            Checking available inventory.
+          </p>
+
         </div>
+      `;
 
-        <h2>Loading numbers</h2>
-
-        <p>
-          Checking available inventory.
-        </p>
-
-      </div>
-    `;
+    }
 
 
     const snapshot =
@@ -368,25 +404,6 @@ async function loadInventory() {
           documentSnapshot.data();
 
 
-        /* =====================================================
-           TEMPORARY FIRESTORE DIAGNOSTICS
-        ===================================================== */
-
-        console.log(
-          "FIRESTORE DATA:",
-          data
-        );
-
-        console.log(
-          "PHONE NUMBER:",
-          data.number
-        );
-
-
-        /* =====================================================
-           STATUS
-        ===================================================== */
-
         const status =
           normalize(data.status);
 
@@ -399,42 +416,28 @@ async function loadInventory() {
         availableCount++;
 
 
-        /* =====================================================
-           SERVICE MATCH
-        ===================================================== */
-
         if (
           !serviceMatches(
             data.services,
             selectedService
           )
         ) {
+
           return;
+
         }
 
 
         compatibleCount++;
 
 
-        /* =====================================================
-           PHONE NUMBER
-        ===================================================== */
+        /*
+         * Read the actual Firestore phone field.
+         */
 
-        const number =
-          String(
-            data.number ?? ""
-          ).trim();
+        const phoneNumber =
+          getPhoneNumber(data);
 
-
-        console.log(
-          "PROCESSED PHONE NUMBER:",
-          number
-        );
-
-
-        /* =====================================================
-           OTHER FIELDS
-        ===================================================== */
 
         const price =
           parsePrice(data.price);
@@ -460,34 +463,35 @@ async function loadInventory() {
           ).trim();
 
 
-        /* =====================================================
-           STORE RECORD
-        ===================================================== */
+        /*
+         * Store the complete normalized record.
+         */
 
         allNumbers.push({
 
           id:
             documentSnapshot.id,
 
-          number,
+          number:
+            phoneNumber,
 
-          country,
+          country:
+            country,
 
-          countryName,
+          countryName:
+            countryName,
 
-          provider,
+          provider:
+            provider,
 
-          price
+          price:
+            price
 
         });
 
       }
     );
 
-
-    /* =======================================================
-       INVENTORY DIAGNOSTIC
-    ======================================================= */
 
     if (diagnostic) {
 
@@ -518,24 +522,28 @@ async function loadInventory() {
     }
 
 
-    numbersList.innerHTML = `
-      <div class="state-box">
+    if (numbersList) {
 
-        <div class="state-icon">
-          <i class="fa-solid fa-circle-exclamation"></i>
+      numbersList.innerHTML = `
+        <div class="state-box">
+
+          <div class="state-icon">
+            <i class="fa-solid fa-circle-exclamation"></i>
+          </div>
+
+          <h2>
+            Inventory unavailable
+          </h2>
+
+          <p>
+            We couldn't load available numbers.
+            Please try again.
+          </p>
+
         </div>
+      `;
 
-        <h2>
-          Inventory unavailable
-        </h2>
-
-        <p>
-          We couldn't load available numbers.
-          Please try again.
-        </p>
-
-      </div>
-    `;
+    }
 
   }
 
@@ -555,8 +563,10 @@ function getFilteredNumbers() {
         return true;
       }
 
-      return normalize(number.country) ===
-        normalize(selectedCountry);
+      return (
+        normalize(number.country) ===
+        normalize(selectedCountry)
+      );
 
     }
   );
@@ -603,9 +613,13 @@ function renderNumbers() {
   numbersList.innerHTML =
     numbers.map(number => {
 
+      /*
+       * This value now comes directly from
+       * the normalized Firestore record.
+       */
+
       const displayNumber =
-        number.number ||
-        "Number unavailable";
+        number.number;
 
 
       const displayCountry =
@@ -664,7 +678,11 @@ function renderNumbers() {
               </span>
 
               <strong class="number-phone">
-                ${escapeHtml(displayNumber)}
+                ${
+                  displayNumber
+                    ? escapeHtml(displayNumber)
+                    : "Inventory number missing"
+                }
               </strong>
 
             </div>
@@ -769,7 +787,7 @@ function attachChooseHandlers() {
         if (!selected.number) {
 
           alert(
-            "The phone number field is empty in this inventory record."
+            "This inventory record does not contain a phone number."
           );
 
           return;

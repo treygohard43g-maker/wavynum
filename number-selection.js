@@ -105,9 +105,7 @@ const diagnostic =
   document.getElementById("diagnostic");
 
 const filterButtons =
-  document.querySelectorAll(
-    ".filter-btn"
-  );
+  document.querySelectorAll(".filter-btn");
 
 
 /* =========================================================
@@ -282,7 +280,7 @@ selectedService =
 
 
 /* =========================================================
-   RENDER SERVICE
+   RENDER SERVICE HEADER
 ========================================================= */
 
 function renderServiceHeader() {
@@ -348,6 +346,13 @@ function renderServiceHeader() {
       serviceLogo.style.display =
         "none";
 
+      if (serviceFallbackIcon) {
+
+        serviceFallbackIcon.style.display =
+          "block";
+
+      }
+
     }
 
   }
@@ -370,9 +375,7 @@ async function loadInventory() {
           <i class="fa-solid fa-spinner fa-spin"></i>
         </div>
 
-        <h2>
-          Loading numbers
-        </h2>
+        <h2>Loading numbers</h2>
 
         <p>
           Checking available inventory.
@@ -545,7 +548,7 @@ async function loadInventory() {
 
 
 /* =========================================================
-   FILTER
+   COUNTRY FILTER
 ========================================================= */
 
 function getFilteredNumbers() {
@@ -642,6 +645,9 @@ function renderNumbers() {
 
             <div class="number-card-inner">
 
+
+              <!-- CARD HEADER -->
+
               <div class="number-card-top">
 
                 <div class="number-country">
@@ -680,84 +686,100 @@ function renderNumbers() {
               </div>
 
 
-              <div class="number-phone-box">
+              <!-- HORIZONTAL CONTENT -->
 
-                <span
-                  class="number-phone-label"
-                >
-                  Phone number
-                </span>
-
-                <strong
-                  class="number-phone"
-                >
-                  ${escapeHtml(
-                    displayNumber
-                  )}
-                </strong>
-
-              </div>
+              <div class="number-card-content">
 
 
-              <div
-                class="number-card-details"
-              >
+                <!-- PHONE -->
 
-                <div class="number-detail">
+                <div class="number-phone-box">
 
                   <span
-                    class="number-detail-label"
+                    class="number-phone-label"
                   >
-                    Provider
+                    Phone number
                   </span>
 
-                  <span
-                    class="number-detail-value"
+                  <strong
+                    class="number-phone"
                   >
                     ${escapeHtml(
-                      displayProvider
+                      displayNumber
                     )}
-                  </span>
+                  </strong>
 
                 </div>
 
+
+                <!-- DETAILS -->
 
                 <div
-                  class="number-detail price"
+                  class="number-card-details"
                 >
 
-                  <span
-                    class="number-detail-label"
+                  <div
+                    class="number-detail"
                   >
-                    Price
-                  </span>
 
-                  <span
-                    class="number-detail-value"
+                    <span
+                      class="number-detail-label"
+                    >
+                      Provider
+                    </span>
+
+                    <span
+                      class="number-detail-value"
+                    >
+                      ${escapeHtml(
+                        displayProvider
+                      )}
+                    </span>
+
+                  </div>
+
+
+                  <div
+                    class="number-detail price"
                   >
-                    ${displayPrice}
-                  </span>
+
+                    <span
+                      class="number-detail-label"
+                    >
+                      Price
+                    </span>
+
+                    <span
+                      class="number-detail-value"
+                    >
+                      ${displayPrice}
+                    </span>
+
+                  </div>
 
                 </div>
 
+
+                <!-- CHOOSE -->
+
+                <button
+                  type="button"
+                  class="number-choose-btn"
+                  data-number-id="${escapeHtml(
+                    number.id
+                  )}"
+                >
+
+                  Choose number
+
+                  <i
+                    class="fa-solid fa-arrow-right"
+                  ></i>
+
+                </button>
+
+
               </div>
-
-
-              <button
-                type="button"
-                class="number-choose-btn"
-                data-number-id="${escapeHtml(
-                  number.id
-                )}"
-              >
-
-                Choose number
-
-                <i
-                  class="fa-solid fa-arrow-right"
-                ></i>
-
-              </button>
 
             </div>
 

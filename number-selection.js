@@ -35,8 +35,12 @@ const SERVICE_CONFIG = {
    ELEMENTS
 ========================================================= */
 
-const serviceName = document.getElementById("serviceName");
-const serviceLogo = document.getElementById("serviceLogo");
+const serviceName =
+  document.getElementById("serviceName");
+
+const serviceLogo =
+  document.getElementById("serviceLogo");
+
 const serviceFallbackIcon =
   document.getElementById("serviceFallbackIcon");
 
@@ -58,7 +62,13 @@ let allNumbers = [];
 
 let selectedCountry = "all";
 
-let selectedService = "";
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const selectedService =
+  params.get("service") || "Other";
 
 
 /* =========================================================
@@ -157,23 +167,10 @@ function canonicalService(value) {
 
   };
 
-  return aliases[normalized] || normalized;
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHtml(value) {
-
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return (
+    aliases[normalized] ||
+    normalized
+  );
 
 }
 
@@ -196,25 +193,31 @@ function serviceMatches(
 
   return services.some(
     service =>
-      canonicalService(service) === requested
+      canonicalService(service) ===
+      requested
   );
 
 }
 
 
 /* =========================================================
-   READ SERVICE
+   ESCAPE HTML
 ========================================================= */
 
-const params =
-  new URLSearchParams(window.location.search);
+function escapeHtml(value) {
 
-selectedService =
-  params.get("service") || "Other";
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
 
 
 /* =========================================================
-   RENDER SERVICE HEADER
+   SERVICE HEADER
 ========================================================= */
 
 function renderServiceHeader() {
@@ -225,6 +228,7 @@ function renderServiceHeader() {
   const config =
     SERVICE_CONFIG[key];
 
+
   if (serviceName) {
 
     serviceName.textContent =
@@ -234,12 +238,15 @@ function renderServiceHeader() {
 
   }
 
+
   if (!serviceLogo) {
     return;
   }
 
+
   const logo =
     SERVICE_LOGOS[key];
+
 
   if (logo) {
 
@@ -247,16 +254,26 @@ function renderServiceHeader() {
 
     serviceLogo.style.display = "block";
 
+
     if (serviceFallbackIcon) {
-      serviceFallbackIcon.style.display = "none";
+
+      serviceFallbackIcon.style.display =
+        "none";
+
     }
+
 
     serviceLogo.onerror = () => {
 
-      serviceLogo.style.display = "none";
+      serviceLogo.style.display =
+        "none";
+
 
       if (serviceFallbackIcon) {
-        serviceFallbackIcon.style.display = "block";
+
+        serviceFallbackIcon.style.display =
+          "block";
+
       }
 
     };
@@ -265,10 +282,15 @@ function renderServiceHeader() {
 
     serviceLogo.removeAttribute("src");
 
-    serviceLogo.style.display = "none";
+    serviceLogo.style.display =
+      "none";
+
 
     if (serviceFallbackIcon) {
-      serviceFallbackIcon.style.display = "block";
+
+      serviceFallbackIcon.style.display =
+        "block";
+
     }
 
   }
@@ -277,14 +299,21 @@ function renderServiceHeader() {
 
 
 /* =========================================================
-   PARSE PRICE
+   PRICE
 ========================================================= */
 
 function parsePrice(value) {
 
-  if (value === null || value === undefined) {
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
     return 0;
+
   }
+
 
   if (typeof value === "number") {
 
@@ -294,13 +323,13 @@ function parsePrice(value) {
 
   }
 
-  const cleaned =
-    String(value)
-      .replace(/[$,\s]/g, "")
-      .trim();
 
   const parsed =
-    Number.parseFloat(cleaned);
+    Number.parseFloat(
+      String(value)
+        .replace(/[$,\s]/g, "")
+    );
+
 
   return Number.isFinite(parsed)
     ? parsed
@@ -313,44 +342,135 @@ function parsePrice(value) {
    READ PHONE NUMBER
 ========================================================= */
 
-function getPhoneNumber(data) {
+function readPhoneNumber(documentSnapshot, data) {
 
   /*
-   * The Firestore field is:
+   * Primary Firestore field:
    *
    * number
-   *
-   * We explicitly read it here instead of relying
-   * on the rendering layer to interpret it.
    */
 
+  const directNumber =
+    documentSnapshot.get("number");
+
+
   if (
-    Object.prototype.hasOwnProperty.call(
-      data,
-      "number"
-    )
+    directNumber !== null &&
+    directNumber !== undefined &&
+    String(directNumber).trim() !== ""
   ) {
 
+    return String(directNumber).trim();
+
+  }
+
+
+  /*
+   * Fallback field names.
+   * These do not interfere with the
+   * normal "number" field.
+   */
+
+  const alternatives = [
+    "phoneNumber",
+    "phone_number",
+    "phone",
+    "numberValue"
+  ];
+
+
+  for (const field of alternatives) {
+
     const value =
-      data.number;
+      documentSnapshot.get(field);
+
 
     if (
       value !== null &&
-      value !== undefined
+      value !== undefined &&
+      String(value).trim() !== ""
     ) {
 
-      const phone =
-        String(value).trim();
-
-      if (phone.length > 0) {
-        return phone;
-      }
+      return String(value).trim();
 
     }
 
   }
 
+
+  /*
+   * Final fallback to the data object.
+   */
+
+  if (
+    data.number !== null &&
+    data.number !== undefined
+  ) {
+
+    const value =
+      String(data.number).trim();
+
+
+    if (value) {
+      return value;
+    }
+
+  }
+
+
   return "";
+
+}
+
+
+/* =========================================================
+   READ PRICE
+========================================================= */
+
+function readPrice(documentSnapshot, data) {
+
+  const directPrice =
+    documentSnapshot.get("price");
+
+
+  if (
+    directPrice !== null &&
+    directPrice !== undefined &&
+    directPrice !== ""
+  ) {
+
+    return parsePrice(directPrice);
+
+  }
+
+
+  const alternatives = [
+    "amount",
+    "numberPrice",
+    "cost"
+  ];
+
+
+  for (const field of alternatives) {
+
+    const value =
+      documentSnapshot.get(field);
+
+
+    if (
+      value !== null &&
+      value !== undefined &&
+      value !== ""
+    ) {
+
+      return parsePrice(value);
+
+    }
+
+  }
+
+
+  return parsePrice(data.price);
 
 }
 
@@ -363,25 +483,21 @@ async function loadInventory() {
 
   try {
 
-    if (numbersList) {
+    numbersList.innerHTML = `
+      <div class="state-box">
 
-      numbersList.innerHTML = `
-        <div class="state-box">
-
-          <div class="state-icon">
-            <i class="fa-solid fa-spinner fa-spin"></i>
-          </div>
-
-          <h2>Loading numbers</h2>
-
-          <p>
-            Checking available inventory.
-          </p>
-
+        <div class="state-icon">
+          <i class="fa-solid fa-spinner fa-spin"></i>
         </div>
-      `;
 
-    }
+        <h2>Loading numbers</h2>
+
+        <p>
+          Checking available inventory.
+        </p>
+
+      </div>
+    `;
 
 
     const snapshot =
@@ -391,6 +507,7 @@ async function loadInventory() {
 
 
     allNumbers = [];
+
 
     let availableCount = 0;
 
@@ -424,7 +541,6 @@ async function loadInventory() {
         ) {
 
           return;
-
         }
 
 
@@ -432,15 +548,22 @@ async function loadInventory() {
 
 
         /*
-         * Read the actual Firestore phone field.
+         * IMPORTANT:
+         * Read these directly from Firestore.
          */
 
         const phoneNumber =
-          getPhoneNumber(data);
+          readPhoneNumber(
+            documentSnapshot,
+            data
+          );
 
 
         const price =
-          parsePrice(data.price);
+          readPrice(
+            documentSnapshot,
+            data
+          );
 
 
         const country =
@@ -462,10 +585,6 @@ async function loadInventory() {
             data.provider ?? ""
           ).trim();
 
-
-        /*
-         * Store the complete normalized record.
-         */
 
         allNumbers.push({
 
@@ -522,28 +641,24 @@ async function loadInventory() {
     }
 
 
-    if (numbersList) {
+    numbersList.innerHTML = `
+      <div class="state-box">
 
-      numbersList.innerHTML = `
-        <div class="state-box">
-
-          <div class="state-icon">
-            <i class="fa-solid fa-circle-exclamation"></i>
-          </div>
-
-          <h2>
-            Inventory unavailable
-          </h2>
-
-          <p>
-            We couldn't load available numbers.
-            Please try again.
-          </p>
-
+        <div class="state-icon">
+          <i class="fa-solid fa-circle-exclamation"></i>
         </div>
-      `;
 
-    }
+        <h2>
+          Inventory unavailable
+        </h2>
+
+        <p>
+          We couldn't load available numbers.
+          Please try again.
+        </p>
+
+      </div>
+    `;
 
   }
 
@@ -613,15 +728,6 @@ function renderNumbers() {
   numbersList.innerHTML =
     numbers.map(number => {
 
-      /*
-       * This value now comes directly from
-       * the normalized Firestore record.
-       */
-
-      const displayNumber =
-        number.number;
-
-
       const displayCountry =
         number.countryName ||
         number.country ||
@@ -634,7 +740,7 @@ function renderNumbers() {
 
 
       const displayPrice =
-        `$${Number(number.price).toFixed(2)}`;
+        Number(number.price).toFixed(2);
 
 
       return `
@@ -679,8 +785,8 @@ function renderNumbers() {
 
               <strong class="number-phone">
                 ${
-                  displayNumber
-                    ? escapeHtml(displayNumber)
+                  number.number
+                    ? escapeHtml(number.number)
                     : "Inventory number missing"
                 }
               </strong>
@@ -710,7 +816,7 @@ function renderNumbers() {
                 </span>
 
                 <span class="number-detail-value">
-                  ${displayPrice}
+                  $${displayPrice}
                 </span>
 
               </div>

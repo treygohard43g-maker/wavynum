@@ -368,6 +368,25 @@ async function loadInventory() {
           documentSnapshot.data();
 
 
+        /* =====================================================
+           TEMPORARY FIRESTORE DIAGNOSTICS
+        ===================================================== */
+
+        console.log(
+          "FIRESTORE DATA:",
+          data
+        );
+
+        console.log(
+          "PHONE NUMBER:",
+          data.number
+        );
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
         const status =
           normalize(data.status);
 
@@ -379,6 +398,10 @@ async function loadInventory() {
 
         availableCount++;
 
+
+        /* =====================================================
+           SERVICE MATCH
+        ===================================================== */
 
         if (
           !serviceMatches(
@@ -393,11 +416,25 @@ async function loadInventory() {
         compatibleCount++;
 
 
+        /* =====================================================
+           PHONE NUMBER
+        ===================================================== */
+
         const number =
           String(
             data.number ?? ""
           ).trim();
 
+
+        console.log(
+          "PROCESSED PHONE NUMBER:",
+          number
+        );
+
+
+        /* =====================================================
+           OTHER FIELDS
+        ===================================================== */
 
         const price =
           parsePrice(data.price);
@@ -423,6 +460,10 @@ async function loadInventory() {
           ).trim();
 
 
+        /* =====================================================
+           STORE RECORD
+        ===================================================== */
+
         allNumbers.push({
 
           id:
@@ -443,6 +484,10 @@ async function loadInventory() {
       }
     );
 
+
+    /* =======================================================
+       INVENTORY DIAGNOSTIC
+    ======================================================= */
 
     if (diagnostic) {
 

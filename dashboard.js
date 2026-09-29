@@ -4,7 +4,6 @@ import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-const ADMIN_UID = "9msvItX8pAYdz4OLdm1QHGtXFQ33";
 
 import {
   doc,
@@ -12,208 +11,282 @@ import {
   collection,
   getDocs,
   query,
+  where,
   orderBy,
   limit
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* =========================================
-   ELEMENTS
-========================================= */
+/* =========================================================
+   CONFIGURATION
+========================================================= */
 
-const menuButton =
-  document.getElementById("menuButton");
+const ADMIN_UID = "9msvItX8pAYdz4OLdm1QHGtXFQ33";
 
-const closeMenu =
-  document.getElementById("closeMenu");
+const TRANSACTION_LIMIT = 5;
 
-const sideMenu =
-  document.getElementById("sideMenu");
 
-const menuOverlay =
-  document.getElementById("menuOverlay");
+/* =========================================================
+   DOM ELEMENTS
+========================================================= */
 
-const logoutButton =
-  document.getElementById("logoutButton");
+const elements = {
+  menuButton: document.getElementById("menuButton"),
+  closeMenu: document.getElementById("closeMenu"),
+  sideMenu: document.getElementById("sideMenu"),
+  menuOverlay: document.getElementById("menuOverlay"),
 
-const usdBalance =
-  document.getElementById("usdBalance");
+  logoutButton: document.getElementById("logoutButton"),
 
-const ngnBalance =
-  document.getElementById("ngnBalance");
+  usdBalance: document.getElementById("usdBalance"),
+  ngnBalance: document.getElementById("ngnBalance"),
 
-const activeNumber =
-  document.getElementById("activeNumber");
+  activeNumberCard:
+    document.getElementById("activeNumberCard"),
 
-const activeNumberCountry =
-  document.getElementById("activeNumberCountry");
+  activeNumber:
+    document.getElementById("activeNumber"),
 
-const activeNumberStatus =
-  document.getElementById("activeNumberStatus");
+  activeNumberCountry:
+    document.getElementById("activeNumberCountry"),
 
-const copyNumberButton =
-  document.getElementById("copyNumberButton");
+  activeNumberStatus:
+    document.getElementById("activeNumberStatus"),
 
-const smsNumberButton =
-  document.getElementById("smsNumberButton");
+  copyNumberButton:
+    document.getElementById("copyNumberButton"),
 
-const transactionsList =
-  document.getElementById("transactionsList");
+  smsNumberButton:
+    document.getElementById("smsNumberButton"),
 
-const smsPreview =
-  document.getElementById("smsPreview");
+  transactionsList:
+    document.getElementById("transactionsList"),
 
+  smsPreview:
+    document.getElementById("smsPreview"),
+
+  adminSupportLink:
+    document.getElementById("adminSupportLink")
+};
+
+
+/* =========================================================
+   STATE
+========================================================= */
 
 let currentUser = null;
 let currentNumber = null;
 
 
-/* =========================================
-   HAMBURGER MENU
-========================================= */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 function openMenu() {
 
-  sideMenu?.classList.add("open");
-  menuOverlay?.classList.add("active");
+  elements.sideMenu?.classList.add("open");
+
+  elements.menuOverlay?.classList.add("active");
+
+  elements.menuButton?.setAttribute(
+    "aria-expanded",
+    "true"
+  );
 
   document.body.classList.add("menu-open");
-
 }
 
 
 function closeSideMenu() {
 
-  sideMenu?.classList.remove("open");
-  menuOverlay?.classList.remove("active");
+  elements.sideMenu?.classList.remove("open");
+
+  elements.menuOverlay?.classList.remove("active");
+
+  elements.menuButton?.setAttribute(
+    "aria-expanded",
+    "false"
+  );
 
   document.body.classList.remove("menu-open");
-
 }
 
 
-menuButton?.addEventListener(
+elements.menuButton?.addEventListener(
   "click",
   openMenu
 );
 
-closeMenu?.addEventListener(
+
+elements.closeMenu?.addEventListener(
   "click",
   closeSideMenu
 );
 
-menuOverlay?.addEventListener(
+
+elements.menuOverlay?.addEventListener(
   "click",
   closeSideMenu
 );
 
 
-/* =========================================
-   MENU SECTION LINKS
-========================================= */
+/*
+ * Close the menu when an internal dashboard
+ * navigation link is selected.
+ */
 
 document
-  .querySelectorAll(".menu-section-link")
+  .querySelectorAll("[data-menu-link]")
   .forEach((link) => {
 
-    link.addEventListener("click", () => {
-
-      closeSideMenu();
-
-    });
+    link.addEventListener(
+      "click",
+      closeSideMenu
+    );
 
   });
 
 
-/* =========================================
-   AUTHENTICATION
-========================================= */
+/*
+ * Allow Escape to close the navigation.
+ */
 
-onAuthStateChanged(auth, async (user) => {
+document.addEventListener(
+  "keydown",
+  (event) => {
 
-  const adminSupportLink = document.getElementById("adminSupportLink");
+    if (
+      event.key === "Escape" &&
+      elements.sideMenu?.classList.contains("open")
+    ) {
 
-if (adminSupportLink) {
-  if (user && user.uid === ADMIN_UID) {
-    adminSupportLink.style.display = "flex";
-  } else {
-    adminSupportLink.style.display = "none";
+      closeSideMenu();
+
+    }
+
   }
-}
-  
-  if (!user) {
+);
 
-    window.location.href = "login.html";
 
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
+
+onAuthStateChanged(
+  auth,
+  async (user) => {
+
+    if (!user) {
+
+      window.location.replace(
+        "login.html"
+      );
+
+      return;
+
+    }
+
+    currentUser = user;
+
+    updateAdminNavigation(user);
+
+    console.log(
+      "Logged in as:",
+      user.email || user.uid
+    );
+
+    /*
+     * Load independent dashboard sections
+     * concurrently instead of waiting for each
+     * request one by one.
+     */
+
+    await Promise.all([
+      loadWallet(user.uid),
+      loadActiveNumber(user.uid),
+      loadTransactions(user.uid),
+      loadSmsPreview(user.uid)
+    ]);
+
+  }
+);
+
+
+/* =========================================================
+   ADMIN NAVIGATION
+========================================================= */
+
+function updateAdminNavigation(user) {
+
+  if (!elements.adminSupportLink) {
     return;
   }
 
+  const isAdmin =
+    user?.uid === ADMIN_UID;
 
-  currentUser = user;
+  elements.adminSupportLink.hidden =
+    !isAdmin;
 
-  console.log(
-    "Logged in as:",
-    user.email || user.uid
-  );
-
-
-  await loadWallet(user.uid);
-
-  await loadActiveNumber(user.uid);
-
-  await loadTransactions(user.uid);
-
-  await loadSmsPreview(user.uid);
-
-});
+}
 
 
-/* =========================================
-   LOAD WALLET
-========================================= */
+/* =========================================================
+   WALLET
+========================================================= */
 
 async function loadWallet(uid) {
 
   try {
 
     const userRef =
-      doc(db, "users", uid);
+      doc(
+        db,
+        "users",
+        uid
+      );
 
-    const userSnapshot =
+    const snapshot =
       await getDoc(userRef);
 
 
-    if (!userSnapshot.exists()) {
+    if (!snapshot.exists()) {
 
-      usdBalance.textContent = "$0.00";
-      ngnBalance.textContent = "₦0.00";
+      setWalletBalances(
+        0,
+        0
+      );
 
       return;
+
     }
 
 
-    const userData =
-      userSnapshot.data();
+    const data =
+      snapshot.data();
 
 
     const usd =
-      Number(userData.usdBalance || 0);
+      toSafeNumber(
+        data.usdBalance
+      );
+
 
     const ngn =
-      Number(userData.ngnBalance || 0);
+      toSafeNumber(
+        data.ngnBalance
+      );
 
 
-    usdBalance.textContent =
-      "$" + usd.toFixed(2);
-
-    ngnBalance.textContent =
-      "₦" + ngn.toFixed(2);
-
+    setWalletBalances(
+      usd,
+      ngn
+    );
 
   } catch (error) {
 
     console.error(
-      "Error loading wallet:",
+      "Wallet loading error:",
       error
     );
 
@@ -222,9 +295,32 @@ async function loadWallet(uid) {
 }
 
 
-/* =========================================
-   LOAD ACTIVE NUMBER
-========================================= */
+function setWalletBalances(
+  usd,
+  ngn
+) {
+
+  if (elements.usdBalance) {
+
+    elements.usdBalance.textContent =
+      formatUSD(usd);
+
+  }
+
+
+  if (elements.ngnBalance) {
+
+    elements.ngnBalance.textContent =
+      formatNGN(ngn);
+
+  }
+
+}
+
+
+/* =========================================================
+   ACTIVE NUMBER
+========================================================= */
 
 async function loadActiveNumber(uid) {
 
@@ -245,91 +341,201 @@ async function loadActiveNumber(uid) {
 
     if (snapshot.empty) {
 
-      currentNumber = null;
-
-      activeNumber.textContent =
-        "No number yet";
-
-      activeNumberCountry.textContent =
-        "Purchase a number to get started";
-
-      activeNumberStatus.textContent =
-        "Not active";
-
-
-      copyNumberButton.disabled = true;
-      smsNumberButton.disabled = true;
-
-
-      showNoNumberSms();
+      setNoActiveNumber();
 
       return;
+
     }
 
 
     /*
-     * Use the first owned number as the
-     * dashboard's current active number.
+     * Prefer an explicitly active number.
+     * Otherwise use the first owned number
+     * as a compatibility fallback.
      */
 
-    const firstDoc =
-      snapshot.docs[0];
+    const numberDocuments =
+      snapshot.docs.map(
+        (numberDoc) => ({
+          id: numberDoc.id,
+          ...numberDoc.data()
+        })
+      );
 
 
-    currentNumber = {
-      id: firstDoc.id,
-      ...firstDoc.data()
-    };
+    const active =
+      numberDocuments.find(
+        (number) =>
+          String(number.status || "")
+            .toLowerCase() === "active"
+      );
 
 
-    activeNumber.textContent =
-      currentNumber.number ||
-      "Unknown number";
+    currentNumber =
+      active ||
+      numberDocuments[0];
 
 
-    activeNumberCountry.textContent =
-      currentNumber.countryName ||
-      currentNumber.country ||
-      currentNumber.service ||
-      "Virtual number";
-
-
-    activeNumberStatus.textContent =
-      currentNumber.status ||
-      "Active";
-
-
-    copyNumberButton.disabled = false;
-    smsNumberButton.disabled = false;
-
+    renderActiveNumber();
 
   } catch (error) {
 
     console.error(
-      "Error loading active number:",
+      "Active number loading error:",
       error
     );
 
 
-    activeNumber.textContent =
-      "Unable to load";
-
-    activeNumberCountry.textContent =
-      "Please try again";
-
-    activeNumberStatus.textContent =
-      "Unavailable";
+    setActiveNumberError();
 
   }
 
 }
 
 
-/* =========================================
-   COPY NUMBER
-========================================= */
+function renderActiveNumber() {
 
-copyNumberButton?.addEventListener(
+  if (!currentNumber) {
+
+    setNoActiveNumber();
+
+    return;
+
+  }
+
+
+  if (elements.activeNumber) {
+
+    elements.activeNumber.textContent =
+      currentNumber.number ||
+      "Unknown number";
+
+  }
+
+
+  if (elements.activeNumberCountry) {
+
+    elements.activeNumberCountry.textContent =
+      currentNumber.countryName ||
+      currentNumber.country ||
+      currentNumber.service ||
+      "Virtual number";
+
+  }
+
+
+  if (elements.activeNumberStatus) {
+
+    elements.activeNumberStatus.textContent =
+      currentNumber.status ||
+      "Active";
+
+  }
+
+
+  elements.copyNumberButton?.removeAttribute(
+    "disabled"
+  );
+
+  elements.smsNumberButton?.removeAttribute(
+    "disabled"
+  );
+
+}
+
+
+function setNoActiveNumber() {
+
+  currentNumber = null;
+
+
+  if (elements.activeNumber) {
+
+    elements.activeNumber.textContent =
+      "No number yet";
+
+  }
+
+
+  if (elements.activeNumberCountry) {
+
+    elements.activeNumberCountry.textContent =
+      "Purchase a number to get started";
+
+  }
+
+
+  if (elements.activeNumberStatus) {
+
+    elements.activeNumberStatus.textContent =
+      "Not active";
+
+  }
+
+
+  elements.copyNumberButton?.setAttribute(
+    "disabled",
+    ""
+  );
+
+  elements.smsNumberButton?.setAttribute(
+    "disabled",
+    ""
+  );
+
+
+  showNoNumberSms();
+
+}
+
+
+function setActiveNumberError() {
+
+  currentNumber = null;
+
+
+  if (elements.activeNumber) {
+
+    elements.activeNumber.textContent =
+      "Unable to load";
+
+  }
+
+
+  if (elements.activeNumberCountry) {
+
+    elements.activeNumberCountry.textContent =
+      "Please try again";
+
+  }
+
+
+  if (elements.activeNumberStatus) {
+
+    elements.activeNumberStatus.textContent =
+      "Unavailable";
+
+  }
+
+
+  elements.copyNumberButton?.setAttribute(
+    "disabled",
+    ""
+  );
+
+  elements.smsNumberButton?.setAttribute(
+    "disabled",
+    ""
+  );
+
+}
+
+
+/* =========================================================
+   COPY NUMBER
+========================================================= */
+
+elements.copyNumberButton?.addEventListener(
   "click",
   async () => {
 
@@ -345,20 +551,30 @@ copyNumberButton?.addEventListener(
       );
 
 
-      const original =
-        copyNumberButton.innerHTML;
+      const originalHTML =
+        elements.copyNumberButton.innerHTML;
 
 
-      copyNumberButton.innerHTML =
-        `<i class="fa-solid fa-check"></i> Copied`;
+      elements.copyNumberButton.innerHTML =
+        `
+          <i
+            class="fa-solid fa-check"
+            aria-hidden="true"
+          ></i>
+
+          <span>Copied</span>
+        `;
 
 
-      setTimeout(() => {
+      setTimeout(
+        () => {
 
-        copyNumberButton.innerHTML =
-          original;
+          elements.copyNumberButton.innerHTML =
+            originalHTML;
 
-      }, 1600);
+        },
+        1600
+      );
 
 
     } catch (error) {
@@ -374,18 +590,17 @@ copyNumberButton?.addEventListener(
 );
 
 
-/* =========================================
-   OPEN SMS FOR ACTIVE NUMBER
-========================================= */
+/* =========================================================
+   OPEN SMS INBOX
+========================================================= */
 
-smsNumberButton?.addEventListener(
+elements.smsNumberButton?.addEventListener(
   "click",
   () => {
 
     if (!currentNumber) {
       return;
     }
-
 
     window.location.href =
       "sms-inbox.html";
@@ -394,9 +609,9 @@ smsNumberButton?.addEventListener(
 );
 
 
-/* =========================================
-   LOAD TRANSACTIONS
-========================================= */
+/* =========================================================
+   TRANSACTIONS
+========================================================= */
 
 async function loadTransactions(uid) {
 
@@ -409,6 +624,14 @@ async function loadTransactions(uid) {
       );
 
 
+    /*
+     * Query only this user's records.
+     *
+     * This is preferable to downloading the
+     * entire transactions collection and filtering
+     * it in the browser.
+     */
+
     let snapshot;
 
 
@@ -417,249 +640,241 @@ async function loadTransactions(uid) {
       const transactionQuery =
         query(
           transactionsRef,
-          orderBy("createdAt", "desc"),
-          limit(5)
+          where(
+            "userId",
+            "==",
+            uid
+          ),
+          orderBy(
+            "createdAt",
+            "desc"
+          ),
+          limit(
+            TRANSACTION_LIMIT
+          )
         );
 
+
       snapshot =
-        await getDocs(transactionQuery);
+        await getDocs(
+          transactionQuery
+        );
 
     } catch (queryError) {
 
       /*
-       * If createdAt is missing or an index is
-       * required, fall back to a normal read.
+       * If the composite index is not available,
+       * retry with the user filter only.
        */
 
       console.warn(
-        "Transaction query fallback:",
+        "Ordered transaction query failed. Using filtered fallback.",
         queryError
       );
 
+
+      const fallbackQuery =
+        query(
+          transactionsRef,
+          where(
+            "userId",
+            "==",
+            uid
+          ),
+          limit(
+            TRANSACTION_LIMIT
+          )
+        );
+
+
       snapshot =
-        await getDocs(transactionsRef);
+        await getDocs(
+          fallbackQuery
+        );
 
     }
 
 
-    const transactions = [];
+    const transactions =
+      snapshot.docs.map(
+        (transactionDoc) => ({
+          id: transactionDoc.id,
+          ...transactionDoc.data()
+        })
+      );
 
-
-    snapshot.forEach((docSnap) => {
-
-      const data =
-        docSnap.data();
-
-
-      /*
-       * Only display this user's transactions.
-       */
-
-      if (data.userId === uid) {
-
-        transactions.push({
-          id: docSnap.id,
-          ...data
-        });
-
-      }
-
-    });
-
-
-    /*
-     * Newest first when the fallback query
-     * was used.
-     */
 
     transactions.sort(
-      (a, b) => {
-
-        const aTime =
-          getTimestampMillis(a.createdAt);
-
-        const bTime =
-          getTimestampMillis(b.createdAt);
-
-        return bTime - aTime;
-
-      }
+      (a, b) =>
+        getTimestampMillis(
+          b.createdAt
+        ) -
+        getTimestampMillis(
+          a.createdAt
+        )
     );
 
 
     renderTransactions(
-      transactions.slice(0, 5)
+      transactions.slice(
+        0,
+        TRANSACTION_LIMIT
+      )
     );
 
 
   } catch (error) {
 
     console.error(
-      "Error loading transactions:",
+      "Transaction loading error:",
       error
     );
 
 
-    transactionsList.innerHTML = `
-      <div class="empty-state">
-
-        <div class="empty-icon">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-        </div>
-
-        <h3>
-          Transactions unavailable
-        </h3>
-
-        <p>
-          We couldn't load your transaction history.
-        </p>
-
-      </div>
-    `;
+    renderTransactionsError();
 
   }
 
 }
 
 
-/* =========================================
-   RENDER TRANSACTIONS
-========================================= */
+/* =========================================================
+   TRANSACTION RENDERING
+========================================================= */
 
 function renderTransactions(items) {
 
   if (!items.length) {
 
-    transactionsList.innerHTML = `
-      <div class="empty-state">
-
-        <div class="empty-icon">
-          <i class="fa-solid fa-receipt"></i>
-        </div>
-
-        <h3>
-          No transactions yet
-        </h3>
-
-        <p>
-          Your wallet activity will appear here.
-        </p>
-
-      </div>
-    `;
+    elements.transactionsList.innerHTML =
+      createEmptyState(
+        "fa-receipt",
+        "No transactions yet",
+        "Your wallet activity will appear here."
+      );
 
     return;
+
   }
 
 
-  transactionsList.innerHTML =
-    items.map((item) => {
-
-      const amount =
-        getTransactionAmount(item);
-
-      const type =
-        item.type ||
-        item.category ||
-        "Transaction";
-
-
-      const status =
-        item.status ||
-        "completed";
-
-
-      const date =
-        formatDate(item.createdAt);
-
-
-      const isPurchase =
-        type.toLowerCase().includes("purchase") ||
-        type.toLowerCase().includes("number");
-
-
-      return `
-        <div
-          style="
-            display:flex;
-            align-items:center;
-            gap:12px;
-            padding:15px;
-            border-bottom:1px solid rgba(34,197,94,.08);
-          "
-        >
-
-          <div
-            style="
-              width:42px;
-              height:42px;
-              flex:0 0 42px;
-              display:flex;
-              align-items:center;
-              justify-content:center;
-              border-radius:12px;
-              background:rgba(34,197,94,.09);
-              color:#39e86f;
-            "
-          >
-            <i class="fa-solid ${
-              isPurchase
-                ? "fa-mobile-screen-button"
-                : "fa-arrow-right-arrow-left"
-            }"></i>
-          </div>
-
-
-          <div style="flex:1;min-width:0;">
-
-            <strong
-              style="
-                display:block;
-                color:#ecfdf3;
-                font-size:13px;
-              "
-            >
-              ${escapeHTML(type)}
-            </strong>
-
-            <span
-              style="
-                display:block;
-                margin-top:4px;
-                color:#78857d;
-                font-size:11px;
-              "
-            >
-              ${escapeHTML(date)}
-              ·
-              ${escapeHTML(status)}
-            </span>
-
-          </div>
-
-
-          <strong
-            style="
-              color:${isPurchase ? "#f87171" : "#4ade80"};
-              font-size:13px;
-              white-space:nowrap;
-            "
-          >
-            ${isPurchase ? "-" : "+"}$${amount.toFixed(2)}
-          </strong>
-
-        </div>
-      `;
-
-    }).join("");
+  elements.transactionsList.innerHTML =
+    items
+      .map(
+        createTransactionHTML
+      )
+      .join("");
 
 }
 
 
-/* =========================================
-   LOAD SMS PREVIEW
-========================================= */
+function createTransactionHTML(item) {
+
+  const amount =
+    getTransactionAmount(item);
+
+
+  const type =
+    item.type ||
+    item.category ||
+    "Transaction";
+
+
+  const status =
+    item.status ||
+    "completed";
+
+
+  const date =
+    formatDate(
+      item.createdAt
+    );
+
+
+  const normalizedType =
+    String(type).toLowerCase();
+
+
+  const isPurchase =
+    normalizedType.includes("purchase") ||
+    normalizedType.includes("number");
+
+
+  const icon =
+    isPurchase
+      ? "fa-mobile-screen-button"
+      : "fa-arrow-right-arrow-left";
+
+
+  const amountClass =
+    isPurchase
+      ? "transaction-amount debit"
+      : "transaction-amount credit";
+
+
+  const amountPrefix =
+    isPurchase
+      ? "-"
+      : "+";
+
+
+  return `
+    <article class="transaction-item">
+
+      <div class="transaction-icon">
+        <i
+          class="fa-solid ${icon}"
+          aria-hidden="true"
+        ></i>
+      </div>
+
+
+      <div class="transaction-details">
+
+        <strong>
+          ${escapeHTML(type)}
+        </strong>
+
+        <span>
+          ${escapeHTML(date)}
+          <span class="transaction-separator">
+            ·
+          </span>
+          ${escapeHTML(status)}
+        </span>
+
+      </div>
+
+
+      <strong class="${amountClass}">
+        ${amountPrefix}${formatUSD(amount)}
+      </strong>
+
+    </article>
+  `;
+
+}
+
+
+/* =========================================================
+   TRANSACTION ERROR
+========================================================= */
+
+function renderTransactionsError() {
+
+  elements.transactionsList.innerHTML =
+    createEmptyState(
+      "fa-triangle-exclamation",
+      "Transactions unavailable",
+      "We couldn't load your transaction history."
+    );
+
+}
+
+
+/* =========================================================
+   SMS PREVIEW
+========================================================= */
 
 async function loadSmsPreview(uid) {
 
@@ -675,7 +890,9 @@ async function loadSmsPreview(uid) {
 
 
     const snapshot =
-      await getDocs(numbersRef);
+      await getDocs(
+        numbersRef
+      );
 
 
     if (snapshot.empty) {
@@ -683,198 +900,140 @@ async function loadSmsPreview(uid) {
       showNoNumberSms();
 
       return;
+
     }
 
 
-    const firstDoc =
-      snapshot.docs[0];
-
-
-    const numberData =
-      firstDoc.data();
+    const firstNumber =
+      snapshot.docs[0].data();
 
 
     const service =
-      numberData.service ||
+      firstNumber.service ||
       "Service";
 
 
-    smsPreview.innerHTML = `
-      <div
-        style="
-          padding:16px;
-          display:flex;
-          gap:12px;
-        "
-      >
-
-        <div
-          style="
-            width:42px;
-            height:42px;
-            flex:0 0 42px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            border-radius:12px;
-            background:rgba(34,197,94,.09);
-            color:#39e86f;
-          "
-        >
-          <i class="fa-regular fa-message"></i>
-        </div>
-
-
-        <div style="flex:1;">
-
-          <div
-            style="
-              display:flex;
-              justify-content:space-between;
-              gap:10px;
-            "
-          >
-
-            <strong
-              style="
-                color:#ecfdf3;
-                font-size:13px;
-              "
-            >
-              ${escapeHTML(service)}
-            </strong>
-
-            <span
-              style="
-                color:#78857d;
-                font-size:11px;
-              "
-            >
-              Demo
-            </span>
-
-          </div>
-
-
-          <p
-            style="
-              margin:7px 0 0;
-              color:#8d9a91;
-              font-size:12px;
-              line-height:1.5;
-            "
-          >
-            This is a simulated SMS message for
-            development and testing.
-          </p>
-
-
-          <span
-            style="
-              display:inline-block;
-              margin-top:8px;
-              padding:5px 8px;
-              border-radius:7px;
-              background:rgba(34,197,94,.09);
-              color:#4ade80;
-              font-size:11px;
-              font-weight:800;
-              letter-spacing:1px;
-            "
-          >
-            DEMO 482731
-          </span>
-
-        </div>
-
-      </div>
-    `;
+    renderSmsPreview(
+      service
+    );
 
 
   } catch (error) {
 
     console.error(
-      "Error loading SMS preview:",
+      "SMS preview loading error:",
       error
     );
 
 
-    smsPreview.innerHTML = `
-      <div class="empty-state">
-
-        <div class="empty-icon">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-        </div>
-
-        <h3>
-          SMS inbox unavailable
-        </h3>
-
-        <p>
-          Please try again later.
-        </p>
-
-      </div>
-    `;
+    elements.smsPreview.innerHTML =
+      createEmptyState(
+        "fa-triangle-exclamation",
+        "SMS inbox unavailable",
+        "Please try again later."
+      );
 
   }
 
 }
 
 
-/* =========================================
-   NO NUMBER SMS STATE
-========================================= */
+/* =========================================================
+   SMS PREVIEW RENDERING
+========================================================= */
 
-function showNoNumberSms() {
+function renderSmsPreview(service) {
 
-  smsPreview.innerHTML = `
-    <div class="empty-state">
+  elements.smsPreview.innerHTML = `
+    <article class="sms-preview">
 
-      <div class="empty-icon">
-        <i class="fa-regular fa-message"></i>
+      <div class="sms-preview-icon">
+        <i
+          class="fa-regular fa-message"
+          aria-hidden="true"
+        ></i>
       </div>
 
-      <h3>
-        No messages
-      </h3>
 
-      <p>
-        Purchase a number to start using your SMS inbox.
-      </p>
+      <div class="sms-preview-content">
 
-    </div>
+        <div class="sms-preview-header">
+
+          <strong>
+            ${escapeHTML(service)}
+          </strong>
+
+          <span>
+            Preview
+          </span>
+
+        </div>
+
+
+        <p>
+          Your SMS messages will appear here
+          when your number receives a message.
+        </p>
+
+
+        <span class="sms-preview-code">
+          SMS PREVIEW
+        </span>
+
+      </div>
+
+    </article>
   `;
 
 }
 
 
-/* =========================================
-   LOGOUT
-========================================= */
+function showNoNumberSms() {
 
-logoutButton?.addEventListener(
+  elements.smsPreview.innerHTML =
+    createEmptyState(
+      "fa-message",
+      "No messages",
+      "Purchase a number to start using your SMS inbox."
+    );
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+elements.logoutButton?.addEventListener(
   "click",
   async () => {
 
     try {
 
-      logoutButton.disabled = true;
+      elements.logoutButton.disabled =
+        true;
+
 
       const label =
-        logoutButton.querySelector("span");
+        elements.logoutButton.querySelector(
+          "span"
+        );
+
 
       if (label) {
+
         label.textContent =
           "Logging out...";
+
       }
 
 
       await signOut(auth);
 
 
-      window.location.href =
-        "login.html";
+      window.location.replace(
+        "login.html"
+      );
 
 
     } catch (error) {
@@ -885,14 +1044,21 @@ logoutButton?.addEventListener(
       );
 
 
-      logoutButton.disabled = false;
+      elements.logoutButton.disabled =
+        false;
+
 
       const label =
-        logoutButton.querySelector("span");
+        elements.logoutButton.querySelector(
+          "span"
+        );
+
 
       if (label) {
+
         label.textContent =
           "Log out";
+
       }
 
     }
@@ -901,9 +1067,89 @@ logoutButton?.addEventListener(
 );
 
 
-/* =========================================
-   HELPERS
-========================================= */
+/* =========================================================
+   EMPTY STATE FACTORY
+========================================================= */
+
+function createEmptyState(
+  icon,
+  title,
+  message
+) {
+
+  return `
+    <div class="empty-state">
+
+      <div class="empty-icon">
+        <i
+          class="fa-solid ${icon}"
+          aria-hidden="true"
+        ></i>
+      </div>
+
+      <h3>
+        ${escapeHTML(title)}
+      </h3>
+
+      <p>
+        ${escapeHTML(message)}
+      </p>
+
+    </div>
+  `;
+
+}
+
+
+/* =========================================================
+   FORMATTING HELPERS
+========================================================= */
+
+function toSafeNumber(value) {
+
+  const number =
+    Number(value);
+
+  return Number.isFinite(number)
+    ? number
+    : 0;
+
+}
+
+
+function formatUSD(value) {
+
+  return new Intl.NumberFormat(
+    "en-US",
+    {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
+  ).format(
+    toSafeNumber(value)
+  );
+
+}
+
+
+function formatNGN(value) {
+
+  return new Intl.NumberFormat(
+    "en-NG",
+    {
+      style: "currency",
+      currency: "NGN",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
+  ).format(
+    toSafeNumber(value)
+  );
+
+}
+
 
 function getTimestampMillis(timestamp) {
 
@@ -913,7 +1159,8 @@ function getTimestampMillis(timestamp) {
 
 
   if (
-    typeof timestamp.toMillis === "function"
+    typeof timestamp.toMillis ===
+    "function"
   ) {
 
     return timestamp.toMillis();
@@ -925,7 +1172,10 @@ function getTimestampMillis(timestamp) {
     timestamp.seconds !== undefined
   ) {
 
-    return timestamp.seconds * 1000;
+    return (
+      Number(timestamp.seconds) *
+      1000
+    );
 
   }
 
@@ -939,6 +1189,23 @@ function getTimestampMillis(timestamp) {
   }
 
 
+  if (
+    typeof timestamp === "string" ||
+    typeof timestamp === "number"
+  ) {
+
+    const date =
+      new Date(timestamp);
+
+    return Number.isNaN(
+      date.getTime()
+    )
+      ? 0
+      : date.getTime();
+
+  }
+
+
   return 0;
 
 }
@@ -947,7 +1214,9 @@ function getTimestampMillis(timestamp) {
 function formatDate(timestamp) {
 
   const millis =
-    getTimestampMillis(timestamp);
+    getTimestampMillis(
+      timestamp
+    );
 
 
   if (!millis) {
@@ -955,14 +1224,16 @@ function formatDate(timestamp) {
   }
 
 
-  return new Date(millis)
-    .toLocaleDateString(
-      undefined,
-      {
-        month: "short",
-        day: "numeric"
-      }
-    );
+  return new Intl.DateTimeFormat(
+    undefined,
+    {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    }
+  ).format(
+    new Date(millis)
+  );
 
 }
 
@@ -977,7 +1248,9 @@ function getTransactionAmount(item) {
   ];
 
 
-  for (const value of possibleValues) {
+  for (
+    const value of possibleValues
+  ) {
 
     const number =
       Number(value);
@@ -999,13 +1272,34 @@ function getTransactionAmount(item) {
 }
 
 
+/* =========================================================
+   SECURITY / HTML ESCAPING
+========================================================= */
+
 function escapeHTML(value) {
 
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }

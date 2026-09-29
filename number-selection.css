@@ -1,17 +1,37 @@
 /* =========================================================
    WAVYNUM — NUMBER SELECTION PAGE
+   Isolated page styling
 ========================================================= */
 
-.number-selection-page {
+.wavynum-number-selection {
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
+  margin: 0;
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(57, 232, 111, 0.08),
+      transparent 34%
+    ),
+    #050806;
+  color: #f5f8f5;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-.number-selection-page .number-selection-main {
-  width: min(100% - 40px, 1120px);
+.wavynum-number-selection *,
+.wavynum-number-selection *::before,
+.wavynum-number-selection *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.wavynum-number-selection .number-selection-page {
+  width: min(100% - 28px, 920px);
   margin: 0 auto;
-  padding: 52px 0 80px;
+  padding: 28px 0 50px;
 }
 
 
@@ -19,76 +39,72 @@
    HEADER
 ========================================================= */
 
-.number-selection-page .selection-header {
+.wavynum-number-selection .number-selection-header {
   display: flex;
   align-items: flex-start;
-  gap: 24px;
-  margin-bottom: 36px;
+  gap: 15px;
+  margin-bottom: 24px;
 }
 
-.number-selection-page .selection-back {
-  width: 56px;
-  height: 56px;
-  flex: 0 0 56px;
+.wavynum-number-selection .number-selection-back {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  margin-top: 2px;
 
-  background: var(--surface);
-
-  color: var(--text);
+  color: #f5f8f5;
   text-decoration: none;
 
-  font-size: 20px;
+  background: rgba(11, 17, 13, 0.92);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 13px;
 
   transition:
-    background var(--transition),
-    border-color var(--transition),
-    transform var(--transition);
+    border-color .2s ease,
+    background .2s ease,
+    transform .2s ease;
 }
 
-.number-selection-page .selection-back:hover {
-  background: var(--surface-light);
-  border-color: var(--border-strong);
+.wavynum-number-selection .number-selection-back:hover {
+  background: #101812;
+  border-color: rgba(57,232,111,0.28);
   transform: translateX(-2px);
 }
 
-.number-selection-page .selection-heading {
+.wavynum-number-selection .number-selection-heading {
   min-width: 0;
 }
 
-.number-selection-page .selection-eyebrow {
+.wavynum-number-selection .number-selection-heading > span {
   display: block;
+  margin-bottom: 5px;
 
-  margin-bottom: 8px;
-
-  color: var(--green);
-
-  font-size: 12px;
+  color: #39e86f;
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.number-selection-page .selection-heading h1 {
+.wavynum-number-selection .number-selection-heading h1 {
   margin: 0;
 
-  font-size: clamp(32px, 5vw, 48px);
+  color: #f5f8f5;
+  font-size: clamp(28px, 5vw, 42px);
   line-height: 1.05;
-  letter-spacing: -0.04em;
+  letter-spacing: -1.4px;
 }
 
-.number-selection-page .selection-heading p {
-  margin: 12px 0 0;
+.wavynum-number-selection .number-selection-heading p {
+  margin: 8px 0 0;
 
-  color: var(--text-muted);
-
-  font-size: 16px;
-  line-height: 1.6;
+  color: #7d897f;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 
@@ -96,33 +112,30 @@
    SELECTED SERVICE
 ========================================================= */
 
-.number-selection-page .selected-service {
+.wavynum-number-selection .selected-service-card {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
 
-  min-height: 96px;
-  padding: 18px 22px;
-
-  margin-bottom: 34px;
-
-  border: 1px solid rgba(57, 232, 111, 0.24);
-  border-radius: 22px;
+  padding: 17px 19px;
 
   background:
     linear-gradient(
       135deg,
-      rgba(57, 232, 111, 0.07),
-      rgba(11, 17, 13, 0.96)
+      rgba(57,232,111,0.055),
+      rgba(11,17,13,0.95)
     );
 
-  box-shadow: var(--shadow-green);
+  border: 1px solid rgba(57,232,111,0.20);
+  border-radius: 18px;
+
+  margin-bottom: 27px;
 }
 
-.number-selection-page .selected-service-logo {
-  width: 64px;
-  height: 64px;
-  flex: 0 0 64px;
+.wavynum-number-selection .selected-service-icon {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
 
   display: flex;
   align-items: center;
@@ -130,134 +143,116 @@
 
   overflow: hidden;
 
-  border-radius: 17px;
-
-  background: #fff;
+  background: #101812;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 15px;
 }
 
-.number-selection-page .selected-service-logo img {
+.wavynum-number-selection .selected-service-icon img {
   width: 100%;
   height: 100%;
-
   object-fit: cover;
 }
 
-.number-selection-page .selected-service-logo i {
-  color: var(--green);
-  font-size: 24px;
+.wavynum-number-selection .selected-service-icon i {
+  color: #39e86f;
+  font-size: 21px;
 }
 
-.number-selection-page .selected-service-info {
-  min-width: 0;
-}
-
-.number-selection-page .selected-service-label {
+.wavynum-number-selection .selected-service-label {
   display: block;
+  margin-bottom: 5px;
 
-  margin-bottom: 4px;
-
-  color: var(--text-muted);
-
-  font-size: 11px;
+  color: #7d897f;
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
+  letter-spacing: 1.6px;
 }
 
-.number-selection-page .selected-service-name {
+.wavynum-number-selection .selected-service-card strong {
   display: block;
 
-  color: var(--text);
-
-  font-size: 22px;
+  color: #f5f8f5;
+  font-size: 18px;
   font-weight: 750;
 }
 
 
 /* =========================================================
-   COUNTRY FILTER
+   COUNTRY
 ========================================================= */
 
-.number-selection-page .country-filter-section {
+.wavynum-number-selection .country-section {
   margin-bottom: 18px;
 }
 
-.number-selection-page .section-label {
+.wavynum-number-selection .country-title {
   display: flex;
   align-items: center;
   gap: 9px;
 
-  margin-bottom: 13px;
+  margin-bottom: 12px;
 
-  color: var(--text-soft);
-
-  font-size: 14px;
+  color: #b5c0b7;
+  font-size: 15px;
   font-weight: 750;
 }
 
-.number-selection-page .section-label i {
-  color: var(--green);
+.wavynum-number-selection .country-title i {
+  color: #39e86f;
 }
 
-.number-selection-page .filters {
+.wavynum-number-selection .country-buttons {
   display: flex;
-  gap: 10px;
+  gap: 9px;
 
   overflow-x: auto;
-
-  padding-bottom: 4px;
+  padding-bottom: 3px;
 
   scrollbar-width: none;
 }
 
-.number-selection-page .filters::-webkit-scrollbar {
+.wavynum-number-selection .country-buttons::-webkit-scrollbar {
   display: none;
 }
 
-.number-selection-page .filter-btn {
-  height: 48px;
+.wavynum-number-selection .country-button {
+  flex: 0 0 auto;
 
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 9px;
+  gap: 8px;
 
-  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 0 14px;
 
-  padding: 0 18px;
+  color: #aeb8b0;
+  background: #0b110d;
 
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
 
-  background: var(--surface);
-
-  color: var(--text-soft);
-
-  font-family: var(--font);
-  font-size: 14px;
+  font: inherit;
+  font-size: 12px;
   font-weight: 700;
 
   cursor: pointer;
 
   transition:
-    background var(--transition),
-    border-color var(--transition),
-    color var(--transition);
+    color .2s ease,
+    background .2s ease,
+    border-color .2s ease;
 }
 
-.number-selection-page .filter-btn:hover {
-  border-color: var(--border-strong);
-  color: var(--text);
+.wavynum-number-selection .country-button:hover {
+  color: #f5f8f5;
+  border-color: rgba(57,232,111,0.24);
 }
 
-.number-selection-page .filter-btn.active {
-  border-color: var(--green);
-  background: var(--green);
+.wavynum-number-selection .country-button.active {
   color: #031007;
-}
-
-.number-selection-page .filter-btn i {
-  font-size: 14px;
+  background: #39e86f;
+  border-color: #39e86f;
 }
 
 
@@ -265,12 +260,12 @@
    INVENTORY STATUS
 ========================================================= */
 
-.number-selection-page .inventory-status {
-  margin: 20px 4px 14px;
+.wavynum-number-selection .inventory-status {
+  min-height: 18px;
+  margin: 14px 2px;
 
-  color: var(--text-muted);
-
-  font-size: 13px;
+  color: #7d897f;
+  font-size: 11px;
   font-weight: 600;
 }
 
@@ -279,126 +274,103 @@
    NUMBER LIST
 ========================================================= */
 
-.number-selection-page .numbers-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.wavynum-number-selection .number-list {
+  display: grid;
+  gap: 13px;
 }
 
 
 /* =========================================================
-   IMPORTANT:
-   SCOPED .number-card
-   This prevents style.css from interfering.
+   NUMBER CARD
 ========================================================= */
 
-.number-selection-page .number-card {
+.wavynum-number-selection .number-card {
   width: 100%;
 
-  margin: 0;
-  padding: 0;
+  background: #0b110d;
+
+  border: 1px solid rgba(255,255,255,0.075);
+  border-radius: 18px;
 
   overflow: hidden;
 
-  border: 1px solid var(--border);
-  border-radius: 20px;
-
-  background: var(--surface);
-
-  box-shadow: none;
+  transition:
+    border-color .2s ease,
+    transform .2s ease,
+    box-shadow .2s ease;
 }
 
-
-/* Reset possible global styles */
-
-.number-selection-page .number-card::before,
-.number-selection-page .number-card::after {
-  content: none;
+.wavynum-number-selection .number-card:hover {
+  border-color: rgba(57,232,111,0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.20);
 }
 
-.number-selection-page .number-card-inner {
-  width: 100%;
-
-  display: grid;
-
-  grid-template-columns:
-    minmax(150px, 1fr)
-    minmax(230px, 1.7fr)
-    minmax(180px, 0.9fr)
-    auto;
-
-  align-items: center;
-
-  gap: 24px;
-
-  padding: 20px 22px;
+.wavynum-number-selection .number-card-inner {
+  padding: 18px;
 }
 
 
 /* =========================================================
-   COUNTRY
+   CARD TOP
 ========================================================= */
 
-.number-selection-page .number-card-top {
-  display: contents;
+.wavynum-number-selection .number-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+
+  padding-bottom: 14px;
+
+  border-bottom: 1px solid rgba(255,255,255,0.055);
 }
 
-.number-selection-page .number-country {
-  min-width: 0;
-}
-
-.number-selection-page .number-country-label,
-.number-selection-page .number-phone-label,
-.number-selection-page .number-detail-label {
+.wavynum-number-selection .number-country-label,
+.wavynum-number-selection .number-phone-label,
+.wavynum-number-selection .number-detail-label {
   display: block;
 
-  margin-bottom: 6px;
-
-  color: var(--text-muted);
-
-  font-size: 10px;
+  color: #657168;
+  font-size: 9px;
   font-weight: 800;
-  letter-spacing: 0.11em;
+  letter-spacing: 1.3px;
   text-transform: uppercase;
 }
 
-.number-selection-page .number-country-name {
+.wavynum-number-selection .number-country-name {
   display: block;
 
-  overflow: hidden;
+  margin-top: 5px;
 
-  color: var(--text);
-
-  font-size: 15px;
+  color: #f5f8f5;
+  font-size: 16px;
   font-weight: 750;
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.number-selection-page .number-country-code {
+.wavynum-number-selection .number-country-code {
   display: block;
 
-  margin-top: 3px;
+  margin-top: 2px;
 
-  color: var(--text-muted);
-
-  font-size: 12px;
-  font-weight: 600;
+  color: #718077;
+  font-size: 11px;
+  font-weight: 650;
 }
 
+.wavynum-number-selection .number-available {
+  flex: 0 0 auto;
 
-/* =========================================================
-   AVAILABILITY
-========================================================= */
+  padding: 6px 9px;
 
-.number-selection-page .number-available {
-  position: absolute;
+  color: #55f47f;
+  background: rgba(57,232,111,0.07);
 
-  width: 1px;
-  height: 1px;
+  border: 1px solid rgba(57,232,111,0.16);
+  border-radius: 999px;
 
-  overflow: hidden;
+  font-size: 10px;
+  font-weight: 750;
 }
 
 
@@ -406,26 +378,22 @@
    PHONE NUMBER
 ========================================================= */
 
-.number-selection-page .number-phone-box {
-  min-width: 0;
+.wavynum-number-selection .number-phone-box {
+  padding: 15px 0 13px;
 }
 
-.number-selection-page .number-phone {
+.wavynum-number-selection .number-phone {
   display: block;
 
-  overflow: hidden;
+  margin-top: 6px;
 
-  color: var(--text);
+  color: #ffffff;
 
-  font-family: var(--font);
+  font-size: clamp(20px, 5vw, 26px);
+  font-weight: 800;
+  letter-spacing: .2px;
 
-  font-size: clamp(19px, 2.2vw, 24px);
-  font-weight: 750;
-
-  letter-spacing: -0.025em;
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  word-break: break-word;
 }
 
 
@@ -433,31 +401,40 @@
    DETAILS
 ========================================================= */
 
-.number-selection-page .number-card-details {
-  display: flex;
-  align-items: center;
-  gap: 28px;
+.wavynum-number-selection .number-card-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 
+  gap: 12px;
+
+  margin-bottom: 14px;
+}
+
+.wavynum-number-selection .number-detail {
   min-width: 0;
 }
 
-.number-selection-page .number-detail {
-  min-width: 0;
-}
-
-.number-selection-page .number-detail-value {
+.wavynum-number-selection .number-detail-value {
   display: block;
 
-  color: var(--text-soft);
+  margin-top: 5px;
 
-  font-size: 14px;
+  color: #dce4de;
+  font-size: 13px;
   font-weight: 700;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.number-selection-page .number-detail.price .number-detail-value {
-  color: var(--green);
+.wavynum-number-selection .number-detail.price {
+  text-align: right;
+}
 
-  font-size: 17px;
+.wavynum-number-selection .number-detail.price .number-detail-value {
+  color: #39e86f;
+  font-size: 18px;
   font-weight: 800;
 }
 
@@ -466,64 +443,62 @@
    CHOOSE BUTTON
 ========================================================= */
 
-.number-selection-page .number-choose-btn {
-  height: 46px;
+.wavynum-number-selection .number-choose-btn {
+  width: 100%;
+  min-height: 46px;
 
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
 
-  padding: 0 17px;
+  padding: 0 16px;
+
+  color: #031007;
+  background: #39e86f;
 
   border: 0;
   border-radius: 12px;
 
-  background: var(--green);
-
-  color: #031007;
-
-  font-family: var(--font);
+  font: inherit;
   font-size: 13px;
   font-weight: 800;
-
-  white-space: nowrap;
 
   cursor: pointer;
 
   transition:
-    transform var(--transition),
-    background var(--transition),
-    box-shadow var(--transition);
+    background .2s ease,
+    transform .2s ease,
+    box-shadow .2s ease;
 }
 
-.number-selection-page .number-choose-btn:hover {
-  background: var(--green-bright);
+.wavynum-number-selection .number-choose-btn:hover {
+  background: #55f47f;
   transform: translateY(-1px);
-  box-shadow: var(--shadow-green);
+  box-shadow: 0 8px 22px rgba(57,232,111,0.12);
 }
 
-.number-selection-page .number-choose-btn i {
-  font-size: 12px;
+.wavynum-number-selection .number-choose-btn:active {
+  transform: translateY(0);
 }
 
 
 /* =========================================================
-   EMPTY / LOADING STATES
+   EMPTY / LOADING STATE
 ========================================================= */
 
-.number-selection-page .state-box {
-  padding: 52px 24px;
-
-  border: 1px solid var(--border);
-  border-radius: 20px;
-
-  background: var(--surface);
+.wavynum-number-selection .number-state {
+  padding: 55px 20px;
 
   text-align: center;
+
+  background: #0b110d;
+
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 18px;
 }
 
-.number-selection-page .state-icon {
+.wavynum-number-selection .number-state-icon {
   width: 48px;
   height: 48px;
 
@@ -531,60 +506,30 @@
   align-items: center;
   justify-content: center;
 
-  margin: 0 auto 16px;
+  margin: 0 auto 14px;
 
+  color: #39e86f;
+
+  background: rgba(57,232,111,0.07);
+  border: 1px solid rgba(57,232,111,0.13);
   border-radius: 14px;
-
-  background: var(--green-soft);
-
-  color: var(--green);
-
-  font-size: 18px;
 }
 
-.number-selection-page .state-box h2 {
+.wavynum-number-selection .number-state h2 {
   margin: 0;
 
-  color: var(--text);
-
-  font-size: 18px;
+  color: #f5f8f5;
+  font-size: 17px;
 }
 
-.number-selection-page .state-box p {
-  max-width: 420px;
+.wavynum-number-selection .number-state p {
+  max-width: 360px;
 
-  margin: 8px auto 0;
+  margin: 7px auto 0;
 
-  color: var(--text-muted);
-
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (max-width: 900px) {
-
-  .number-selection-page .number-card-inner {
-    grid-template-columns:
-      1fr 1.4fr auto;
-
-    gap: 18px;
-  }
-
-  .number-selection-page .number-card-details {
-    grid-column: 1 / 3;
-    grid-row: 2;
-  }
-
-  .number-selection-page .number-choose-btn {
-    grid-column: 3;
-    grid-row: 1 / 3;
-  }
-
+  color: #7d897f;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 
@@ -592,93 +537,67 @@
    MOBILE
 ========================================================= */
 
-@media (max-width: 640px) {
+@media (max-width: 600px) {
 
-  .number-selection-page .number-selection-main {
-    width: min(100% - 28px, 1120px);
-    padding: 30px 0 60px;
+  .wavynum-number-selection .number-selection-page {
+    width: min(100% - 22px, 920px);
+    padding-top: 20px;
   }
 
-  .number-selection-page .selection-header {
-    gap: 15px;
-    margin-bottom: 26px;
+  .wavynum-number-selection .number-selection-header {
+    gap: 12px;
+    margin-bottom: 20px;
   }
 
-  .number-selection-page .selection-back {
-    width: 48px;
-    height: 48px;
-    flex-basis: 48px;
-    border-radius: 14px;
+  .wavynum-number-selection .number-selection-back {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
   }
 
-  .number-selection-page .selection-heading h1 {
-    font-size: 32px;
+  .wavynum-number-selection .number-selection-heading h1 {
+    font-size: 30px;
   }
 
-  .number-selection-page .selection-heading p {
-    margin-top: 8px;
-    font-size: 14px;
+  .wavynum-number-selection .number-selection-heading p {
+    font-size: 12px;
   }
 
-  .number-selection-page .selected-service {
-    min-height: 82px;
-    padding: 14px 16px;
-    margin-bottom: 28px;
-    border-radius: 18px;
+  .wavynum-number-selection .selected-service-card {
+    padding: 15px;
+    border-radius: 16px;
   }
 
-  .number-selection-page .selected-service-logo {
-    width: 54px;
-    height: 54px;
-    flex-basis: 54px;
-    border-radius: 14px;
+  .wavynum-number-selection .selected-service-icon {
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
   }
 
-  .number-selection-page .selected-service-name {
-    font-size: 19px;
+  .wavynum-number-selection .number-card-inner {
+    padding: 16px;
   }
 
-  .number-selection-page .number-card-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-
-    gap: 18px;
-
-    padding: 20px;
-  }
-
-  .number-selection-page .number-phone {
-    font-size: 22px;
-  }
-
-  .number-selection-page .number-card-details {
-    display: flex;
-    justify-content: space-between;
-
-    padding-top: 2px;
-  }
-
-  .number-selection-page .number-choose-btn {
-    width: 100%;
-    height: 48px;
+  .wavynum-number-selection .number-phone {
+    font-size: 21px;
   }
 
 }
 
 
 /* =========================================================
-   REDUCED MOTION
+   ACCESSIBILITY
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-  .number-selection-page *,
-  .number-selection-page *::before,
-  .number-selection-page *::after {
-    transition: none !important;
-    animation: none !important;
+  .wavynum-number-selection *,
+  .wavynum-number-selection *::before,
+  .wavynum-number-selection *::after {
     scroll-behavior: auto !important;
+    transition: none !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
   }
 
 }

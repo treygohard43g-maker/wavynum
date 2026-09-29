@@ -8,75 +8,79 @@ import {
 
 /* =========================================================
    WAVYNUM — NUMBER SELECTION
+   Clean isolated implementation
 ========================================================= */
-
-const SERVICE_CONFIG = {
-  facebook: { name: "Facebook" },
-  whatsapp: { name: "WhatsApp" },
-  instagram: { name: "Instagram" },
-  telegram: { name: "Telegram" },
-  snapchat: { name: "Snapchat" },
-  "google voice": { name: "Google Voice" },
-  textplus: { name: "TextPlus" },
-  textnow: { name: "TextNow" },
-  textfree: { name: "TextFree" },
-  hushed: { name: "Hushed" },
-  burner: { name: "Burner" },
-  "2ndline": { name: "2ndLine" },
-  freetone: { name: "FreeTone" },
-  coverme: { name: "CoverMe" },
-  numero: { name: "Numero" },
-  mysudo: { name: "MySudo" },
-  twitter: { name: "Twitter / X" }
-};
 
 
 /* =========================================================
    ELEMENTS
 ========================================================= */
 
-const serviceName =
-  document.getElementById("serviceName");
+const serviceNameElement =
+  document.getElementById("selectedServiceName");
 
-const serviceLogo =
-  document.getElementById("serviceLogo");
+const serviceLogoElement =
+  document.getElementById("selectedServiceLogo");
 
-const serviceFallbackIcon =
-  document.getElementById("serviceFallbackIcon");
+const serviceFallbackElement =
+  document.getElementById("selectedServiceFallback");
 
-const numbersList =
-  document.getElementById("numbersList");
+const inventoryStatusElement =
+  document.getElementById("inventoryStatus");
 
-const diagnostic =
-  document.getElementById("diagnostic");
+const numberListElement =
+  document.getElementById("numberList");
 
-const filterButtons =
-  document.querySelectorAll(".filter-btn");
+const countryButtons =
+  document.querySelectorAll(".country-button");
 
 
 /* =========================================================
-   STATE
+   URL
 ========================================================= */
 
-let allNumbers = [];
-
-let selectedCountry = "all";
-
 const params =
-  new URLSearchParams(
-    window.location.search
-  );
+  new URLSearchParams(window.location.search);
 
 const selectedService =
   params.get("service") || "Other";
 
 
 /* =========================================================
-   SERVICE LOGOS
+   STATE
 ========================================================= */
 
-const SERVICE_LOGOS = {
+let inventory = [];
 
+let selectedCountry = "all";
+
+
+/* =========================================================
+   SERVICE DATA
+========================================================= */
+
+const serviceNames = {
+  facebook: "Facebook",
+  whatsapp: "WhatsApp",
+  instagram: "Instagram",
+  telegram: "Telegram",
+  snapchat: "Snapchat",
+  "google voice": "Google Voice",
+  textplus: "TextPlus",
+  textnow: "TextNow",
+  textfree: "TextFree",
+  hushed: "Hushed",
+  burner: "Burner",
+  "2ndline": "2ndLine",
+  freetone: "FreeTone",
+  coverme: "CoverMe",
+  numero: "Numero",
+  mysudo: "MySudo",
+  twitter: "Twitter / X"
+};
+
+
+const serviceLogos = {
   facebook:
     "https://cdn.brandfetch.io/facebook.com/w/256/h/256",
 
@@ -127,7 +131,6 @@ const SERVICE_LOGOS = {
 
   twitter:
     "https://cdn.brandfetch.io/x.com/w/256/h/256"
-
 };
 
 
@@ -147,62 +150,51 @@ function normalize(value) {
 
 
 /* =========================================================
-   CANONICAL SERVICE
-========================================================= */
-
-function canonicalService(value) {
-
-  const normalized =
-    normalize(value);
-
-  const aliases = {
-
-    "twitter / x":
-      "twitter",
-
-    "twitter/x":
-      "twitter",
-
-    "twitter x":
-      "twitter",
-
-    "x/twitter":
-      "twitter",
-
-    "facebook messenger":
-      "facebook"
-
-  };
-
-  return (
-    aliases[normalized] ||
-    normalized
-  );
-
-}
-
-
-/* =========================================================
    SERVICE MATCH
 ========================================================= */
 
-function serviceMatches(
-  services,
-  requestedService
-) {
+function serviceMatches(services) {
 
   if (!Array.isArray(services)) {
     return false;
   }
 
   const requested =
-    canonicalService(requestedService);
+    normalize(selectedService);
 
-  return services.some(
-    service =>
-      canonicalService(service) ===
-      requested
-  );
+  return services.some(service => {
+
+    const current =
+      normalize(service);
+
+    if (current === requested) {
+      return true;
+    }
+
+    if (
+      requested === "twitter / x" &&
+      current === "twitter"
+    ) {
+      return true;
+    }
+
+    if (
+      requested === "twitter" &&
+      current === "twitter / x"
+    ) {
+      return true;
+    }
+
+    if (
+      requested === "facebook messenger" &&
+      current === "facebook"
+    ) {
+      return true;
+    }
+
+    return false;
+
+  });
 
 }
 
@@ -224,152 +216,107 @@ function escapeHtml(value) {
 
 
 /* =========================================================
-   SERVICE HEADER
-========================================================= */
-
-function renderServiceHeader() {
-
-  const key =
-    canonicalService(selectedService);
-
-  const config =
-    SERVICE_CONFIG[key];
-
-
-  if (serviceName) {
-
-    serviceName.textContent =
-      config?.name ||
-      selectedService ||
-      "Service";
-
-  }
-
-
-  if (!serviceLogo) {
-    return;
-  }
-
-
-  const logo =
-    SERVICE_LOGOS[key];
-
-
-  if (logo) {
-
-    serviceLogo.src = logo;
-
-    serviceLogo.style.display =
-      "block";
-
-
-    if (serviceFallbackIcon) {
-
-      serviceFallbackIcon.style.display =
-        "none";
-
-    }
-
-
-    serviceLogo.onerror = () => {
-
-      serviceLogo.style.display =
-        "none";
-
-
-      if (serviceFallbackIcon) {
-
-        serviceFallbackIcon.style.display =
-          "block";
-
-      }
-
-    };
-
-  } else {
-
-    serviceLogo.removeAttribute("src");
-
-    serviceLogo.style.display =
-      "none";
-
-
-    if (serviceFallbackIcon) {
-
-      serviceFallbackIcon.style.display =
-        "block";
-
-    }
-
-  }
-
-}
-
-
-/* =========================================================
    PRICE
 ========================================================= */
 
-function parsePrice(value) {
+function getPrice(value) {
 
-  if (
-    value === null ||
-    value === undefined ||
-    value === ""
-  ) {
+  const price =
+    Number(value);
 
+  if (!Number.isFinite(price)) {
     return 0;
-
   }
 
-
-  if (typeof value === "number") {
-
-    return Number.isFinite(value)
-      ? value
-      : 0;
-
-  }
-
-
-  const parsed =
-    Number.parseFloat(
-      String(value)
-        .replace(/[$,\s]/g, "")
-    );
-
-
-  return Number.isFinite(parsed)
-    ? parsed
-    : 0;
+  return price;
 
 }
 
 
 /* =========================================================
-   LOAD INVENTORY
+   SERVICE HEADER
+========================================================= */
+
+function renderService() {
+
+  const key =
+    normalize(selectedService);
+
+  const displayName =
+    serviceNames[key] ||
+    selectedService ||
+    "Service";
+
+
+  serviceNameElement.textContent =
+    displayName;
+
+
+  const logo =
+    serviceLogos[key];
+
+
+  if (!logo) {
+
+    serviceLogoElement.style.display =
+      "none";
+
+    serviceFallbackElement.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  serviceLogoElement.src =
+    logo;
+
+  serviceLogoElement.style.display =
+    "block";
+
+  serviceFallbackElement.style.display =
+    "none";
+
+
+  serviceLogoElement.onerror =
+    () => {
+
+      serviceLogoElement.style.display =
+        "none";
+
+      serviceFallbackElement.style.display =
+        "block";
+
+    };
+
+}
+
+
+/* =========================================================
+   LOAD FIRESTORE INVENTORY
 ========================================================= */
 
 async function loadInventory() {
 
-  try {
+  numberListElement.innerHTML = `
+    <div class="number-state">
 
-    numbersList.innerHTML = `
-      <div class="state-box">
-
-        <div class="state-icon">
-          <i class="fa-solid fa-spinner fa-spin"></i>
-        </div>
-
-        <h2>Loading numbers</h2>
-
-        <p>
-          Checking available inventory.
-        </p>
-
+      <div class="number-state-icon">
+        <i class="fa-solid fa-spinner fa-spin"></i>
       </div>
-    `;
 
+      <h2>Loading numbers</h2>
+
+      <p>
+        Checking available inventory.
+      </p>
+
+    </div>
+  `;
+
+
+  try {
 
     const snapshot =
       await getDocs(
@@ -377,12 +324,12 @@ async function loadInventory() {
       );
 
 
-    allNumbers = [];
+    inventory = [];
 
 
-    let availableCount = 0;
+    let availableTotal = 0;
 
-    let compatibleCount = 0;
+    let serviceTotal = 0;
 
 
     snapshot.forEach(
@@ -391,6 +338,10 @@ async function loadInventory() {
         const data =
           documentSnapshot.data();
 
+
+        /*
+         * ONLY AVAILABLE INVENTORY
+         */
 
         const status =
           normalize(data.status);
@@ -401,13 +352,16 @@ async function loadInventory() {
         }
 
 
-        availableCount++;
+        availableTotal++;
 
+
+        /*
+         * MATCH SELECTED SERVICE
+         */
 
         if (
           !serviceMatches(
-            data.services,
-            selectedService
+            data.services
           )
         ) {
 
@@ -416,12 +370,11 @@ async function loadInventory() {
         }
 
 
-        compatibleCount++;
+        serviceTotal++;
 
 
         /*
-         * Read the actual Firestore fields
-         * directly from the document data.
+         * READ FIRESTORE VALUES DIRECTLY
          */
 
         const phoneNumber =
@@ -431,7 +384,7 @@ async function loadInventory() {
 
 
         const price =
-          parsePrice(
+          getPrice(
             data.price
           );
 
@@ -444,9 +397,7 @@ async function loadInventory() {
 
         const countryName =
           String(
-            data.countryName ??
-            data.country_name ??
-            ""
+            data.countryName ?? ""
           ).trim();
 
 
@@ -456,13 +407,16 @@ async function loadInventory() {
           ).trim();
 
 
-        allNumbers.push({
+        inventory.push({
 
           id:
             documentSnapshot.id,
 
           number:
             phoneNumber,
+
+          price:
+            price,
 
           country:
             country,
@@ -471,10 +425,7 @@ async function loadInventory() {
             countryName,
 
           provider:
-            provider,
-
-          price:
-            price
+            provider
 
         });
 
@@ -482,14 +433,8 @@ async function loadInventory() {
     );
 
 
-    if (diagnostic) {
-
-      diagnostic.textContent =
-        `${snapshot.size} documents · ` +
-        `${availableCount} available · ` +
-        `${compatibleCount} compatible`;
-
-    }
+    inventoryStatusElement.textContent =
+      `${serviceTotal} available number${serviceTotal === 1 ? "" : "s"}`;
 
 
     renderNumbers();
@@ -503,18 +448,14 @@ async function loadInventory() {
     );
 
 
-    if (diagnostic) {
-
-      diagnostic.textContent =
-        "Unable to load inventory";
-
-    }
+    inventoryStatusElement.textContent =
+      "Unable to load inventory";
 
 
-    numbersList.innerHTML = `
-      <div class="state-box">
+    numberListElement.innerHTML = `
+      <div class="number-state">
 
-        <div class="state-icon">
+        <div class="number-state-icon">
           <i class="fa-solid fa-circle-exclamation"></i>
         </div>
 
@@ -523,7 +464,7 @@ async function loadInventory() {
         </h2>
 
         <p>
-          We couldn't load available numbers.
+          We couldn't load the available numbers.
           Please try again.
         </p>
 
@@ -536,45 +477,45 @@ async function loadInventory() {
 
 
 /* =========================================================
-   COUNTRY FILTER
+   FILTER
 ========================================================= */
 
-function getFilteredNumbers() {
+function getVisibleNumbers() {
 
-  return allNumbers.filter(
-    number => {
+  if (
+    selectedCountry === "all"
+  ) {
 
-      if (selectedCountry === "all") {
-        return true;
-      }
+    return inventory;
 
-      return (
-        normalize(number.country) ===
-        normalize(selectedCountry)
-      );
+  }
 
-    }
+
+  return inventory.filter(
+    item =>
+      normalize(item.country) ===
+      normalize(selectedCountry)
   );
 
 }
 
 
 /* =========================================================
-   RENDER NUMBERS
+   RENDER
 ========================================================= */
 
 function renderNumbers() {
 
   const numbers =
-    getFilteredNumbers();
+    getVisibleNumbers();
 
 
   if (!numbers.length) {
 
-    numbersList.innerHTML = `
-      <div class="state-box">
+    numberListElement.innerHTML = `
+      <div class="number-state">
 
-        <div class="state-icon">
+        <div class="number-state-icon">
           <i class="fa-solid fa-phone-slash"></i>
         </div>
 
@@ -584,7 +525,7 @@ function renderNumbers() {
 
         <p>
           There are currently no available
-          numbers for this selection.
+          numbers for this service.
         </p>
 
       </div>
@@ -595,50 +536,54 @@ function renderNumbers() {
   }
 
 
-  numbersList.innerHTML =
-    numbers.map(number => {
+  numberListElement.innerHTML =
+    numbers.map(item => {
 
-      const displayCountry =
-        number.countryName ||
-        number.country ||
+      const country =
+        item.countryName ||
+        item.country ||
         "Unknown";
 
 
-      const displayProvider =
-        number.provider ||
+      const provider =
+        item.provider ||
         "Telnyx";
 
 
-      const displayPrice =
-        Number(number.price).toFixed(2);
+      const phone =
+        item.number ||
+        "Inventory number missing";
+
+
+      const price =
+        item.price.toFixed(2);
 
 
       return `
 
-        <article
-          class="number-card"
-          data-number-id="${escapeHtml(number.id)}"
-        >
+        <article class="number-card">
 
           <div class="number-card-inner">
 
+
             <div class="number-card-top">
 
-              <div class="number-country">
+              <div>
 
                 <span class="number-country-label">
                   Country
                 </span>
 
                 <strong class="number-country-name">
-                  ${escapeHtml(displayCountry)}
+                  ${escapeHtml(country)}
                 </strong>
 
                 <small class="number-country-code">
-                  ${escapeHtml(number.country)}
+                  ${escapeHtml(item.country)}
                 </small>
 
               </div>
+
 
               <span class="number-available">
                 Available
@@ -654,11 +599,7 @@ function renderNumbers() {
               </span>
 
               <strong class="number-phone">
-                ${
-                  number.number
-                    ? escapeHtml(number.number)
-                    : "Inventory number missing"
-                }
+                ${escapeHtml(phone)}
               </strong>
 
             </div>
@@ -673,7 +614,7 @@ function renderNumbers() {
                 </span>
 
                 <span class="number-detail-value">
-                  ${escapeHtml(displayProvider)}
+                  ${escapeHtml(provider)}
                 </span>
 
               </div>
@@ -686,7 +627,7 @@ function renderNumbers() {
                 </span>
 
                 <span class="number-detail-value">
-                  $${displayPrice}
+                  $${price}
                 </span>
 
               </div>
@@ -697,14 +638,12 @@ function renderNumbers() {
             <button
               type="button"
               class="number-choose-btn"
-              data-number-id="${escapeHtml(number.id)}"
+              data-number-id="${escapeHtml(item.id)}"
             >
-
               Choose number
-
               <i class="fa-solid fa-arrow-right"></i>
-
             </button>
+
 
           </div>
 
@@ -715,7 +654,7 @@ function renderNumbers() {
     }).join("");
 
 
-  attachChooseHandlers();
+  attachChooseEvents();
 
 }
 
@@ -724,7 +663,7 @@ function renderNumbers() {
    CHOOSE NUMBER
 ========================================================= */
 
-function attachChooseHandlers() {
+function attachChooseEvents() {
 
   const buttons =
     document.querySelectorAll(
@@ -738,14 +677,14 @@ function attachChooseHandlers() {
       "click",
       () => {
 
-        const numberId =
+        const id =
           button.dataset.numberId;
 
 
         const selected =
-          allNumbers.find(
-            number =>
-              number.id === numberId
+          inventory.find(
+            item =>
+              item.id === id
           );
 
 
@@ -771,37 +710,43 @@ function attachChooseHandlers() {
         }
 
 
+        /*
+         * SAVE EVERYTHING NEEDED
+         * BY NUMBER-CONFIRMATION.HTML
+         */
+
+        const selection = {
+
+          id:
+            selected.id,
+
+          service:
+            selectedService,
+
+          serviceKey:
+            normalize(selectedService),
+
+          number:
+            selected.number,
+
+          country:
+            selected.country,
+
+          countryName:
+            selected.countryName,
+
+          price:
+            selected.price,
+
+          provider:
+            selected.provider
+
+        };
+
+
         localStorage.setItem(
           "wavynumSelectedNumber",
-          JSON.stringify({
-
-            id:
-              selected.id,
-
-            service:
-              selectedService,
-
-            serviceKey:
-              canonicalService(
-                selectedService
-              ),
-
-            number:
-              selected.number,
-
-            country:
-              selected.country,
-
-            countryName:
-              selected.countryName,
-
-            price:
-              selected.price,
-
-            provider:
-              selected.provider
-
-          })
+          JSON.stringify(selection)
         );
 
 
@@ -817,16 +762,16 @@ function attachChooseHandlers() {
 
 
 /* =========================================================
-   COUNTRY FILTERS
+   COUNTRY BUTTONS
 ========================================================= */
 
-filterButtons.forEach(button => {
+countryButtons.forEach(button => {
 
   button.addEventListener(
     "click",
     () => {
 
-      filterButtons.forEach(
+      countryButtons.forEach(
         item =>
           item.classList.remove("active")
       );
@@ -849,9 +794,9 @@ filterButtons.forEach(button => {
 
 
 /* =========================================================
-   INIT
+   START
 ========================================================= */
 
-renderServiceHeader();
+renderService();
 
 loadInventory();

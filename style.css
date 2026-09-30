@@ -2865,4 +2865,378 @@ ol {
 
 }
 
+/* =========================================================
+   WAVYNUM — ADD FUNDS PAGE
+========================================================= */
+
+.funds-main {
+    width: min(100% - 32px, 760px);
+    margin: 0 auto;
+    padding: 42px 0 70px;
+}
+
+/* ---------------------------------------------------------
+   HEADER
+--------------------------------------------------------- */
+
+.dashboard-header {
+    width: 100%;
+    min-height: 72px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(5, 8, 6, 0.92);
+}
+
+.dashboard-logo {
+    color: #39e86f;
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.back-button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: #d9e4dc;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.back-button:hover {
+    color: #39e86f;
+    background: rgba(57, 232, 111, 0.09);
+    transform: translateX(-2px);
+}
+
+/* ---------------------------------------------------------
+   PAGE INTRO
+--------------------------------------------------------- */
+
+.funds-header {
+    margin-bottom: 28px;
+}
+
+.dashboard-eyebrow {
+    margin: 0 0 9px;
+    color: #39e86f;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+}
+
+.funds-header h1 {
+    margin: 0;
+    color: #f4f8f5;
+    font-size: clamp(2rem, 5vw, 2.65rem);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+}
+
+.funds-header > p:last-child {
+    margin: 11px 0 0;
+    color: #89968d;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ---------------------------------------------------------
+   MAIN CARD
+--------------------------------------------------------- */
+
+.funds-card {
+    padding: 26px;
+    border-radius: 20px;
+    background: #0b100d;
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.funds-card-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 28px;
+}
+
+.funds-icon {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    color: #39e86f;
+    background: rgba(57, 232, 111, 0.09);
+    border: 1px solid rgba(57, 232, 111, 0.13);
+    font-size: 1rem;
+}
+
+.funds-card-title h2 {
+    margin: 0;
+    color: #f0f5f2;
+    font-size: 1.05rem;
+    font-weight: 750;
+    letter-spacing: -0.015em;
+}
+
+.funds-card-title p {
+    margin: 5px 0 0;
+    color: #78857c;
+    font-size: 0.83rem;
+    line-height: 1.45;
+}
+
+/* ---------------------------------------------------------
+   FORM
+--------------------------------------------------------- */
+
+#fundsForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: #dce5df;
+    font-size: 0.82rem;
+    font-weight: 650;
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 15px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 12px;
+    outline: none;
+    color: #eef5f0;
+    background: #070b09;
+    font: inherit;
+    font-size: 0.92rem;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+.form-group input::placeholder {
+    color: #526058;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    border-color: rgba(57, 232, 111, 0.55);
+    background: #080e0b;
+    box-shadow: 0 0 0 3px rgba(57, 232, 111, 0.08);
+}
+
+/* ---------------------------------------------------------
+   DEPOSIT PREVIEW
+--------------------------------------------------------- */
+
+.deposit-preview {
+    min-height: 68px;
+    padding: 15px 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-radius: 13px;
+    background: rgba(57, 232, 111, 0.045);
+    border: 1px solid rgba(57, 232, 111, 0.10);
+}
+
+.deposit-preview span {
+    color: #849188;
+    font-size: 0.82rem;
+}
+
+.deposit-preview strong {
+    color: #39e86f;
+    font-size: 1.12rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* ---------------------------------------------------------
+   BUTTON
+--------------------------------------------------------- */
+
+.funds-button {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 2px;
+    border: 0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    color: #041007;
+    background: #39e86f;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.funds-button:hover {
+    background: #50ee80;
+    box-shadow: 0 8px 24px rgba(57, 232, 111, 0.16);
+    transform: translateY(-1px);
+}
+
+.funds-button:active {
+    transform: translateY(0);
+}
+
+.funds-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ---------------------------------------------------------
+   MESSAGE
+--------------------------------------------------------- */
+
+.funds-message {
+    min-height: 20px;
+    margin: -4px 0 0;
+    text-align: center;
+    color: #89968d;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.funds-message.success {
+    color: #39e86f;
+}
+
+.funds-message.error {
+    color: #ff7373;
+}
+
+/* ---------------------------------------------------------
+   DEVELOPMENT NOTICE
+--------------------------------------------------------- */
+
+.demo-notice {
+    margin-top: 18px;
+    padding: 17px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.demo-notice > i {
+    margin-top: 2px;
+    color: #7f8d84;
+    font-size: 0.95rem;
+}
+
+.demo-notice strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #cbd5cf;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.demo-notice p {
+    margin: 0;
+    color: #748078;
+    font-size: 0.78rem;
+    line-height: 1.55;
+}
+
+/* ---------------------------------------------------------
+   MOBILE
+--------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .dashboard-header {
+        min-height: 64px;
+        padding: 0 16px;
+    }
+
+    .funds-main {
+        width: min(100% - 24px, 760px);
+        padding: 30px 0 50px;
+    }
+
+    .funds-header {
+        margin-bottom: 22px;
+    }
+
+    .funds-header h1 {
+        font-size: 2rem;
+    }
+
+    .funds-header > p:last-child {
+        font-size: 0.88rem;
+    }
+
+    .funds-card {
+        padding: 20px;
+        border-radius: 17px;
+    }
+
+    .funds-card-title {
+        gap: 12px;
+        margin-bottom: 23px;
+    }
+
+    .funds-icon {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+        border-radius: 12px;
+    }
+
+    .deposit-preview {
+        min-height: 62px;
+        padding: 13px 14px;
+    }
+
+    .demo-notice {
+        padding: 15px;
+    }
+}
 

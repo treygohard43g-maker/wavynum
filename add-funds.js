@@ -1,29 +1,20 @@
-import { auth, db } from "./firebase.js";
+import { auth } from "./firebase.js";
 
 import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-import {
-  doc,
-  getDoc,
-  updateDoc,
-  addDoc,
-  collection,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
 
 const fundsForm = document.getElementById("fundsForm");
-const currency = document.getElementById("currency");
-const amount = document.getElementById("amount");
-const amountPreview = document.getElementById("amountPreview");
 const fundsMessage = document.getElementById("fundsMessage");
 
 let currentUser = null;
 
 
-// Check authentication
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
+
 onAuthStateChanged(auth, (user) => {
 
   if (!user) {
@@ -36,144 +27,44 @@ onAuthStateChanged(auth, (user) => {
 });
 
 
-// Update preview
-function updatePreview() {
+/* =========================================================
+   GENERATE PAYMENT ACCOUNT
+========================================================= */
 
-  const value = Number(amount.value || 0);
-
-  if (currency.value === "USD") {
-
-    amountPreview.textContent =
-      "$" + value.toFixed(2);
-
-  } else {
-
-    amountPreview.textContent =
-      "₦" + value.toFixed(2);
-
-  }
-
-}
-
-
-amount.addEventListener("input", updatePreview);
-
-currency.addEventListener("change", updatePreview);
-
-
-// Submit deposit
 fundsForm.addEventListener("submit", async (event) => {
 
   event.preventDefault();
 
   if (!currentUser) {
+
     fundsMessage.textContent =
       "Please log in again.";
 
-    return;
-  }
-
-
-  const selectedCurrency = currency.value;
-  const depositAmount = Number(amount.value);
-
-
-  if (!depositAmount || depositAmount <= 0) {
-
-    fundsMessage.textContent =
-      "Enter a valid amount.";
+    fundsMessage.className =
+      "funds-message error";
 
     return;
 
   }
 
 
-  try {
+  fundsMessage.textContent =
+    "Opening secure funding setup...";
 
-    fundsMessage.textContent =
-      "Processing deposit...";
-
-
-    const userRef =
-      doc(db, "users", currentUser.uid);
-
-    const userSnapshot =
-      await getDoc(userRef);
+  fundsMessage.className =
+    "funds-message";
 
 
-    if (!userSnapshot.exists()) {
+  /*
+    We don't modify the wallet here.
 
-      fundsMessage.textContent =
-        "Account record not found.";
+    The next page will handle:
+      1. Checking whether the user already has a payment account
+      2. Requesting one from the backend if necessary
+      3. Displaying the bank details
+  */
 
-      return;
-
-    }
-
-
-    const userData =
-      userSnapshot.data();
-
-
-    const field =
-      selectedCurrency === "USD"
-        ? "usdBalance"
-        : "ngnBalance";
-
-
-    const currentBalance =
-      Number(userData[field] || 0);
-
-
-    const newBalance =
-      currentBalance + depositAmount;
-
-
-    // Update wallet
-    await updateDoc(userRef, {
-
-      [field]: newBalance
-
-    });
-
-
-    // Record transaction
-    await addDoc(
-      collection(db, "transactions"),
-      {
-
-        userId: currentUser.uid,
-
-        type: "deposit",
-
-        currency: selectedCurrency,
-
-        amount: depositAmount,
-
-        status: "completed",
-
-        createdAt: serverTimestamp()
-
-      }
-    );
-
-
-    fundsMessage.textContent =
-      "Funds added successfully.";
-
-
-    amount.value = "";
-
-    updatePreview();
-
-
-  } catch (error) {
-
-    console.error("Deposit error:", error);
-
-    fundsMessage.textContent =
-      "Deposit error: " + error.code;
-
-  }
+  window.location.href =
+    "payment-account.html";
 
 });
